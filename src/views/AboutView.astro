@@ -1,43 +1,57 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getTranslations, getLocalizedPath, type Lang } from '../i18n';
+import { getNamespace, getLocalizedPath, type Lang } from '../i18n';
 
 export interface Props {
   lang?: Lang;
 }
 
 const { lang = 'en' } = Astro.props;
-const t = getTranslations(lang);
+const common = getNamespace(lang, 'common');
+const about = getNamespace(lang, 'about');
+const age = getNamespace(lang, 'age');
+const birthday = getNamespace(lang, 'birthday');
+const wheel = getNamespace(lang, 'wheel');
+const picker = getNamespace(lang, 'picker');
+const countdown = getNamespace(lang, 'countdown');
+const names = getNamespace(lang, 'names');
+
+const t = {
+  about,
+  common,
+  nav: common.nav,
+  siteName: common.siteName,
+};
 
 const tools = [
   {
-    name: `🎂 ${t.nav.ageCalculator}`,
-    description: t.age.subtitle,
+    name: `🎂 ${common.nav?.ageCalculator || 'Age Calculator'}`,
+    description: age.subtitle,
     href: getLocalizedPath('/age-calculator', lang),
   },
   {
-    name: `🎉 ${t.nav.birthdayFacts}`,
-    description: t.birthday.subtitle,
+    name: `🎉 ${common.nav?.birthdayFacts || 'Birthday Facts'}`,
+    description: birthday.subtitle,
     href: getLocalizedPath('/birthday-facts', lang),
   },
   {
-    name: `🎡 ${t.nav.decisionWheel}`,
-    description: t.wheel.subtitle,
+    name: `🎡 ${common.nav?.decisionWheel || 'Decision Wheel'}`,
+    description: wheel.subtitle,
     href: getLocalizedPath('/decision-wheel', lang),
   },
   {
-    name: `🎲 ${t.nav.randomPicker}`,
-    description: t.picker.subtitle,
+    name: `🎲 ${common.nav?.randomPicker || 'Random Picker'}`,
+    description: picker.subtitle,
     href: getLocalizedPath('/random-picker', lang),
   },
   {
-    name: `⏳ ${t.nav.countdown}`,
-    description: t.countdown.subtitle,
+    name: `⏳ ${common.nav?.countdown || 'Countdown Timer'}`,
+    description: countdown.subtitle,
     href: getLocalizedPath('/countdown', lang),
   },
   {
-    name: `🏷️ ${t.nav.nameMeaning}`,
-    description: t.names.subtitle,
+    name: `🏷️ ${common.nav?.nameMeaning || 'Name Meaning'}`,
+    description: names.subtitle,
     href: getLocalizedPath('/name-meaning', lang),
   },
 ];
@@ -45,9 +59,9 @@ const tools = [
 const aboutSchema = {
   '@context': 'https://schema.org',
   '@type': 'AboutPage',
-  name: t.about.title,
+  name: about.title || 'About ToolNest',
   url: `https://toolnest.pages.dev${getLocalizedPath('/about', lang)}`,
-  description: t.about.metaDesc,
+  description: about.metaDesc,
   publisher: {
     '@type': 'Organization',
     name: 'ToolNest',
@@ -61,8 +75,7 @@ const aboutSchema = {
 ---
 
 <Base
-  title={t.about.title}
-  description={t.about.metaDesc}
+  metaKey="about"
   canonicalPath={getLocalizedPath('/about', lang)}
   ogImage="/og/about.svg"
   breadcrumbs={[{ name: t.nav.about, item: getLocalizedPath('/about', lang) }]}

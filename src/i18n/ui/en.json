@@ -1,186 +1,331 @@
 {
   "common": {
     "siteName": "ToolNest",
-    "tagline": "Free Online Micro-Tools",
-    "description": "Fast, private, and free online micro-tools that just work — no sign-up, no bloated ads, and zero server storage.",
-    "badges": {
-      "free": "100% Free",
-      "noSignup": "No Sign-Up",
-      "privacy": "Zero Tracking"
-    },
+    "tagline": "Free online micro-tools that just work — no signup, no ads blocking your screen, nothing leaves your browser.",
+    "description": "A curated collection of modern, fast, and privacy-focused client-side micro-tools. Decision wheel, random picker, age calculator, birthday facts, countdown timers, and name meanings.",
+    "badgeFree": "100% Free",
+    "badgeNoSignup": "No Sign-up",
+    "badgePrivacy": "Privacy-First",
+    "footerTagline": "Free, private, mobile-first micro-tools that run completely in your browser.",
+    "footerCopyright": "ToolNest. All rights reserved. Zero tracking. Zero servers.",
     "nav": {
       "home": "Home",
       "ageCalculator": "Age Calculator",
       "birthdayFacts": "Birthday Facts",
       "decisionWheel": "Decision Wheel",
       "randomPicker": "Random Picker",
-      "countdown": "Countdown Timer",
-      "nameMeaning": "Name Meaning",
+      "countdown": "Countdown",
+      "nameMeaning": "Name Meanings",
       "about": "About",
       "privacy": "Privacy Policy",
       "contact": "Contact",
-      "switchLanguage": "Switch Language",
-      "skipToContent": "Skip to main content"
-    },
-    "footer": {
-      "tagline": "Free, private, browser-first micro-tools that respect your time and data.",
-      "copyright": "ToolNest. Built for speed, privacy, and simplicity.",
-      "allRightsReserved": "All rights reserved."
+      "switchLanguage": "Language"
     },
     "buttons": {
       "calculate": "Calculate",
-      "spin": "Spin Wheel",
+      "spin": "Spin the Wheel",
       "pick": "Pick Winner",
       "create": "Create Countdown",
       "share": "Share",
       "shareAsImage": "Share as Image",
-      "downloadImage": "Download Card",
+      "downloadImage": "Download Image",
       "copyLink": "Copy Link",
-      "copied": "Copied!",
+      "linkCopied": "Link copied to clipboard!",
       "reset": "Reset",
-      "clear": "Clear All",
-      "retry": "Try Again",
+      "clear": "Clear",
+      "retry": "Retry",
       "loading": "Loading...",
       "generating": "Generating...",
       "retrying": "Retrying...",
-      "remove": "Remove",
-      "add": "Add",
-      "save": "Save",
-      "close": "Close",
-      "back": "Back",
-      "exploreMore": "Explore More Tools",
-      "switchTheme": "Switch theme"
-    },
-    "toasts": {
-      "copied": "Copied to clipboard!",
-      "linkCopied": "Shareable link copied to clipboard!",
-      "error": "Something went wrong. Please try again.",
-      "saved": "Saved successfully!",
-      "removed": "Removed successfully.",
-      "cannotRemove": "Cannot remove item: minimum requirements not met.",
-      "shareFailed": "Unable to share on this device. Link copied instead.",
-      "invalidDate": "Please enter a valid date.",
-      "futureDate": "Date cannot be in the future."
-    },
-    "sections": {
+      "error": "An error occurred",
+      "success": "Success!",
       "howItWorks": "How It Works",
       "useCases": "Popular Use Cases",
       "faq": "Frequently Asked Questions",
-      "relatedTools": "Related Micro-Tools",
-      "quickIdeas": "Quick Presets"
+      "relatedTools": "Related Tools",
+      "exploreMore": "Explore More Tools",
+      "madeWith": "made with ToolNest • toolnest.pages.dev",
+      "quickIdeas": "Quick Ideas",
+      "winner": "Winner",
+      "shuffle": "Shuffle",
+      "remove": "Remove",
+      "add": "Add",
+      "options": "Options",
+      "result": "Result",
+      "downloadCard": "Download Card",
+      "backHome": "Back to Home",
+      "viewDetails": "View Details",
+      "confirm": "Confirm",
+      "cancel": "Cancel"
     },
-    "watermark": "Created with ToolNest"
+    "toasts": {
+      "copied": "Copied to clipboard!",
+      "errorOccurred": "An unexpected error occurred.",
+      "loaded": "Loaded successfully!"
+    },
+    "skipToContent": "Skip to main content",
+    "sitemap": "Sitemap",
+    "privacyBadge100": "100% Client-Side Privacy",
+    "clientPrivacy": "Stored only in your browser",
+    "recentActivity": "Recent Activity",
+    "recentCalculations": "No recent calculations saved yet",
+    "entriesSavedPrivately": "Your entries are automatically saved privately on this device.",
+    "clearAll": "Clear all",
+    "clearAllConfirm": "Clear all?",
+    "yes": "Yes",
+    "cancel": "Cancel",
+    "restore": "Restore",
+    "restoreArrow": "Restore →",
+    "userReviews": "user reviews",
+    "popular": "Popular",
+    "openTool": "Open Tool",
+    "relatedTools": "Related Free Tools",
+    "viewAllTools": "View all tools",
+    "close": "Close",
+    "lightMode": "Light Mode",
+    "darkMode": "Dark Mode",
+    "switchTheme": "Switch theme",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "quickAnswerTitle": "Quick Answer & Key Takeaways",
+    "lastUpdated": "Last updated",
+    "methodologyGuarantee": "Methodology & Accuracy Guarantee",
+    "howToUse": "How to Use in 3 Steps",
+    "exploreMore": "Explore Tools",
+    "backHome": "Back to Home",
+    "copied": "Copied to clipboard!",
+    "unableToCopy": "Unable to copy to clipboard.",
+    "dismiss": "Dismiss"
   },
   "meta": {
     "home": {
-      "title": "ToolNest — Free Online Micro-Tools for Everyday Decisions",
-      "description": "Fast, private, and free micro-tools: Decision Wheel, Birthday Facts, Random Picker, Countdown Timer, Age Calculator, and Name Meanings."
+      "title": "ToolNest — Free Online Micro-Tools That Just Work",
+      "description": "Fast, private, mobile-friendly micro-tools. Decision wheel, random picker, age calculator, birthday facts, countdown timers, and name meanings."
     },
     "wheel": {
-      "title": "Random Decision Wheel Spinner | ToolNest",
-      "description": "Spin the interactive AI decision wheel to make random choices quickly. Generate custom options with Gemini AI or enter your own."
+      "title": "Decision Wheel — Free Custom Spin Wheel with AI Presets",
+      "description": "Spin the wheel to make quick, unbiased decisions. Settle dinners, pick games, or generate instant slices with our built-in AI assistant."
     },
     "picker": {
-      "title": "Random List Picker & Team Generator | ToolNest",
-      "description": "Pick random winners, draw raffle names, or generate balanced teams effortlessly with cryptographically fair randomness."
+      "title": "Random Picker — Free Contest Winner & Classroom Picker",
+      "description": "Easily draw random names or numbers without repeats, select classroom students, or divide players into balanced randomized teams."
     },
     "age": {
-      "title": "Chronological Age Calculator & Milestones | ToolNest",
-      "description": "Calculate your exact chronological age down to the second, compare dates, and discover upcoming milestone birthdays."
+      "title": "Age Calculator — Exact Age in Years, Months, Days & Seconds",
+      "description": "Find your precise chronological age, next birthday countdown, total days lived, and compare age differences between two dates."
     },
     "birthday": {
-      "title": "Birthday Facts & Trivia Card Generator | ToolNest",
-      "description": "Discover fascinating birthday trivia: weekday born, zodiac signs, birthstones, historical famous namesakes, and downloadable sticker cards."
+      "title": "Birthday Facts — Zodiac, Birthstone, Flower & Fun Milestones",
+      "description": "Uncover your zodiac sign, element, birthstone, day of the week you were born, and download a beautiful personalized birthday card."
     },
     "countdown": {
-      "title": "Live Countdown Timer Creator | ToolNest",
-      "description": "Create beautiful, shareable live countdown timers for birthdays, vacations, weddings, exams, and milestones."
+      "title": "Live Countdown Timer — Create and Share Event Countdowns",
+      "description": "Build beautiful real-time countdown clocks. Share with friends via direct link or download an image card formatted for social media."
     },
     "countdownView": {
-      "title": "Live Countdown Event | ToolNest",
-      "description": "View this live countdown in real time. Track days, hours, minutes, and seconds until the celebration."
+      "title": "Live Countdown Viewer | ToolNest",
+      "description": "Watch your event countdown live in real time. Shareable, mobile-optimized, and free."
     },
     "names": {
-      "title": "Baby Names Directory & Search | ToolNest",
-      "description": "Explore hundreds of baby names with origins, cultural meanings, popularity trends, and Gemini AI personality insights."
+      "title": "Name Meanings & Origins — 200+ Baby Names with AI Insights",
+      "description": "Browse curated name meanings, phonetic pronunciations, cultural heritages, and generate tailored AI name insights and sibling pairings."
     },
     "nameMeaning": {
-      "title": "Baby Name Meaning & AI Personality Insights | ToolNest",
-      "description": "Search any name to uncover deep etymological roots, cultural origins, personality traits, and famous historical namesakes."
+      "title": "Name Meaning Search & Analysis | ToolNest",
+      "description": "Look up comprehensive etymological roots, personality associations, historical popularity, and phonetic variations for any name."
     },
     "about": {
-      "title": "About ToolNest — Philosophy & Editorial Standards",
-      "description": "Learn why we built ToolNest: free, private, client-first micro-tools with zero tracking, zero accounts, and honest utility."
+      "title": "About ToolNest — Fast, Private Web Utilities",
+      "description": "Learn about ToolNest: our mission to provide fast, private, zero-tracking client-side tools, verified mathematical methodology, and editorial standards."
     },
     "contact": {
-      "title": "Contact ToolNest — Feedback & Tool Requests",
-      "description": "Get in touch with the ToolNest team. Suggest a new micro-tool, report a bug, or send partnership inquiries."
+      "title": "Contact ToolNest — Support & Inquiries",
+      "description": "Get in touch with the ToolNest team for questions, tool suggestions, feedback, or bug reports. We respond to all inquiries within 24 to 48 hours."
     },
     "privacy": {
-      "title": "Privacy Policy — Zero Tracking Guarantee | ToolNest",
-      "description": "Our privacy commitment: zero personal data stored, client-side browser execution, and transparent security practices."
+      "title": "Privacy Policy — Data Privacy & Trust | ToolNest",
+      "description": "Read ToolNest's comprehensive Privacy Policy. Learn about our client-side architecture, local storage usage, advertising cookies, and analytics policies."
     },
     "notFound": {
       "title": "Page Not Found (404) | ToolNest",
-      "description": "The page you are looking for does not exist or has moved. Explore our collection of free online micro-tools."
+      "description": "The page you requested could not be found on ToolNest."
     }
   },
   "wheel": {
-    "title": "Random Decision Wheel Spinner",
-    "subtitle": "Can't decide? Let the wheel choose for you. Spin manually or generate personalized options with Google Gemini AI.",
-    "spinButton": "SPIN",
+    "title": "Decision Wheel",
+    "subtitle": "Can’t decide? Put your choices on an interactive wheel and give it a spin.",
+    "spinButton": "SPIN THE WHEEL",
     "spinning": "Spinning...",
-    "optionsHeading": "Wheel Segments",
-    "addPlaceholder": "Type new choice...",
-    "quickIdeasHeading": "Quick Presets",
+    "optionsHeading": "Wheel Options",
+    "addPlaceholder": "Add option...",
+    "quickIdeasHeading": "Quick Ideas",
+    "ideas": {
+      "whatToEat": "What to eat",
+      "workout": "Workout today",
+      "movie": "Movie night",
+      "travel": "Travel destinations"
+    },
+    "aiGeneratorTitle": "AI Preset Generator",
+    "aiGeneratorSubtitle": "Curate custom slices in seconds",
+    "aiPromptLabel": "Describe what you need to decide",
+    "aiPromptPlaceholder": "Describe what you need to decide (e.g. what to eat for dinner, movie genres, chores)...",
+    "aiGenerateBtn": "Generate with AI",
+    "aiCountLabel": "Count:",
+    "aiGeneratingText": "Generating… can take up to 20 seconds on first try",
+    "aiRetryingText": "Retrying… hang tight, first request took a bit longer",
+    "replaceConfirmTitle": "Replace current wheel options?",
+    "replaceConfirmDesc": "Your wheel currently has custom slices. Would you like to replace them with the new AI-generated options?",
+    "replaceConfirmBtn": "Replace Options",
+    "replaceCancelBtn": "Keep Current Options",
+    "winnerAnnounce": "Selected Choice:",
     "presetEat": "What to Eat",
     "presetWatch": "What to Watch",
     "presetYesNo": "Yes or No",
-    "aiGeneratorTitle": "AI Option Generator",
-    "aiGeneratorSubtitle": "Describe your dilemma (e.g. 'fun weekend activities in rainy weather') and let AI draft balanced options.",
-    "aiPromptPlaceholder": "e.g., healthy dinner recipes, book club picks...",
-    "aiGenerateBtn": "Generate with AI",
-    "aiCountLabel": "Number of Options",
-    "aiGeneratingText": "Generating options with Gemini AI... can take up to 20 seconds on first try.",
-    "aiRetryingText": "Retrying AI generation... hang tight!",
-    "replaceConfirmTitle": "Replace Current Options?",
-    "replaceConfirmDesc": "Loading these options will replace your existing wheel items.",
-    "replaceConfirmBtn": "Yes, Replace",
-    "replaceCancelBtn": "Cancel",
-    "winnerAnnounce": "Winner Announced!",
-    "winnerModalTitle": "Winner",
-    "removeWinnerBtn": "Remove Winner & Spin Again",
-    "minOptionsError": "Minimum 2 options required to spin the wheel.",
-    "maxOptionsError": "Maximum 12 options reached for optimal display.",
-    "duplicateError": "This option already exists on the wheel.",
-    "emptyError": "Please type an option name first.",
-    "shareSuccessToast": "Custom wheel URL copied to clipboard!",
-    "removeWinnerToast": "Removed \"{winner}\" from the wheel."
+    "toasts": {
+      "generatedCount": "Generated {count} options!",
+      "keptOptions": "Kept current wheel options.",
+      "loadedHistory": "Loaded wheel options.",
+      "removedWinner": "Removed winning slice.",
+      "requiresTwo": "Please add at least 2 options to spin.",
+      "alreadyExists": "That option is already on the wheel.",
+      "maxOptions": "Maximum 12 options reached.",
+      "shuffled": "Options shuffled.",
+      "cannotRemoveWinner": "Cannot remove winner: minimum 2 options required.",
+      "historyCleared": "Spin history cleared."
+    },
+    "howTo": {
+      "title": "How to Use the Decision Wheel in 3 Steps",
+      "subtitle": "Break analysis paralysis with smooth physics in seconds.",
+      "s1Title": "Enter Choices or Use AI",
+      "s1Desc": "Type up to 12 custom options, choose from quick presets, or let Gemini AI generate personalized slices.",
+      "s2Title": "Spin the Wheel",
+      "s2Desc": "Tap the center SPIN hub, press Spacebar, or flick the canvas on mobile to launch the physics deceleration.",
+      "s3Title": "Celebrate & Eliminate",
+      "s3Desc": "Celebrate the chosen slice with confetti, copy your share URL, or eliminate the winner for another round."
+    },
+    "methodology": {
+      "m1Title": "How Does the Physics-Based Wheel Deceleration Work?",
+      "m1Desc": "Unlike static randomizers that snap to a pre-chosen value, ToolNest simulates realistic angular momentum. The wheel launches with random initial rotational velocity and smoothly slows down using a continuous quadratic drag formula computed at 60 FPS via requestAnimationFrame. The winning slice is read from the physical resting angle beneath the top pointer.",
+      "m2Title": "Is the Online Wheel Spinner Mathematically Fair?",
+      "m2Desc": "Every slice on the wheel occupies an equal angular segment (360° / N). Because the spin force, deceleration duration, and stopping angle are generated without weighting or bias, each outcome has an identical mathematical probability of being selected.",
+      "noteTitle": "Methodology & Deceleration Physics",
+      "noteDesc": "Calculations run entirely client-side using native HTML5 Canvas and mathematical requestAnimationFrame loops with zero server bias."
+    },
+    "useCases": {
+      "title": "Popular Use Cases for the Random Wheel Generator",
+      "u1Title": "What to Eat for Dinner Decider",
+      "u1Desc": "Eliminate evening mealtime debates between partners and families by spinning a custom food wheel with your top takeout spots and home-cooked recipes.",
+      "u2Title": "Classroom Wheel for Teachers",
+      "u2Desc": "Call on students fairly, choose reading turns, assign classroom chores, or run spelling bee challenges without any perception of teacher favoritism.",
+      "u3Title": "Prize Wheel Online & Raffles",
+      "u3Desc": "Host live Twitch giveaways, Discord community raffles, party icebreaker challenges, and trivia contests with engaging physics deceleration."
+    },
+    "trivia": {
+      "title": "Did You Know? Decision-Making & Wheel Trivia",
+      "t1Title": "Analysis Paralysis",
+      "t1Desc": "Psychological research indicates humans make roughly 35,000 decisions daily. Delegating low-stakes choices preserves mental willpower.",
+      "t2Title": "Roman Wheel of Fortune",
+      "t2Desc": "The concept of spinning a wheel dates back to the Roman goddess Fortuna (Rota Fortunae), representing life mutability and fate.",
+      "t3Title": "Visual Randomness Effect",
+      "t3Desc": "Watching a wheel decelerate triggers anticipation dopamine surges, making group choices markedly more engaging than flat lists."
+    },
+    "ui": {
+      "physicsRandomizer": "Physics & AI Randomizer",
+      "wheelAria": "Interactive decision wheel",
+      "spinButton": "SPIN",
+      "orSpace": "or Space",
+      "optionsListHeading": "Wheel Options",
+      "winnerModalTitle": "We Have a Winner!",
+      "removeWinner": "Remove Winner",
+      "spinAgain": "Spin Again",
+      "keyTakeawaysTitle": "Quick Answer & Key Takeaways",
+      "kt1": "Cryptographic Fairness: Employs realistic canvas deceleration physics with zero predetermined landing sectors.",
+      "kt2": "AI Dilemma Solver: Generate tailored options with Gemini AI or paste your own custom list of 2 to 12 choices.",
+      "kt3": "Stateless URL Sharing: Encode your custom wheel parameters directly into the link for instant sharing."
+    }
   },
   "picker": {
-    "title": "Random List Picker & Team Generator",
-    "subtitle": "Fair, cryptographically secure random selection. Pick single or multiple winners, shuffle lists, or balance teams instantly.",
-    "itemsLabel": "Your List Items (one item per line)",
-    "itemsPlaceholder": "Alice\nBob\nCharlie\nDiana\nEvan\nFiona",
-    "pickWinnerBtn": "Pick Winner(s)",
+    "title": "Random Picker",
+    "subtitle": "Draw transparent, fair results for giveaways, classrooms, raffles, and team sorting.",
+    "itemsLabel": "Enter list items (one per line or comma separated)",
+    "itemsPlaceholder": "Alex\nJordan\nTaylor\nMorgan\nCasey\nRiley",
+    "pickWinnerBtn": "Draw Winner",
     "splitTeamsBtn": "Split into Teams",
     "pickStudentBtn": "Pick Random Student",
-    "allowDuplicates": "Allow Duplicate Winners",
-    "numWinners": "Number of Winners",
-    "numTeams": "Number of Teams",
+    "allowDuplicates": "Allow duplicate picks",
+    "numWinners": "Winners to draw:",
+    "numTeams": "Number of teams:",
     "teamLabel": "Team",
-    "remainingItems": "Remaining Items",
-    "emptyError": "Please enter at least 2 items to pick or generate teams.",
-    "winnerHeader": "Selected Winner(s)",
-    "teamsHeader": "Generated Teams",
-    "shuffleBtn": "Shuffle List",
-    "clearBtn": "Clear All",
-    "copiedToast": "Results copied to clipboard!"
+    "remainingItems": "Remaining items in pool:",
+    "emptyError": "Please enter at least 2 items in the list.",
+    "toasts": {
+      "winnerPicked": "Winner chosen!",
+      "teamsGenerated": "Teams successfully generated!",
+      "itemsCleared": "List cleared.",
+      "duplicatesRemoved": "Duplicates removed."
+    },
+    "howTo": {
+      "title": "How to Use the Random Name Picker in 3 Steps",
+      "subtitle": "Draw verifiable random winners in 3 quick steps.",
+      "s1Title": "Paste Your List",
+      "s1Desc": "Paste names separated by newlines or commas. The tool automatically detects formatting and alerts you if duplicates exist.",
+      "s2Title": "Select Options & Count",
+      "s2Desc": "Set how many winners to draw (1 to 10) and choose whether to automatically remove winning entries for subsequent rounds.",
+      "s3Title": "Draw & Copy Winners",
+      "s3Desc": "Watch the cycling animation settle on your winners with celebratory confetti. Copy the results to your clipboard with one click."
+    },
+    "methodology": {
+      "m1Title": "Why Does Cryptographic Randomness Matter for Contests?",
+      "m1Desc": "Standard web randomizers often use Math.random(), an algorithmic pseudo-random number generator that can produce statistical clustering over small lists. ToolNest queries the Web Cryptography API (crypto.getRandomValues), harvesting hardware and OS entropy to ensure uncompromised mathematical fairness for school raffles, social media giveaways, and corporate draws.",
+      "m2Title": "How Do You Draw Multiple Unique Winners Without Repeats?",
+      "m2Desc": "When drawing multiple winners, naive random pickers risk selecting the same participant twice. ToolNest executes an in-place modern Fisher–Yates shuffle algorithm. By iterating through the array in reverse and swapping elements using cryptographically uniform indices, every permutation is equally probable and each drawn winner is guaranteed to be unique.",
+      "noteTitle": "Methodology & Cryptographic Entropy",
+      "noteDesc": "The algorithm utilizes window.crypto.getRandomValues to guarantee cryptographically secure randomness, ensuring zero predictable sequences."
+    },
+    "useCases": {
+      "title": "Popular Use Cases for the Random Name Picker & Team Generator",
+      "u1Title": "Name Picker for Teachers",
+      "u1Desc": "Select classroom students fairly for presentations, cold-call answers, and weekly classroom jobs with verified neutrality.",
+      "u2Title": "Giveaway Winner Picker & Raffles",
+      "u2Desc": "Execute transparent, cryptographically sound prize drawings for Instagram giveaways, Discord community raffles, and corporate promotions using a provably fair raffle drawer online.",
+      "u3Title": "Random Team Picker & Squads",
+      "u3Desc": "Shuffle large rosters in seconds to divide classrooms, hackathons, sports leagues, and video game tournaments into balanced, randomized squads."
+    },
+    "trivia": {
+      "title": "Did You Know? Randomness & Sortition Trivia",
+      "t1Title": "Hardware Thermal Entropy",
+      "t1Desc": "Standard Math.random algorithms can repeat patterns over time. The Web Cryptography API samples real physical noise from device CPU thermal fluctuations for casino-grade fairness.",
+      "t2Title": "Ancient Athenian Democracy",
+      "t2Desc": "In ancient Athens, political officials and court jurors were chosen by sortition (random lottery) using marble-slotted machines called kleroterion rather than elections.",
+      "t3Title": "The Fisher-Yates Guarantee",
+      "t3Desc": "For a list of N items, there are N! possible orderings. The Fisher-Yates algorithm guarantees that every single permutation has an exact 1 / N! chance of occurring."
+    },
+    "ui": {
+      "cryptoSortition": "Cryptographic Random Sortition",
+      "pasteListLabel": "Paste or Enter Items List",
+      "itemsCount": "items in pool",
+      "pickWinnerBtn": "Pick Random Winner",
+      "pickCaptainBtn": "Pick Team Captain",
+      "pickStudentBtn": "Pick Random Student",
+      "shuffleListBtn": "Shuffle List",
+      "removeDuplicatesBtn": "Remove Duplicates",
+      "clearListBtn": "Clear List",
+      "allowDuplicates": "Allow duplicate picks",
+      "removeWinnerAfterPick": "Remove winners after pick",
+      "numWinners": "Winners to draw:",
+      "numTeams": "Number of teams:",
+      "teamLabel": "Team",
+      "remainingItems": "Remaining items in pool:",
+      "keyTakeawaysTitle": "Quick Answer & Key Takeaways",
+      "kt1": "Hardware Entropy: Powered by the Web Cryptography API for verified, provably neutral drawings.",
+      "kt2": "Multi-Winner Fairness: Employs the Fisher-Yates shuffle algorithm to guarantee non-repeating selections.",
+      "kt3": "Zero Data Transmissions: Roster lists stay strictly confidential in client-side memory."
+    }
   },
   "age": {
-    "title": "Chronological Age Calculator & Milestones",
-    "subtitle": "Calculate your exact age down to the exact second, discover upcoming milestone dates, and compare age gaps.",
-    "birthDateLabel": "Select Birth Date",
+    "title": "Age Calculator",
+    "subtitle": "Calculate your exact chronological age with down-to-the-second live accuracy.",
+    "birthDateLabel": "Enter Date of Birth",
     "calculateBtn": "Calculate Exact Age",
     "exactAgeHeading": "Your Exact Age",
     "years": "Years",
@@ -192,39 +337,210 @@
     "seconds": "Seconds",
     "nextBirthdayHeading": "Next Birthday Countdown",
     "milestoneHeading": "Upcoming Milestones",
-    "dateDiffHeading": "Age Difference Comparison",
-    "compareDateLabel": "Compare Against Another Date",
-    "futureDateError": "Birth date cannot be in the future.",
-    "invalidDateError": "Please enter a valid date.",
-    "copiedToast": "Age calculation copied to clipboard!"
+    "dateDiffHeading": "Compare Two Dates",
+    "compareDateLabel": "Second Date",
+    "daysUntilNext": "Days until next birthday:",
+    "daysLived": "Total days lived:",
+    "heartbeatsEstimate": "Estimated heartbeats:",
+    "breathsEstimate": "Estimated breaths taken:",
+    "toasts": {
+      "calculated": "Age calculated!",
+      "copiedSummary": "Age summary copied to clipboard!",
+      "invalidDate": "Please select a valid birth date."
+    },
+    "howTo": {
+      "title": "How to Calculate Your Exact Age Online in 3 Steps",
+      "subtitle": "A quick guide to determining your exact chronological age in years, months, days, and live seconds using ToolNest.",
+      "s1Title": "Select your birth date",
+      "s1Desc": "Select your birth year, month, and day using the dropdown menus or click the calendar icon for native date picking.",
+      "s2Title": "Choose an optional reference date",
+      "s2Desc": "By default, your age is calculated relative to today. Expand the optional date panel to calculate your age at a past wedding, graduation, or future milestone.",
+      "s3Title": "Calculate and explore your life statistics",
+      "s3Desc": "Click Calculate Exact Age to reveal your full chronological breakdown, lived seconds ticker, and upcoming birthday countdown."
+    },
+    "methodology": {
+      "m1Title": "How Does Precise Calendar Mathematics Calculate Age?",
+      "m1Desc": "To calculate exact chronological age without rounding errors, the algorithm evaluates discrete calendar boundaries. It calculates elapsed full years, remaining whole months, and borrows the exact number of days from the preceding Gregorian calendar month (accounting for 28, 29, 30, or 31 days) to prevent rounding drift.",
+      "m2Title": "Why Do Online Age Calculators Give Different Results?",
+      "m2Desc": "Many simple calculators divide total elapsed days by 365 or 30.4375, introducing cumulative rounding discrepancies. ToolNest uses strict UTC Gregorian day-by-day progression and accounts for leap years, ensuring mathematically exact day, month, and year counts.",
+      "noteTitle": "Methodology & Accuracy Guarantee",
+      "noteDesc": "Our calculation algorithm executes standard UTC Gregorian calendar arithmetic directly in your browser without transmitting personal data across the network."
+    },
+    "useCases": {
+      "title": "Popular Use Cases for Chronological Age Calculations",
+      "u1Title": "Pediatric & Baby Milestone Tracking",
+      "u1Desc": "Track baby development in exact weeks, months, and days for growth charts, pediatric developmental milestones, and immunization schedules.",
+      "u2Title": "School & Sports Eligibility",
+      "u2Desc": "Verify strict chronological age cutoffs for kindergarten enrollment, youth sports divisions, martial arts tournaments, and driving permits.",
+      "u3Title": "Legal & Retirement Planning",
+      "u3Desc": "Determine exact qualifying dates for passport renewals, government pensions, legal contract signing, and retirement account withdrawals."
+    },
+    "trivia": {
+      "title": "Did You Know? Fascinating Age & Lifespan Trivia",
+      "t1Title": "Your Martian Age",
+      "t1Desc": "Because Mars takes approximately 687 Earth days to orbit the Sun, your chronological age on Mars is just over half your age on Earth. A 30-year-old Earthling is only 15.9 on Mars!",
+      "t2Title": "Oldest Verified Human",
+      "t2Desc": "Jeanne Calment of Arles, France, holds the verified record for longest human lifespan: 122 years and 164 days (totalling 44,724 days of life) from 1875 to 1997.",
+      "t3Title": "Leap Day Babies (Leaplings)",
+      "t3Desc": "With odds of 1 in 1,461, people born on February 29th only observe a true calendar birthday once every four years, often celebrating on March 1 in non-leap years."
+    },
+    "ui": {
+      "precisionMath": "Precision Calendar Math",
+      "enterDob": "Enter Date of Birth",
+      "accurateToDay": "Accurate to the day",
+      "month": "Month",
+      "day": "Day",
+      "year": "Year",
+      "orUseCalendar": "Or use calendar picker:",
+      "calculateAtDate": "Calculate age at a specific date (optional)",
+      "targetDateDesc": "Defaults to today. Change this to see your age at a past wedding, graduation, or future milestone.",
+      "resetToToday": "Reset to Today",
+      "copyResults": "Copy Results",
+      "share": "Share",
+      "calculatingNextBday": "Calculating next birthday...",
+      "happyBirthday": "Happy Birthday!",
+      "totalMilestones": "Total Lifetime Milestones",
+      "totalMonths": "Total Months",
+      "totalWeeks": "Total Weeks",
+      "totalDays": "Total Days",
+      "totalHours": "Total Hours",
+      "funStatsHeading": "Fascinating Life & Planetary Stats",
+      "hoursSlept": "Hours Slept (~8h/day)",
+      "hoursSleptDesc": "Approximately one third of your lifetime spent dreaming and recharging.",
+      "heartbeatsTitle": "Heartbeats (~80 bpm)",
+      "heartbeatsDesc": "Pumping gallons of vital energy uninterrupted through your body.",
+      "breathsTitle": "Breaths (~16/min)",
+      "breathsDesc": "Continuous cycles of oxygen fueling every cell and thought.",
+      "planetAgeTitle": "Your Age on Other Planets",
+      "planetAgeSubtitle": "Based on orbital periods",
+      "mercury": "Mercury (88d)",
+      "venus": "Venus (225d)",
+      "mars": "Mars (687d)",
+      "jupiter": "Jupiter (4,333d)",
+      "yearsOld": "years old",
+      "liveSecondsPrefix": "You are exactly",
+      "liveSecondsSuffix": "seconds old",
+      "keyTakeawaysTitle": "Quick Answer & Key Takeaways",
+      "kt1": "Exact Calendar Math: Calculates completed years, months, and days using true Gregorian month boundaries, not rough 365-day approximations.",
+      "kt2": "Historical & Future Dates: Calculate your exact age on any date in history or find your exact age on future milestones.",
+      "kt3": "Zero Tracking: Runs 100% in your browser. Your birth date is never transmitted, stored on servers, or tracked."
+    }
   },
   "birthday": {
-    "title": "Birthday Facts & Trivia Card Generator",
-    "subtitle": "Enter your birth date to unlock historical trivia, zodiac signs, birthstones, famous namesakes, and high-res share cards.",
-    "inputDateLabel": "Enter Birth Date",
+    "title": "Birthday Facts",
+    "subtitle": "Discover astrological details, birthstones, flowers, and memorable milestones for any birthdate.",
+    "inputDateLabel": "Select Your Date of Birth",
     "revealBtn": "Reveal Birthday Facts",
     "zodiacLabel": "Zodiac Sign",
     "elementLabel": "Element",
     "stoneLabel": "Birthstone",
     "flowerLabel": "Birth Flower",
-    "weekdayLabel": "Day of the Week",
+    "weekdayLabel": "Day of Week Born",
     "generationLabel": "Generation",
     "milestonesHeading": "Life Milestones",
-    "famousHeading": "Famous People Born on This Day",
-    "cardWatermark": "toolnest.dev",
-    "shareFactsBtn": "Share Facts",
-    "downloadCardBtn": "Download Sticker Card",
-    "futureDateError": "Birth date cannot be in the future.",
-    "invalidDateError": "Please select a valid birth date.",
-    "copiedToast": "Birthday trivia copied to clipboard!",
-    "shareHeader": "Birthday Trivia for {date}",
-    "noFamousPeople": "You share your special day with millions of inspiring pioneers worldwide!"
+    "famousHeading": "Shared Historical Events",
+    "cardWatermark": "made with ToolNest • toolnest.pages.dev",
+    "toasts": {
+      "invalidDate": "Please select a valid birth date.",
+      "cardCopied": "Birthday card copied to clipboard!",
+      "factsCopied": "Birthday facts copied to clipboard!"
+    },
+    "howTo": {
+      "title": "How to Discover Your Birthday Facts in 3 Steps",
+      "subtitle": "Generate your personalized birth date dossier in seconds with zero tracking.",
+      "s1Title": "Select Your Birth Date",
+      "s1Desc": "Input your day, month, and year of birth. All dates from 1920 to the present are checked for calendar validity.",
+      "s2Title": "Generate Your Card",
+      "s2Desc": "Our engine calculates your exact birth weekday, zodiac element, birthstone, flower, and lifetime day milestones.",
+      "s3Title": "Save Image or Share",
+      "s3Desc": "Download your sticker card as a crisp PNG image for social media, or copy the text summary directly."
+    },
+    "methodology": {
+      "m1Title": "How Do You Find What Day of the Week You Were Born?",
+      "m1Desc": "The day of the week for any historical Gregorian calendar date is determined using Zeller's Congruence or UTC modular day-offset algorithms. By calculating the modulo 7 remainder of elapsed days from a known anchor date, the exact weekday (Sunday through Saturday) is derived with mathematical certainty regardless of regional daylight saving transitions.",
+      "m2Title": "What Are Astrological Sun Signs and Birthstones?",
+      "m2Desc": "Astrological sun signs represent the constellation sector aligned with the Sun on your birth date. Paired with historical birthstones—gemstones standardized by the National Association of Jewelers in 1912—and seasonal birth flowers, your birthday forms a unique cultural tapestry linking ancestral traditions to modern celebratory customs.",
+      "noteTitle": "Methodology & Calendar Ephemeris",
+      "noteDesc": "Calculations utilize exact Gregorian calendar modular arithmetic and standardized international gemstone registries."
+    },
+    "useCases": {
+      "title": "Popular Uses for Birthday Facts & Numerology Dossiers",
+      "u1Title": "Astrology & Numerology",
+      "u1Desc": "Discover your life path archetype, zodiac elements, and ruling planets to deepen your personal self-reflection.",
+      "u2Title": "Milestone & Golden Birthdays",
+      "u2Desc": "Find your golden birthday (turning the age of your birth date) and plan celebrations for your 10,000th lived day.",
+      "u3Title": "Personalized Gifts & Cards",
+      "u3Desc": "Generate and download custom aesthetic cards featuring birthstones and flowers to print or text to friends and family."
+    },
+    "trivia": {
+      "title": "Did You Know? Fascinating Birthday & Calendar Trivia",
+      "t1Title": "The Birthday Paradox",
+      "t1Desc": "In a room of just 23 people, there is a greater than 50% probability that at least two people share the exact same birthday.",
+      "t2Title": "Most Common Birthdays",
+      "t2Desc": "Globally, mid-September (especially September 9th and 19th) consistently records the highest concentration of births each year.",
+      "t3Title": "Golden Birthday Tradition",
+      "t3Desc": "Your \"Golden Birthday\" occurs when your turning age matches the calendar day you were born (e.g., turning 25 on the 25th of the month)."
+    },
+    "zodiacTable": {
+      "heading": "Zodiac Signs by Month (Calendar Reference)",
+      "subheading": "Look up which Western astrological sign governs each calendar month, along with classical elemental affinities and planetary rulers.",
+      "colMonth": "Month",
+      "colSigns": "Zodiac Signs",
+      "colRange": "Date Range",
+      "colElement": "Element",
+      "colPlanet": "Ruling Planet"
+    },
+    "ui": {
+      "personalDossier": "Personal Birthday Dossier",
+      "selectDob": "Select Your Date of Birth",
+      "day": "Day",
+      "month": "Month",
+      "year": "Year",
+      "orPickCalendar": "Or pick from calendar:",
+      "revealFacts": "Reveal My Facts",
+      "personalCard": "Your Personal Birthday Card",
+      "cardSubtitle": "Share your celebration sticker or save as a crisp high-res image.",
+      "bornOn": "Born on",
+      "zodiacSign": "Zodiac Sign",
+      "birthstone": "Birthstone",
+      "birthFlower": "Birth Flower",
+      "generation": "Generation",
+      "gemstone": "Gemstone",
+      "botanical": "Botanical",
+      "daysOnEarth": "Days on Earth:",
+      "saveCardImage": "Save Card as Image",
+      "shareFacts": "Share Facts",
+      "calculateAnother": "Calculate Another",
+      "famousBirthdays": "Famous Birthdays",
+      "famousSubtitle": "Notable icons, visionaries, and historical figures who share your birthday.",
+      "historicalBornOnDay": "historical figures born on this day",
+      "noCelebrityRecords": "No celebrity records in our offline archive for this date. You share your special day with millions of everyday pioneers worldwide!",
+      "archetypesHeading": "Birthday Dossier & Archetypes",
+      "archetypesSubtitle": "Astrological, mineralogical, botanical, and demographic facets linked to your birth date.",
+      "lifePathHeading": "Pythagorean Life Path Number",
+      "lifePathLabel": "Life Path",
+      "coreTraits": "Core Traits",
+      "journeyHeading": "Life Journey & Day Milestones",
+      "journeySubtitle": "Track the exact calendar markers and landmarks of your life journey.",
+      "totalElapsed": "Total Elapsed",
+      "consecutiveDaysElapsed": "Total consecutive calendar days elapsed since your exact moment of birth.",
+      "day10kLandmark": "10,000th Day Landmark",
+      "celebrated": "Celebrated",
+      "upcoming": "Upcoming",
+      "dayLandmark": "th Day Landmark",
+      "upcomingGoal": "Upcoming Goal",
+      "recentBirthdays": "Recent Birthdays",
+      "keyTakeawaysTitle": "Quick Answer & Key Takeaways",
+      "kt1": "Day of Week Algorithm: Uses Gregorian modular arithmetic to accurately identify your birth day of the week with zero time-zone shifts.",
+      "kt2": "Astrological & Botanical Traditions: Integrates traditional 1912 standardized birthstones and Western sun signs.",
+      "kt3": "Zero Server Storage: Every card and fact is rendered directly in your browser memory for complete privacy."
+    }
   },
   "countdown": {
-    "title": "Live Countdown Timer Creator",
-    "subtitle": "Count down to weddings, birthdays, product launches, holidays, or goals with high-precision seconds and sticker cards.",
-    "eventTitleLabel": "Event Title",
-    "eventTitlePlaceholder": "e.g. Summer Vacation, 30th Birthday, Trip to Tokyo",
+    "title": "Countdown Timer",
+    "subtitle": "Create a live countdown clock for birthdays, holidays, product drops, or events.",
+    "eventTitleLabel": "Event Name",
+    "eventTitlePlaceholder": "e.g. Vacation, Birthday, Product Launch...",
     "targetDateLabel": "Target Date",
     "targetTimeLabel": "Target Time",
     "createBtn": "Create Countdown",
@@ -233,122 +549,870 @@
     "hoursRemaining": "Hours",
     "minutesRemaining": "Minutes",
     "secondsRemaining": "Seconds",
-    "eventPassed": "This event has already taken place!",
-    "viewCountdownTitle": "Live Countdown",
+    "eventPassed": "The countdown has finished!",
+    "viewCountdownTitle": "Event Countdown",
     "liveCountdown": "Live Countdown",
-    "watermark": "Created with ToolNest",
-    "copyLinkBtn": "Copy Live Link",
-    "downloadCardBtn": "Download Share Card",
-    "copiedToast": "Countdown link copied to clipboard!",
-    "titleRequiredError": "Please provide an event title.",
-    "futureTargetError": "Please choose a future date and time for the countdown.",
-    "createdLabel": "Created",
-    "targetLabel": "Target",
-    "elapsedLabel": "elapsed"
+    "watermark": "made with ToolNest",
+    "toasts": {
+      "invalidTitle": "Please enter an event name.",
+      "invalidDate": "Please select a date in the future.",
+      "linkCopied": "Countdown link copied to clipboard!",
+      "loaded": "Loaded countdown event."
+    },
+    "howTo": {
+      "title": "How to Create & Share a Countdown in 3 Steps",
+      "subtitle": "Create private, shareable event countdown timers in seconds with zero accounts.",
+      "s1Title": "Set Your Event Date",
+      "s1Desc": "Name your celebration and choose your target date and time. Add an emoji icon and theme to personalize your timer.",
+      "s2Title": "Generate Instant Link",
+      "s2Desc": "Our client-side engine encodes your event metadata directly into a secure, compact URL with zero database requirements.",
+      "s3Title": "Share Anywhere",
+      "s3Desc": "Send the link via WhatsApp, Instagram, or Discord. Viewers see the live ticking timer synchronized to their local time."
+    },
+    "methodology": {
+      "m1Title": "How Do Timezones Work When Sharing Countdowns?",
+      "m1Desc": "When creating a countdown, ToolNest converts your chosen date and time into a standardized ISO-8601 UTC timestamp. When family or team members click your link from different countries, their local browser clock automatically reconciles the UTC target against their device timezone. This ensures midnight celebrations synchronize precisely across every continent.",
+      "m2Title": "What Are Stateless URL Countdowns and Why Are They Safer?",
+      "m2Desc": "Traditional countdown platforms store your events in centralized databases, meaning links can break if servers purge old data or require account logins. ToolNest packages all event metadata into the URL query string itself. The timer state lives entirely within the link, making it permanent, immune to server outages, and 100% private.",
+      "noteTitle": "Methodology & Precision Timing",
+      "noteDesc": "Timer loops synchronize every 1,000 milliseconds against the system epoch clock, compensating for browser tab throttling and sleep states without drift."
+    },
+    "useCases": {
+      "title": "Popular Use Cases for Event Countdowns",
+      "u1Title": "Weddings & Save-The-Dates",
+      "u1Desc": "Share live ticking countdown clocks with wedding guests, rehearsal dinner attendees, and anniversary party invitees across WhatsApp and wedding portals.",
+      "u2Title": "Product Drops & Livestreams",
+      "u2Desc": "Build viral anticipation for Kickstarter launches, podcast premieres, merch drops, and esports tournaments with full-screen streaming overlays.",
+      "u3Title": "Vacations & Days Until Calculator",
+      "u3Desc": "Track exact days until summer breaks, holiday road trips, retirement dates, or birthdays. Want to know how many days you've been alive? Check our chronological age calculator or explore your birthday facts dossier."
+    },
+    "trivia": {
+      "title": "Did You Know? Timing & Countdown Trivia",
+      "t1Title": "Fritz Lang's Invention",
+      "t1Desc": "The rocket launch countdown was invented by German filmmaker Fritz Lang for his 1929 sci-fi classic Frau im Mond (Woman in the Moon) to build audience tension before NASA adopted it.",
+      "t2Title": "Time Dilation Perception",
+      "t2Desc": "Cognitive psychologists have proven that the anticipation of a positive upcoming milestone causes subjective time perception to accelerate as the target day approaches.",
+      "t3Title": "Times Square Ball Drop",
+      "t3Desc": "The world's most famous live New Year countdown began on December 31, 1907, with a 700-pound iron and wood ball adorned with one hundred 25-watt light bulbs."
+    },
+    "ui": {
+      "liveTimerTitle": "Real-Time Precision Timer",
+      "createCountdownHeading": "Create a Live Countdown",
+      "eventNameLabel": "Event Name",
+      "eventNamePlaceholder": "e.g. Sarah's Wedding, Summer Vacation, Product Launch...",
+      "targetDateLabel": "Target Date & Time",
+      "chooseEmoji": "Choose an Emoji",
+      "createBtn": "Create Countdown",
+      "presetNewYear": "New Year",
+      "presetSummer": "Summer",
+      "presetHalloween": "Halloween",
+      "presetChristmas": "Christmas",
+      "presetBirthday": "Birthday",
+      "days": "Days",
+      "hours": "Hours",
+      "minutes": "Minutes",
+      "seconds": "Seconds",
+      "eventHere": "It's here! 🎉",
+      "timeSinceEvent": "Time elapsed since event:",
+      "shareCountdown": "Share Countdown",
+      "copyLink": "Copy Link",
+      "openFullscreen": "Fullscreen Display",
+      "keyTakeawaysTitle": "Quick Answer & Key Takeaways",
+      "kt1": "Stateless Global Sharing: Event configurations are compressed into URL links that work forever without accounts.",
+      "kt2": "Timezone Auto-Synchronization: Recipients worldwide see countdowns precisely converted to their local clocks.",
+      "kt3": "Down-to-the-Second Precision: High-performance browser ticking with instant celebration transitions at zero."
+    }
   },
   "names": {
-    "title": "Baby Names Directory & Search",
-    "subtitle": "Discover names by gender, linguistic origin, popularity, and deep cultural meanings.",
-    "searchPlaceholder": "Search names by spelling or meaning (e.g. Oliver, strong)...",
+    "title": "Name Meanings & Origins",
+    "subtitle": "Explore the origins, history, and deeper meanings behind names from all around the world.",
+    "searchPlaceholder": "Search names or meanings...",
     "allGenders": "All Genders",
-    "boyNames": "Boys",
-    "girlNames": "Girls",
+    "boyNames": "Boy Names",
+    "girlNames": "Girl Names",
     "unisexNames": "Unisex",
     "allOrigins": "All Origins",
     "meaningLabel": "Meaning",
     "originLabel": "Origin",
     "pronounceLabel": "Pronunciation",
-    "aiInsightsHeading": "AI Personality & Character Analysis",
+    "aiInsightsHeading": "AI Name Insights",
     "siblingHeading": "Recommended Sibling Names",
-    "analyzeWithAiBtn": "Analyze Name with AI",
-    "analyzingBtn": "Analyzing with Gemini AI...",
-    "popularNamesHeading": "Popular Baby Names",
-    "namesFound": "{count} names found",
-    "noNamesFound": "No names matched your search filters. Try clearing filters or searching another keyword.",
-    "copiedToast": "Name details copied to clipboard!",
-    "errorToast": "Failed to analyze name. Please try again."
+    "popularLabel": "Popular",
+    "trendingLabel": "Trending",
+    "toasts": {
+      "copiedName": "Name copied to clipboard!",
+      "copiedMeaning": "Name details copied to clipboard!"
+    },
+    "methodology": {
+      "title": "Directory Methodology & Onomastic Research",
+      "desc": "Each name entry is verified against primary historical lexicons and demographic registries. Popularity scores are mapped to statistical birth percentiles, ensuring reliable cultural and etymological documentation."
+    },
+    "emptyState": {
+      "title": "No names match your search",
+      "desc": "Try adjusting your keywords, checking your spelling, or clearing your active gender filter."
+    },
+    "counter": {
+      "showingOf": "Showing {count} of {total} names",
+      "clearFilters": "Clear filters",
+      "recentlyViewed": "Recently Viewed Names"
+    },
+    "ui": {
+      "directoryAtoZ": "Alphabetical Index (A–Z)",
+      "curatedProfiles": "Curated Names",
+      "aiPrompt": "Looking for a rare or custom name not listed below?",
+      "aiPromptBtn": "Try AI Name Meaning Finder →",
+      "searchPlaceholder": "Search by name, origin (e.g. Latin, Greek), or meaning...",
+      "allGenders": "All",
+      "female": "Female",
+      "male": "Male",
+      "unisex": "Unisex",
+      "showingCount": "Showing {shown} of {total} names",
+      "clearFilters": "Clear filters",
+      "meaningLabel": "Meaning",
+      "noNamesFound": "No names match your search",
+      "noNamesFoundDesc": "Try adjusting your keywords, checking your spelling, or clearing your active gender filter.",
+      "recentlyViewed": "Recently Viewed Names",
+      "methodologyTitle": "Directory Methodology & Onomastic Research",
+      "methodologyDesc": "Each name entry is verified against primary historical lexicons and demographic registries. Popularity scores are mapped to statistical birth percentiles, ensuring reliable cultural and etymological documentation.",
+      "keyTakeawaysTitle": "Quick Answer & Key Takeaways",
+      "kt1": "200+ Curated Profiles: Comprehensive dossiers detailing historical definitions, phonetic roots, and rankings.",
+      "kt2": "A–Z Quick Navigation: Jump instantly between letters or filter dynamically by gender, cultural origin, and popularity.",
+      "kt3": "Private Onomastic Tool: Instant search running 100% in your browser without tracking or mandatory user logins."
+    }
+  },
+  "home": {
+    "heroTitle": "Everyday Tools That Just Work",
+    "heroSubtitle": "Free, lightning-fast micro-tools engineered for your phone and computer. No accounts, no subscriptions, and zero tracking.",
+    "exploreToolsHeading": "Explore Our Micro-Tools",
+    "whyChooseTitle": "Why Use ToolNest?",
+    "whyFast": "Lightning Fast",
+    "whyFastDesc": "Built with modern web standards for immediate loading, even on slow mobile connections.",
+    "whyPrivate": "100% Private",
+    "whyPrivateDesc": "Everything calculates locally in your browser. Your dates, names, and inputs never touch a server.",
+    "whyFree": "Completely Free",
+    "whyFreeDesc": "No paywalls, no credits, no registrations. Enjoy unlimited access across all your devices forever."
   },
   "about": {
-    "title": "About ToolNest",
-    "metaDesc": "ToolNest delivers fast, ad-free, browser-native micro-tools that respect user privacy with zero data storage.",
-    "badge": "Our Mission",
-    "heading": "Micro-tools that respect your time and data.",
-    "subheading": "Fast, private, and free utilities designed to solve everyday dilemmas without bloated ads, required sign-ups, or invasive tracking.",
-    "philosophyTitle": "Our Philosophy",
-    "philosophyP1": "The modern web has become cluttered with slow page loads, forced account registrations, intrusive cookie popups, and battery-draining ad scripts just to use basic utilities like a decision wheel or age calculator.",
-    "philosophyP2": "ToolNest is engineered as a clean alternative: single-purpose tools that run directly in your browser, process calculations offline where possible, and never store your personal choices on our servers.",
-    "methodologyTitle": "Privacy-First Engineering",
-    "methodologyP1": "Calculations and data entry in ToolNest occur in your local browser session. Whether you spin the decision wheel, compute birthday facts, or time an upcoming vacation, your inputs are stateless and private.",
-    "editorialTitle": "Editorial & Algorithmic Fairness",
-    "editorialP1": "Every tool is designed with mathematical precision. Our decision wheels and random pickers leverage Web Cryptography API algorithms to guarantee unbiased, tamper-proof probability.",
-    "toolsTitle": "Our Micro-Tools",
-    "launchTool": "Open Tool",
-    "techTitle": "Built with Modern Edge Technology",
-    "techP1": "Powered by Astro and deployed to Cloudflare Workers across 300+ edge locations globally for sub-50 millisecond load times.",
+    "title": "About ToolNest — Fast, Private Web Utilities | ToolNest",
+    "metaDesc": "Learn about ToolNest: our mission to provide fast, private, zero-tracking client-side tools, verified mathematical methodology, and editorial standards.",
+    "badge": "About the Platform",
+    "heading": "About ToolNest",
+    "subheading": "ToolNest is an independent suite of fast, lightweight, and privacy-focused client-side web utilities created to answer everyday questions without sign-ups, trackers, or databases.",
+    "philosophyTitle": "Our Philosophy: Speed, Privacy & Mathematical Integrity",
+    "philosophyP1": "Too many simple web utilities today are weighed down by tracking scripts, invasive advertising cookies, slow server roundtrips, and mandatory email registrations. ToolNest was founded to prove that everyday digital tools should be instant, reliable, and completely private.",
+    "philosophyP2": "Every calculation, spin, shuffle, and countdown runs entirely inside your browser sandbox using modern client-side JavaScript. We do not operate user databases, nor do we collect, store, or sell personal inputs on remote servers.",
+    "methodologyTitle": "Methodology & Calculation Standards",
+    "methodologyP1": "Our calculations utilize standardized, verified algorithms: UTC-standardized Gregorian calendars for exact age calculations, Web Cryptography API with Fisher-Yates shuffle for truly unbiased random picking, and quadratic bezier deceleration curves for realistic wheel physics.",
+    "editorialTitle": "Editorial Standards & Name Research",
+    "editorialP1": "Our Name Meaning database covers curated names representing diverse linguistic traditions. Meanings and etymological roots are cross-verified against primary historical onomastic records, classical dictionaries, and demographic naming registries.",
+    "toolsTitle": "Included Utilities",
+    "launchTool": "Launch tool →",
+    "techTitle": "Technical Architecture & Edge Delivery",
+    "techP1": "ToolNest is statically generated using Astro and styled with Tailwind CSS. Served globally across Cloudflare Pages edge locations, providing ultra-low latency with automatic HTTPS and DDoS protection.",
     "contactTitle": "Questions or Feedback?",
-    "contactDesc": "Have an idea for a new micro-tool or feedback on an existing one? We would love to hear from you.",
-    "contactBtn": "Get in Touch"
+    "contactDesc": "We welcome suggestions for new tools, feature requests, and bug reports. Reach out to our engineering team anytime.",
+    "contactBtn": "Contact ToolNest →"
   },
   "contact": {
-    "title": "Contact Us",
-    "metaDesc": "Send questions, feedback, or tool ideas to the ToolNest development team.",
-    "badge": "Get in Touch",
-    "heading": "Let's connect.",
-    "subheading": "Have feedback, found a bug, or want to suggest a new micro-tool? Reach out directly.",
+    "title": "Contact ToolNest — Support & Inquiries | ToolNest",
+    "metaDesc": "Get in touch with the ToolNest team for questions, tool suggestions, feedback, or bug reports. We respond to all inquiries within 24 to 48 hours.",
+    "badge": "Support & Feedback",
+    "heading": "Contact ToolNest",
+    "subheading": "Have a feature request, spotted a bug, or want to suggest a new client-side tool? We read and reply to all messages.",
     "emailTitle": "Direct Email",
-    "emailDesc": "For general inquiries, suggestions, and feedback.",
+    "emailDesc": "Reach our engineering team directly via email.",
     "responseTitle": "Response Time",
-    "responseDesc": "We typically reply within 24 to 48 business hours.",
-    "responseHours": "Monday to Friday",
-    "formTitle": "Send a Message",
-    "formSubtitle": "Fill out the form below and your default mail app will open ready to send.",
+    "responseDesc": "We typically respond to inquiries within 24–48 business hours.",
+    "responseHours": "Monday – Friday (UTC)",
+    "formTitle": "Send Us a Message",
+    "formSubtitle": "Fill out the form below and we will get back to you promptly.",
     "nameLabel": "Your Name",
-    "namePlaceholder": "Jane Doe",
     "emailLabel": "Your Email",
-    "emailPlaceholder": "jane@example.com",
     "subjectLabel": "Subject",
-    "subjectPlaceholder": "Feature suggestion, bug report, question...",
     "messageLabel": "Message",
-    "messagePlaceholder": "Tell us how we can help...",
     "submitBtn": "Send Message",
-    "submittingBtn": "Opening Mail App...",
-    "successMsg": "Thank you! Opening your email client to send message.",
-    "fillAllFieldsError": "Please complete all required fields.",
-    "invalidEmailError": "Please enter a valid email address."
+    "successMsg": "Thank you! Your message has been prepared.",
+    "validationName": "Please enter your name.",
+    "validationEmail": "Please enter a valid email address.",
+    "validationMessage": "Please enter a message (at least 10 characters)."
   },
   "privacy": {
-    "title": "Privacy Policy",
-    "metaDesc": "ToolNest privacy policy: zero tracking, zero personal data retention, client-first computation.",
-    "badge": "Privacy Commitment",
-    "heading": "Zero tracking. Zero accounts. Zero data collection.",
-    "lastUpdated": "Last updated",
+    "title": "Privacy Policy — Data Privacy & Trust | ToolNest",
+    "metaDesc": "Read ToolNest's comprehensive Privacy Policy. Learn about our client-side architecture, local storage usage, advertising cookies, and analytics policies.",
+    "badge": "Data Governance & Transparency",
+    "heading": "Privacy Policy",
+    "lastUpdated": "Last Updated",
     "dateStr": "September 2026",
-    "introTitle": "1. Our Core Principle",
-    "introP": "At ToolNest, we believe online utilities should not require surrendering personal privacy. We do not require accounts, we do not build advertising profiles, and we do not sell data to third parties.",
-    "collectTitle": "2. Information We Do Not Collect",
-    "collectP1": "When you use tools like the Age Calculator, Birthday Facts, Decision Wheel, or Random Picker, all mathematical evaluations happen locally in your web browser.",
-    "collectP2": "We do not store your entered birth dates, decision options, event names, or participant lists on any database server.",
-    "cookiesTitle": "3. Cookies & Local Preferences",
-    "cookiesP1": "We use minimal client-side localStorage and lightweight cookies strictly for user preferences (such as remembering your dark/light theme and chosen interface language). No tracking or third-party advertising cookies are used.",
-    "analyticsTitle": "4. Analytics & Hosting",
-    "analyticsP": "Our website is hosted on Cloudflare Workers. Cloudflare collects basic aggregate request telemetry (such as total hits and country-level geolocation for language routing) without tracking individual visitors.",
-    "urlTitle": "5. Stateless URL Sharing",
-    "urlP": "When you share a countdown timer or decision wheel, options are encoded directly into the URL hash or query string. Anyone with the link loads the exact same client configuration without server lookups."
+    "introTitle": "1. Introduction",
+    "introP": "ToolNest operates as a decentralized, static web platform providing fast, browser-based utilities. We are committed to transparency and respecting the privacy of our visitors.",
+    "collectTitle": "2. Information We Collect",
+    "collectP1": "Zero Server-Side Storage: Unlike conventional web services, ToolNest does not maintain user account systems, profile databases, or remote logging servers for your tool inputs. Calculations execute entirely within your browser local sandbox environment.",
+    "collectP2": "Client-Side Local Storage: We store your recent tool activity and theme preferences in your browser local storage only — it never leaves your device and you can clear it anytime.",
+    "cookiesTitle": "3. Cookies & Advertising",
+    "cookiesP1": "To sustain the free availability of our utilities, ToolNest may display advertisements served by third-party ad networks such as Google AdSense. Third-party vendors use cookies to serve ads based on prior visits.",
+    "analyticsTitle": "4. Web Analytics",
+    "analyticsP": "We may utilize privacy-friendly edge metrics to evaluate aggregate traffic trends, page views, and device compatibility in anonymized, aggregated formats.",
+    "urlTitle": "5. URL State Persistence",
+    "urlP": "Certain tools encode user-selected states directly into the browser URL parameters, allowing you to bookmark or share links without saving data to an external database."
   },
   "notFound": {
-    "title": "Page Not Found",
-    "heading": "Oops! Page Not Found",
-    "subtext": "The micro-tool or page you were looking for doesn't exist or has moved. Explore our popular utilities below.",
-    "backHome": "Back to Home",
-    "exploreTitle": "Explore All Micro-Tools"
+    "title": "Page Not Found (404) | ToolNest",
+    "heading": "This page wandered off",
+    "subtext": "We couldn't find the page you were looking for. It might have been moved, renamed, or perhaps never existed.",
+    "backHome": "Back to Home Overview",
+    "exploreTitle": "Explore Our Free Tools"
   },
   "errors": {
-    "timeout": "Generation timed out. Please try again with a simpler topic.",
-    "rateLimit": "Too many requests. Please wait a moment before trying again.",
-    "serverConfig": "Server configuration error. Please check back shortly.",
-    "upstreamUnavailable": "AI service is currently experiencing high load. Please try again in a few moments.",
-    "serverError": "Unable to complete request. Please try again or enter options manually.",
-    "networkError": "Network connection error. Please check your internet connection.",
-    "unknownError": "An unexpected error occurred. Please refresh the page."
+    "requiredField": "This field is required.",
+    "invalidEmail": "Please provide a valid email address.",
+    "networkError": "Network error. Please check your connection and try again.",
+    "rateLimit": "Rate limit reached. Please wait a minute before trying again.",
+    "serverError": "A server error occurred. Please try again shortly.",
+    "timeoutError": "Operation timed out. Please try again.",
+    "unavailableError": "Service is temporarily unavailable. Please try again later.",
+    "parseError": "Could not parse response. Please try with different parameters.",
+    "genericError": "An unexpected error occurred. Please try again."
+  },
+  "tags": {
+    "popular": "Popular",
+    "trivia": "Trivia",
+    "randomizer": "Randomizer",
+    "utility": "Utility",
+    "time": "Time",
+    "aiDatabase": "AI + Database",
+    "fun": "Fun",
+    "daily": "Daily",
+    "classroom": "Classroom",
+    "party": "Party",
+    "age": "Age",
+    "facts": "Facts",
+    "wheel": "Wheel",
+    "picker": "Picker",
+    "countdown": "Countdown",
+    "names": "Names",
+    "astrology": "Astrology",
+    "numerology": "Numerology"
+  },
+  "share": {
+    "whatsappShare": "Check out this free tool on ToolNest:",
+    "twitterShare": "Check out this free tool on ToolNest:",
+    "countdownShareText": "Check out this live countdown for \"{title}\"!",
+    "countdownShareTitle": "⏳ {title} Countdown",
+    "countdownJoinText": "Join the live countdown for \"{title}\":",
+    "countdownTrackText": "Track this live countdown with me: \"{title}\"",
+    "birthdayShareTitle": "My Birthday Facts on ToolNest",
+    "ageShareTitle": "My Exact Age on ToolNest",
+    "wheelShareTitle": "Decision Wheel on ToolNest",
+    "pickerShareTitle": "Winners Picked on ToolNest",
+    "watermark": "made with ToolNest • toolnest.pages.dev",
+    "stickerShared": "Countdown sticker shared!",
+    "linkShared": "Countdown link shared!",
+    "imageSaved": "Image saved — share it anywhere!",
+    "renderImage": "Rendering Image...",
+    "prepareShare": "Preparing Share...",
+    "generatingSticker": "Generating high-res sticker...",
+    "imageDownloaded": "Image downloaded successfully!",
+    "imageFailed": "Failed to generate image. Please try again!"
+  },
+  "forms": {
+    "required": "Required",
+    "optional": "Optional",
+    "clear": "Clear",
+    "reset": "Reset",
+    "submit": "Submit",
+    "save": "Save",
+    "cancel": "Cancel",
+    "close": "Close",
+    "search": "Search",
+    "filter": "Filter",
+    "select": "Select",
+    "copy": "Copy",
+    "share": "Share",
+    "download": "Download",
+    "namePlaceholder": "Alex",
+    "emailPlaceholder": "alex@example.com",
+    "subjectPlaceholder": "Feature suggestion...",
+    "messagePlaceholder": "Your message...",
+    "searchPlaceholder": "Type to search..."
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "description": "Everything you need to know about how this tool works.",
+    "answersCount": "8 Answers",
+    "quickNav": "Quick Navigation — Common Questions",
+    "wheel": [
+      {
+        "q": "Is the wheel spinner truly random and mathematically fair?",
+        "a": "Yes. The wheel uses cryptographically secure browser randomness to generate the initial spin velocity and duration. Each slice has an equal geometric angle and mathematical probability of winning."
+      },
+      {
+        "q": "Can AI automatically generate custom options for the wheel?",
+        "a": "Yes! ToolNest features an AI preset generator powered by Google Gemini. Simply describe your dilemma (like \"dinner ideas\" or \"party games\"), and the AI will generate balanced options in seconds."
+      },
+      {
+        "q": "Can I use this as a Wheel of Names alternative or prize wheel online?",
+        "a": "Absolutely. ToolNest serves as a clean, ad-free Wheel of Names alternative and interactive prize wheel for classrooms, online giveaways, team standups, and game nights."
+      },
+      {
+        "q": "How do I set up a yes or no wheel or dinner decider?",
+        "a": "You can quickly set up a yes or no wheel by entering two options: \"Yes\" and \"No\". For a dinner decider, use our preset or paste your favorite local restaurants."
+      },
+      {
+        "q": "How does the wheel physics deceleration simulation work?",
+        "a": "The wheel runs a custom canvas physics engine using quadratic bezier drag deceleration curves rendered at 60 FPS, mimicking the natural friction of a mechanical carnival wheel."
+      },
+      {
+        "q": "Can I share my custom decision wheel configuration with a link?",
+        "a": "Yes! Your options are encoded directly into the URL parameters in real time. Tapping \"Share Wheel\" copies a unique link that friends or coworkers can open to spin the exact same choices."
+      },
+      {
+        "q": "How many options can I put on the wheel generator?",
+        "a": "You can configure between 2 and 12 options. Setting a 12-item maximum ensures high slice readability, sharp canvas rendering, and distinct color contrast on mobile screens."
+      },
+      {
+        "q": "Can I remove the winning choice after each spin?",
+        "a": "Yes. When the victory celebration modal pops up, you can click \"Remove Winner\". The chosen slice is removed and the wheel instantly recalculates remaining angles."
+      }
+    ],
+    "picker": [
+      {
+        "q": "Is this random name picker truly fair and cryptographically unbiased?",
+        "a": "Unlike standard randomizers relying on Math.random, ToolNest utilizes the browser Cryptographic API (crypto.getRandomValues) combined with unbiased Fisher-Yates shuffling to ensure verifiable statistical fairness."
+      },
+      {
+        "q": "How do I use this tool as a random team picker or group generator?",
+        "a": "To split names into random teams, first tap \"Shuffle List\" to completely randomize the roster order, then distribute names sequentially into your desired squad sizes."
+      },
+      {
+        "q": "Can I draw multiple unique giveaway winners at the same time?",
+        "a": "Yes! Use the winner stepper to draw between 1 and 10 winners simultaneously. The selection algorithm guarantees no duplicate winners when replacement is disabled."
+      },
+      {
+        "q": "What is the difference between crypto.getRandomValues and Math.random?",
+        "a": "Math.random uses a pseudo-random number generator (PRNG) with predictable internal seed states. crypto.getRandomValues taps into OS hardware entropy, making it suitable for audited contests."
+      },
+      {
+        "q": "Can I automatically eliminate winners after each raffle draw round?",
+        "a": "Yes. Toggle the \"Remove winners after pick\" switch above the button. Whenever a winner is drawn, their entry is excised from the list, allowing seamless multi-round raffles."
+      },
+      {
+        "q": "Does ToolNest store or upload my student or giveaway roster?",
+        "a": "No. Your list never leaves your local browser memory. Text parsing, duplicate cleaning, and winner selection run 100% locally with zero server transmissions."
+      },
+      {
+        "q": "What types of lists can I paste into the list randomizer?",
+        "a": "You can paste any list separated by line breaks, commas, or semicolons. The parser automatically trims excess whitespace and filters out empty lines."
+      },
+      {
+        "q": "Can I filter duplicate names before drawing winners?",
+        "a": "Yes! The tool automatically scans your list for repeated entries and displays a duplicate warning banner with a one-click \"Remove Duplicates\" action."
+      }
+    ],
+    "age": [
+      {
+        "q": "How old am I today in years, months, and days?",
+        "a": "Your exact age is the precise count of completed calendar years, remaining whole months, and remaining days since your date of birth, calculated using UTC date boundaries."
+      },
+      {
+        "q": "How does an age calculator by date of birth calculate my age?",
+        "a": "To calculate your age accurately, the algorithm tallies completed calendar years, evaluates remaining months by checking actual calendar days per month, and adds remaining days."
+      },
+      {
+        "q": "When is my half birthday and does this tool include a half birthday calculator?",
+        "a": "Yes! ToolNest functions as an automatic half birthday calculator. Your half birthday occurs exactly six calendar months after your birth date (or approximately 182.5 days)."
+      },
+      {
+        "q": "Why does my age in days/months differ between online calculators?",
+        "a": "Many basic calculators divide total elapsed days by 365 or 30.4375, introducing noticeable rounding errors. ToolNest uses exact Gregorian calendar month-lengths and leap years."
+      },
+      {
+        "q": "Can I calculate how old I was on a specific past date?",
+        "a": "Yes! Expand the \"Calculate age at a specific date\" panel beneath the birth date inputs. Choose any historical date to determine your exact age on that milestone day."
+      },
+      {
+        "q": "How are leap years and February 29th birthdays handled?",
+        "a": "For individuals born on February 29th, the algorithm accurately attributes 29 days in leap years. During non-leap years, common law observes the anniversary on March 1st."
+      },
+      {
+        "q": "Does ToolNest store or transmit my birth date to a server?",
+        "a": "No. ToolNest operates with zero servers, zero analytics databases, and zero tracking cookies. Every single calculation runs locally in your browser memory."
+      },
+      {
+        "q": "How accurate is the live seconds and heartbeat tracker?",
+        "a": "The live seconds ticker increments in real time using the high-precision browser clock. Estimated heartbeats (resting average 70 BPM) and breaths (16/min) provide engaging statistical projections."
+      }
+    ],
+    "birthday": [
+      {
+        "q": "What day of the week was I born on and how is it verified?",
+        "a": "Your birth weekday is determined by calculating the elapsed days under the Gregorian calendar from an established epoch reference, correctly accounting for every historical leap year."
+      },
+      {
+        "q": "How do I find my zodiac sign by birthday and what does its element mean?",
+        "a": "Your Western zodiac sun sign is established by the apparent position of the Sun across twelve 30-degree celestial sectors. Each sign corresponds to one of four classical elements: Fire, Earth, Air, or Water."
+      },
+      {
+        "q": "What does my birthstone by month and birth flower symbolize?",
+        "a": "Birthstones are historically attributed gemstones standardized in 1912 by the National Association of Jewelers, and birth flowers date back to Roman floriography traditions symbolizing personal virtues."
+      },
+      {
+        "q": "What is a golden birthday meaning and when does it happen?",
+        "a": "A golden birthday (also known as a lucky or champagne birthday) occurs when you turn the exact age matching your day of birth—such as turning 25 on the 25th of the month."
+      },
+      {
+        "q": "What is my numerology life path number and how is it calculated?",
+        "a": "Your life path number is derived by reducing each component of your birth date (month, day, and year) to single digits (or master numbers 11, 22, 33), revealing your core archetypal personality."
+      },
+      {
+        "q": "When is my half birthday and why do people celebrate it?",
+        "a": "Your half birthday occurs exactly six calendar months after your birth date. Many celebrate it for children with holiday-adjacent birthdays or as an enjoyable midpoint celebration."
+      },
+      {
+        "q": "How are generational cohorts like Gen Z and Millennials determined?",
+        "a": "Generational cohorts are mapped based on demographic frameworks established by the Pew Research Center, linking birth year spans to formative historical and technological milestones."
+      },
+      {
+        "q": "Can I download and share my birthday facts card?",
+        "a": "Yes! ToolNest generates a high-resolution PNG sticker card directly in your browser without sending any images or personal dates to an external server. You can save or share it instantly."
+      }
+    ],
+    "countdown": [
+      {
+        "q": "Is this countdown timer online free and account-free?",
+        "a": "Yes, 100% free with no account creation, email sign-ups, or passwords required. You can build, customize, and share unlimited live countdown timers instantly."
+      },
+      {
+        "q": "Can I use this as a days until calculator or live New Year countdown?",
+        "a": "Absolutely! You can choose our one-click presets for New Year, Christmas, summer solstice, or enter any custom target date to calculate exact days, hours, and minutes remaining."
+      },
+      {
+        "q": "Where is my countdown timer stored and how does the share link work?",
+        "a": "Your timer data (title, ISO timestamp, and emoji) is encoded directly into the shareable link using URL-safe Base64URL encoding. There are zero database records or server lookups."
+      },
+      {
+        "q": "How do I share a countdown link across WhatsApp, Instagram, or Discord?",
+        "a": "Click \"Copy Link\" or use our dedicated share buttons. On mobile devices, tap \"Share Sticker\" to generate a downloadable high-resolution PNG card perfect for stories and chats."
+      },
+      {
+        "q": "How does the countdown handle friends in different time zones?",
+        "a": "Dates are serialized in universal ISO-8601 UTC format. When recipients open your link, their browser calculates the exact remaining time according to their local clock, keeping the countdown in perfect sync."
+      },
+      {
+        "q": "What happens when the countdown clock reaches zero?",
+        "a": "The live clock automatically transitions into a celebratory mode with victory animations, confetti visuals, and an elapsed time counter showing how long ago the milestone occurred."
+      },
+      {
+        "q": "Can I set an exact target hour and minute for my event countdown?",
+        "a": "Yes! The datetime picker supports exact precision down to the minute, allowing you to track project deadlines, flight departures, and product launches with complete accuracy."
+      },
+      {
+        "q": "Can I embed or view the timer full screen for livestreams?",
+        "a": "Yes! The shareable event viewer at /countdown/view provides a clean, responsive interface optimized for desktop presentation, OBS overlays, and browser window capture."
+      }
+    ],
+    "nameMeaning": [
+      {
+        "q": "What does my name mean and how is its origin determined?",
+        "a": "A name meaning reflects its etymological root word in ancient languages such as Hebrew, Latin, Greek, Old Norse, Celtic, or Arabic. ToolNest matches your query against historical linguistic dictionaries."
+      },
+      {
+        "q": "Can I look up any unique or rare name with the name origin finder?",
+        "a": "Yes! In addition to our curated 200+ database of traditional and modern names, ToolNest features an AI-assisted analysis engine powered by Google Gemini to analyze any rare or international name."
+      },
+      {
+        "q": "Can I find names that mean specific virtues like light, love, or strength?",
+        "a": "Yes! Many classical and modern names embody specific virtues. For example, names meaning light include Lucia, Elena, and Aaron; names meaning strength include Ethan and Audrey; and names meaning love include Amara and David."
+      },
+      {
+        "q": "How accurate are the AI name meanings and personality insights?",
+        "a": "Curated name dossiers are verified against historical lexical records and government birth statistics. AI-generated interpretations draw from global cultural motifs and phonetic rhythm analysis."
+      },
+      {
+        "q": "How does the search determine static vs. AI results?",
+        "a": "When you submit a name, ToolNest instantly checks if it exists in our curated directory. If matched, you are routed directly to the full static dossier. Otherwise, our AI engine generates instant insights on the page."
+      },
+      {
+        "q": "Is my name search private and completely free?",
+        "a": "Yes, 100% free with zero tracking cookies and zero user account requirements. Searches execute on-demand, and your recent search history is preserved solely in your local browser storage."
+      },
+      {
+        "q": "What linguistic traditions are included in the name database?",
+        "a": "Our curated database encompasses Latin, Germanic, Greek, Hebrew, Celtic, Old Norse, Slavic, Sanskrit, Japanese, and Yoruba traditions, showcasing global naming customs."
+      },
+      {
+        "q": "Can I view most popular names filtered by letter or gender?",
+        "a": "Yes! Visit our full Names Directory at /names/ to explore all 200+ profiles filtered alphabetically from A to Z, by gender (boy, girl, unisex), cultural origin, and popularity tiers."
+      }
+    ],
+    "nameDetail": {
+      "q1": "What does the name {name} mean?",
+      "a1": "The name {name} is of {origin} origin and traditionally signifies \"{meaning}\".",
+      "q2": "How popular is the name {name} today?",
+      "a2": "{name} currently holds a {popularity} popularity rating among contemporary baby names worldwide.",
+      "q3": "Want deeper insights? Unlock AI analysis of any name",
+      "a3": "You can click the \"Unlock AI Insights\" button on this page to generate rich, personalized interpretations—including personality traits, psychological archetypes, style classification, and unique historical fun facts powered by Google Gemini."
+    }
+  },
+  "nameMeaning": {
+    "useCases": {
+      "title": "Popular Use Cases for Name Meaning & Etymology Searches",
+      "u1Title": "Baby Name Decision-Making",
+      "u1Desc": "Discover baby name ideas with deep ancestral roots, lyrical syllables, and gender flexibility. Browse our curated baby names directory A–Z to compare meanings across cultures.",
+      "u2Title": "Writers & Screenwriters",
+      "u2Desc": "Name fictional protagonists, antagonists, and fantasy world leaders with symbolic etymology matching their literary arcs and character personalities.",
+      "u3Title": "Genealogy & Ancestral Lore",
+      "u3Desc": "Trace family migration patterns and historical vocations through ancestral linguistic roots. Pair with birth dates on our birthday personality calculator."
+    },
+    "trivia": {
+      "title": "Did You Know? Phonetics & Onomastics Trivia",
+      "t1Title": "The Bouba/Kiki Effect",
+      "t1Desc": "Linguistic experiments prove humans universally associate soft, rounded vowel sounds (like Amara or Noah) with gentleness, while sharp plosive consonants evoke dynamic vigor.",
+      "t2Title": "The 100-Year Name Cycle",
+      "t2Desc": "Baby name fashions follow a predictable century-long cycle: names that feel dated to parents often feel classic and chic to grandchildren honoring their great-grandparents.",
+      "t3Title": "500 Ancestral Roots",
+      "t3Desc": "Over 80% of traditional European and Mediterranean given names originate from fewer than 500 ancient Proto-Indo-European root words signifying light, peace, nature, and courage."
+    },
+    "ui": {
+      "aiPoweredFinder": "AI & Curated Name Dossier",
+      "enterNameLabel": "Enter Any Name",
+      "searchBtn": "Find Meaning",
+      "curatedBadge": "Curated Dossier Available",
+      "aiBadge": "AI Linguistic Analysis",
+      "viewFullDossier": "View Full Dossier →",
+      "keyTakeawaysTitle": "Quick Answer & Key Takeaways",
+      "kt1": "Global Onomastic Database: Cross-references thousands of cultural roots and classical language dictionaries.",
+      "kt2": "Instant AI Insights: Unlocks psychological archetypes, phonetic rhythm, and origin lore for any unique name.",
+      "kt3": "100% Client-Side Privacy: Queries and search history remain confidential in local storage."
+    }
+  },
+  "data": {
+    "birthstones": {
+      "1": {
+        "name": "Garnet",
+        "meaning": "Symbolizes protection, vitality, and enduring friendship."
+      },
+      "2": {
+        "name": "Amethyst",
+        "meaning": "Symbolizes peace, clarity, and inner strength."
+      },
+      "3": {
+        "name": "Aquamarine",
+        "meaning": "Symbolizes courage, tranquility, and safe travels."
+      },
+      "4": {
+        "name": "Diamond",
+        "meaning": "Symbolizes eternal love, strength, and invincibility."
+      },
+      "5": {
+        "name": "Emerald",
+        "meaning": "Symbolizes rebirth, growth, wisdom, and patience."
+      },
+      "6": {
+        "name": "Pearl",
+        "meaning": "Symbolizes purity, innocence, and timeless wisdom."
+      },
+      "7": {
+        "name": "Ruby",
+        "meaning": "Symbolizes passion, energy, courage, and vitality."
+      },
+      "8": {
+        "name": "Peridot",
+        "meaning": "Symbolizes harmony, good fortune, and positive energy."
+      },
+      "9": {
+        "name": "Sapphire",
+        "meaning": "Symbolizes wisdom, loyalty, truth, and nobility."
+      },
+      "10": {
+        "name": "Opal",
+        "meaning": "Symbolizes creativity, hope, spontaneity, and fidelity."
+      },
+      "11": {
+        "name": "Topaz",
+        "meaning": "Symbolizes warmth, empathy, healing, and strength."
+      },
+      "12": {
+        "name": "Turquoise",
+        "meaning": "Symbolizes protection, success, luck, and calm."
+      }
+    },
+    "birthFlowers": {
+      "1": {
+        "name": "Carnation",
+        "meaning": "Symbolizes admiration, deep devotion, and unconditional love."
+      },
+      "2": {
+        "name": "Violet",
+        "meaning": "Symbolizes modesty, spiritual faithfulness, and quiet beauty."
+      },
+      "3": {
+        "name": "Daffodil",
+        "meaning": "Symbolizes new beginnings, vibrant hope, and joyous rebirth."
+      },
+      "4": {
+        "name": "Daisy",
+        "meaning": "Symbolizes innocence, joyful simplicity, and secret affection."
+      },
+      "5": {
+        "name": "Lily of the Valley",
+        "meaning": "Symbolizes the return of happiness, humility, and sweet grace."
+      },
+      "6": {
+        "name": "Rose",
+        "meaning": "Symbolizes profound romance, enduring passion, and honor."
+      },
+      "7": {
+        "name": "Larkspur",
+        "meaning": "Symbolizes openness of heart, lighthearted laughter, and positivity."
+      },
+      "8": {
+        "name": "Gladiolus",
+        "meaning": "Symbolizes strength of character, moral integrity, and remembrance."
+      },
+      "9": {
+        "name": "Aster",
+        "meaning": "Symbolizes delicate elegance, patience, and poetic affection."
+      },
+      "10": {
+        "name": "Marigold",
+        "meaning": "Symbolizes radiant warmth, passionate ambition, and inner drive."
+      },
+      "11": {
+        "name": "Chrysanthemum",
+        "meaning": "Symbolizes longevity, lasting friendship, and steady cheer."
+      },
+      "12": {
+        "name": "Holly",
+        "meaning": "Symbolizes festive optimism, domestic happiness, and goodwill."
+      }
+    },
+    "generations": [
+      {
+        "name": "Silent Generation",
+        "shortName": "Silent",
+        "startYear": 1928,
+        "endYear": 1945,
+        "description": "Known for resilience, strong work ethic, and civic duty."
+      },
+      {
+        "name": "Baby Boomers",
+        "shortName": "Boomers",
+        "startYear": 1946,
+        "endYear": 1964,
+        "description": "Defined by post-war optimism, cultural transformation, and ambition."
+      },
+      {
+        "name": "Generation X",
+        "shortName": "Gen X",
+        "startYear": 1965,
+        "endYear": 1980,
+        "description": "Characterized by self-reliance, adaptability, and balance."
+      },
+      {
+        "name": "Millennials",
+        "shortName": "Millennials",
+        "startYear": 1981,
+        "endYear": 1996,
+        "description": "Digital pioneers known for purpose-driven values and collaboration."
+      },
+      {
+        "name": "Generation Z",
+        "shortName": "Gen Z",
+        "startYear": 1997,
+        "endYear": 2012,
+        "description": "Digital natives championing authenticity, social impact, and creativity."
+      },
+      {
+        "name": "Generation Alpha",
+        "shortName": "Gen Alpha",
+        "startYear": 2013,
+        "endYear": 2025,
+        "description": "Tech-immersed generation shaping the AI-driven connected era."
+      }
+    ],
+    "zodiac": {
+      "aries": {
+        "name": "Aries",
+        "element": "Fire",
+        "traits": [
+          "Bold",
+          "Energetic",
+          "Courageous",
+          "Passionate"
+        ]
+      },
+      "taurus": {
+        "name": "Taurus",
+        "element": "Earth",
+        "traits": [
+          "Reliable",
+          "Patient",
+          "Practical",
+          "Devoted"
+        ]
+      },
+      "gemini": {
+        "name": "Gemini",
+        "element": "Air",
+        "traits": [
+          "Adaptable",
+          "Curious",
+          "Witty",
+          "Expressive"
+        ]
+      },
+      "cancer": {
+        "name": "Cancer",
+        "element": "Water",
+        "traits": [
+          "Intuitive",
+          "Empathetic",
+          "Protective",
+          "Caring"
+        ]
+      },
+      "leo": {
+        "name": "Leo",
+        "element": "Fire",
+        "traits": [
+          "Confident",
+          "Generous",
+          "Charismatic",
+          "Ambitious"
+        ]
+      },
+      "virgo": {
+        "name": "Virgo",
+        "element": "Earth",
+        "traits": [
+          "Analytical",
+          "Detail-Oriented",
+          "Helpful",
+          "Modest"
+        ]
+      },
+      "libra": {
+        "name": "Libra",
+        "element": "Air",
+        "traits": [
+          "Diplomatic",
+          "Fair-Minded",
+          "Charming",
+          "Artistic"
+        ]
+      },
+      "scorpio": {
+        "name": "Scorpio",
+        "element": "Water",
+        "traits": [
+          "Intense",
+          "Resourceful",
+          "Passionate",
+          "Loyal"
+        ]
+      },
+      "sagittarius": {
+        "name": "Sagittarius",
+        "element": "Fire",
+        "traits": [
+          "Optimistic",
+          "Adventurous",
+          "Philosophical",
+          "Free-Spirited"
+        ]
+      },
+      "capricorn": {
+        "name": "Capricorn",
+        "element": "Earth",
+        "traits": [
+          "Disciplined",
+          "Ambitious",
+          "Patient",
+          "Strategic"
+        ]
+      },
+      "aquarius": {
+        "name": "Aquarius",
+        "element": "Air",
+        "traits": [
+          "Innovative",
+          "Independent",
+          "Humanitarian",
+          "Visionary"
+        ]
+      },
+      "pisces": {
+        "name": "Pisces",
+        "element": "Water",
+        "traits": [
+          "Compassionate",
+          "Imaginative",
+          "Intuitive",
+          "Gentle"
+        ]
+      }
+    },
+    "lifePath": {
+      "1": {
+        "title": "The Leader",
+        "traits": "Independent, Innovative, Ambitious",
+        "summary": "Pioneering spirits driven to break new ground, embrace self-reliance, and lead with original vision."
+      },
+      "2": {
+        "title": "The Peacemaker",
+        "traits": "Diplomatic, Empathetic, Intuitive",
+        "summary": "Natural mediators and compassionate listeners who thrive by fostering harmony and deep partnerships."
+      },
+      "3": {
+        "title": "The Creative",
+        "traits": "Expressive, Optimistic, Charismatic",
+        "summary": "Joyful communicators and artistic souls with a gift for storytelling, humor, and inspiring others."
+      },
+      "4": {
+        "title": "The Builder",
+        "traits": "Disciplined, Practical, Trustworthy",
+        "summary": "Steadfast foundations of society who construct lasting value through methodical effort and integrity."
+      },
+      "5": {
+        "title": "The Adventurer",
+        "traits": "Adaptable, Freedom-loving, Curious",
+        "summary": "Dynamic free spirits who thrive on versatile exploration, cultural discovery, and transformative change."
+      },
+      "6": {
+        "title": "The Nurturer",
+        "traits": "Compassionate, Protective, Responsible",
+        "summary": "Heart-centered guardians focused on family, community wellness, emotional healing, and domestic beauty."
+      },
+      "7": {
+        "title": "The Seeker",
+        "traits": "Analytical, Introspective, Spiritual",
+        "summary": "Truth-seekers and philosophical thinkers drawn to unraveling life’s mysteries, sciences, and higher knowledge."
+      },
+      "8": {
+        "title": "The Powerhouse",
+        "traits": "Authoritative, Ambitious, Strategic",
+        "summary": "Goal-oriented visionaries with an innate understanding of material success, executive strategy, and empowerment."
+      },
+      "9": {
+        "title": "The Humanitarian",
+        "traits": "Altruistic, Broad-minded, Empathetic",
+        "summary": "Selfless world-citizens dedicated to universal compassion, artistic wisdom, and uplifting global consciousness."
+      },
+      "11": {
+        "title": "The Master Intuitive",
+        "traits": "Illuminated, Visionary, Inspiring",
+        "summary": "A rare Master Number carrying profound spiritual intuition, heightened sensitivity, and prophetic insight."
+      },
+      "22": {
+        "title": "The Master Builder",
+        "traits": "Visionary, Pragmatic, Transformative",
+        "summary": "A powerful Master Number capable of translating grand global ideals into tangible, world-changing structures."
+      },
+      "33": {
+        "title": "The Master Teacher",
+        "traits": "Compassionate, Guiding, Selfless",
+        "summary": "The pinnacle Master Number embodying supreme empathy, spiritual mentorship, and selfless devotion to humanity."
+      }
+    }
   }
 }

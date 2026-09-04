@@ -1,13 +1,14 @@
 /**
  * src/i18n/utils.ts
- * Core utilities for ToolNest internationalization (i18n).
- * Provides t(), getLangFromUrl(), getLocalizedPath(), and build-time fallback warning logger.
+ * Lightweight, modular internationalization utilities for ToolNest.
  */
-
 import en from './ui/en.json';
 import pt from './ui/pt.json';
 import id from './ui/id.json';
 import ar from './ui/ar.json';
+
+export type TranslationSchema = typeof en;
+export type Namespace = keyof TranslationSchema;
 
 export const LANGUAGES = {
   en: {
@@ -45,10 +46,7 @@ export const DEFAULT_LANG: Lang = 'en';
 export const LOCALES: Lang[] = ['en', 'pt', 'id', 'ar'];
 export const NON_DEFAULT_LOCALES: Lang[] = ['pt', 'id', 'ar'];
 
-export type TranslationSchema = typeof en;
-export type Namespace = keyof TranslationSchema;
-
-const dictionaries: Record<Lang, any> = {
+const dictionaries: Record<Lang, TranslationSchema> = {
   en,
   pt,
   id,
@@ -56,74 +54,51 @@ const dictionaries: Record<Lang, any> = {
 };
 
 /**
- * Build-time cache of warned missing keys to prevent spamming console
- */
-const loggedWarnings = new Set<string>();
-
-/**
- * Retrieve a translated string with build-time fallback to English and console warning
- * Supports dynamic interpolation: t(lang, 'wheel', 'removeWinnerToast', { winner: 'Pizza' })
+ * Get translation for a specific namespace and key with build-time fallback to English and warning.
  */
 export function t<N extends Namespace, K extends keyof TranslationSchema[N]>(
-  lang: string | null | undefined,
+  lang: Lang | string,
   namespace: N,
-  key: K,
-  params?: Record<string, string | number>
+  key: K
 ): string {
-  const activeLang: Lang = (lang && lang in LANGUAGES ? lang : DEFAULT_LANG) as Lang;
-  const dict = dictionaries[activeLang] || en;
-  const nsDict = dict[namespace];
+  const currentLang: Lang = (lang in dictionaries) ? (lang as Lang) : DEFAULT_LANG;
+  const dict = dictionaries[currentLang];
+  const nsObj = dict?.[namespace] as any;
+  const val = nsObj?.[key];
 
-  let value = nsDict?.[key];
-
-  // Fallback to English if key missing or empty in target language
-  if ((value === undefined || value === null || value === '') && activeLang !== DEFAULT_LANG) {
-    const warningKey = `${activeLang}:${String(namespace)}.${String(key)}`;
-    if (!loggedWarnings.has(warningKey)) {
-      loggedWarnings.add(warningKey);
-      console.warn(`⚠️ [i18n warning] Missing key "${String(namespace)}.${String(key)}" in "${activeLang}". Falling back to English.`);
-    }
-    value = (en as any)[namespace]?.[key];
+  if (val !== undefined && val !== null && val !== '') {
+    return String(val);
   }
 
-  if (value === undefined || value === null) {
-    return String(key);
+  // Fallback to English and log warning if not English
+  if (currentLang !== DEFAULT_LANG) {
+    console.warn(`[i18n warning] Missing key "${String(namespace)}.${String(key)}" for language "${currentLang}". Falling back to English.`);
   }
 
-  let result = String(value);
-
-  // Parameter interpolation e.g. {winner} or {count}
-  if (params && typeof params === 'object') {
-    for (const [paramKey, paramVal] of Object.entries(params)) {
-      result = result.replace(new RegExp(`\\{${paramKey}\\}`, 'g'), String(paramVal));
-    }
-  }
-
-  return result;
+  const fallbackNs = en[namespace] as any;
+  return fallbackNs?.[key] !== undefined ? String(fallbackNs[key]) : String(key);
 }
 
 /**
- * Returns scoped translations for only the requested namespaces.
- * Avoids passing global megabundles to client components.
+ * Load ONLY the specific namespace needed by a page or component, with fallback to English.
+ * Prevents bundling unused namespaces.
  */
-export function useTranslations<N extends Namespace>(
-  lang: string | null | undefined,
-  namespaces: N[]
-): { [K in N]: TranslationSchema[K] } {
-  const activeLang: Lang = (lang && lang in LANGUAGES ? lang : DEFAULT_LANG) as Lang;
-  const result = {} as { [K in N]: TranslationSchema[K] };
+export function getNamespace<N extends Namespace>(lang: Lang | string, namespace: N): TranslationSchema[N] {
+  const currentLang: Lang = (lang in dictionaries) ? (lang as Lang) : DEFAULT_LANG;
+  const targetNs = (dictionaries[currentLang]?.[namespace] || {}) as TranslationSchema[N];
+  const enNs = en[namespace];
 
-  for (const ns of namespaces) {
-    const langNs = dictionaries[activeLang]?.[ns];
-    const enNs = (en as any)[ns];
+  if (currentLang === DEFAULT_LANG) {
+    return enNs;
+  }
 
-    if (!langNs && activeLang !== DEFAULT_LANG) {
-      console.warn(`⚠️ [i18n warning] Namespace "${String(ns)}" completely missing in "${activeLang}". Falling back to English.`);
-      result[ns] = enNs;
+  // Create a merged object with English fallback for any missing properties
+  const result: any = { ...enNs };
+  for (const [k, v] of Object.entries(targetNs)) {
+    if (v !== undefined && v !== null && v !== '') {
+      result[k] = v;
     } else {
-      // Merge with English fallback per key
-      const merged = { ...enNs, ...(langNs || {}) };
-      result[ns] = merged;
+      console.warn(`[i18n warning] Key "${String(namespace)}.${k}" is empty in language "${currentLang}". Falling back to English.`);
     }
   }
 
@@ -131,41 +106,41 @@ export function useTranslations<N extends Namespace>(
 }
 
 /**
- * Parse language from URL pathname (e.g. /pt/decision-wheel -> 'pt', /en/countdown -> 'en', /birthday-facts -> 'en')
+ * Get full translations dictionary for a language (backwards compatibility).
+ */
+export function getTranslations(lang?: string | null): any {
+  const dict = (lang && lang in dictionaries) ? dictionaries[lang as Lang] : en;
+  return {
+    ...dict,
+    nav: dict.common?.nav || en.common.nav,
+    siteName: dict.common?.siteName || en.common.siteName,
+    tagline: dict.common?.tagline || en.common.tagline,
+  };
+}
+
+/**
+ * Determine language from URL or pathname (e.g. /pt/decision-wheel -> 'pt', /en/decision-wheel -> 'en', /decision-wheel -> 'en')
  */
 export function getLangFromUrl(url: URL | string): Lang {
   const pathname = typeof url === 'string' ? url : url.pathname;
   const segments = pathname.split('/').filter(Boolean);
   const first = segments[0];
-
   if (first && (first === 'en' || first === 'pt' || first === 'id' || first === 'ar')) {
     return first as Lang;
   }
-
   return DEFAULT_LANG;
 }
 
+/**
+ * Alias for getLangFromUrl
+ */
 export const getLangFromPath = getLangFromUrl;
 
 /**
- * Map any URL path to the equivalent target language path.
- * - For English ('en'):
- *   - By default (canonicalForEnglishBare = true), returns bare URL:
- *     '/pt/decision-wheel' -> '/decision-wheel'
- *     '/en/decision-wheel' -> '/decision-wheel'
- *     '/pt/' -> '/'
- *   - When canonicalForEnglishBare = false, preserves '/en/':
- *     '/decision-wheel' -> '/en/decision-wheel'
- * - For other languages ('pt', 'id', 'ar'):
- *   - '/decision-wheel' -> '/pt/decision-wheel'
- *   - '/pt/decision-wheel' -> '/ar/decision-wheel'
- *   - '/' -> '/pt/'
+ * Map any URL/path to the equivalent path in targetLang.
+ * NOTE: English URLs always return the bare URL (e.g. /decision-wheel) so English users never see /en/ in links.
  */
-export function getLocalizedPath(
-  pathname: string,
-  targetLang: Lang,
-  canonicalForEnglishBare = true
-): string {
+export function getLocalizedPath(pathname: string, targetLang: Lang): string {
   // Strip any existing language prefix: /en, /pt, /id, /ar
   let cleanPath = pathname.replace(/^\/(en|pt|id|ar)(\/|$)/, '/');
   if (!cleanPath.startsWith('/')) {
@@ -176,15 +151,8 @@ export function getLocalizedPath(
   const [basePath, searchAndHash] = cleanPath.split(/(?=[?#])/);
   const suffix = searchAndHash || '';
 
-  if (targetLang === DEFAULT_LANG && canonicalForEnglishBare) {
+  if (targetLang === DEFAULT_LANG) {
     return basePath === '' ? `/${suffix}` : `${basePath}${suffix}`;
-  }
-
-  if (targetLang === DEFAULT_LANG && !canonicalForEnglishBare) {
-    if (basePath === '/' || basePath === '') {
-      return `/en/${suffix}`;
-    }
-    return `/en${basePath}${suffix}`;
   }
 
   if (basePath === '/' || basePath === '') {
@@ -195,35 +163,19 @@ export function getLocalizedPath(
 }
 
 /**
- * Returns whether a given language is RTL (Arabic)
+ * Normalizes canonical path: ensures /en/* canonicalizes to bare URL for en.
  */
-export function isRtlLang(lang: string | null | undefined): boolean {
-  return lang === 'ar';
+export function getCanonicalPath(pathname: string): string {
+  let clean = pathname.replace(/^\/en(\/|$)/, '/');
+  if (!clean.startsWith('/')) {
+    clean = `/${clean}`;
+  }
+  return clean;
 }
 
 /**
- * Get full translation dictionary with backward compatibility
+ * Returns whether a given language is RTL
  */
-export function getTranslations(lang?: string | null): any {
-  const activeLang: Lang = (lang && lang in LANGUAGES ? lang : DEFAULT_LANG) as Lang;
-  const dict = dictionaries[activeLang] || en;
-  // Deep clone/merge with fallback to English so all legacy properties exist
-  return {
-    ...en,
-    ...dict,
-    common: { ...en.common, ...dict.common },
-    nav: { ...en.common.nav, ...dict.common?.nav },
-    meta: { ...en.meta, ...dict.meta },
-    wheel: { ...en.wheel, ...dict.wheel },
-    picker: { ...en.picker, ...dict.picker },
-    age: { ...en.age, ...dict.age },
-    birthday: { ...en.birthday, ...dict.birthday },
-    countdown: { ...en.countdown, ...dict.countdown },
-    names: { ...en.names, ...dict.names },
-    about: { ...en.about, ...dict.about },
-    contact: { ...en.contact, ...dict.contact },
-    privacy: { ...en.privacy, ...dict.privacy },
-    notFound: { ...en.notFound, ...dict.notFound },
-    errors: { ...en.errors, ...dict.errors },
-  };
+export function isRtlLang(lang: Lang | string): boolean {
+  return lang === 'ar' || (LANGUAGES as any)[lang]?.dir === 'rtl';
 }

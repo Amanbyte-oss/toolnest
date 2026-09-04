@@ -6,75 +6,43 @@ import HistoryCard from '../components/HistoryCard.astro';
 import relatedLinksData from '../data/related-links.json';
 import { PRESET_EMOJIS } from '../scripts/countdown.js';
 import CountdownShareCard from '../components/CountdownShareCard.astro';
-import { getTranslations, getLocalizedPath, type Lang } from '../i18n';
+import { getLocalizedRelatedLinks } from '../i18n/relatedLinks';
+import { getNamespace, getLocalizedPath, type Lang } from '../i18n';
 
 export interface Props {
   lang?: Lang;
 }
 
 const { lang = 'en' } = Astro.props;
-const t = getTranslations(lang);
+const common = getNamespace(lang, 'common');
+const countdown = getNamespace(lang, 'countdown');
+const errors = getNamespace(lang, 'errors');
+const faqNs = getNamespace(lang, 'faq');
+const t = { countdown, common, errors, nav: common.nav, siteName: common.siteName };
 
-const lastUpdatedDate = new Date().toLocaleDateString(lang === 'ar' ? 'ar-EG' : lang === 'pt' ? 'pt-BR' : lang === 'id' ? 'id-ID' : 'en-US', {
+const localeCode = lang === 'ar' ? 'ar-EG' : lang === 'pt' ? 'pt-BR' : lang === 'id' ? 'id-ID' : 'en-US';
+const lastUpdatedDate = new Date().toLocaleDateString(localeCode, {
   year: 'numeric',
   month: 'long',
   day: 'numeric',
 });
 
-// Comprehensive FAQ definitions (8 questions targeting core search clusters)
-const faqs = [
-  {
-    question: 'Is this countdown timer online free and account-free?',
-    answer:
-      'Yes! ToolNest is 100% free with no registration, no email signup, no paywalls, and no ads. You can generate unlimited live event countdowns with real-time ticking seconds.',
-  },
-  {
-    question: 'Can I use this as a days until calculator or live New Year countdown?',
-    answer:
-      'Yes! Use our quick preset buttons to launch an instant New Year countdown live, Christmas clock, or summer vacation timer. You can also calculate exact days until milestones with our customizable birthday countdown preset.',
-  },
-  {
-    question: 'Where is my countdown timer stored and how does the share link work?',
-    answer:
-      'All event information—including your title, emoji, and target timestamp—is compressed directly into the shareable URL parameters. Because no database is involved, your link works permanently and will never expire.',
-  },
-  {
-    question: 'How do I share a countdown link across WhatsApp, Instagram, or Discord?',
-    answer:
-      'After creating your timer, click "Share Link" or "Copy URL" to share countdown link URLs with your group. Paste the link into WhatsApp chats, Instagram Stories, Discord channels, or wedding invites. Anyone who clicks will see the live ticking timer synchronized to their local time.',
-  },
-  {
-    question: 'How does the countdown handle friends in different time zones?',
-    answer:
-      'Timestamps are encoded in ISO-8601 UTC format. When someone in New York, London, or Tokyo clicks your link, their browser automatically translates the target time into their local timezone for a perfectly synchronized global countdown.',
-  },
-  {
-    question: 'What happens when the countdown clock reaches zero?',
-    answer:
-      'The moment the timer strikes zero, the page automatically bursts with colorful confetti, displays a celebratory greeting ("It\'s here!"), and transitions into an elapsed time counter showing how long ago the milestone began.',
-  },
-  {
-    question: 'Can I set an exact target hour and minute for my event countdown?',
-    answer:
-      'Yes! You can specify the exact calendar date, hour, and minute for your deadline or celebration. The clock continuously ticks down days, hours, minutes, and live seconds until the exact moment arrives.',
-  },
-  {
-    question: 'Can I embed or view the timer full screen for livestreams?',
-    answer:
-      'Yes! Tapping the view link opens a distraction-free, full-screen live countdown display ideal for event projector screens, Twitch/YouTube streaming overlays, and office countdown boards.',
-  },
-];
+// Localized FAQs
+const faqs = (faqNs.countdown || []).map((f: any) => ({
+  question: f.question || f.q,
+  answer: f.answer || f.a,
+}));
 
-const relatedTools = relatedLinksData['countdown'];
+const relatedTools = getLocalizedRelatedLinks(lang, 'countdown');
 
 // JSON-LD Schemas
 const webAppSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
-  '@id': 'https://toolnest.pages.dev/countdown#app',
-  name: 'Shareable Online Countdown Timer Clock',
-  url: 'https://toolnest.pages.dev/countdown',
-  description: 'Create and share live countdown timers online with friends. Zero account, zero database: all data is encoded in the shareable link.',
+  '@id': `https://toolnest.pages.dev${getLocalizedPath('/countdown', lang)}#app`,
+  name: t.countdown.title,
+  url: `https://toolnest.pages.dev${getLocalizedPath('/countdown', lang)}`,
+  description: t.countdown.subtitle,
   applicationCategory: 'UtilitiesApplication',
   operatingSystem: 'Any',
   offers: {
@@ -87,38 +55,31 @@ const webAppSchema = {
     name: 'ToolNest',
     url: 'https://toolnest.pages.dev',
   },
-  featureList: [
-    'Live ticking real-time countdown timer down to the second',
-    'Stateless URL compression for permanent zero-database sharing',
-    'Celebration state with confetti explosion when counter reaches zero',
-    'Local timezone auto-detection for international recipients',
-    'Preset templates for New Year, Summer, Halloween, and Christmas',
-  ],
 };
 
 const howToSchema = {
   '@context': 'https://schema.org',
   '@type': 'HowTo',
-  name: 'How to Create and Share a Countdown Timer in 3 Steps',
-  description: 'A step-by-step guide to generating a live, shareable event countdown clock without an account.',
+  name: t.countdown.howTo.title,
+  description: t.countdown.howTo.subtitle,
   step: [
     {
       '@type': 'HowToStep',
       position: 1,
-      name: 'Set your event title and date',
-      text: 'Pick a name, target date, time, and custom icon or choose a holiday template.',
+      name: t.countdown.howTo.s1Title,
+      text: t.countdown.howTo.s1Desc,
     },
     {
       '@type': 'HowToStep',
       position: 2,
-      name: 'Preview your live countdown',
-      text: 'Review your ticking countdown card with real-time days, hours, minutes, and seconds.',
+      name: t.countdown.howTo.s2Title,
+      text: t.countdown.howTo.s2Desc,
     },
     {
       '@type': 'HowToStep',
       position: 3,
-      name: 'Copy and share your permanent link',
-      text: 'Copy your stateless countdown link and share it on WhatsApp, Discord, or Instagram.',
+      name: t.countdown.howTo.s3Title,
+      text: t.countdown.howTo.s3Desc,
     },
   ],
 };
@@ -138,11 +99,10 @@ const faqSchema = {
 ---
 
 <Base
-  title={`${t.countdown.metaTitle} | ${t.siteName}`}
-  description={t.countdown.metaDescription}
+  metaKey="countdown"
   canonicalPath={getLocalizedPath('/countdown', lang)}
   ogImage="/og/countdown.svg"
-  breadcrumbs={[{ name: t.nav.home, item: getLocalizedPath('/', lang) }, { name: t.nav.countdown, item: getLocalizedPath('/countdown', lang) }]}
+  breadcrumbs={[{ name: common.nav.home, item: getLocalizedPath('/', lang) }, { name: common.nav.countdown, item: getLocalizedPath('/countdown', lang) }]}
   extraSchemas={[webAppSchema, howToSchema, faqSchema]}
   lang={lang}
 >
@@ -155,7 +115,7 @@ const faqSchema = {
   <header class="text-center py-4 sm:py-6 space-y-3">
     <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-accent/10 text-accent dark:bg-accent/20">
       <span>⏳</span>
-      <span>Shareable Event Timer</span>
+      <span>{t.countdown.ui?.liveTimerTitle || 'Shareable Event Timer'}</span>
     </div>
     <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-primary-light dark:text-primary-dark">
       {t.countdown.title}
@@ -169,9 +129,9 @@ const faqSchema = {
   <section class="mt-6 space-y-2" aria-labelledby="templates-heading">
     <div class="flex items-center justify-between">
       <span id="templates-heading" class="text-xs font-semibold uppercase tracking-wider text-secondary-light dark:text-secondary-dark block">
-        Popular Countdown Ideas (Click to Prefill)
+        {lang === 'ar' ? 'أفكار العد التنازلي الشائعة (انقر للتعبئة)' : lang === 'pt' ? 'Ideias Populares de Contagem (Clique para Preencher)' : lang === 'id' ? 'Ide Hitung Mundur Populer (Klik untuk Mengisi)' : 'Popular Countdown Ideas (Click to Prefill)'}
       </span>
-      <span class="text-[11px] text-accent font-medium">10 Quick Presets</span>
+      <span class="text-[11px] text-accent font-medium">10 {lang === 'ar' ? 'نماذج سريعة' : lang === 'pt' ? 'Modelos Rápidos' : lang === 'id' ? 'Templat Cepat' : 'Quick Presets'}</span>
     </div>
     <div class="flex flex-wrap items-center gap-2">
       <button
@@ -180,7 +140,7 @@ const faqSchema = {
         class="template-btn px-3 py-1.5 rounded-xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark text-xs font-medium text-primary-light dark:text-primary-dark hover:border-accent transition-colors min-h-[40px] flex items-center gap-1.5 cursor-pointer"
       >
         <span>🎆</span>
-        <span>New Year</span>
+        <span>{t.countdown.ui?.presetNewYear || 'New Year'}</span>
       </button>
       <button
         type="button"
@@ -188,7 +148,7 @@ const faqSchema = {
         class="template-btn px-3 py-1.5 rounded-xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark text-xs font-medium text-primary-light dark:text-primary-dark hover:border-accent transition-colors min-h-[40px] flex items-center gap-1.5 cursor-pointer"
       >
         <span>🎄</span>
-        <span>Christmas</span>
+        <span>{t.countdown.ui?.presetChristmas || 'Christmas'}</span>
       </button>
       <button
         type="button"
@@ -196,7 +156,7 @@ const faqSchema = {
         class="template-btn px-3 py-1.5 rounded-xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark text-xs font-medium text-primary-light dark:text-primary-dark hover:border-accent transition-colors min-h-[40px] flex items-center gap-1.5 cursor-pointer"
       >
         <span>🎃</span>
-        <span>Halloween</span>
+        <span>{t.countdown.ui?.presetHalloween || 'Halloween'}</span>
       </button>
       <button
         type="button"
@@ -204,7 +164,7 @@ const faqSchema = {
         class="template-btn px-3 py-1.5 rounded-xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark text-xs font-medium text-primary-light dark:text-primary-dark hover:border-accent transition-colors min-h-[40px] flex items-center gap-1.5 cursor-pointer"
       >
         <span>☀️</span>
-        <span>Summer Solstice</span>
+        <span>{t.countdown.ui?.presetSummer || 'Summer Solstice'}</span>
       </button>
       <button
         type="button"
@@ -212,7 +172,7 @@ const faqSchema = {
         class="template-btn px-3 py-1.5 rounded-xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark text-xs font-medium text-primary-light dark:text-primary-dark hover:border-accent transition-colors min-h-[40px] flex items-center gap-1.5 cursor-pointer"
       >
         <span>🍻</span>
-        <span>Next Friday 5 PM</span>
+        <span>{lang === 'ar' ? 'الجمعة القادمة 5 مساءً' : lang === 'pt' ? 'Próxima Sexta 17h' : lang === 'id' ? 'Jumat Depan 17:00' : 'Next Friday 5 PM'}</span>
       </button>
       <button
         type="button"
@@ -220,7 +180,7 @@ const faqSchema = {
         class="template-btn px-3 py-1.5 rounded-xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark text-xs font-medium text-primary-light dark:text-primary-dark hover:border-accent transition-colors min-h-[40px] flex items-center gap-1.5 cursor-pointer"
       >
         <span>🌕</span>
-        <span>Next Full Moon</span>
+        <span>{lang === 'ar' ? 'البدر القادم' : lang === 'pt' ? 'Próxima Lua Cheia' : lang === 'id' ? 'Bulan Purnama Berikutnya' : 'Next Full Moon'}</span>
       </button>
       <button
         type="button"
@@ -228,7 +188,7 @@ const faqSchema = {
         class="template-btn px-3 py-1.5 rounded-xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark text-xs font-medium text-primary-light dark:text-primary-dark hover:border-accent transition-colors min-h-[40px] flex items-center gap-1.5 cursor-pointer"
       >
         <span>🎓</span>
-        <span>Graduation</span>
+        <span>{lang === 'ar' ? 'التخرج' : lang === 'pt' ? 'Formatura' : lang === 'id' ? 'Kelulusan' : 'Graduation'}</span>
       </button>
       <button
         type="button"
@@ -236,7 +196,7 @@ const faqSchema = {
         class="template-btn px-3 py-1.5 rounded-xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark text-xs font-medium text-primary-light dark:text-primary-dark hover:border-accent transition-colors min-h-[40px] flex items-center gap-1.5 cursor-pointer"
       >
         <span>🎂</span>
-        <span>Birthday</span>
+        <span>{t.countdown.ui?.presetBirthday || 'Birthday'}</span>
       </button>
       <button
         type="button"
@@ -244,7 +204,7 @@ const faqSchema = {
         class="template-btn px-3 py-1.5 rounded-xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark text-xs font-medium text-primary-light dark:text-primary-dark hover:border-accent transition-colors min-h-[40px] flex items-center gap-1.5 cursor-pointer"
       >
         <span>✈️</span>
-        <span>Summer Vacation</span>
+        <span>{lang === 'ar' ? 'الإجازة الصيفية' : lang === 'pt' ? 'Férias de Verão' : lang === 'id' ? 'Liburan Musim Panas' : 'Summer Vacation'}</span>
       </button>
       <button
         type="button"
@@ -252,7 +212,7 @@ const faqSchema = {
         class="template-btn px-3 py-1.5 rounded-xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark text-xs font-medium text-primary-light dark:text-primary-dark hover:border-accent transition-colors min-h-[40px] flex items-center gap-1.5 cursor-pointer"
       >
         <span>🚀</span>
-        <span>Product Launch</span>
+        <span>{lang === 'ar' ? 'إطلاق المنتج' : lang === 'pt' ? 'Lançamento de Produto' : lang === 'id' ? 'Peluncuran Produk' : 'Product Launch'}</span>
       </button>
     </div>
   </section>
@@ -261,10 +221,10 @@ const faqSchema = {
   <section class="card mt-6 space-y-6" aria-labelledby="creator-form-heading">
     <div class="border-b border-border-light dark:border-border-dark pb-3 flex items-center justify-between">
       <h2 id="creator-form-heading" class="text-base font-bold text-primary-light dark:text-primary-dark">
-        Event Details
+        {t.countdown.ui?.createCountdownHeading || 'Event Details'}
       </h2>
       <span class="text-xs text-secondary-light dark:text-secondary-dark">
-        All data is preserved in the link
+        {lang === 'ar' ? 'يتم حفظ جميع البيانات في الرابط' : lang === 'pt' ? 'Todos os dados ficam salvos no link' : lang === 'id' ? 'Semua data tersimpan di tautan' : 'All data is preserved in the link'}
       </span>
     </div>
 
@@ -272,7 +232,7 @@ const faqSchema = {
     <div class="space-y-1.5">
       <div class="flex items-center justify-between">
         <label for="event-title-input" class="block text-xs font-semibold uppercase tracking-wider text-secondary-light dark:text-secondary-dark">
-          Event Title
+          {t.countdown.eventTitleLabel || 'Event Title'}
         </label>
         <span id="title-char-count" class="text-xs text-secondary-light dark:text-secondary-dark">
           0 / 60
@@ -283,7 +243,7 @@ const faqSchema = {
         type="text"
         maxlength="60"
         class="input-base text-base"
-        placeholder="e.g. Vacation in Hawaii, Graduation Day, Product Launch"
+        placeholder={t.countdown.eventTitlePlaceholder || 'e.g. Vacation, Birthday, Product Launch...'}
         value="Trip to Hawaii"
         autocomplete="off"
       />
@@ -292,7 +252,7 @@ const faqSchema = {
     <!-- Target Date & Time Input -->
     <div class="space-y-1.5">
       <label for="event-datetime-input" class="block text-xs font-semibold uppercase tracking-wider text-secondary-light dark:text-secondary-dark">
-        Target Date & Time (Local Time)
+        {t.countdown.targetDateLabel || 'Target Date & Time (Local Time)'}
       </label>
       <input
         id="event-datetime-input"
@@ -311,14 +271,14 @@ const faqSchema = {
           <line x1="12" y1="8" x2="12" y2="12"/>
           <line x1="12" y1="16" x2="12.01" y2="16"/>
         </svg>
-        <span>Target date and time must be in the future.</span>
+        <span>{t.countdown.toasts?.invalidDate || 'Target date and time must be in the future.'}</span>
       </div>
     </div>
 
     <!-- Emoji Picker Row -->
     <div class="space-y-2">
       <label class="block text-xs font-semibold uppercase tracking-wider text-secondary-light dark:text-secondary-dark">
-        Pick an Event Emoji
+        {t.countdown.ui?.chooseEmoji || 'Pick an Event Emoji'}
       </label>
       <div class="flex flex-wrap items-center gap-2.5" id="emoji-picker-container">
         {PRESET_EMOJIS.map((emoji, idx) => (
@@ -338,19 +298,18 @@ const faqSchema = {
       </div>
     </div>
 
-    <!-- LIVE PREVIEW CARD (Real-time dynamic updates) -->
+    <!-- LIVE PREVIEW CARD -->
     <div class="pt-4 border-t border-border-light dark:border-border-dark space-y-3">
       <div class="flex items-center justify-between">
         <span class="text-xs font-semibold uppercase tracking-wider text-secondary-light dark:text-secondary-dark">
-          Live Preview
+          {lang === 'ar' ? 'معاينة حية' : lang === 'pt' ? 'Prévia ao Vivo' : lang === 'id' ? 'Pratinjau Langsung' : 'Live Preview'}
         </span>
         <span class="text-[11px] text-accent font-medium flex items-center gap-1">
           <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
-          <span>Ticking live</span>
+          <span>{lang === 'ar' ? 'يعمل لحظيًا' : lang === 'pt' ? 'Atualizando em tempo real' : lang === 'id' ? 'Berjalan langsung' : 'Ticking live'}</span>
         </span>
       </div>
 
-      <!-- Mini Live Preview Box -->
       <div class="p-5 rounded-2xl border border-border-light dark:border-border-dark bg-gradient-to-b from-surface-light to-bg-light dark:from-surface-dark dark:to-bg-dark shadow-sm text-center space-y-3">
         <div class="flex items-center justify-center gap-2">
           <span id="preview-emoji" class="text-2xl">🎉</span>
@@ -359,27 +318,25 @@ const faqSchema = {
           </h3>
         </div>
 
-        <!-- 4-unit mini timer -->
         <div class="grid grid-cols-4 gap-2 max-w-xs mx-auto">
           <div class="p-2 rounded-xl bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark">
             <span id="preview-days" class="font-mono text-xl sm:text-2xl font-black text-accent block tabular-nums">00</span>
-            <span class="text-[9px] uppercase tracking-wider text-secondary-light dark:text-secondary-dark font-semibold">Days</span>
+            <span class="text-[9px] uppercase tracking-wider text-secondary-light dark:text-secondary-dark font-semibold">{t.countdown.daysRemaining || 'Days'}</span>
           </div>
           <div class="p-2 rounded-xl bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark">
             <span id="preview-hours" class="font-mono text-xl sm:text-2xl font-black text-primary-light dark:text-primary-dark block tabular-nums">00</span>
-            <span class="text-[9px] uppercase tracking-wider text-secondary-light dark:text-secondary-dark font-semibold">Hours</span>
+            <span class="text-[9px] uppercase tracking-wider text-secondary-light dark:text-secondary-dark font-semibold">{t.countdown.hoursRemaining || 'Hours'}</span>
           </div>
           <div class="p-2 rounded-xl bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark">
             <span id="preview-minutes" class="font-mono text-xl sm:text-2xl font-black text-primary-light dark:text-primary-dark block tabular-nums">00</span>
-            <span class="text-[9px] uppercase tracking-wider text-secondary-light dark:text-secondary-dark font-semibold">Mins</span>
+            <span class="text-[9px] uppercase tracking-wider text-secondary-light dark:text-secondary-dark font-semibold">{t.countdown.minutesRemaining || 'Mins'}</span>
           </div>
           <div class="p-2 rounded-xl bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark">
             <span id="preview-seconds" class="font-mono text-xl sm:text-2xl font-black text-primary-light dark:text-primary-dark block tabular-nums">00</span>
-            <span class="text-[9px] uppercase tracking-wider text-secondary-light dark:text-secondary-dark font-semibold">Secs</span>
+            <span class="text-[9px] uppercase tracking-wider text-secondary-light dark:text-secondary-dark font-semibold">{t.countdown.secondsRemaining || 'Secs'}</span>
           </div>
         </div>
 
-        <!-- Preview Share & Download Buttons -->
         <div class="flex flex-wrap items-center justify-center gap-2 pt-1 border-t border-border-light/60 dark:border-border-dark/60 mt-3">
           <button
             id="preview-download-image-btn"
@@ -407,7 +364,7 @@ const faqSchema = {
               <line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/>
               <line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/>
             </svg>
-            <span>Share Image</span>
+            <span>{common.buttons.share || common.share || 'Share'}</span>
           </button>
         </div>
       </div>
@@ -420,12 +377,12 @@ const faqSchema = {
         type="button"
         class="btn-primary w-full sm:w-auto sm:px-8 py-3.5 text-base font-bold shadow-md shadow-accent/20 cursor-pointer"
       >
-        Create Countdown Link
+        {t.countdown.createBtn || 'Create Countdown Link'}
       </button>
     </div>
 
     <!-- Sticky Mobile Button -->
-    <div class="sm:hidden fixed bottom-3 left-4 right-4 z-30 pb-[calc(0.5rem+env(safe-area-inset-bottom,0))]">
+    <div class="sm:hidden fixed bottom-3 inset-x-4 z-30 pb-[calc(0.5rem+env(safe-area-inset-bottom,0))]">
       <button
         id="mobile-create-countdown-btn"
         type="button"
@@ -433,12 +390,12 @@ const faqSchema = {
         style="touch-action: manipulation;"
       >
         <span>⏳</span>
-        <span>CREATE COUNTDOWN LINK</span>
+        <span>{t.countdown.createBtn || 'CREATE COUNTDOWN LINK'}</span>
       </button>
     </div>
   </section>
 
-  <!-- GENERATED LINK MODAL / OUTPUT CARD -->
+  <!-- GENERATED LINK OUTPUT CARD -->
   <section
     id="created-link-section"
     class="hidden mt-8 card space-y-4 border-2 border-accent/40 scroll-mt-20"
@@ -450,11 +407,11 @@ const faqSchema = {
         <polyline points="22 4 12 14.01 9 11.01"/>
       </svg>
       <h3 id="share-link-heading" class="text-base text-primary-light dark:text-primary-dark">
-        Your Countdown Link is Ready!
+        {lang === 'ar' ? 'رابط العد التنازلي جاهز!' : lang === 'pt' ? 'Seu link de contagem regressiva está pronto!' : lang === 'id' ? 'Tautan hitung mundur Anda sudah siap!' : 'Your Countdown Link is Ready!'}
       </h3>
     </div>
     <p class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark">
-      Anyone with this URL can view your live ticking countdown in their local time.
+      {lang === 'ar' ? 'يمكن لأي شخص لديه هذا الرابط رؤية العد التنازلي اللحظي بتوقيته المحلي.' : lang === 'pt' ? 'Qualquer pessoa com este link pode ver a contagem em tempo real em seu horário local.' : lang === 'id' ? 'Siapa pun yang memiliki tautan ini dapat melihat hitung mundur langsung sesuai waktu lokal mereka.' : 'Anyone with this URL can view your live ticking countdown in their local time.'}
     </p>
 
     <!-- Readonly Link Box with Copy Button -->
@@ -475,15 +432,15 @@ const faqSchema = {
           <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
           <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
         </svg>
-        <span>Copy Link</span>
+        <span>{common.buttons.copy || 'Copy Link'}</span>
       </button>
     </div>
 
-    <!-- 48px+ Primary Image Actions (Instagram / WhatsApp Status) -->
+    <!-- Image Actions -->
     <div class="pt-2 border-t border-border-light/60 dark:border-border-dark/60">
       <div class="text-xs font-medium text-secondary-light dark:text-secondary-dark mb-2.5 flex items-center gap-1.5">
         <span>📸</span>
-        <span>Share as Image (1080×1350 Story / Status Card)</span>
+        <span>{lang === 'ar' ? 'مشاركة كصورة (بطاقة الحالة / القصة 1080×1350)' : lang === 'pt' ? 'Compartilhar como Imagem (Card 1080×1350)' : lang === 'id' ? 'Bagikan sebagai Gambar (Kartu Story / Status 1080×1350)' : 'Share as Image (1080×1350 Story / Status Card)'}</span>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
         <button
@@ -497,7 +454,7 @@ const faqSchema = {
             <polyline points="7 10 12 15 17 10"/>
             <line x1="12" y1="15" x2="12" y2="3"/>
           </svg>
-          <span>Download image</span>
+          <span>Download PNG</span>
         </button>
 
         <button
@@ -513,7 +470,7 @@ const faqSchema = {
             <line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/>
             <line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/>
           </svg>
-          <span>Share image</span>
+          <span>{common.buttons.share || common.share || 'Share'}</span>
         </button>
       </div>
     </div>
@@ -525,7 +482,7 @@ const faqSchema = {
         href="#"
         class="btn-secondary py-2.5 px-4 text-xs sm:text-sm font-semibold gap-1.5"
       >
-        <span>Open Countdown &rarr;</span>
+        <span>{lang === 'ar' ? 'فتح العد التنازلي' : lang === 'pt' ? 'Abrir Contagem Regressiva' : lang === 'id' ? 'Buka Hitung Mundur' : 'Open Countdown'} &rarr;</span>
       </a>
 
       <button
@@ -540,39 +497,38 @@ const faqSchema = {
           <line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/>
           <line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/>
         </svg>
-        <span>Share Link</span>
+        <span>{common.buttons.share || common.share || 'Share Link'}</span>
       </button>
     </div>
   </section>
 
   <!-- Recent Activity History Card -->
   <div class="mt-8">
-    <HistoryCard toolId="countdown" title="Recent Countdowns" icon="⏳" />
+    <HistoryCard toolId="countdown" title={lang === 'ar' ? 'العد التنازلي الأخير' : lang === 'pt' ? 'Contagens Regressivas Recentes' : lang === 'id' ? 'Hitung Mundur Terbaru' : 'Recent Countdowns'} icon="⏳" lang={lang} />
   </div>
 
-  <!-- KEY TAKEAWAYS / FEATURED SNIPPET SUMMARY BOX -->
+  <!-- KEY TAKEAWAYS -->
   <aside class="card mt-8 p-4 sm:p-5 border-l-4 border-accent bg-accent/5 space-y-2" aria-label="Key Takeaways">
     <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent">
       <span>⚡</span>
-      <span>Quick Answer & Key Takeaways</span>
+      <span>{t.countdown.ui?.keyTakeawaysTitle || 'Quick Answer & Key Takeaways'}</span>
     </div>
     <ul class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark space-y-1.5 list-disc list-inside leading-relaxed">
-      <li><strong>Stateless Sharing:</strong> Every timer is encoded into the URL parameters so links never expire and require zero server databases.</li>
-      <li><strong>Auto Timezone Sync:</strong> Uses ISO-8601 UTC timestamps, automatically converting the target date to every viewer's local time zone.</li>
-      <li><strong>Celebration Finale:</strong> Automatically triggers confetti celebrations and elapsed time tracking the moment the counter hits zero.</li>
+      <li>{t.countdown.ui?.kt1}</li>
+      <li>{t.countdown.ui?.kt2}</li>
+      <li>{t.countdown.ui?.kt3}</li>
     </ul>
   </aside>
 
-  <!-- SEO CONTENT & QUESTION-FORM HEADINGS -->
+  <!-- HOW TO USE -->
   <section class="mt-14 pt-10 border-t border-border-light dark:border-border-dark space-y-10">
-    <!-- How it works -->
     <div class="space-y-4">
       <div class="space-y-1">
         <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-primary-light dark:text-primary-dark">
-          How to Create and Share a Countdown Timer in 3 Steps
+          {t.countdown.howTo.title}
         </h2>
         <p class="text-sm text-secondary-light dark:text-secondary-dark">
-          Create and share persistent live timers in 3 simple steps.
+          {t.countdown.howTo.subtitle}
         </p>
       </div>
 
@@ -582,10 +538,10 @@ const faqSchema = {
             1
           </div>
           <h3 class="text-base font-bold text-primary-light dark:text-primary-dark">
-            Pick Date & Emoji
+            {t.countdown.howTo.s1Title}
           </h3>
           <p class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark leading-relaxed">
-            Set your event title, pick a festive emoji, and select the exact future date and time for your milestone.
+            {t.countdown.howTo.s1Desc}
           </p>
         </div>
 
@@ -594,10 +550,10 @@ const faqSchema = {
             2
           </div>
           <h3 class="text-base font-bold text-primary-light dark:text-primary-dark">
-            Generate Link
+            {t.countdown.howTo.s2Title}
           </h3>
           <p class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark leading-relaxed">
-            Our client-side engine encodes your event metadata directly into a secure, compact URL with zero database requirements.
+            {t.countdown.howTo.s2Desc}
           </p>
         </div>
 
@@ -606,34 +562,34 @@ const faqSchema = {
             3
           </div>
           <h3 class="text-base font-bold text-primary-light dark:text-primary-dark">
-            Share Anywhere
+            {t.countdown.howTo.s3Title}
           </h3>
           <p class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark leading-relaxed">
-            Send the link via WhatsApp, Instagram, or Discord. Viewers see the live ticking timer synchronized to their local time.
+            {t.countdown.howTo.s3Desc}
           </p>
         </div>
       </div>
     </div>
 
-    <!-- Long-Tail Educational Content & Question-Form Subheadings -->
+    <!-- Methodology -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div class="card p-6 space-y-3">
         <h2 class="text-lg font-bold text-primary-light dark:text-primary-dark flex items-center gap-2">
           <span>🌐</span>
-          <span>How Do Timezones Work When Sharing Countdowns?</span>
+          <span>{t.countdown.methodology.m1Title}</span>
         </h2>
         <p class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark leading-relaxed">
-          When creating a countdown, ToolNest converts your chosen date and time into a standardized ISO-8601 UTC timestamp. When family or team members click your link from different countries, their local browser clock automatically reconciles the UTC target against their device timezone. This ensures midnight celebrations synchronize precisely across every continent.
+          {t.countdown.methodology.m1Desc}
         </p>
       </div>
 
       <div class="card p-6 space-y-3">
         <h2 class="text-lg font-bold text-primary-light dark:text-primary-dark flex items-center gap-2">
           <span>🔗</span>
-          <span>What Are Stateless URL Countdowns and Why Are They Safer?</span>
+          <span>{t.countdown.methodology.m2Title}</span>
         </h2>
         <p class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark leading-relaxed">
-          Traditional countdown platforms store your events in centralized databases, meaning links can break if servers purge old data or require account logins. ToolNest packages all event metadata into the URL query string itself. The timer state lives entirely within the link, making it permanent, immune to server outages, and 100% private.
+          {t.countdown.methodology.m2Desc}
         </p>
       </div>
     </div>
@@ -642,28 +598,28 @@ const faqSchema = {
     <section class="space-y-4" aria-labelledby="use-cases-heading">
       <h2 id="use-cases-heading" class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark flex items-center gap-2">
         <span>💡</span>
-        <span>Popular Use Cases for Event Countdowns</span>
+        <span>{t.countdown.useCases.title}</span>
       </h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div class="card p-5 space-y-2">
           <div class="text-2xl">💍</div>
-          <h3 class="text-base font-bold text-primary-light dark:text-primary-dark">Weddings & Save-The-Dates</h3>
+          <h3 class="text-base font-bold text-primary-light dark:text-primary-dark">{t.countdown.useCases.u1Title}</h3>
           <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
-            Share live ticking countdown clocks with wedding guests, rehearsal dinner attendees, and anniversary party invitees across WhatsApp and wedding portals.
+            {t.countdown.useCases.u1Desc}
           </p>
         </div>
         <div class="card p-5 space-y-2">
           <div class="text-2xl">🚀</div>
-          <h3 class="text-base font-bold text-primary-light dark:text-primary-dark">Product Drops & Livestreams</h3>
+          <h3 class="text-base font-bold text-primary-light dark:text-primary-dark">{t.countdown.useCases.u2Title}</h3>
           <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
-            Build viral anticipation for Kickstarter launches, podcast premieres, merch drops, and esports tournaments with full-screen streaming overlays.
+            {t.countdown.useCases.u2Desc}
           </p>
         </div>
         <div class="card p-5 space-y-2">
           <div class="text-2xl">🏖️</div>
-          <h3 class="text-base font-bold text-primary-light dark:text-primary-dark">Vacations & Days Until Calculator</h3>
+          <h3 class="text-base font-bold text-primary-light dark:text-primary-dark">{t.countdown.useCases.u3Title}</h3>
           <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
-            Track exact days until summer breaks, holiday road trips, retirement dates, or birthdays. Want to know how many days you've been alive? Check our <a href="/age-calculator" class="text-accent hover:underline font-medium">chronological age calculator</a> or explore your <a href="/birthday-facts" class="text-accent hover:underline font-medium">birthday facts dossier</a>.
+            {t.countdown.useCases.u3Desc}
           </p>
         </div>
       </div>
@@ -674,32 +630,32 @@ const faqSchema = {
       <div class="flex items-center gap-2">
         <span class="text-lg">🧠</span>
         <h2 id="trivia-strip-heading" class="text-sm font-bold uppercase tracking-wider text-accent">
-          Did You Know? Timing & Countdown Trivia
+          {t.countdown.trivia.title}
         </h2>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
         <div class="space-y-1">
           <span class="text-xs font-bold text-primary-light dark:text-primary-dark flex items-center gap-1.5">
-            <span>🎬</span> Fritz Lang's Invention
+            <span>🎬</span> {t.countdown.trivia.t1Title}
           </span>
           <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
-            The rocket launch countdown was invented by German filmmaker Fritz Lang for his 1929 sci-fi classic *Frau im Mond* (Woman in the Moon) to build audience tension before NASA adopted it.
+            {t.countdown.trivia.t1Desc}
           </p>
         </div>
         <div class="space-y-1">
           <span class="text-xs font-bold text-primary-light dark:text-primary-dark flex items-center gap-1.5">
-            <span>⏳</span> Time Dilation Perception
+            <span>⏳</span> {t.countdown.trivia.t2Title}
           </span>
           <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
-            Cognitive psychologists have proven that the anticipation of a positive upcoming milestone causes subjective time perception to accelerate as the target day approaches.
+            {t.countdown.trivia.t2Desc}
           </p>
         </div>
         <div class="space-y-1">
           <span class="text-xs font-bold text-primary-light dark:text-primary-dark flex items-center gap-1.5">
-            <span>🍎</span> Times Square Ball Drop
+            <span>🍎</span> {t.countdown.trivia.t3Title}
           </span>
           <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
-            The world's most famous live New Year countdown began on December 31, 1907, with a 700-pound iron and wood ball adorned with one hundred 25-watt light bulbs.
+            {t.countdown.trivia.t3Desc}
           </p>
         </div>
       </div>
@@ -710,14 +666,14 @@ const faqSchema = {
       <div class="flex flex-wrap items-center justify-between gap-2">
         <h3 class="text-xs font-bold uppercase tracking-wider text-primary-light dark:text-primary-dark flex items-center gap-1.5">
           <span>📐</span>
-          <span>Methodology & Precision Timing</span>
+          <span>{t.countdown.methodology.noteTitle}</span>
         </h3>
         <span class="text-[11px] text-secondary-light dark:text-secondary-dark">
-          Last updated: {lastUpdatedDate}
+          {common.ui?.lastUpdated || 'Last updated'}: {lastUpdatedDate}
         </span>
       </div>
       <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
-        Timer loops synchronize every 1,000 milliseconds against the system epoch clock, compensating for browser tab throttling and sleep states without drift.
+        {t.countdown.methodology.noteDesc}
       </p>
     </div>
   </section>
@@ -727,9 +683,9 @@ const faqSchema = {
     <div class="card p-4 space-y-2.5 bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark">
       <div class="flex items-center justify-between">
         <span class="text-xs font-bold uppercase tracking-wider text-secondary-light dark:text-secondary-dark">
-          Quick Navigation — Common Questions
+          {common.ui?.quickJump || 'Quick Jump'}
         </span>
-        <span class="text-xs text-accent font-medium">8 Answers</span>
+        <span class="text-xs text-accent font-medium">{faqs.length} {common.ui?.answers || 'Answers'}</span>
       </div>
       <div class="flex flex-wrap gap-1.5">
         {faqs.map((faq, idx) => (
@@ -744,17 +700,17 @@ const faqSchema = {
     </div>
 
     <!-- FAQ SECTION ACCORDION -->
-    <Faq items={faqs} />
+    <Faq items={faqs} lang={lang} />
   </section>
 
   <!-- RELATED TOOLS SECTION -->
   <section class="mt-14 pt-10 border-t border-border-light dark:border-border-dark space-y-4">
     <div class="flex items-center justify-between">
       <h2 class="text-lg sm:text-xl font-bold tracking-tight text-primary-light dark:text-primary-dark">
-        Related Free Tools
+        {common.headings?.relatedTools || 'Related Free Tools'}
       </h2>
-      <a href="/" class="text-xs font-semibold text-accent hover:underline">
-        View all tools &rarr;
+      <a href={getLocalizedPath('/', lang)} class="text-xs font-semibold text-accent hover:underline">
+        {common.links?.viewAllTools || 'View all tools'} &rarr;
       </a>
     </div>
 
@@ -766,11 +722,16 @@ const faqSchema = {
           href={tool.href}
           anchor={tool.anchor}
           icon={tool.href.includes('age') ? 'calendar' : tool.href.includes('birthday') ? 'cake' : 'wheel'}
+          lang={lang}
         />
       ))}
     </div>
   </section>
 
+  <script is:inline define:vars={{ countdownI18n: { common, countdown, errors }, pageLang: lang }}>
+    window.__COUNTDOWN_I18N__ = countdownI18n;
+    window.__PAGE_LANG__ = pageLang;
+  </script>
 </Base>
 
 <script>
@@ -793,13 +754,19 @@ const faqSchema = {
   import { showToast } from '../scripts/toast.js';
 
   function initCountdownCreator() {
-    const titleInput = document.getElementById('event-title-input');
+    const i18n = (window as any).__COUNTDOWN_I18N__ || {};
+    const tCountdown = i18n.countdown || {};
+    const tCommon = i18n.common || {};
+    const tErrors = i18n.errors || {};
+    const currentLang = (window as any).__PAGE_LANG__ || document.documentElement.lang || 'en';
+
+    const titleInput = document.getElementById('event-title-input') as HTMLInputElement;
     const charCounter = document.getElementById('title-char-count');
-    const datetimeInput = document.getElementById('event-datetime-input');
+    const datetimeInput = document.getElementById('event-datetime-input') as HTMLInputElement;
     const datetimeError = document.getElementById('datetime-error-msg');
     const emojiButtons = document.querySelectorAll('.emoji-btn');
-    const createBtn = document.getElementById('create-countdown-btn');
-    const mobileCreateBtn = document.getElementById('mobile-create-countdown-btn');
+    const createBtn = document.getElementById('create-countdown-btn') as HTMLButtonElement;
+    const mobileCreateBtn = document.getElementById('mobile-create-countdown-btn') as HTMLButtonElement;
 
     // Live preview elements
     const previewEmoji = document.getElementById('preview-emoji');
@@ -811,16 +778,16 @@ const faqSchema = {
 
     // Generated section elements
     const createdSection = document.getElementById('created-link-section');
-    const generatedUrlInput = document.getElementById('generated-url-input');
+    const generatedUrlInput = document.getElementById('generated-url-input') as HTMLInputElement;
     const copyUrlBtn = document.getElementById('copy-generated-url-btn');
-    const openViewerLink = document.getElementById('open-viewer-link');
+    const openViewerLink = document.getElementById('open-viewer-link') as HTMLAnchorElement;
     const shareGeneratedBtn = document.getElementById('share-generated-btn');
 
     if (!titleInput || !datetimeInput || !createBtn) return;
 
     let selectedEmoji = '🎉';
-    let tickerInterval = null;
-    let currentCreatedIso = null;
+    let tickerInterval: any = null;
+    let currentCreatedIso: string | null = null;
 
     // Image export elements
     const creatorShareCard = document.getElementById('creator-share-card');
@@ -868,7 +835,7 @@ const faqSchema = {
         const key = btn.getAttribute('data-template');
         if (key === 'birthday') {
           titleInput.value = 'My Birthday!';
-          showToast('Select your upcoming birthday date & time.');
+          showToast(tCountdown.toasts?.invalidDate || 'Select your upcoming birthday date & time.');
           datetimeInput.focus();
           return;
         }
@@ -882,12 +849,12 @@ const faqSchema = {
           // Highlight matching emoji button
           emojiButtons.forEach((b) => {
             if (b.getAttribute('data-emoji') === template.emoji) {
-              b.click();
+              (b as HTMLButtonElement).click();
             }
           });
 
           updatePreview();
-          showToast(`Loaded ${template.title} preset.`);
+          showToast(tCommon.toasts?.loaded || 'Preset loaded.');
         }
       });
     });
@@ -941,7 +908,7 @@ const faqSchema = {
     // Create Countdown Handler
     function handleCreate() {
       if (!validateDatetime()) {
-        showToast('Please pick a date in the future.');
+        showToast(tCountdown.toasts?.invalidDate || 'Please pick a date in the future.');
         datetimeInput.focus();
         return;
       }
@@ -958,11 +925,12 @@ const faqSchema = {
         c: currentCreatedIso,
       });
 
-      const fullUrl = `${window.location.origin}/countdown/view?c=${encoded}`;
+      const localizedViewPath = (currentLang === 'en' ? '/countdown/view' : `/${currentLang}/countdown/view`);
+      const fullUrl = `${window.location.origin}${localizedViewPath}?c=${encoded}`;
 
       // Update output elements
       if (generatedUrlInput) generatedUrlInput.value = fullUrl;
-      if (openViewerLink) openViewerLink.href = `/countdown/view?c=${encoded}`;
+      if (openViewerLink) openViewerLink.href = `${localizedViewPath}?c=${encoded}`;
 
       if (createdSection) {
         createdSection.classList.remove('hidden');
@@ -977,13 +945,13 @@ const faqSchema = {
         year: 'numeric',
       });
       saveHistory('countdown', {
-        t: `Countdown: ${title} — ${formattedDate}`,
+        t: `${tCountdown.title || 'Countdown'}: ${title} — ${formattedDate}`,
         d: new Date().toISOString(),
         x: {
           title,
           targetIso: isoDate,
           emoji: selectedEmoji,
-          url: `/countdown/view?c=${encoded}`,
+          url: `${localizedViewPath}?c=${encoded}`,
         },
       });
       saveLastState('countdown', {
@@ -996,10 +964,10 @@ const faqSchema = {
       navigator.clipboard
         .writeText(fullUrl)
         .then(() => {
-          showToast('Link copied — share it anywhere!');
+          showToast(tCountdown.toasts?.linkCopied || 'Link copied — share it anywhere!');
         })
         .catch(() => {
-          showToast('Countdown created! Copy link below.');
+          showToast(tCountdown.toasts?.linkCopied || 'Countdown created! Copy link below.');
         });
     }
 
@@ -1012,9 +980,9 @@ const faqSchema = {
         if (!generatedUrlInput || !generatedUrlInput.value) return;
         try {
           await navigator.clipboard.writeText(generatedUrlInput.value);
-          showToast('Countdown link copied to clipboard!');
+          showToast(tCountdown.toasts?.linkCopied || 'Countdown link copied to clipboard!');
         } catch (e) {
-          showToast('Unable to copy.');
+          showToast(tCommon.toasts?.errorOccurred || 'Unable to copy.');
         }
       });
     }
@@ -1025,7 +993,7 @@ const faqSchema = {
         if (!generatedUrlInput || !generatedUrlInput.value) return;
         const title = titleInput.value.trim() || 'My Event';
         const shareData = {
-          title: `⏳ Countdown: ${title}`,
+          title: `⏳ ${tCountdown.title || 'Countdown'}: ${title}`,
           text: `Track this live countdown with me: "${title}"`,
           url: generatedUrlInput.value,
         };
@@ -1039,15 +1007,15 @@ const faqSchema = {
         } else {
           try {
             await navigator.clipboard.writeText(generatedUrlInput.value);
-            showToast('Countdown link copied to clipboard!');
+            showToast(tCountdown.toasts?.linkCopied || 'Countdown link copied to clipboard!');
           } catch (e) {
-            showToast('Unable to share.');
+            showToast(tCommon.toasts?.errorOccurred || 'Unable to share.');
           }
         }
       });
     }
 
-    // Image Export Actions (Created Section)
+    // Image Export Actions
     if (creatorDownloadBtn) {
       creatorDownloadBtn.addEventListener('click', () => {
         handleDownloadImage({
@@ -1071,7 +1039,6 @@ const faqSchema = {
       });
     }
 
-    // Image Export Actions (Preview Box)
     if (previewDownloadBtn) {
       previewDownloadBtn.addEventListener('click', () => {
         handleDownloadImage({
@@ -1096,7 +1063,7 @@ const faqSchema = {
     }
 
     // Restore from history
-    function restoreCountdown(data) {
+    function restoreCountdown(data: any) {
       if (!data) return;
       if (data.url) {
         window.location.href = data.url;
@@ -1127,10 +1094,9 @@ const faqSchema = {
         if (previewEmoji) previewEmoji.textContent = selectedEmoji;
       }
       updatePreview();
-      showToast('Loaded countdown event.');
+      showToast(tCountdown.toasts?.loaded || 'Loaded countdown event.');
     }
 
-    // Prefill from last state if available ("welcome back" effect)
     const lastCountdown = getLastState('countdown');
     if (lastCountdown && lastCountdown.title) {
       titleInput.value = lastCountdown.title;

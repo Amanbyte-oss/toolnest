@@ -1,16 +1,14 @@
 ---
 /**
  * src/components/LocalizedHead.astro
- * Auto-generates complete SEO metadata, reciprocal hreflang links, canonical URLs,
- * Open Graph / Twitter tags, and Schema.org JSON-LD across all 4 languages.
+ * SEO head manager with automatic hreflang generation, translated titles/meta, canonical mapping, and JSON-LD.
  */
 import {
   getLocalizedPath,
+  getCanonicalPath,
   type Lang,
   DEFAULT_LANG,
-  LOCALES,
-  t,
-  getTranslations,
+  getNamespace,
 } from '../i18n';
 
 export interface BreadcrumbItem {
@@ -19,81 +17,65 @@ export interface BreadcrumbItem {
 }
 
 export interface Props {
-  lang?: Lang;
-  metaKey?: string;
   title?: string;
   description?: string;
+  metaKey?: string;
   canonicalPath?: string;
   ogImage?: string;
   type?: 'website' | 'article';
   breadcrumbs?: BreadcrumbItem[];
   extraSchemas?: Record<string, any>[];
   noindex?: boolean;
+  lang?: Lang;
 }
 
 const {
-  lang = 'en',
+  title: titleProp,
+  description: descProp,
   metaKey,
-  title: propTitle,
-  description: propDescription,
   canonicalPath = Astro.url.pathname,
   ogImage = '/favicon.svg',
   type = 'website',
   breadcrumbs = [],
   extraSchemas = [],
   noindex = false,
+  lang = 'en',
 } = Astro.props;
 
-const siteUrl = Astro.site
-  ? Astro.site.toString().replace(/\/$/, '')
-  : 'https://toolnest.pages.dev';
+// Production site URL (single source of truth)
+const siteUrl = Astro.site ? Astro.site.toString().replace(/\/$/, '') : 'https://toolnest.pages.dev';
 
-// Resolve title and description from 'meta' namespace if metaKey provided
-const resolvedTitle =
-  propTitle ||
-  (metaKey ? (t(lang, 'meta', metaKey as any) as any)?.title : '') ||
-  t(lang, 'meta', 'home').title;
+// Load metadata namespace
+const metaNs = getNamespace(lang, 'meta') as any;
+const commonNs = getNamespace(lang, 'common') as any;
 
-const resolvedDescription =
-  propDescription ||
-  (metaKey ? (t(lang, 'meta', metaKey as any) as any)?.description : '') ||
-  t(lang, 'meta', 'home').description;
+let resolvedTitle = titleProp;
+let resolvedDesc = descProp;
 
-// Ensure clean canonical URL:
-// For English pages (whether visited at /... or /en/...), canonical MUST be the bare URL
-const cleanPath = canonicalPath.startsWith('/') ? canonicalPath : `/${canonicalPath}`;
-const bareEnglishPath = getLocalizedPath(cleanPath, DEFAULT_LANG, true);
-
-let canonicalRelativePath = cleanPath;
-if (lang === DEFAULT_LANG || cleanPath.startsWith('/en/') || cleanPath === '/en') {
-  canonicalRelativePath = bareEnglishPath;
-} else {
-  canonicalRelativePath = getLocalizedPath(cleanPath, lang, true);
+if (!resolvedTitle && metaKey && metaNs[metaKey]?.title) {
+  resolvedTitle = metaNs[metaKey].title;
+}
+if (!resolvedDesc && metaKey && metaNs[metaKey]?.description) {
+  resolvedDesc = metaNs[metaKey].description;
 }
 
-const canonicalUrl = new URL(canonicalRelativePath, siteUrl).toString();
-const absoluteOgImage = ogImage.startsWith('http')
-  ? ogImage
-  : new URL(ogImage, siteUrl).toString();
+const defaultTitle = `${commonNs.siteName} — ${commonNs.tagline}`;
+const defaultDescription = commonNs.description;
 
-// Target strict length limits (< 60 chars title, < 155 chars description)
-const siteName = 'ToolNest';
-const formattedTitle =
-  resolvedTitle.length > 60
-    ? `${resolvedTitle.slice(0, 57)}...`
-    : resolvedTitle;
+const rawTitle = resolvedTitle || defaultTitle;
+const rawDesc = resolvedDesc || defaultDescription;
 
-const formattedDescription =
-  resolvedDescription.length > 155
-    ? `${resolvedDescription.slice(0, 152)}...`
-    : resolvedDescription;
+// Ensure title contains site name and conforms to length guidelines
+const siteName = commonNs.siteName || 'ToolNest';
+const fullTitle = rawTitle.includes(siteName) ? rawTitle : `${rawTitle} | ${siteName}`;
+const formattedTitle = fullTitle.length > 65 ? `${fullTitle.slice(0, 62)}...` : fullTitle;
+const formattedDescription = rawDesc.length > 160 ? `${rawDesc.slice(0, 157)}...` : rawDesc;
 
-const isHomePage =
-  canonicalRelativePath === '/' ||
-  canonicalRelativePath === '' ||
-  canonicalRelativePath === '/pt/' ||
-  canonicalRelativePath === '/id/' ||
-  canonicalRelativePath === '/ar/';
+// Canonical URL calculation:
+// On /en/*, canonical URL points to bare URL (e.g. /birthday-facts)
+const cleanPath = getCanonicalPath(canonicalPath);
+const canonicalUrl = new URL(cleanPath, siteUrl).toString();
+const absoluteOgImage = ogImage.startsWith('http') ? ogImage : new URL(ogImage, siteUrl).toString();
 
 const ogLocaleMap: Record<Lang, string> = {
   en: 'en_US',
@@ -103,7 +85,9 @@ const ogLocaleMap: Record<Lang, string> = {
 };
 const ogLocale = ogLocaleMap[lang] || 'en_US';
 
-// Schema: Organization
+const isHomePage = cleanPath === '/' || cleanPath === '' || cleanPath === '/pt/' || cleanPath === '/id/' || cleanPath === '/ar/';
+
+// Organization schema
 const organizationJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
@@ -117,7 +101,7 @@ const organizationJsonLd = {
   sameAs: [],
 };
 
-// Schema: WebSite
+// WebSite schema
 const websiteJsonLd = isHomePage
   ? {
       '@context': 'https://schema.org',
@@ -133,7 +117,6 @@ const websiteJsonLd = isHomePage
     }
   : null;
 
-// Schema: Unified @graph for Homepage
 const homeGraphJsonLd = isHomePage
   ? {
       '@context': 'https://schema.org',
@@ -141,17 +124,12 @@ const homeGraphJsonLd = isHomePage
     }
   : null;
 
-// Schema: BreadcrumbList
+// Breadcrumbs schema
 const breadcrumbsList = [
-  {
-    name: lang === 'en' ? 'Home' : getTranslations(lang).nav.home,
-    item: `${siteUrl}${getLocalizedPath('/', lang)}`,
-  },
+  { name: commonNs.nav.home, item: `${siteUrl}${getLocalizedPath('/', lang)}` },
   ...breadcrumbs.map((b) => ({
     name: b.name,
-    item: b.item.startsWith('http')
-      ? b.item
-      : new URL(b.item.startsWith('/') ? b.item : `/${b.item}`, siteUrl).toString(),
+    item: b.item.startsWith('http') ? b.item : new URL(b.item.startsWith('/') ? b.item : `/${b.item}`, siteUrl).toString(),
   })),
 ];
 
@@ -181,13 +159,12 @@ const breadcrumbJsonLd =
   <meta name="robots" content="index, follow" />
 )}
 
-<!-- Reciprocal Hreflang Alternates (SEO Critical) -->
-<!-- English always points to bare URL -->
-<link rel="alternate" hreflang="en" href={`${siteUrl}${getLocalizedPath(cleanPath, 'en', true)}`} />
-<link rel="alternate" hreflang="pt" href={`${siteUrl}${getLocalizedPath(cleanPath, 'pt', true)}`} />
-<link rel="alternate" hreflang="id" href={`${siteUrl}${getLocalizedPath(cleanPath, 'id', true)}`} />
-<link rel="alternate" hreflang="ar" href={`${siteUrl}${getLocalizedPath(cleanPath, 'ar', true)}`} />
-<link rel="alternate" hreflang="x-default" href={`${siteUrl}${getLocalizedPath(cleanPath, 'en', true)}`} />
+<!-- Reciprocal Hreflang Alternates (SEO Critical - Absolute URLs) -->
+<link rel="alternate" hreflang="en" href={`${siteUrl}${getLocalizedPath(cleanPath, 'en')}`} />
+<link rel="alternate" hreflang="pt" href={`${siteUrl}${getLocalizedPath(cleanPath, 'pt')}`} />
+<link rel="alternate" hreflang="id" href={`${siteUrl}${getLocalizedPath(cleanPath, 'id')}`} />
+<link rel="alternate" hreflang="ar" href={`${siteUrl}${getLocalizedPath(cleanPath, 'ar')}`} />
+<link rel="alternate" hreflang="x-default" href={`${siteUrl}${getLocalizedPath(cleanPath, 'en')}`} />
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content={type} />
@@ -198,7 +175,7 @@ const breadcrumbJsonLd =
 <meta property="og:site_name" content={siteName} />
 <meta property="og:locale" content={ogLocale} />
 
-<!-- Twitter -->
+<!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:url" content={canonicalUrl} />
 <meta name="twitter:title" content={formattedTitle} />

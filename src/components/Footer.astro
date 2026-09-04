@@ -1,29 +1,30 @@
 ---
-import { getTranslations, getLocalizedPath, type Lang } from '../i18n';
+import { getNamespace, getLocalizedPath, type Lang } from '../i18n';
 
 export interface Props {
   lang?: Lang;
 }
 
 const { lang = 'en' } = Astro.props;
-const t = getTranslations(lang);
+const common = getNamespace(lang, 'common');
+const namesNs = getNamespace(lang, 'names');
 const currentYear = new Date().getFullYear();
 
 const toolLinks = [
-  { name: t.nav.ageCalculator, href: getLocalizedPath('/age-calculator', lang) },
-  { name: t.nav.birthdayFacts, href: getLocalizedPath('/birthday-facts', lang) },
-  { name: t.nav.decisionWheel, href: getLocalizedPath('/decision-wheel', lang) },
-  { name: t.nav.randomPicker, href: getLocalizedPath('/random-picker', lang) },
-  { name: t.nav.countdown, href: getLocalizedPath('/countdown', lang) },
-  { name: t.nav.nameMeaning, href: getLocalizedPath('/name-meaning', lang) },
-  { name: t.names.title, href: getLocalizedPath('/names', lang) },
+  { name: common.nav.ageCalculator, href: getLocalizedPath('/age-calculator', lang) },
+  { name: common.nav.birthdayFacts, href: getLocalizedPath('/birthday-facts', lang) },
+  { name: common.nav.decisionWheel, href: getLocalizedPath('/decision-wheel', lang) },
+  { name: common.nav.randomPicker, href: getLocalizedPath('/random-picker', lang) },
+  { name: common.nav.countdown, href: getLocalizedPath('/countdown', lang) },
+  { name: common.nav.nameMeaning, href: getLocalizedPath('/name-meaning', lang) },
+  { name: namesNs.title, href: getLocalizedPath('/names', lang) },
 ];
 
 const siteLinks = [
-  { name: t.nav.about, href: getLocalizedPath('/about', lang) },
-  { name: t.nav.contact, href: getLocalizedPath('/contact', lang) },
-  { name: t.nav.privacy, href: getLocalizedPath('/privacy-policy', lang) },
-  { name: 'Sitemap', href: '/sitemap-index.xml' },
+  { name: common.nav.about, href: getLocalizedPath('/about', lang) },
+  { name: common.nav.contact, href: getLocalizedPath('/contact', lang) },
+  { name: common.nav.privacy, href: getLocalizedPath('/privacy-policy', lang) },
+  { name: common.sitemap || 'Sitemap', href: '/sitemap-index.xml' },
 ];
 ---
 
@@ -41,14 +42,14 @@ const siteLinks = [
           <span>ToolNest</span>
         </a>
         <p class="text-sm text-secondary-light dark:text-secondary-dark leading-relaxed">
-          {t.footerTagline}
+          {common.footerTagline}
         </p>
       </div>
 
       <!-- Col 2: Tools -->
       <div class="space-y-3">
         <h3 class="text-xs font-bold uppercase tracking-wider text-primary-light dark:text-primary-dark">
-          {t.common.options}
+          {common.buttons.options}
         </h3>
         <ul class="space-y-2 text-sm">
           {toolLinks.map((tool) => (
@@ -67,7 +68,7 @@ const siteLinks = [
       <!-- Col 3: Site -->
       <div class="space-y-3">
         <h3 class="text-xs font-bold uppercase tracking-wider text-primary-light dark:text-primary-dark">
-          {t.siteName}
+          {common.siteName}
         </h3>
         <ul class="space-y-2 text-sm">
           {siteLinks.map((site) => (
@@ -86,28 +87,28 @@ const siteLinks = [
       <!-- Col 4: Privacy & Standards -->
       <div class="col-span-2 md:col-span-1 space-y-3">
         <h3 class="text-xs font-bold uppercase tracking-wider text-primary-light dark:text-primary-dark">
-          {t.badgePrivacy}
+          {common.badgePrivacy}
         </h3>
         <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
-          {t.description}
+          {common.description}
         </p>
         <div class="flex items-center gap-2 pt-1 text-xs text-secondary-light dark:text-secondary-dark">
           <span class="inline-block w-2 h-2 rounded-full bg-emerald-500"></span>
-          <span>100% Client-Side Privacy</span>
+          <span>{common.privacyBadge100 || '100% Client-Side Privacy'}</span>
         </div>
       </div>
     </div>
 
     <!-- Bottom Bar: Copyright -->
     <div class="pt-8 border-t border-border-light dark:border-border-dark flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-secondary-light dark:text-secondary-dark">
-      <p>&copy; {currentYear} {t.footerCopyright}</p>
+      <p>&copy; {currentYear} {common.footerCopyright}</p>
       <div class="flex items-center gap-4">
         <a href={getLocalizedPath('/privacy-policy', lang)} class="hover:text-accent transition-colors">
-          {t.nav.privacy}
+          {common.nav.privacy}
         </a>
         <span>&bull;</span>
         <a href={getLocalizedPath('/contact', lang)} class="hover:text-accent transition-colors">
-          {t.nav.contact}
+          {common.nav.contact}
         </a>
       </div>
     </div>

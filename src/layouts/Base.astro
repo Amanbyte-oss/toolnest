@@ -1,11 +1,11 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import Seo, { type BreadcrumbItem } from '../components/Seo.astro';
+import LocalizedHead, { type BreadcrumbItem } from '../components/LocalizedHead.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import BackToTop from '../components/BackToTop.astro';
 import Toast from '../components/Toast.astro';
-import { getLangFromPath, isRtlLang, type Lang, getTranslations } from '../i18n';
+import { getLangFromPath, isRtlLang, type Lang, getNamespace } from '../i18n';
 import '../styles/global.css';
 
 export interface Props {
@@ -36,9 +36,9 @@ const {
   noindex = false,
 } = Astro.props;
 
-const t = getTranslations(lang);
-const defaultTitle = `${t.common?.siteName || t.siteName} — ${t.common?.tagline || t.tagline}`;
-const defaultDescription = t.common?.description || t.description;
+const common = getNamespace(lang, 'common');
+const defaultTitle = `${common.siteName} — ${common.tagline}`;
+const defaultDescription = common.description;
 
 const pageTitle = title || defaultTitle;
 const pageDescription = description || defaultDescription;
@@ -97,25 +97,25 @@ const isRtl = isRtlLang(lang);
     </style>
 
     <!-- SEO, Hreflang & Structured Data -->
-    <Seo
-      title={pageTitle}
-      description={pageDescription}
+    <LocalizedHead
+      title={title}
+      description={description}
+      metaKey={metaKey}
       canonicalPath={canonicalPath || currentPath}
       ogImage={ogImage}
       breadcrumbs={breadcrumbs}
       extraSchemas={extraSchemas}
       noindex={noindex}
       lang={lang}
-      metaKey={metaKey}
     />
   </head>
-  <body class="min-h-screen flex flex-col bg-bg-light dark:bg-bg-dark text-primary-light dark:text-primary-dark antialiased transition-colors duration-150">
+  <body class="min-h-screen flex flex-col bg-bg-light dark:bg-bg-dark text-primary-light dark:text-primary-dark antialiased transition-colors duration-150 overflow-x-clip w-full max-w-full">
     <!-- Accessible Skip to Content Link -->
     <a
       href="#main-content"
       class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:start-3 focus:z-50 focus:px-4 focus:py-2.5 focus:bg-accent focus:text-white focus:font-semibold focus:rounded-xl focus:shadow-lg focus:outline-none"
     >
-      Skip to main content
+      {common.skipToContent || 'Skip to main content'}
     </a>
 
     <Header lang={lang} />
@@ -123,7 +123,7 @@ const isRtl = isRtlLang(lang);
     <main
       id="main-content"
       tabindex="-1"
-      class:list={['flex-1 w-full mx-auto px-4 py-6 sm:py-10 focus:outline-none', maxWidthClass]}
+      class:list={['flex-1 w-full max-w-full min-w-0 mx-auto px-4 py-6 sm:py-10 focus:outline-none overflow-x-clip', maxWidthClass]}
     >
       {breadcrumbs.length > 0 && <Breadcrumbs items={breadcrumbs} lang={lang} />}
       <slot />

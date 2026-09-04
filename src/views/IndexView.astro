@@ -1,61 +1,68 @@
 ---
 import Base from '../layouts/Base.astro';
 import ToolCard from '../components/ToolCard.astro';
-import { getTranslations, getLocalizedPath, type Lang } from '../i18n';
+import { getNamespace, getLocalizedPath, type Lang } from '../i18n';
 
 export interface Props {
   lang?: Lang;
 }
 
 const { lang = 'en' } = Astro.props;
-const t = getTranslations(lang);
+const common = getNamespace(lang, 'common');
+const home = getNamespace(lang, 'home');
+const age = getNamespace(lang, 'age');
+const birthday = getNamespace(lang, 'birthday');
+const wheel = getNamespace(lang, 'wheel');
+const picker = getNamespace(lang, 'picker');
+const countdown = getNamespace(lang, 'countdown');
+const names = getNamespace(lang, 'names');
 
 const tools = [
   {
-    title: t.nav.ageCalculator,
-    description: t.age.subtitle,
+    title: common.nav.ageCalculator,
+    description: age.subtitle,
     href: getLocalizedPath('/age-calculator', lang),
-    badge: 'Popular',
+    badge: common.labels?.popular || (lang === 'ar' ? 'شائع' : lang === 'pt' ? 'Popular' : lang === 'id' ? 'Populer' : 'Popular'),
     icon: 'calendar' as const,
     popular: true,
   },
   {
-    title: t.nav.birthdayFacts,
-    description: t.birthday.subtitle,
+    title: common.nav.birthdayFacts,
+    description: birthday.subtitle,
     href: getLocalizedPath('/birthday-facts', lang),
-    badge: 'Trivia',
+    badge: lang === 'ar' ? 'معلومات' : lang === 'pt' ? 'Curiosidades' : lang === 'id' ? 'Trivia' : 'Trivia',
     icon: 'cake' as const,
     popular: false,
   },
   {
-    title: t.nav.decisionWheel,
-    description: t.wheel.subtitle,
+    title: common.nav.decisionWheel,
+    description: wheel.subtitle,
     href: getLocalizedPath('/decision-wheel', lang),
-    badge: 'Randomizer',
+    badge: lang === 'ar' ? 'عشوائي' : lang === 'pt' ? 'Sorteador' : lang === 'id' ? 'Pengacak' : 'Randomizer',
     icon: 'wheel' as const,
     popular: false,
   },
   {
-    title: t.nav.randomPicker,
-    description: t.picker.subtitle,
+    title: common.nav.randomPicker,
+    description: picker.subtitle,
     href: getLocalizedPath('/random-picker', lang),
-    badge: 'Utility',
+    badge: lang === 'ar' ? 'أداة' : lang === 'pt' ? 'Utilitário' : lang === 'id' ? 'Utilitas' : 'Utility',
     icon: 'dice' as const,
     popular: false,
   },
   {
-    title: t.nav.countdown,
-    description: t.countdown.subtitle,
+    title: common.nav.countdown,
+    description: countdown.subtitle,
     href: getLocalizedPath('/countdown', lang),
-    badge: 'Time',
+    badge: lang === 'ar' ? 'الوقت' : lang === 'pt' ? 'Tempo' : lang === 'id' ? 'Waktu' : 'Time',
     icon: 'clock' as const,
     popular: false,
   },
   {
-    title: t.nav.nameMeaning,
-    description: t.names.subtitle,
+    title: common.nav.nameMeaning,
+    description: names.subtitle,
     href: getLocalizedPath('/name-meaning', lang),
-    badge: 'AI + Database',
+    badge: lang === 'ar' ? 'ذكاء اصطناعي + قاعدة بيانات' : lang === 'pt' ? 'IA + Dados' : lang === 'id' ? 'AI + Database' : 'AI + Database',
     icon: 'book' as const,
     popular: false,
   },
@@ -63,13 +70,17 @@ const tools = [
 ---
 
 <Base
-  title={`${t.home.heroTitle} — ${t.siteName}`}
-  description={t.description}
+  metaKey="home"
   canonicalPath={getLocalizedPath('/', lang)}
   ogImage="/og/home.svg"
   maxWidthClass="max-w-5xl"
   lang={lang}
 >
+  <!-- Pass localized data to client script -->
+  <script is:inline define:vars={{ pageLang: lang }}>
+    window.__PAGE_LANG__ = pageLang;
+  </script>
+
   <!-- Client-side First Visit Redirect Fallback on root -->
   {lang === 'en' && (
     <script is:inline>
@@ -93,23 +104,23 @@ const tools = [
         <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
         <span class="font-medium text-primary-light dark:text-primary-dark">ToolNest</span>
         <span>•</span>
-        <span>{t.badgeFree}</span>
+        <span>{common.badgeFree}</span>
         <span>•</span>
-        <span>{t.badgePrivacy}</span>
+        <span>{common.badgePrivacy}</span>
       </div>
 
       <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-primary-light dark:text-primary-dark leading-[1.15]">
-        {t.home.heroTitle}
+        {home.heroTitle}
       </h1>
 
       <p class="text-base sm:text-lg text-secondary-light dark:text-secondary-dark max-w-xl mx-auto leading-relaxed">
-        {t.home.heroSubtitle}
+        {home.heroSubtitle}
       </p>
 
       <div class="pt-2">
         <a href="#tools-grid" class="btn-primary inline-flex items-center gap-2 shadow-sm">
-          <span>{t.common.exploreMore}</span>
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <span>{common.buttons.exploreMore}</span>
+          <svg class="w-4 h-4 rtl-flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="6 9 12 15 18 9"></polyline>
           </svg>
         </a>
@@ -118,31 +129,38 @@ const tools = [
   </section>
 
   <!-- Jump Back In Section -->
-  <section id="jump-back-in-section" class="hidden mb-10 space-y-3">
-    <div class="flex items-center justify-between">
-      <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-secondary-light dark:text-secondary-dark">
-        <svg class="w-3.5 h-3.5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
-          <circle cx="12" cy="12" r="10"/>
-          <polyline points="12 6 12 12 16 14"/>
+  <section
+    id="jump-back-in-section"
+    class="hidden mb-8 p-4 rounded-2xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark transition-all"
+    aria-label={lang === 'ar' ? 'النشاط الأخير' : lang === 'pt' ? 'Atividade Recente' : lang === 'id' ? 'Aktivitas Terbaru' : 'Recent Activity'}
+  >
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+      <h2 class="text-xs font-bold uppercase tracking-wider text-secondary-light dark:text-secondary-dark flex items-center gap-2">
+        <svg class="w-3.5 h-3.5 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
         </svg>
-        <span>Recent Activity</span>
-      </div>
+        <span>{lang === 'ar' ? 'استئناف النشاط الأخير' : lang === 'pt' ? 'Continuar de onde parou' : lang === 'id' ? 'Lanjutkan Aktivitas' : 'Jump Back In'}</span>
+      </h2>
+      <span class="text-[11px] text-secondary-light/70 dark:text-secondary-dark/70">
+        {lang === 'ar' ? 'محفوظ محلياً في متصفحك فقط' : lang === 'pt' ? 'Salvo apenas no seu navegador' : lang === 'id' ? 'Tersimpan hanya di browser Anda' : 'Stored only in your browser'}
+      </span>
     </div>
-    <div id="jump-back-in-chips" class="flex flex-wrap gap-2.5"></div>
+    <div id="jump-back-in-chips" class="flex flex-wrap gap-2"></div>
   </section>
 
-  <!-- Tools Grid -->
-  <section id="tools-grid" class="scroll-mt-24 space-y-6">
-    <div class="flex items-center justify-between border-b border-border-light dark:border-border-dark pb-3">
-      <h2 class="text-xl font-bold tracking-tight text-primary-light dark:text-primary-dark">
-        {t.home.exploreToolsHeading}
+  <!-- Tools Grid Section -->
+  <section id="tools-grid" class="space-y-4">
+    <div class="flex items-center justify-between">
+      <h2 class="text-lg font-bold text-primary-light dark:text-primary-dark">
+        {home.exploreToolsHeading}
       </h2>
-      <span class="text-xs font-medium text-secondary-light dark:text-secondary-dark">
-        6 {t.common.options.toLowerCase()}
+      <span class="text-xs text-secondary-light dark:text-secondary-dark">
+        {tools.length} {lang === 'ar' ? 'أدوات مصغرة' : lang === 'pt' ? 'microferramentas' : lang === 'id' ? 'alat mikro' : 'micro-tools'}
       </span>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {tools.map((tool) => (
         <ToolCard
           title={tool.title}
@@ -151,6 +169,7 @@ const tools = [
           badge={tool.badge}
           icon={tool.icon}
           popular={tool.popular}
+          lang={lang}
         />
       ))}
     </div>
@@ -160,10 +179,10 @@ const tools = [
   <section class="mt-16 pt-12 border-t border-border-light dark:border-border-dark">
     <div class="text-center max-w-xl mx-auto mb-10 space-y-2">
       <h2 class="text-2xl font-bold text-primary-light dark:text-primary-dark">
-        {t.home.whyChooseTitle}
+        {home.whyChooseTitle}
       </h2>
       <p class="text-sm text-secondary-light dark:text-secondary-dark leading-relaxed">
-        {t.siteName} is crafted with privacy, performance, and simplicity at its core.
+        {lang === 'ar' ? `${common.siteName} مصممة مع التركيز الكامل على الخصوصية، والسرعة، والبساطة الفائقة.` : lang === 'pt' ? `${common.siteName} é desenvolvido com privacidade, desempenho e simplicidade em sua essência.` : lang === 'id' ? `${common.siteName} dibuat dengan mengutamakan privasi, performa, dan kesederhanaan.` : `${common.siteName} is crafted with privacy, performance, and simplicity at its core.`}
       </p>
     </div>
 
@@ -175,10 +194,10 @@ const tools = [
           </svg>
         </div>
         <h3 class="text-base font-bold text-primary-light dark:text-primary-dark">
-          {t.home.whyFast}
+          {home.whyFast}
         </h3>
         <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
-          {t.home.whyFastDesc}
+          {home.whyFastDesc}
         </p>
       </div>
 
@@ -190,10 +209,10 @@ const tools = [
           </svg>
         </div>
         <h3 class="text-base font-bold text-primary-light dark:text-primary-dark">
-          {t.home.whyPrivate}
+          {home.whyPrivate}
         </h3>
         <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
-          {t.home.whyPrivateDesc}
+          {home.whyPrivateDesc}
         </p>
       </div>
 
@@ -204,10 +223,10 @@ const tools = [
           </svg>
         </div>
         <h3 class="text-base font-bold text-primary-light dark:text-primary-dark">
-          {t.home.whyFree}
+          {home.whyFree}
         </h3>
         <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
-          {t.home.whyFreeDesc}
+          {home.whyFreeDesc}
         </p>
       </div>
     </div>
@@ -227,13 +246,22 @@ const tools = [
         return;
       }
 
+      const pageLang = (window as any).__PAGE_LANG__ || 'en';
+      const langPrefix = pageLang !== 'en' ? `/${pageLang}` : '';
+
       container.innerHTML = recent
         .map(
-          (item) => `
+          (item) => {
+            const rawHref = item.href || '/';
+            const cleanHref = rawHref.startsWith('/pt/') || rawHref.startsWith('/id/') || rawHref.startsWith('/ar/')
+              ? rawHref
+              : (pageLang !== 'en' ? `${langPrefix}${rawHref}` : rawHref);
+
+            return `
         <a
-          href="${item.href}"
+          href="${cleanHref}"
           class="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark hover:border-accent/50 text-xs shadow-xs hover:shadow-sm hover:-translate-y-0.5 active:scale-95 transition-all shrink-0 group focus:outline-none focus:ring-2 focus:ring-accent"
-          aria-label="Reopen ${item.toolTitle}: ${item.t}"
+          aria-label="${item.toolTitle}: ${item.t}"
         >
           <span class="px-1.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-accent/10 text-accent dark:bg-accent/20">
             ${item.badge}
@@ -242,10 +270,11 @@ const tools = [
             ${item.t}
           </span>
           <span class="text-[10px] text-secondary-light/70 dark:text-secondary-dark/70 shrink-0">
-            ${formatRelativeTime(item.d)}
+            ${formatRelativeTime(item.d, pageLang)}
           </span>
         </a>
-      `
+      `;
+          }
         )
         .join('');
 
@@ -260,3 +289,4 @@ const tools = [
     window.addEventListener('toolnest:history-updated', renderJumpBackIn);
   </script>
 </Base>
+

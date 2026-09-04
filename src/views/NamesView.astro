@@ -3,15 +3,24 @@ import Base from '../layouts/Base.astro';
 import ToolCard from '../components/ToolCard.astro';
 import HistoryCard from '../components/HistoryCard.astro';
 import namesData from '../data/names.json';
-import relatedLinksData from '../data/related-links.json';
-import { getTranslations, getLocalizedPath, type Lang } from '../i18n';
+import { getNamespace, getLocalizedPath, type Lang, getLocalizedRelatedLinks } from '../i18n';
 
 export interface Props {
   lang?: Lang;
 }
 
 const { lang = 'en' } = Astro.props;
-const t = getTranslations(lang);
+const common = getNamespace(lang, 'common');
+const names = getNamespace(lang, 'names');
+const errors = getNamespace(lang, 'errors');
+
+const t = {
+  names,
+  common,
+  errors,
+  nav: common.nav,
+  siteName: common.siteName,
+};
 
 const lastUpdatedDate = new Date().toLocaleDateString(lang === 'ar' ? 'ar-EG' : lang === 'pt' ? 'pt-BR' : lang === 'id' ? 'id-ID' : 'en-US', {
   year: 'numeric',
@@ -25,16 +34,16 @@ const alphabet = Array.from(new Set(sortedNames.map((n) => n.name[0].toUpperCase
 
 const seenLetters = new Set<string>();
 
-const relatedTools = relatedLinksData['names'];
+const relatedTools = getLocalizedRelatedLinks(lang, 'names');
 
 // WebApplication schema
 const webAppSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
   '@id': 'https://toolnest.pages.dev/names#app',
-  name: 'Baby Names Directory A–Z — Meanings & Roots',
-  url: 'https://toolnest.pages.dev/names',
-  description: 'Search and explore meanings, origins, popularity, and famous namesakes for 200+ popular baby names worldwide.',
+  name: names.title || 'Baby Names Directory A–Z — Meanings & Roots',
+  url: `https://toolnest.pages.dev${getLocalizedPath('/names', lang)}`,
+  description: names.subtitle || 'Search and explore meanings, origins, popularity, and famous namesakes for 200+ popular baby names worldwide.',
   applicationCategory: 'UtilitiesApplication',
   operatingSystem: 'Any',
   offers: {
@@ -51,14 +60,18 @@ const webAppSchema = {
 ---
 
 <Base
-  title={`${t.names.metaTitle} | ${t.siteName}`}
-  description={t.names.metaDescription}
+  metaKey="names"
   canonicalPath={getLocalizedPath('/names', lang)}
   ogImage="/og/names.svg"
   breadcrumbs={[{ name: t.nav.home, item: getLocalizedPath('/', lang) }, { name: t.nav.names, item: getLocalizedPath('/names', lang) }]}
   extraSchemas={[webAppSchema]}
   lang={lang}
 >
+  <!-- Pass localized data to client script -->
+  <script is:inline define:vars={{ namesI18n: { common, names, errors }, pageLang: lang }}>
+    window.__NAMES_I18N__ = namesI18n;
+    window.__PAGE_LANG__ = pageLang;
+  </script>
   <!-- Page Header -->
   <header class="text-center py-4 sm:py-6 space-y-3">
     <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-accent/10 text-accent dark:bg-accent/20">
@@ -74,15 +87,15 @@ const webAppSchema = {
   </header>
 
   <!-- KEY TAKEAWAYS / FEATURED SNIPPET SUMMARY BOX -->
-  <aside class="card mt-2 p-4 sm:p-5 border-l-4 border-accent bg-accent/5 space-y-2" aria-label="Key Takeaways">
+  <aside class="card mt-2 p-4 sm:p-5 border-l-4 border-accent bg-accent/5 space-y-2" aria-label={names.ui?.keyTakeawaysTitle || "Key Takeaways"}>
     <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent">
       <span>⚡</span>
-      <span>Quick Answer & Key Takeaways</span>
+      <span>{names.ui?.keyTakeawaysTitle || "Quick Answer & Key Takeaways"}</span>
     </div>
     <ul class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark space-y-1.5 list-disc list-inside leading-relaxed">
-      <li><strong>200+ Curated Profiles:</strong> Comprehensive dossiers detailing historical definitions, phonetic roots, and rankings.</li>
-      <li><strong>A–Z Quick Navigation:</strong> Jump instantly between letters or filter dynamically by gender, cultural origin, and popularity.</li>
-      <li><strong>Private Onomastic Tool:</strong> Instant search running 100% in your browser without tracking or mandatory user logins.</li>
+      <li>{names.ui?.kt1 || "200+ Curated Profiles: Comprehensive dossiers detailing historical definitions, phonetic roots, and rankings."}</li>
+      <li>{names.ui?.kt2 || "A–Z Quick Navigation: Jump instantly between letters or filter dynamically by gender, cultural origin, and popularity."}</li>
+      <li>{names.ui?.kt3 || "Private Onomastic Tool: Instant search running 100% in your browser without tracking or mandatory user logins."}</li>
     </ul>
   </aside>
 
@@ -90,10 +103,10 @@ const webAppSchema = {
   <div class="card mt-4 p-3.5 sm:p-4 border border-accent/25 bg-accent/5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs sm:text-sm">
     <div class="flex items-center gap-2.5 text-primary-light dark:text-primary-dark">
       <span class="text-base select-none">✨</span>
-      <span>Looking for a rare or custom name not listed below?</span>
+      <span>{names.ui?.aiPrompt || "Looking for a rare or custom name not listed below?"}</span>
     </div>
     <a href={getLocalizedPath('/name-meaning', lang)} class="btn-primary text-xs px-3.5 py-1.5 font-bold shrink-0 inline-flex items-center gap-1 shadow-xs">
-      <span>Try AI Name Meaning Finder &rarr;</span>
+      <span>{names.ui?.aiPromptBtn || "Try AI Name Meaning Finder →"}</span>
     </a>
   </div>
 
@@ -101,9 +114,9 @@ const webAppSchema = {
   <div class="card mt-4 p-3 space-y-1.5 border border-border-light dark:border-border-dark" aria-label="Alphabetical Jump">
     <div class="flex items-center justify-between px-1">
       <span class="text-[11px] font-bold uppercase tracking-wider text-secondary-light dark:text-secondary-dark">
-        Alphabetical Index (A–Z)
+        {names.ui?.directoryAtoZ || "Alphabetical Index (A–Z)"}
       </span>
-      <span class="text-[11px] text-accent font-semibold">{sortedNames.length} Curated Names</span>
+      <span class="text-[11px] text-accent font-semibold">{sortedNames.length} {names.ui?.curatedProfiles || "Curated Names"}</span>
     </div>
     <nav class="flex flex-wrap items-center gap-1 sm:gap-1.5" aria-label="Alphabet Jump Links">
       {alphabet.map((letter) => (
@@ -123,16 +136,16 @@ const webAppSchema = {
     <div class="flex flex-col sm:flex-row gap-3">
       <!-- Search Input -->
       <div class="relative flex-1">
-        <svg class="w-4 h-4 text-secondary-light dark:text-secondary-dark absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <svg class="w-4 h-4 text-secondary-light dark:text-secondary-dark absolute start-3.5 top-1/2 -translate-y-1/2 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="11" cy="11" r="8"/>
           <line x1="21" y1="21" x2="16.65" y2="16.65"/>
         </svg>
         <input
           id="name-search-input"
           type="search"
-          placeholder="Search by name, origin (e.g. Latin, Greek), or meaning..."
-          class="input-base text-sm pl-10 pr-4 py-2.5 w-full"
-          aria-label="Search names"
+          placeholder={names.ui?.searchPlaceholder || names.searchPlaceholder || "Search by name, origin (e.g. Latin, Greek), or meaning..."}
+          class="input-base text-sm ps-10 pe-4 py-2.5 w-full"
+          aria-label={names.ui?.searchPlaceholder || names.searchPlaceholder || "Search names"}
           autocomplete="off"
         />
       </div>
@@ -144,48 +157,48 @@ const webAppSchema = {
           data-gender="all"
           class="gender-chip px-3.5 py-2 rounded-xl text-xs font-semibold border transition-all cursor-pointer border-accent bg-accent text-white"
         >
-          All ({sortedNames.length})
+          {names.ui?.allGenders || names.allGenders || 'All'} ({sortedNames.length})
         </button>
         <button
           type="button"
           data-gender="female"
           class="gender-chip px-3.5 py-2 rounded-xl text-xs font-semibold border transition-all cursor-pointer border-border-light dark:border-border-dark bg-input-light dark:bg-input-dark text-secondary-light dark:text-secondary-dark hover:border-accent"
         >
-          Female
+          {names.ui?.female || names.girlNames || 'Female'}
         </button>
         <button
           type="button"
           data-gender="male"
           class="gender-chip px-3.5 py-2 rounded-xl text-xs font-semibold border transition-all cursor-pointer border-border-light dark:border-border-dark bg-input-light dark:bg-input-dark text-secondary-light dark:text-secondary-dark hover:border-accent"
         >
-          Male
+          {names.ui?.male || names.boyNames || 'Male'}
         </button>
         <button
           type="button"
           data-gender="unisex"
           class="gender-chip px-3.5 py-2 rounded-xl text-xs font-semibold border transition-all cursor-pointer border-border-light dark:border-border-dark bg-input-light dark:bg-input-dark text-secondary-light dark:text-secondary-dark hover:border-accent"
         >
-          Unisex
+          {names.ui?.unisex || names.unisexNames || 'Unisex'}
         </button>
       </div>
     </div>
 
     <!-- Live Counter -->
     <div class="flex items-center justify-between text-xs text-secondary-light dark:text-secondary-dark pt-1 border-t border-border-light dark:border-border-dark">
-      <span id="name-results-count">Showing {sortedNames.length} of {sortedNames.length} names</span>
+      <span id="name-results-count">{(names.ui?.showingCount || "Showing {shown} of {total} names").replace('{shown}', String(sortedNames.length)).replace('{total}', String(sortedNames.length))}</span>
       <button
         id="clear-filters-btn"
         type="button"
         class="hidden text-accent hover:underline font-medium cursor-pointer"
       >
-        Clear filters
+        {names.ui?.clearFilters || common.buttons?.clear || 'Clear filters'}
       </button>
     </div>
   </section>
 
   <!-- Recent Activity History Card -->
   <div class="mt-6">
-    <HistoryCard toolId="names" title="Recently Viewed Names" icon="🏷️" />
+    <HistoryCard toolId="names" title={names.ui?.recentlyViewed || "Recently Viewed Names"} icon="🏷️" lang={lang} />
   </div>
 
   <!-- NAMES DIRECTORY GRID -->
@@ -221,7 +234,7 @@ const webAppSchema = {
                   {item.name}
                 </span>
                 <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded-md bg-input-light dark:bg-input-dark text-secondary-light dark:text-secondary-dark">
-                  {item.gender}
+                  {item.gender === 'female' ? (names.ui?.female || 'Female') : item.gender === 'male' ? (names.ui?.male || 'Male') : (names.ui?.unisex || 'Unisex')}
                 </span>
               </div>
               <p class="text-xs text-secondary-light dark:text-secondary-dark line-clamp-1">
@@ -240,7 +253,7 @@ const webAppSchema = {
                 ))}
               </div>
               <span class="text-accent font-semibold flex items-center gap-0.5 group-hover:translate-x-0.5 transition-transform">
-                Meaning &rarr;
+                {names.ui?.meaningLabel || names.meaningLabel || 'Meaning'} &rarr;
               </span>
             </div>
           </a>
@@ -256,10 +269,10 @@ const webAppSchema = {
     >
       <span class="text-3xl">🔍</span>
       <h3 class="text-base font-bold text-primary-light dark:text-primary-dark">
-        No names match your search
+        {names.ui?.noNamesFound || names.emptyState?.title || "No names match your search"}
       </h3>
       <p class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark max-w-sm mx-auto">
-        Try adjusting your keywords, checking your spelling, or clearing your active gender filter.
+        {names.ui?.noNamesFoundDesc || names.emptyState?.desc || "Try adjusting your keywords, checking your spelling, or clearing your active gender filter."}
       </p>
     </div>
   </section>
@@ -269,14 +282,14 @@ const webAppSchema = {
     <div class="flex flex-wrap items-center justify-between gap-2">
       <h2 class="text-xs font-bold uppercase tracking-wider text-primary-light dark:text-primary-dark flex items-center gap-1.5">
         <span>📐</span>
-        <span>Directory Methodology & Onomastic Research</span>
+        <span>{names.ui?.methodologyTitle || names.methodology?.title || "Directory Methodology & Onomastic Research"}</span>
       </h2>
       <span class="text-[11px] text-secondary-light dark:text-secondary-dark">
-        Last updated: {lastUpdatedDate}
+        {common.labels?.lastUpdated || "Last updated"}: {lastUpdatedDate}
       </span>
     </div>
     <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
-      Each name entry is verified against primary historical lexicons and demographic registries. Popularity scores are mapped to statistical birth percentiles, ensuring reliable cultural and etymological documentation.
+      {names.ui?.methodologyDesc || names.methodology?.desc || "Each name entry is verified against primary historical lexicons and demographic registries. Popularity scores are mapped to statistical birth percentiles, ensuring reliable cultural and etymological documentation."}
     </p>
   </section>
 
@@ -284,10 +297,10 @@ const webAppSchema = {
   <section class="mt-14 pt-10 border-t border-border-light dark:border-border-dark space-y-4">
     <div class="flex items-center justify-between">
       <h2 class="text-lg sm:text-xl font-bold tracking-tight text-primary-light dark:text-primary-dark">
-        Related Free Tools
+        {common.buttons?.relatedTools || 'Related Free Tools'}
       </h2>
-      <a href="/" class="text-xs font-semibold text-accent hover:underline">
-        View all tools &rarr;
+      <a href={getLocalizedPath('/', lang)} class="text-xs font-semibold text-accent hover:underline">
+        {common.buttons?.exploreMore || 'View all tools'} &rarr;
       </a>
     </div>
 
@@ -299,6 +312,7 @@ const webAppSchema = {
           href={tool.href}
           anchor={tool.anchor}
           icon={tool.href.includes('meaning') ? 'book' : tool.href.includes('birthday') ? 'cake' : 'calendar'}
+          lang={lang}
         />
       ))}
     </div>
@@ -348,7 +362,12 @@ const webAppSchema = {
       });
 
       if (countDisplay) {
-        countDisplay.textContent = `Showing ${visibleCount} of ${cards.length} names`;
+        const i18n = (window as any).__NAMES_I18N__ || {};
+        const template = i18n.names?.ui?.showingCount || i18n.names?.counter?.showingOf || "Showing {shown} of {total} names";
+        countDisplay.textContent = template
+          .replace('{shown}', String(visibleCount))
+          .replace('{count}', String(visibleCount))
+          .replace('{total}', String(cards.length));
       }
 
       if (clearBtn) {
@@ -438,7 +457,8 @@ const webAppSchema = {
 
   function setupNamesPage() {
     initNamesDirectory();
-    initHistoryCard({ toolId: 'names' });
+    const pageLang = (window as any).__PAGE_LANG__ || 'en';
+    initHistoryCard({ toolId: 'names', lang: pageLang });
   }
 
   if (document.readyState === 'loading') {
@@ -448,3 +468,4 @@ const webAppSchema = {
   }
   document.addEventListener('astro:after-swap', setupNamesPage);
 </script>
+

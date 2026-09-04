@@ -1,31 +1,25 @@
 {
   "common": {
     "siteName": "ToolNest",
-    "tagline": "Alat Mikro Online Gratis",
-    "description": "Alat mikro online yang cepat, privat, dan gratis tanpa daftar akun, tanpa iklan mengganggu, dan tanpa penyimpanan server.",
-    "badges": {
-      "free": "100% Gratis",
-      "noSignup": "Tanpa Daftar",
-      "privacy": "Bebas Pelacakan"
-    },
+    "tagline": "Alat mikro online gratis yang andal — tanpa daftar akun, tanpa iklan mengganggu, data tetap aman di peramban Anda.",
+    "description": "Koleksi pilihan alat mikro berbasis peramban yang modern, cepat, dan mengutamakan privasi. Roda keputusan, pengacak nama, kalkulator umur, fakta tanggal lahir, hitung mundur, dan arti nama.",
+    "badgeFree": "100% Gratis",
+    "badgeNoSignup": "Tanpa Daftar",
+    "badgePrivacy": "Privasi Terjaga",
+    "footerTagline": "Alat mikro gratis, privat, dan ramah ponsel yang berjalan langsung di peramban Anda.",
+    "footerCopyright": "ToolNest. Hak cipta dilindungi. Tanpa pelacakan. Tanpa penyimpanan di server.",
     "nav": {
       "home": "Beranda",
-      "ageCalculator": "Kalkulator Usia",
-      "birthdayFacts": "Fakta Ulang Tahun",
+      "ageCalculator": "Kalkulator Umur",
+      "birthdayFacts": "Fakta Tanggal Lahir",
       "decisionWheel": "Roda Keputusan",
-      "randomPicker": "Pengacak Pilihan",
+      "randomPicker": "Pengacak Acak",
       "countdown": "Hitung Mundur",
       "nameMeaning": "Arti Nama",
       "about": "Tentang",
-      "privacy": "Kebijakan Privasi",
+      "privacy": "Privasi",
       "contact": "Kontak",
-      "switchLanguage": "Ganti Bahasa",
-      "skipToContent": "Lompat ke konten utama"
-    },
-    "footer": {
-      "tagline": "Alat mikro gratis, privat, dan berbasis peramban yang menghargai waktu dan data Anda.",
-      "copyright": "ToolNest. Dibuat untuk kecepatan, privasi, dan kesederhanaan.",
-      "allRightsReserved": "Semua hak dilindungi undang-undang."
+      "switchLanguage": "Bahasa"
     },
     "buttons": {
       "calculate": "Hitung",
@@ -34,155 +28,306 @@
       "create": "Buat Hitung Mundur",
       "share": "Bagikan",
       "shareAsImage": "Bagikan Gambar",
-      "downloadImage": "Unduh Kartu",
+      "downloadImage": "Unduh Gambar",
       "copyLink": "Salin Tautan",
-      "copied": "Tersalin!",
+      "linkCopied": "Tautan berhasil disalin ke papan klip!",
       "reset": "Atur Ulang",
-      "clear": "Hapus Semua",
+      "clear": "Bersihkan",
       "retry": "Coba Lagi",
       "loading": "Memuat...",
-      "generating": "Membuat...",
-      "retrying": "Mencoba lagi...",
+      "generating": "Memproses...",
+      "retrying": "Mencoba kembali...",
+      "error": "Terjadi kesalahan",
+      "success": "Berhasil!",
+      "howItWorks": "Cara Kerja",
+      "useCases": "Contoh Penggunaan",
+      "faq": "Pertanyaan Umum",
+      "relatedTools": "Alat Terkait",
+      "exploreMore": "Jelajahi Alat Lainnya",
+      "madeWith": "dibuat dengan ToolNest • toolnest.pages.dev",
+      "quickIdeas": "Ide Cepat",
+      "winner": "Pemenang",
+      "shuffle": "Acak",
       "remove": "Hapus",
       "add": "Tambah",
-      "save": "Simpan",
-      "close": "Tutup",
-      "back": "Kembali",
-      "exploreMore": "Jelajahi Alat Lainnya",
-      "switchTheme": "Ganti tema"
+      "options": "Pilihan",
+      "result": "Hasil",
+      "downloadCard": "Unduh Kartu",
+      "backHome": "Kembali ke Beranda",
+      "viewDetails": "Lihat Detail",
+      "confirm": "Konfirmasi",
+      "cancel": "Batal"
     },
     "toasts": {
       "copied": "Berhasil disalin ke papan klip!",
-      "linkCopied": "Tautan berhasil disalin ke papan klip!",
-      "error": "Terjadi kesalahan. Silakan coba lagi.",
-      "saved": "Berhasil disimpan!",
-      "removed": "Berhasil dihapus.",
-      "cannotRemove": "Tidak dapat menghapus: batas minimal tidak terpenuhi.",
-      "shareFailed": "Tidak dapat membagikan di perangkat ini. Tautan telah disalin.",
-      "invalidDate": "Silakan masukkan tanggal yang valid.",
-      "futureDate": "Tanggal tidak boleh di masa depan."
+      "errorOccurred": "Terjadi kesalahan yang tidak terduga.",
+      "loaded": "Berhasil dimuat!"
     },
-    "sections": {
-      "howItWorks": "Cara Kerja",
-      "useCases": "Contoh Penggunaan Populer",
-      "faq": "Pertanyaan Umum",
-      "relatedTools": "Alat Mikro Terkait",
-      "quickIdeas": "Pilihan Cepat"
-    },
-    "watermark": "Dibuat dengan ToolNest"
+    "skipToContent": "Lewati ke konten utama",
+    "sitemap": "Peta Situs",
+    "privacyBadge100": "Privasi 100% Sisi Klien",
+    "clientPrivacy": "Hanya tersimpan di browsermu",
+    "recentActivity": "Aktivitas Terbaru",
+    "recentCalculations": "Belum ada perhitungan yang tersimpan",
+    "entriesSavedPrivately": "Data kamu tersimpan dengan aman hanya di perangkat ini.",
+    "clearAll": "Hapus semua",
+    "clearAllConfirm": "Hapus semua?",
+    "yes": "Ya",
+    "cancel": "Batal",
+    "restore": "Pulihkan",
+    "restoreArrow": "Pulihkan →",
+    "userReviews": "ulasan pengguna",
+    "popular": "Populer",
+    "openTool": "Buka Alat",
+    "relatedTools": "Alat Gratis Terkait",
+    "viewAllTools": "Lihat semua alat",
+    "close": "Tutup",
+    "lightMode": "Mode Terang",
+    "darkMode": "Mode Gelap",
+    "switchTheme": "Ganti tema",
+    "openMenu": "Buka menu",
+    "closeMenu": "Tutup menu",
+    "quickAnswerTitle": "Jawaban Cepat & Poin Utama",
+    "lastUpdated": "Terakhir diperbarui",
+    "methodologyGuarantee": "Metodologi & Jaminan Akurasi",
+    "howToUse": "Cara Menggunakan dalam 3 Langkah",
+    "exploreMore": "Jelajahi Alat",
+    "backHome": "Kembali ke Beranda",
+    "copied": "Tersalin ke papan klip!",
+    "unableToCopy": "Gagal menyalin.",
+    "dismiss": "Tutup"
   },
   "meta": {
     "home": {
-      "title": "ToolNest — Alat Mikro Online Gratis untuk Keputusan Sehari-hari",
-      "description": "Alat praktis dan privat: Roda Keputusan, Fakta Ulang Tahun, Pengacak Nama, Hitung Mundur Waktu, Kalkulator Usia, dan Arti Nama Bayi."
+      "title": "ToolNest — Alat Mikro Online Gratis yang Cepat & Andal",
+      "description": "Alat mikro cepat, aman, dan ramah ponsel. Roda keputusan, pengacak nama, kalkulator umur, fakta tanggal lahir, dan hitung mundur acara."
     },
     "wheel": {
-      "title": "Roda Putar Pengambil Keputusan Acak | ToolNest",
-      "description": "Putar roda acak interaktif bertenaga AI untuk mengambil keputusan cepat. Buat pilihan khusus dengan Google Gemini AI atau masukkan sendiri."
+      "title": "Roda Keputusan — Putar Roda Pilihan dengan Bantuan AI",
+      "description": "Putar roda interaktif untuk mengambil keputusan secara cepat dan adil. Pilih menu makan, undian acak, atau buat opsi instan dengan AI."
     },
     "picker": {
-      "title": "Pengacak Nama & Pembagi Tim Acak Online | ToolNest",
-      "description": "Undi pemenang acak, arisan, undian kuis, atau bagi tim kerja secara adil dan matematis langsung di peramban Anda."
+      "title": "Pengacak Nama & Nomor — Undian dan Pembagi Tim Acak",
+      "description": "Undi nama atau nomor tanpa duplikat, pilih siswa di kelas, atau bagi anggota kelompok ke dalam tim yang seimbang secara acak."
     },
     "age": {
-      "title": "Kalkulator Usia Tepat & Tonggak Ulang Tahun | ToolNest",
-      "description": "Hitung usia kronologis tepat hingga detik, bandingkan selisih tanggal, dan ketahui hari penting ulang tahun Anda berikutnya."
+      "title": "Kalkulator Umur — Hitung Usia Tepat Tahun, Hari & Detik",
+      "description": "Ketahui umur kronologis Anda secara presisi, hitung mundur ulang tahun berikutnya, total hari hidup, dan selisih antara dua tanggal."
     },
     "birthday": {
-      "title": "Fakta Ulang Tahun & Generator Kartu Trivia | ToolNest",
-      "description": "Temukan fakta unik hari kelahiran Anda: hari lahir, zodiak, batu kelahiran, tokoh terkenal yang berulang tahun sama, dan kartu stiker."
+      "title": "Fakta Tanggal Lahir — Zodiak, Batu Lahir & Momen Penting",
+      "description": "Temukan zodiak, elemen, batu kelahiran, hari lahir, dan unduh kartu ucapan ulang tahun visual yang menarik untuk media sosial."
     },
     "countdown": {
-      "title": "Pembuat Waktu Hitung Mundur Langsung | ToolNest",
-      "description": "Buat penghitung mundur acara penting seperti pernikahan, liburan, ulang tahun, dan ujian untuk dibagikan ke teman."
+      "title": "Hitung Mundur Waktu — Buat & Bagikan Timer Acara",
+      "description": "Buat jam hitung mundur waktu nyata yang cantik. Bagikan tautan langsung ke teman atau unduh kartu gambar untuk media sosial."
     },
     "countdownView": {
-      "title": "Hitung Mundur Acara Langsung | ToolNest",
-      "description": "Lihat hitung mundur ini secara langsung dalam hitungan hari, jam, menit, dan detik hingga momen perayaan tiba."
+      "title": "Tampilan Hitung Mundur Langsung | ToolNest",
+      "description": "Pantau hitung mundur acara Anda secara langsung dalam waktu nyata. Mudah dibagikan, gratis, dan optimal untuk layar ponsel."
     },
     "names": {
-      "title": "Kamus & Arti Nama Bayi Terlengkap | ToolNest",
-      "description": "Jelajahi ratusan nama bayi beserta asal-usul bahasa, makna filosofis, popularitas, dan analisis kepribadian AI."
+      "title": "Arti & Asal Nama — Koleksi Lebih dari 200 Nama dengan AI",
+      "description": "Cari arti nama, pelafalan fonetis, latar belakang budaya, serta dapatkan rekomendasi nama saudara dengan bantuan kecerdasan buatan."
     },
     "nameMeaning": {
-      "title": "Arti Nama & Analisis Karakter AI | ToolNest",
-      "description": "Cari nama apa pun untuk mengungkap akar etimologi, asal budaya, sifat karakter, dan tokoh bersejarah senama."
+      "title": "Pencarian & Analisis Arti Nama | ToolNest",
+      "description": "Telusuri asal-usul etimologi lengkap, karakter kepribadian, popularitas sejarah, dan variasi fonetik untuk setiap nama pilihan Anda."
     },
     "about": {
-      "title": "Tentang ToolNest — Filosofi & Komitmen Privasi",
-      "description": "Pelajari alasan kami membuat ToolNest: alat mikro gratis, cepat, tanpa iklan berlebih, dan tanpa mengumpulkan data pribadi."
+      "title": "Tentang ToolNest — Utilitas Web Cepat & Menjaga Privasi",
+      "description": "Pelajari misi ToolNest: menyediakan alat bantu web berbasis peramban yang cepat, bebas pelacak pihak ketiga, dan berprinsip privasi penuh."
     },
     "contact": {
-      "title": "Hubungi ToolNest — Masukan & Permintaan Alat",
-      "description": "Hubungi tim pengembang ToolNest. Usulkan alat mikro baru, laporkan kendala teknis, atau kirimkan pertanyaan Anda."
+      "title": "Hubungi ToolNest — Bantuan & Pertanyaan",
+      "description": "Hubungi tim ToolNest untuk pertanyaan, saran penambahan alat, masukan, atau laporan kendala. Kami membalas dalam 24 hingga 48 jam."
     },
     "privacy": {
-      "title": "Kebijakan Privasi — Jaminan Tanpa Pelacakan | ToolNest",
-      "description": "Komitmen privasi kami: nol penyimpanan data pribadi di server, pemrosesan lokal di peramban, dan transparansi penuh."
+      "title": "Kebijakan Privasi — Keamanan Data & Transparansi | ToolNest",
+      "description": "Baca Kebijakan Privasi lengkap ToolNest. Pelajari arsitektur murni di peramban, penggunaan penyimpanan lokal, dan komitmen privasi kami."
     },
     "notFound": {
       "title": "Halaman Tidak Ditemukan (404) | ToolNest",
-      "description": "Halaman yang Anda tuju tidak tersedia atau telah dipindahkan. Jelajahi koleksi alat mikro online gratis kami."
+      "description": "Halaman yang Anda tuju tidak dapat ditemukan di ToolNest."
     }
   },
   "wheel": {
-    "title": "Roda Putar Pengambil Keputusan Acak",
-    "subtitle": "Bingung mau memilih apa? Biarkan roda yang menentukan. Putar secara manual atau buat pilihan otomatis dengan bantuan AI Google Gemini.",
-    "spinButton": "PUTAR",
+    "title": "Roda Keputusan",
+    "subtitle": "Bingung menentukan pilihan? Masukkan opsi Anda ke roda interaktif dan putar sekarang.",
+    "spinButton": "PUTAR RODA",
     "spinning": "Memutar...",
     "optionsHeading": "Pilihan Roda",
-    "addPlaceholder": "Ketik pilihan baru...",
-    "quickIdeasHeading": "Pilihan Cepat",
-    "presetEat": "Mau Makan Apa",
-    "presetWatch": "Mau Nonton Apa",
-    "presetYesNo": "Ya atau Tidak",
-    "aiGeneratorTitle": "Generator Pilihan dengan AI",
-    "aiGeneratorSubtitle": "Jelaskan kebimbangan Anda (misal: 'aktivitas santai saat akhir pekan hujan') dan biarkan AI menyusunkan opsinya.",
-    "aiPromptPlaceholder": "contoh: menu makan malam sehat, rekomendasi film...",
+    "addPlaceholder": "Tambah pilihan...",
+    "quickIdeasHeading": "Ide Cepat",
+    "ideas": {
+      "whatToEat": "Makan apa hari ini",
+      "workout": "Olahraga hari ini",
+      "movie": "Nonton film apa",
+      "travel": "Destinasi liburan"
+    },
+    "aiGeneratorTitle": "Pembuat Pilihan Otomatis dengan AI",
+    "aiGeneratorSubtitle": "Susun daftar pilihan khusus hanya dalam hitungan detik",
+    "aiPromptLabel": "Jelaskan keputusan yang ingin Anda buat",
+    "aiPromptPlaceholder": "Jelaskan keputusan yang ingin Anda buat (contoh: menu makan malam, genre film, tugas rumah)...",
     "aiGenerateBtn": "Buat dengan AI",
-    "aiCountLabel": "Jumlah Pilihan",
-    "aiGeneratingText": "Sedang membuat pilihan dengan AI Gemini... proses bisa memakan waktu hingga 20 detik pada percobaan pertama.",
-    "aiRetryingText": "Mencoba ulang... mohon tunggu sebentar!",
-    "replaceConfirmTitle": "Ganti Pilihan yang Ada?",
-    "replaceConfirmDesc": "Memuat pilihan baru ini akan mengganti opsi yang saat ini ada di roda.",
-    "replaceConfirmBtn": "Ya, Ganti",
-    "replaceCancelBtn": "Batal",
-    "winnerAnnounce": "Pemenang Terpilih!",
-    "winnerModalTitle": "Pemenang",
-    "removeWinnerBtn": "Hapus Pemenang & Putar Lagi",
-    "minOptionsError": "Minimal harus ada 2 pilihan untuk memutar roda.",
-    "maxOptionsError": "Maksimal 12 pilihan untuk tampilan roda yang ideal.",
-    "duplicateError": "Pilihan ini sudah ada di dalam roda.",
-    "emptyError": "Silakan ketikkan nama pilihan terlebih dahulu.",
-    "shareSuccessToast": "Tautan roda berhasil disalin ke papan klip!",
-    "removeWinnerToast": "Pilihan \"{winner}\" telah dihapus dari roda."
+    "aiCountLabel": "Jumlah:",
+    "aiGeneratingText": "Sedang memproses… bisa butuh waktu hingga 20 detik pada percobaan pertama",
+    "aiRetryingText": "Mencoba kembali… permintaan pertama membutuhkan waktu sedikit lebih lama",
+    "replaceConfirmTitle": "Ganti pilihan roda saat ini?",
+    "replaceConfirmDesc": "Roda Anda sudah memiliki pilihan sendiri. Apakah Anda ingin menggantinya dengan pilihan baru yang dibuat oleh AI?",
+    "replaceConfirmBtn": "Ganti Pilihan",
+    "replaceCancelBtn": "Pertahankan Pilihan Saat Ini",
+    "winnerAnnounce": "Pilihan Terpilih:",
+    "presetEat": "Makan Apa",
+    "presetWatch": "Tonton Apa",
+    "presetYesNo": "Ya atau Tidak",
+    "toasts": {
+      "generatedCount": "Berhasil membuat {count} pilihan!",
+      "keptOptions": "Pilihan roda saat ini dipertahankan.",
+      "loadedHistory": "Pilihan roda berhasil dimuat.",
+      "removedWinner": "Pilihan pemenang telah dihapus.",
+      "requiresTwo": "Harap tambahkan setidaknya 2 opsi untuk memutar.",
+      "alreadyExists": "Opsi tersebut sudah ada di roda.",
+      "maxOptions": "Maksimal 12 opsi tercapai.",
+      "shuffled": "Opsi diacak.",
+      "cannotRemoveWinner": "Tidak dapat menghapus pemenang: minimal 2 opsi diperlukan.",
+      "historyCleared": "Riwayat putaran dibersihkan."
+    },
+    "howTo": {
+      "title": "Cara Menggunakan Roda Keputusan dalam 3 Langkah",
+      "subtitle": "Atasi keraguan dengan animasi fisika halus dalam hitungan detik.",
+      "s1Title": "Masukkan Pilihan atau Gunakan AI",
+      "s1Desc": "Ketik hingga 12 opsi kustom, pilih dari preset cepat, atau biarkan AI Gemini membuat pilihan untuk Anda.",
+      "s2Title": "Putar Rodanya",
+      "s2Desc": "Ketuk tombol PUTAR di tengah, tekan Spasi, atau usap layar ponsel untuk meluncurkan putaran fisika.",
+      "s3Title": "Rayakan & Eliminasi",
+      "s3Desc": "Rayakan opsi terpilih dengan konfeti, salin tautan berbagi, atau eliminasi pemenang untuk putaran berikutnya."
+    },
+    "methodology": {
+      "m1Title": "Bagaimana Cara Kerja Perlambatan Fisika pada Roda?",
+      "m1Desc": "Berbeda dari pengacak statis yang langsung melompat ke nilai terpilih, ToolNest menyimulasikan momentum sudut nyata. Roda berputar dengan kecepatan awal acak lalu melambat secara halus menggunakan rumus gesekan kuadratis pada 60 FPS via requestAnimationFrame. Pemenang dibaca dari posisi fisik tepat di bawah jarum penunjuk atas.",
+      "m2Title": "Apakah Roda Putar Online Ini Adil Secara Matematis?",
+      "m2Desc": "Setiap potongan pada roda memiliki sudut juring yang sama persis (360° / N). Karena gaya putar, durasi deselerasi, dan sudut henti dihitung tanpa bobot atau manipulasi, setiap pilihan memiliki peluang probabilitas matematis yang seimbang.",
+      "noteTitle": "Metodologi & Fisika Perlambatan",
+      "noteDesc": "Perhitungan berjalan sepenuhnya di sisi klien menggunakan HTML5 Canvas asli dan loop requestAnimationFrame tanpa bias server."
+    },
+    "useCases": {
+      "title": "Kegunaan Populer untuk Generator Roda Keputusan",
+      "u1Title": "Menentukan Menu Makan Malam",
+      "u1Desc": "Akhiri perdebatan memilih menu makan bersama teman atau keluarga dengan memutar roda berisi daftar tempat makan favorit Anda.",
+      "u2Title": "Roda Kelas untuk Guru & Pengajar",
+      "u2Desc": "Panggil murid secara adil untuk membaca, menjawab pertanyaan, atau membagi tugas piket kelas tanpa kesan pilih kasih.",
+      "u3Title": "Roda Berhadiah Online & Undian",
+      "u3Desc": "Gelar giveaway siaran langsung, undian komunitas Discord, atau permainan pesta dengan sensasi putaran yang seru."
+    },
+    "trivia": {
+      "title": "Tahukah Anda? Fakta Menarik Seputar Pengambilan Keputusan",
+      "t1Title": "Paralisis Analisis",
+      "t1Desc": "Penelitian psikologi membuktikan manusia membuat sekitar 35.000 keputusan tiap hari. Menyerahkan pilihan kecil pada roda menghemat energi mental.",
+      "t2Title": "Roda Keberuntungan Romawi Kuno",
+      "t2Desc": "Gagasan memutar roda telah ada sejak masa dewi Romawi Fortuna (Rota Fortunae), melambangkan takdir dan perputaran nasib manusia.",
+      "t3Title": "Efek Acak Visual",
+      "t3Desc": "Melihat roda yang perlahan melambat memicu dopamin antisipasi, membuat keputusan kelompok terasa jauh lebih seru."
+    },
+    "ui": {
+      "physicsRandomizer": "Pengacak Fisika & AI",
+      "wheelAria": "Roda interaktif pengambil keputusan",
+      "spinButton": "PUTAR",
+      "orSpace": "atau Spasi",
+      "optionsListHeading": "Pilihan Roda",
+      "winnerModalTitle": "Pemenang Terpilih!",
+      "removeWinner": "Hapus Pemenang",
+      "spinAgain": "Putar Lagi",
+      "keyTakeawaysTitle": "Jawaban Singkat & Poin Penting",
+      "kt1": "Keadilan Kriptografis: Menggunakan fisika perlambatan kanvas yang realistis tanpa hasil yang telah ditentukan sebelumnya.",
+      "kt2": "Solusi Dilema AI: Buat pilihan instan dengan Gemini AI atau masukkan daftar 2 hingga 12 pilihan Anda sendiri.",
+      "kt3": "Berbagi Tautan Bebas Server: Enkode parameter roda kustom langsung ke dalam tautan untuk dibagikan tanpa akun."
+    }
   },
   "picker": {
-    "title": "Pengacak Nama & Pembagi Tim Acak",
-    "subtitle": "Undian acak yang adil dan aman menggunakan kriptografi peramban. Tentukan pemenang, acak urutan daftar, atau bagi kelompok dalam sekejap.",
-    "itemsLabel": "Daftar Item Anda (satu per baris)",
+    "title": "Pengacak Acak",
+    "subtitle": "Lakukan undian yang adil dan transparan untuk kuis, kelas, pembagian tim, dan hadiah.",
+    "itemsLabel": "Masukkan daftar pilihan (satu per baris atau pisahkan dengan koma)",
     "itemsPlaceholder": "Budi\nSiti\nAndi\nDewi\nRizky\nPutri",
-    "pickWinnerBtn": "Pilih Pemenang",
-    "splitTeamsBtn": "Bagi Jadi Tim",
-    "pickStudentBtn": "Pilih Murid Acak",
-    "allowDuplicates": "Izinkan Pemenang Ganda",
-    "numWinners": "Jumlah Pemenang",
-    "numTeams": "Jumlah Tim",
+    "pickWinnerBtn": "Undi Pemenang",
+    "splitTeamsBtn": "Bagi ke Tim",
+    "pickStudentBtn": "Pilih Siswa Acak",
+    "allowDuplicates": "Izinkan pilihan terpilih kembali",
+    "numWinners": "Jumlah pemenang:",
+    "numTeams": "Jumlah tim:",
     "teamLabel": "Tim",
-    "remainingItems": "Sisa Item",
-    "emptyError": "Silakan masukkan minimal 2 item untuk mengundi atau membagi tim.",
-    "winnerHeader": "Pemenang Terpilih",
-    "teamsHeader": "Daftar Tim Terbentuk",
-    "shuffleBtn": "Acak Urutan",
-    "clearBtn": "Hapus Semua",
-    "copiedToast": "Hasil berhasil disalin ke papan klip!"
+    "remainingItems": "Sisa pilihan yang belum terpilih:",
+    "emptyError": "Harap masukkan setidaknya 2 item ke dalam daftar.",
+    "toasts": {
+      "winnerPicked": "Pemenang terpilih!",
+      "teamsGenerated": "Tim berhasil dibentuk!",
+      "itemsCleared": "Daftar berhasil dibersihkan.",
+      "duplicatesRemoved": "Duplikat dihapus."
+    },
+    "howTo": {
+      "title": "Cara Menggunakan Pengacak Nama Acak dalam 3 Langkah",
+      "subtitle": "Tentukan pemenang acak terpercaya dalam 3 langkah mudah.",
+      "s1Title": "Tempel Daftar Anda",
+      "s1Desc": "Tempel nama yang dipisahkan baris baru atau koma. Alat ini otomatis mendeteksi format dan memberi tahu jika ada duplikat.",
+      "s2Title": "Pilih Opsi & Jumlah Pemenang",
+      "s2Desc": "Tentukan berapa banyak pemenang (1 hingga 10) dan pilih apakah pemenang akan langsung dieliminasi untuk putaran berikutnya.",
+      "s3Title": "Undi & Salin Pemenang",
+      "s3Desc": "Saksikan animasi acak memilih pemenang diiringi semarak konfeti. Salin daftar pemenang ke papan klip dengan satu klik."
+    },
+    "methodology": {
+      "m1Title": "Mengapa Keacakan Kriptografis Penting untuk Undian?",
+      "m1Desc": "Alat pengacak web biasa sering memakai Math.random(), generator semu yang dapat menghasilkan bias pada daftar kecil. ToolNest menggunakan Web Cryptography API (crypto.getRandomValues), memanfaatkan entropi perangkat keras dan sistem operasi guna memastikan keadilan mutlak untuk undian sekolah, giveaway media sosial, dan kuis kantor.",
+      "m2Title": "Bagaimana Cara Mengundi Beberapa Pemenang Tanpa Terulang?",
+      "m2Desc": "Saat memilih banyak pemenang, alat acak sederhana berisiko memanggil nama yang sama dua kali. ToolNest menerapkan algoritme pengocokan Fisher–Yates modern. Melalui iterasi terbalik dan penukaran elemen bersertifikasi kriptografis, setiap susunan memiliki peluang setara dan setiap pemenang dijamin unik.",
+      "noteTitle": "Metodologi & Entropi Kriptografis",
+      "noteDesc": "Algoritme memakai window.crypto.getRandomValues untuk menjamin keacakan kriptografis aman, tanpa urutan yang bisa ditebak."
+    },
+    "useCases": {
+      "title": "Kegunaan Populer untuk Pengacak Nama & Pembagi Tim",
+      "u1Title": "Pemanggil Nama Murid untuk Guru",
+      "u1Desc": "Pilih siswa secara adil untuk presentasi, menjawab pertanyaan mendadak, dan tugas piket dengan kenetralan teruji.",
+      "u2Title": "Pengundi Pemenang Giveaway & Doorprize",
+      "u2Desc": "Jalankan undian hadiah yang transparan dan aman untuk giveaway Instagram, komunitas Discord, maupun doorprize kantor.",
+      "u3Title": "Pembagi Tim & Kelompok Acak",
+      "u3Desc": "Bagi daftar panjang nama dalam sekejap untuk membentuk kelompok belajar, hackathon, tim olahraga, atau turnamen game yang seimbang."
+    },
+    "trivia": {
+      "title": "Tahukah Anda? Fakta Unik tentang Keacakan & Pengundian",
+      "t1Title": "Entropi Termal Perangkat Keras",
+      "t1Desc": "Rumus acak biasa dapat mengulang pola dari waktu ke waktu. Web Cryptography API membaca fluktuasi termal nyata dari CPU untuk keadilan setara standar kasino.",
+      "t2Title": "Demokrasi Athena Kuno",
+      "t2Desc": "Di Athena kuno, pejabat pemerintahan dan juri pengadilan dipilih lewat undian acak (sortisi) menggunakan mesin batu bernama kleroterion, bukan pemilu.",
+      "t3Title": "Jaminan Algoritme Fisher-Yates",
+      "t3Desc": "Untuk daftar N item, terdapat N! kemungkinan urutan. Algoritme Fisher-Yates membuktikan bahwa setiap susunan memiliki peluang tepat 1 / N! untuk muncul."
+    },
+    "ui": {
+      "cryptoSortition": "Undian Acak Kriptografis",
+      "pasteListLabel": "Tempel atau Masukkan Daftar Pilihan",
+      "itemsCount": "item dalam daftar",
+      "pickWinnerBtn": "Pilih Pemenang Acak",
+      "pickCaptainBtn": "Pilih Kapten Tim",
+      "pickStudentBtn": "Pilih Siswa Acak",
+      "shuffleListBtn": "Acak Urutan Daftar",
+      "removeDuplicatesBtn": "Hapus Duplikat",
+      "clearListBtn": "Kosongkan Daftar",
+      "allowDuplicates": "Izinkan pilihan berulang",
+      "removeWinnerAfterPick": "Hapus pemenang setelah terpilih",
+      "numWinners": "Jumlah pemenang:",
+      "numTeams": "Jumlah tim:",
+      "teamLabel": "Tim",
+      "remainingItems": "Sisa item dalam daftar:",
+      "keyTakeawaysTitle": "Jawaban Singkat & Poin Penting",
+      "kt1": "Entropi Perangkat Keras: Ditenagai Web Cryptography API untuk undian yang terbukti adil dan netral.",
+      "kt2": "Keadilan Multi-Pemenang: Menggunakan algoritma acak Fisher-Yates untuk memastikan pilihan tanpa pengulangan.",
+      "kt3": "Bebas Pengiriman Data: Daftar nama Anda tetap rahasia di memori peramban tanpa dikirim ke server."
+    }
   },
   "age": {
-    "title": "Kalkulator Usia Tepat & Tonggak Ulang Tahun",
-    "subtitle": "Ketahui usia detail Anda hingga satuan detik, hitung mundur menuju ulang tahun berikutnya, dan bandingkan selisih umur.",
+    "title": "Kalkulator Umur",
+    "subtitle": "Hitung umur kronologis Anda secara akurat dengan penghitungan waktu nyata hingga detik.",
     "birthDateLabel": "Pilih Tanggal Lahir",
-    "calculateBtn": "Hitung Usia Tepat",
-    "exactAgeHeading": "Usia Tepat Anda",
+    "calculateBtn": "Hitung Umur Akurat",
+    "exactAgeHeading": "Umur Anda Saat Ini",
     "years": "Tahun",
     "months": "Bulan",
     "weeks": "Minggu",
@@ -191,40 +336,211 @@
     "minutes": "Menit",
     "seconds": "Detik",
     "nextBirthdayHeading": "Hitung Mundur Ulang Tahun Berikutnya",
-    "milestoneHeading": "Momen Tonggak Mendatang",
-    "dateDiffHeading": "Perbandingan Selisih Usia",
-    "compareDateLabel": "Bandingkan dengan Tanggal Lain",
-    "futureDateError": "Tanggal lahir tidak boleh berada di masa depan.",
-    "invalidDateError": "Silakan masukkan tanggal yang valid.",
-    "copiedToast": "Hasil perhitungan usia disalin ke papan klip!"
+    "milestoneHeading": "Momen Usia Mendatang",
+    "dateDiffHeading": "Bandingkan Dua Tanggal",
+    "compareDateLabel": "Tanggal Kedua",
+    "daysUntilNext": "Hari hingga ulang tahun berikutnya:",
+    "daysLived": "Total hari yang telah dijalani:",
+    "heartbeatsEstimate": "Estimasi detak jantung:",
+    "breathsEstimate": "Estimasi tarikan napas:",
+    "toasts": {
+      "calculated": "Umur berhasil dihitung!",
+      "copiedSummary": "Ringkasan umur disalin ke papan klip!",
+      "invalidDate": "Harap pilih tanggal lahir yang valid."
+    },
+    "howTo": {
+      "title": "Cara Menghitung Usia Tepat Anda secara Online dalam 3 Langkah",
+      "subtitle": "Panduan cepat untuk mengetahui usia kronologis persis Anda dalam tahun, bulan, hari, dan detik langsung.",
+      "s1Title": "Pilih tanggal lahir Anda",
+      "s1Desc": "Pilih tahun, bulan, dan tanggal lahir lewat menu dropdown atau klik ikon kalender bawaan perangkat Anda.",
+      "s2Title": "Pilih tanggal patokan perbandingan (opsional)",
+      "s2Desc": "Secara default, usia dihitung terhadap hari ini. Buka panel tambahan untuk mengetahui umur Anda saat wisuda, pernikahan, atau momen masa depan.",
+      "s3Title": "Hitung & telusuri statistik kehidupan Anda",
+      "s3Desc": "Klik Hitung Usia Tepat untuk melihat rincian kronologis lengkap, penghitung detik hidup, dan hitung mundur ulang tahun berikutnya."
+    },
+    "methodology": {
+      "m1Title": "Bagaimana Matematika Kalender Menghitung Usia secara Presisi?",
+      "m1Desc": "Untuk menghitung umur secara persis tanpa galat pembulatan, algoritme membaca pergantian bulan kalender Gregorian yang sesungguhnya. Penghitungan menjumlahkan tahun penuh, sisa bulan, dan meminjam jumlah hari riil dari bulan sebelumnya (28, 29, 30, atau 31 hari).",
+      "m2Title": "Mengapa Beberapa Kalkulator Usia Online Menghasilkan Angka Berbeda?",
+      "m2Desc": "Banyak kalkulator sederhana hanya membagi total hari dengan 365 atau 30,4375 yang menimbulkan selisih pembulatan. ToolNest memakai perhitungan kalender Gregorian UTC yang memperhitungkan tahun kabisat dan panjang bulan nyata.",
+      "noteTitle": "Metodologi & Jaminan Ketepatan",
+      "noteDesc": "Algoritme perhitungan kami menjalankan matematika kalender Gregorian UTC langsung di peramban Anda tanpa mengirim data pribadi ke server."
+    },
+    "useCases": {
+      "title": "Kegunaan Umum untuk Perhitungan Usia Kronologis",
+      "u1Title": "Tumbuh Kembang Bayi & Anak",
+      "u1Desc": "Pantau perkembangan bayi dalam hitungan minggu, bulan, dan hari yang presisi untuk grafik pertumbuhan dan jadwal imunisasi dokter.",
+      "u2Title": "Syarat Masuk Sekolah & Kompetisi Olahraga",
+      "u2Desc": "Pastikan batas usia ketat untuk pendaftaran sekolah dasar, kategori umur cabang olahraga, turnamen bela diri, dan izin mengemudi.",
+      "u3Title": "Rencana Pensiun & Hak Hukum",
+      "u3Desc": "Ketahui tanggal pasti pembaruan paspor, pencairan dana pensiun, penandatanganan kontrak hukum, dan hak pensiun ketenagakerjaan."
+    },
+    "trivia": {
+      "title": "Tahukah Anda? Fakta Menarik tentang Usia & Harapan Hidup",
+      "t1Title": "Usia Anda di Planet Mars",
+      "t1Desc": "Karena Mars membutuhkan sekitar 687 hari Bumi untuk mengitari Matahari, usia Anda di Mars hampir setengahnya. Orang berusia 30 tahun di Bumi baru berumur 15,9 tahun di Mars!",
+      "t2Title": "Manusia Tertua yang Terverifikasi",
+      "t2Desc": "Jeanne Calment asal Prancis memegang rekor resmi usia terpanjang manusia: 122 tahun 164 hari (total 44.724 hari hidup) dari tahun 1875 hingga 1997.",
+      "t3Title": "Orang yang Lahir pada Tahun Kabisat",
+      "t3Desc": "Dengan peluang 1 berbanding 1.461, orang yang lahir pada 29 Februari hanya mengalami tanggal ulang tahun asli tiap empat tahun sekali, dan merayakannya di tanggal 1 Maret."
+    },
+    "ui": {
+      "precisionMath": "Matematika Kalender Presisi",
+      "enterDob": "Masukkan Tanggal Lahir",
+      "accurateToDay": "Akurat hingga hitungan hari",
+      "month": "Bulan",
+      "day": "Hari",
+      "year": "Tahun",
+      "orUseCalendar": "Atau gunakan kalender perangkat:",
+      "calculateAtDate": "Hitung usia pada tanggal tertentu (opsional)",
+      "targetDateDesc": "Secara default mengacu ke hari ini. Ubah untuk melihat umur Anda di momen wisuda, pernikahan, atau masa depan.",
+      "resetToToday": "Kembalikan ke Hari Ini",
+      "copyResults": "Salin Hasil",
+      "share": "Bagikan",
+      "calculatingNextBday": "Menghitung ulang tahun berikutnya...",
+      "happyBirthday": "Selamat Ulang Tahun!",
+      "totalMilestones": "Total Tonggak Perjalanan Hidup",
+      "totalMonths": "Total Bulan",
+      "totalWeeks": "Total Minggu",
+      "totalDays": "Total Hari",
+      "totalHours": "Total Jam",
+      "funStatsHeading": "Statistik Kehidupan & Planet yang Menakjubkan",
+      "hoursSlept": "Jam Tidur (~8 jam/hari)",
+      "hoursSleptDesc": "Sekitar sepertiga dari hidup Anda dihabiskan untuk bermimpi dan memulihkan tenaga.",
+      "heartbeatsTitle": "Detak Jantung (~80 bpm)",
+      "heartbeatsDesc": "Memompa energi vital tanpa henti ke seluruh tubuh Anda.",
+      "breathsTitle": "Tarikan Napas (~16/menit)",
+      "breathsDesc": "Siklus oksigen terus-menerus yang memberi daya bagi setiap sel dan pikiran.",
+      "planetAgeTitle": "Usia Anda di Planet Lain",
+      "planetAgeSubtitle": "Berdasarkan periode orbit",
+      "mercury": "Merkurius (88h)",
+      "venus": "Venus (225h)",
+      "mars": "Mars (687h)",
+      "jupiter": "Jupiter (4.333h)",
+      "yearsOld": "tahun",
+      "liveSecondsPrefix": "Usia Anda tepat",
+      "liveSecondsSuffix": "detik",
+      "keyTakeawaysTitle": "Jawaban Singkat & Poin Penting",
+      "kt1": "Matematika Kalender Akurat: Menghitung tahun, bulan, dan hari lengkap menggunakan batas bulan Gregorian yang sebenarnya, bukan perkiraan kasar 365 hari.",
+      "kt2": "Tanggal Historis & Masa Depan: Hitung usia pasti Anda pada tanggal bersejarah apa pun atau cari tahu usia Anda pada momen penting di masa depan.",
+      "kt3": "Privasi Penuh: Berjalan 100% di peramban Anda. Tanggal lahir Anda tidak pernah dikirim, disimpan di server, atau dilacak."
+    }
   },
   "birthday": {
-    "title": "Fakta Ulang Tahun & Generator Kartu Trivia",
-    "subtitle": "Masukkan tanggal lahir Anda untuk mengetahui hari kelahiran, zodiak, batu lahir, dan tokoh terkenal yang berulang tahun sama.",
-    "inputDateLabel": "Masukkan Tanggal Lahir",
-    "revealBtn": "Buka Fakta Ulang Tahun",
+    "title": "Fakta Tanggal Lahir",
+    "subtitle": "Ketahui zodiak, batu kelahiran, bunga kelahiran, dan peristiwa sejarah untuk setiap tanggal lahir.",
+    "inputDateLabel": "Pilih Tanggal Lahir Anda",
+    "revealBtn": "Lihat Fakta Kelahiran",
     "zodiacLabel": "Zodiak",
     "elementLabel": "Elemen",
     "stoneLabel": "Batu Kelahiran",
     "flowerLabel": "Bunga Kelahiran",
-    "weekdayLabel": "Hari Kelahiran",
+    "weekdayLabel": "Hari Lahir",
     "generationLabel": "Generasi",
-    "milestonesHeading": "Tonggak Kehidupan",
-    "famousHeading": "Tokoh Terkenal Lahir di Hari Ini",
-    "cardWatermark": "toolnest.dev",
-    "shareFactsBtn": "Bagikan Fakta",
-    "downloadCardBtn": "Unduh Kartu Stiker",
-    "futureDateError": "Tanggal lahir tidak boleh berada di masa depan.",
-    "invalidDateError": "Silakan pilih tanggal lahir yang valid.",
-    "copiedToast": "Trivia ulang tahun disalin ke papan klip!",
-    "shareHeader": "Trivia Ulang Tahun untuk {date}",
-    "noFamousPeople": "Anda berbagi hari istimewa ini dengan jutaan orang hebat dan inspiratif di seluruh dunia!"
+    "milestonesHeading": "Momen Perjalanan Hidup",
+    "famousHeading": "Peristiwa Sejarah Terkait",
+    "cardWatermark": "dibuat dengan ToolNest • toolnest.pages.dev",
+    "toasts": {
+      "invalidDate": "Harap pilih tanggal yang valid.",
+      "cardCopied": "Kartu ulang tahun disalin ke papan klip!",
+      "factsCopied": "Fakta ulang tahun disalin ke papan klip!"
+    },
+    "howTo": {
+      "title": "Cara Mengetahui Fakta Hari Lahir Anda dalam 3 Langkah",
+      "subtitle": "Buat profil tanggal lahir pribadi Anda dalam sekejap tanpa pelacakan apa pun.",
+      "s1Title": "Pilih Tanggal Lahir Anda",
+      "s1Desc": "Masukkan tanggal, bulan, dan tahun lahir. Kalender divalidasi mulai dari tahun 1920 hingga hari ini.",
+      "s2Title": "Hasilkan Kartu Anda",
+      "s2Desc": "Sistem kami menghitung hari kelahiran, elemen zodiak, batu kelahiran, bunga bulan, dan pencapaian umur Anda.",
+      "s3Title": "Simpan Gambar atau Bagikan",
+      "s3Desc": "Unduh kartu stiker dalam format gambar PNG jernih untuk media sosial, atau salin ringkasan teksnya langsung."
+    },
+    "methodology": {
+      "m1Title": "Bagaimana Cara Mengetahui Hari Kelahiran Anda dalam Sepekan?",
+      "m1Desc": "Hari kelahiran dalam sepekan dihitung menggunakan rumus Kongruensi Zeller atau algoritme modular UTC. Dengan menghitung sisa bagi 7 terhadap tanggal acuan, hari persisnya (Minggu sampai Sabtu) diperoleh dengan kepastian matematis mutlak.",
+      "m2Title": "Apa Itu Tanda Zodiak dan Batu Kelahiran?",
+      "m2Desc": "Tanda zodiak matahari mewakili sektor rasi bintang yang sejajar dengan Matahari saat Anda lahir. Dipadukan dengan batu permata kelahiran yang distandarkan sejak 1912 serta bunga bulanan, hari ulang tahun Anda memiliki makna budaya yang kaya.",
+      "noteTitle": "Metodologi & Efemeris Kalender",
+      "noteDesc": "Perhitungan memakai aritmetika modular kalender Gregorian dan standar resmi batu permata internasional."
+    },
+    "useCases": {
+      "title": "Kegunaan Populer Profil Fakta Ulang Tahun & Numerologi",
+      "u1Title": "Astrologi & Numerologi",
+      "u1Desc": "Ketahui arketipe angka jalan hidup, elemen zodiak, dan planet penguasa untuk memperdalam refleksi diri Anda.",
+      "u2Title": "Ulang Tahun Emas & Pencapaian Usia",
+      "u2Desc": "Temukan ulang tahun emas Anda (saat umur sama dengan tanggal lahir) dan rayakan hari ke-10.000 Anda di dunia.",
+      "u3Title": "Kado & Kartu Ucapan Personal",
+      "u3Desc": "Buat dan unduh kartu estetis dengan batu serta bunga kelahiran untuk dicetak atau dikirim ke orang terkasih."
+    },
+    "trivia": {
+      "title": "Tahukah Anda? Fakta Unik tentang Ulang Tahun & Kalender",
+      "t1Title": "Paradoks Ulang Tahun",
+      "t1Desc": "Hanya dengan 23 orang di dalam satu ruangan, peluang ada dua orang yang berulang tahun di tanggal yang sama mencapai lebih dari 50%.",
+      "t2Title": "Tanggal Lahir Paling Umum",
+      "t2Desc": "Di seluruh dunia, pertengahan September (terutama tanggal 9 dan 19) secara konsisten mencatat angka kelahiran terbanyak tiap tahunnya.",
+      "t3Title": "Tradisi Ulang Tahun Emas",
+      "t3Desc": "Ulang tahun emas terjadi ketika usia Anda persis sama dengan tanggal kelahiran Anda di bulan tersebut (misal: berusia 25 tahun di tanggal 25)."
+    },
+    "zodiacTable": {
+      "heading": "Tanda Zodiak Berdasarkan Bulan (Referensi Kalender)",
+      "subheading": "Lihat zodiak barat yang menaungi tiap bulan, beserta elemen klasik dan planet penguasanya.",
+      "colMonth": "Bulan",
+      "colSigns": "Tanda Zodiak",
+      "colRange": "Rentang Tanggal",
+      "colElement": "Elemen",
+      "colPlanet": "Planet Penguasa"
+    },
+    "ui": {
+      "personalDossier": "Berkas Pribadi Hari Lahir",
+      "selectDob": "Pilih Tanggal Lahir Anda",
+      "day": "Hari",
+      "month": "Bulan",
+      "year": "Tahun",
+      "orPickCalendar": "Atau pilih dari kalender:",
+      "revealFacts": "Buka Fakta Saya",
+      "personalCard": "Kartu Ulang Tahun Pribadi Anda",
+      "cardSubtitle": "Bagikan stiker perayaan Anda atau simpan sebagai gambar beresolusi tinggi.",
+      "bornOn": "Lahir pada hari",
+      "zodiacSign": "Zodiak",
+      "birthstone": "Batu Kelahiran",
+      "birthFlower": "Bunga Kelahiran",
+      "generation": "Generasi",
+      "gemstone": "Batu Mulia",
+      "botanical": "Tumbuhan",
+      "daysOnEarth": "Hari di Bumi:",
+      "saveCardImage": "Simpan Kartu sebagai Gambar",
+      "shareFacts": "Bagikan Fakta",
+      "calculateAnother": "Hitung Tanggal Lain",
+      "famousBirthdays": "Ulang Tahun Tokoh Terkenal",
+      "famousSubtitle": "Tokoh ternama, visioner, dan figur bersejarah yang berulang tahun di hari yang sama dengan Anda.",
+      "historicalBornOnDay": "tokoh bersejarah yang lahir pada hari ini",
+      "noCelebrityRecords": "Tidak ada catatan tokoh terkenal di arsip offline kami untuk tanggal ini. Anda berbagi hari istimewa ini dengan jutaan perintis luar biasa di seluruh dunia!",
+      "archetypesHeading": "Berkas Ulang Tahun & Arketipe",
+      "archetypesSubtitle": "Dimensi astrologi, mineralogi, botani, dan demografi yang berkaitan dengan tanggal lahir Anda.",
+      "lifePathHeading": "Angka Jalur Hidup Pythagoras",
+      "lifePathLabel": "Jalur Hidup",
+      "coreTraits": "Karakter Utama",
+      "journeyHeading": "Perjalanan Hidup & Tonggak Hari",
+      "journeySubtitle": "Lacak penanda kalender pasti dan tonggak penting perjalanan hidup Anda.",
+      "totalElapsed": "Total Berjalan",
+      "consecutiveDaysElapsed": "Total hari kalender berturut-turut yang telah berlalu sejak hari kelahiran Anda.",
+      "day10kLandmark": "Tonggak Hari ke-10.000",
+      "celebrated": "Tercapai",
+      "upcoming": "Mendatang",
+      "dayLandmark": " Tonggak Hari",
+      "upcomingGoal": "Target Mendatang",
+      "recentBirthdays": "Hari Lahir Terbaru",
+      "keyTakeawaysTitle": "Jawaban Singkat & Poin Penting",
+      "kt1": "Algoritma Hari dalam Seminggu: Menggunakan aritmatika modular Gregorian untuk mengidentifikasi hari kelahiran tanpa pergeseran zona waktu.",
+      "kt2": "Tradisi Astrologi & Botani: Mengintegrasikan batu kelahiran standar sejak tahun 1912 dan tanda zodiak barat.",
+      "kt3": "Tanpa Penyimpanan Server: Setiap kartu dan fakta dirender langsung di memori peramban demi privasi penuh."
+    }
   },
   "countdown": {
-    "title": "Pembuat Waktu Hitung Mundur Langsung",
-    "subtitle": "Hitung mundur momen liburan, pernikahan, ulang tahun, peluncuran produk, atau target pribadi dengan tampilan kartu yang menarik.",
-    "eventTitleLabel": "Judul Acara",
-    "eventTitlePlaceholder": "contoh: Liburan ke Bali, Ulang Tahun ke-30, Resepsi Pernikahan",
+    "title": "Hitung Mundur",
+    "subtitle": "Buat pengingat hitung mundur langsung untuk hari ulang tahun, liburan, peluncuran produk, atau momen penting.",
+    "eventTitleLabel": "Nama Acara",
+    "eventTitlePlaceholder": "Contoh: Liburan Sekolah, Ulang Tahun, Peluncuran Proyek...",
     "targetDateLabel": "Tanggal Acara",
     "targetTimeLabel": "Waktu Acara",
     "createBtn": "Buat Hitung Mundur",
@@ -233,122 +549,870 @@
     "hoursRemaining": "Jam",
     "minutesRemaining": "Menit",
     "secondsRemaining": "Detik",
-    "eventPassed": "Acara ini telah berlangsung!",
-    "viewCountdownTitle": "Hitung Mundur Langsung",
-    "liveCountdown": "Hitung Mundur Acara",
-    "watermark": "Dibuat dengan ToolNest",
-    "copyLinkBtn": "Salin Tautan Langsung",
-    "downloadCardBtn": "Unduh Kartu Gambar",
-    "copiedToast": "Tautan hitung mundur disalin ke papan klip!",
-    "titleRequiredError": "Harap masukkan judul acara.",
-    "futureTargetError": "Silakan pilih tanggal dan waktu di masa depan.",
-    "createdLabel": "Dibuat",
-    "targetLabel": "Target",
-    "elapsedLabel": "berlalu"
+    "eventPassed": "Waktu hitung mundur telah berakhir!",
+    "viewCountdownTitle": "Hitung Mundur Acara",
+    "liveCountdown": "Hitung Mundur Langsung",
+    "watermark": "dibuat dengan ToolNest",
+    "toasts": {
+      "invalidTitle": "Harap masukkan nama acara.",
+      "invalidDate": "Harap pilih tanggal di masa mendatang.",
+      "linkCopied": "Tautan hitung mundur disalin ke papan klip!",
+      "loaded": "Acara hitung mundur berhasil dimuat."
+    },
+    "howTo": {
+      "title": "Cara Membuat & Membagikan Hitung Mundur dalam 3 Langkah",
+      "subtitle": "Buat penghitung waktu mundur acara pribadi yang mudah dibagikan tanpa perlu akun.",
+      "s1Title": "Tentukan Waktu Acara",
+      "s1Desc": "Beri nama acara Anda dan pilih tanggal serta jam yang dituju. Tambahkan emoji dan tema favorit.",
+      "s2Title": "Dapatkan Tautan Instan",
+      "s2Desc": "Sistem kami mengemas detail acara Anda langsung ke dalam URL aman tanpa membutuhkan database.",
+      "s3Title": "Bagikan ke Mana Saja",
+      "s3Desc": "Kirim tautan lewat WhatsApp, Instagram, atau Discord. Penerima akan melihat jam berjalan yang pas dengan zona waktu mereka."
+    },
+    "methodology": {
+      "m1Title": "Bagaimana Zona Waktu Disesuaikan Saat Tautan Dibagikan?",
+      "m1Desc": "Saat membuat hitung mundur, ToolNest mengubah tanggal dan waktu Anda menjadi format standar ISO-8601 UTC. Ketika teman atau keluarga dari berbagai negara membuka tautan, peramban mereka langsung menyesuaikan waktu sasaran dengan zona waktu lokal perangkat masing-masing.",
+      "m2Title": "Apa Itu Hitung Mundur Berbasis URL Tanpa Database dan Kenapa Lebih Aman?",
+      "m2Desc": "Situs hitung mundur biasa menyimpan acara di database terpusat yang rentan terhapus atau mewajibkan login. ToolNest menyimpan seluruh data di dalam tautan URL itu sendiri. Jam sepenuhnya mandiri, tahan gangguan server, dan 100% privat.",
+      "noteTitle": "Metodologi & Presisi Waktu",
+      "noteDesc": "Timer disinkronkan tiap 1.000 milidetik terhadap jam sistem, mengoreksi jeda tab latar belakang agar tidak ada selisih detik."
+    },
+    "useCases": {
+      "title": "Kegunaan Populer Jam Hitung Mundur Acara",
+      "u1Title": "Pernikahan & Undangan Acara",
+      "u1Desc": "Bagikan jam hitung mundur ke tamu pernikahan, jamuan makan, dan perayaan hari jadian melalui WhatsApp dan undangan online.",
+      "u2Title": "Peluncuran Produk & Siaran Langsung",
+      "u2Desc": "Bangun antusiasme untuk rilis produk baru, premiere podcast, barang edisi terbatas, dan turnamen game dengan tampilan layar penuh.",
+      "u3Title": "Liburan & Hitung Hari Menuju Cuti",
+      "u3Desc": "Hitung hari yang tersisa menuju libur sekolah, perjalanan wisata, tanggal pensiun, atau hari ulang tahun."
+    },
+    "trivia": {
+      "title": "Tahukah Anda? Fakta Menarik tentang Waktu & Hitung Mundur",
+      "t1Title": "Penemuan Sutradara Fritz Lang",
+      "t1Desc": "Hitung mundur peluncuran roket diciptakan oleh pembuat film Jerman Fritz Lang untuk film klasiknya tahun 1929 \"Frau im Mond\" guna menciptakan ketegangan, sebelum akhirnya dipakai resmi oleh NASA.",
+      "t2Title": "Persepsi Distorsi Waktu",
+      "t2Desc": "Psikolog kognitif membuktikan bahwa penantian momen yang membahagiakan membuat persepsi waktu terasa melaju lebih cepat saat hari H semakin dekat.",
+      "t3Title": "Tradisi Turun Bola Times Square",
+      "t3Desc": "Hitung mundur Tahun Baru paling terkenal di dunia dimulai pada 31 Desember 1907 di Times Square, dengan bola seberat 317 kg berhiaskan seratus bola lampu."
+    },
+    "ui": {
+      "liveTimerTitle": "Penghitung Waktu Presisi Real-Time",
+      "createCountdownHeading": "Buat Hitung Mundur Langsung",
+      "eventNameLabel": "Nama Acara",
+      "eventNamePlaceholder": "cth: Pernikahan Sarah, Liburan Musim Panas, Peluncuran Produk...",
+      "targetDateLabel": "Tanggal & Waktu Tujuan",
+      "chooseEmoji": "Pilih Emoji",
+      "createBtn": "Buat Hitung Mundur",
+      "presetNewYear": "Tahun Baru",
+      "presetSummer": "Musim Panas",
+      "presetHalloween": "Halloween",
+      "presetChristmas": "Natal",
+      "presetBirthday": "Ulang Tahun",
+      "days": "Hari",
+      "hours": "Jam",
+      "minutes": "Menit",
+      "seconds": "Detik",
+      "eventHere": "Saatnya telah tiba! 🎉",
+      "timeSinceEvent": "Waktu yang telah berlalu sejak acara:",
+      "shareCountdown": "Bagikan Hitung Mundur",
+      "copyLink": "Salin Tautan",
+      "openFullscreen": "Tampilan Layar Penuh",
+      "keyTakeawaysTitle": "Jawaban Singkat & Poin Penting",
+      "kt1": "Berbagi Tautan Global Tanpa Akun: Acara dikompresi ke dalam tautan URL yang aktif selamanya tanpa akun.",
+      "kt2": "Sinkronisasi Zona Waktu Otomatis: Penerima di seluruh dunia melihat hitungan mundur yang disesuaikan dengan jam lokal mereka.",
+      "kt3": "Presisi Hingga Detik: Detik waktu yang akurat dengan perayaan kembang api saat waktu habis."
+    }
   },
   "names": {
-    "title": "Kamus & Arti Nama Bayi Terlengkap",
-    "subtitle": "Temukan nama bayi berdasarkan jenis kelamin, asal bahasa, popularitas, dan arti filosofis yang mendalam.",
-    "searchPlaceholder": "Cari nama atau artinya (contoh: Arya, kuat, cerdas)...",
-    "allGenders": "Semua Jenis Kelamin",
+    "title": "Arti & Asal Usul Nama",
+    "subtitle": "Jelajahi sejarah, akar bahasa, dan makna mendalam di balik nama-nama dari seluruh penjuru dunia.",
+    "searchPlaceholder": "Cari nama atau artinya...",
+    "allGenders": "Semua Gender",
     "boyNames": "Laki-laki",
     "girlNames": "Perempuan",
     "unisexNames": "Uniseks",
     "allOrigins": "Semua Asal Bahasa",
     "meaningLabel": "Arti",
-    "originLabel": "Asal Bahasa",
+    "originLabel": "Asal Usul",
     "pronounceLabel": "Pelafalan",
-    "aiInsightsHeading": "Analisis Karakter & Kepribadian AI",
+    "aiInsightsHeading": "Wawasan Nama Berbasis AI",
     "siblingHeading": "Rekomendasi Nama Saudara",
-    "analyzeWithAiBtn": "Analisis Nama dengan AI",
-    "analyzingBtn": "Menganalisis dengan AI Gemini...",
-    "popularNamesHeading": "Nama-Nama Populer",
-    "namesFound": "{count} nama ditemukan",
-    "noNamesFound": "Tidak ada nama yang cocok dengan filter pencarian Anda. Coba kata kunci lain.",
-    "copiedToast": "Detail nama disalin ke papan klip!",
-    "errorToast": "Gagal menganalisis nama. Silakan coba lagi."
+    "popularLabel": "Populer",
+    "trendingLabel": "Tren",
+    "toasts": {
+      "copiedName": "Nama disalin ke papan klip!",
+      "copiedMeaning": "Detail nama disalin ke papan klip!"
+    },
+    "methodology": {
+      "title": "Metodologi Direktori & Riset Onomastika",
+      "desc": "Setiap nama diverifikasi melalui kamus sejarah utama dan catatan demografi resmi. Skor kepopuleran dipetakan dari persentil kelahiran nyata."
+    },
+    "emptyState": {
+      "title": "Tidak ada nama yang cocok dengan pencarian Anda",
+      "desc": "Coba sesuaikan kata kunci, periksa ejaan, atau bersihkan filter gender yang aktif."
+    },
+    "counter": {
+      "showingOf": "Menampilkan {count} dari {total} nama",
+      "clearFilters": "Hapus filter",
+      "recentlyViewed": "Nama yang Baru Dilihat"
+    },
+    "ui": {
+      "directoryAtoZ": "Indeks Alfabetis (A–Z)",
+      "curatedProfiles": "Nama Terpilih",
+      "aiPrompt": "Mencari nama langka atau unik yang tidak tercantum di bawah ini?",
+      "aiPromptBtn": "Cari Arti Nama dengan AI →",
+      "searchPlaceholder": "Cari berdasarkan nama, asal usul (cth: Latin, Yunani), atau arti...",
+      "allGenders": "Semua",
+      "female": "Perempuan",
+      "male": "Laki-laki",
+      "unisex": "Uniseks",
+      "showingCount": "Menampilkan {shown} dari {total} nama",
+      "clearFilters": "Reset filter",
+      "meaningLabel": "Arti",
+      "noNamesFound": "Tidak ada nama yang cocok dengan pencarian Anda",
+      "noNamesFoundDesc": "Coba sesuaikan kata kunci, periksa ejaan, atau hapus filter jenis kelamin yang aktif.",
+      "recentlyViewed": "Nama yang Baru Saja Dilihat",
+      "methodologyTitle": "Metodologi Direktori & Riset Onomastik",
+      "methodologyDesc": "Setiap entri nama diverifikasi berdasarkan leksikon historis dan data kependudukan resmi. Skor popularitas dipetakan ke persentil kelahiran nyata untuk dokumentasi budaya yang andal.",
+      "keyTakeawaysTitle": "Jawaban Singkat & Poin Penting",
+      "kt1": "200+ Profil Terpilih: Berkas komprehensif yang merinci arti historis, akar fonetik, dan peringkat popularitas.",
+      "kt2": "Navigasi Cepat A–Z: Jelajahi huruf dengan mudah atau filter berdasarkan jenis kelamin, asal budaya, dan popularitas.",
+      "kt3": "Alat Pencarian Pribadi: Pencarian instan yang berjalan 100% di peramban Anda tanpa pelacakan atau login."
+    }
+  },
+  "home": {
+    "heroTitle": "Alat Sehari-hari yang Praktis dan Andal",
+    "heroSubtitle": "Alat mikro gratis dan sangat cepat yang dirancang untuk kenyamanan di ponsel dan komputer Anda. Tanpa akun, tanpa biaya berlangganan, dan tanpa pelacak.",
+    "exploreToolsHeading": "Jelajahi Pilihan Alat Kami",
+    "whyChooseTitle": "Mengapa Memilih ToolNest?",
+    "whyFast": "Sangat Cepat",
+    "whyFastDesc": "Dibangun dengan standar web mutakhir agar dapat terbuka seketika, bahkan saat koneksi internet lambat.",
+    "whyPrivate": "100% Privat",
+    "whyPrivateDesc": "Semua kalkulasi dilakukan langsung di perangkat Anda. Tanggal, nama, dan input Anda tidak pernah dikirim ke server.",
+    "whyFree": "Sepenuhnya Gratis",
+    "whyFreeDesc": "Tanpa biaya langganan, tanpa batasan kuota, dan tanpa pendaftaran akun. Akses bebas selamanya di semua perangkat."
   },
   "about": {
-    "title": "Tentang ToolNest",
-    "metaDesc": "ToolNest menyediakan alat mikro online yang cepat, tanpa iklan mengganggu, dan menghormati privasi Anda.",
-    "badge": "Misi Kami",
-    "heading": "Alat praktis yang menghargai waktu dan privasi data Anda.",
-    "subheading": "Layanan gratis dan aman yang dirancang untuk mempermudah rutinitas harian tanpa perlu daftar akun atau iklan yang berat.",
-    "philosophyTitle": "Filosofi Kami",
-    "philosophyP1": "Internet modern saat ini dipenuhi situs lambat, keharusan registrasi, dan iklan berkedip hanya untuk sekadar memutar roda acak atau menghitung usia.",
-    "philosophyP2": "ToolNest hadir sebagai solusi bersih: alat-alat terarah yang berjalan langsung di peramban Anda dan tidak pernah menyimpan data pilihan Anda.",
-    "methodologyTitle": "Privasi Sejak Awal",
-    "methodologyP1": "Semua perhitungan berlangsung di sesi lokal peramban Anda. Input tanggal, nama, atau pilihan Anda tidak pernah dikirimkan ke server kami.",
-    "editorialTitle": "Kejujuran Algoritma & Akurasi",
-    "editorialP1": "Setiap pengacak memanfaatkan Web Cryptography API untuk memastikan hasil undian benar-benar adil dan tidak dapat dimanipulasi.",
-    "toolsTitle": "Koleksi Alat Kami",
-    "launchTool": "Buka Alat",
-    "techTitle": "Ditenagai Teknologi Edge Modern",
-    "techP1": "Dibangun dengan Astro dan disajikan melalui 300+ lokasi Cloudflare Workers di seluruh dunia untuk waktu muat di bawah 50 milidetik.",
+    "title": "Tentang ToolNest — Utilitas Web Cepat & Menjaga Privasi | ToolNest",
+    "metaDesc": "Pelajari misi ToolNest: menyediakan alat web berbasis peramban yang cepat, bebas pelacak pihak ketiga, berlandaskan prinsip matematika yang valid dan privasi penuh.",
+    "badge": "Tentang Platform",
+    "heading": "Tentang ToolNest",
+    "subheading": "ToolNest adalah rangkaian utilitas web mandiri yang ringan, cepat, dan menjaga privasi, dibuat untuk menjawab kebutuhan sehari-hari tanpa perlu mendaftar akun atau menyimpan data di server.",
+    "philosophyTitle": "Filosofi Kami: Kecepatan, Privasi & Integritas Perhitungan",
+    "philosophyP1": "Banyak alat sederhana saat ini dipenuhi pelacak data, iklan pop-up yang mengganggu, respons server yang lambat, dan kewajiban mendaftarkan email. ToolNest hadir untuk membuktikan bahwa alat digital sehari-hari seharusnya instan, dapat diandalkan, dan sepenuhnya privat.",
+    "philosophyP2": "Setiap perhitungan, putaran roda, pengacakan, dan hitung mundur berjalan seutuhnya di dalam peramban Anda menggunakan JavaScript modern. Kami tidak mengoperasikan basis data akun dan tidak mengumpulkan informasi pribadi Anda.",
+    "methodologyTitle": "Metodologi & Standar Perhitungan",
+    "methodologyP1": "Semua fungsi kami menggunakan algoritma yang teruji dan terstandar: kalender Gregorian berbasis UTC untuk perhitungan umur, Web Cryptography API dengan algoritma Fisher-Yates untuk undian adil, dan rumus deselerasi fisik nyata untuk roda keputusan.",
+    "editorialTitle": "Standar Kurasi & Riset Arti Nama",
+    "editorialP1": "Basis data arti nama kami mencakup nama pilihan dari berbagai tradisi bahasa dunia. Setiap arti dan akar etimologi dikonfirmasi silang dengan catatan onomastik sejarah dan kamus bahasa rujukan tepercaya.",
+    "toolsTitle": "Alat yang Tersedia",
+    "launchTool": "Buka alat →",
+    "techTitle": "Arsitektur Teknis & Akses Global",
+    "techP1": "ToolNest dibuat menggunakan Astro dan ditata dengan Tailwind CSS. Didistribusikan ke seluruh dunia melalui jaringan tepi Cloudflare Pages untuk menjamin akses berkecepatan tinggi dengan proteksi HTTPS otomatis.",
     "contactTitle": "Ada Pertanyaan atau Masukan?",
-    "contactDesc": "Punya ide alat mikro baru atau masukan untuk perbaikan? Kami sangat senang mendengarnya dari Anda.",
-    "contactBtn": "Hubungi Kami"
+    "contactDesc": "Kami sangat menyambut ide alat baru, masukan fitur, dan laporan kendala. Silakan hubungi tim kami kapan saja.",
+    "contactBtn": "Hubungi ToolNest →"
   },
   "contact": {
-    "title": "Hubungi Kami",
-    "metaDesc": "Kirimkan pertanyaan, saran, atau ide alat baru kepada tim pengembang ToolNest.",
-    "badge": "Hubungi Kami",
-    "heading": "Mari terhubung.",
-    "subheading": "Punya masukan, menemukan kendala, atau ingin mengusulkan alat baru? Hubungi kami langsung.",
+    "title": "Hubungi ToolNest — Bantuan & Masukan | ToolNest",
+    "metaDesc": "Hubungi tim ToolNest untuk pertanyaan, usulan alat baru, saran, atau pelaporan kendala teknis. Kami membalas dalam 24 hingga 48 jam kerja.",
+    "badge": "Layanan & Masukan",
+    "heading": "Hubungi Kami",
+    "subheading": "Punya ide fitur baru, menemukan kendala, atau ingin mengusulkan alat baru? Kami membaca dan membalas setiap pesan.",
     "emailTitle": "Email Langsung",
-    "emailDesc": "Untuk pertanyaan umum, kerja sama, dan saran.",
-    "responseTitle": "Waktu Tanggapan",
-    "responseDesc": "Kami biasanya membalas dalam 24 hingga 48 jam kerja.",
-    "responseHours": "Senin hingga Jumat",
-    "formTitle": "Kirim Pesan",
-    "formSubtitle": "Isi formulir di bawah ini dan aplikasi email Anda akan terbuka otomatis.",
+    "emailDesc": "Hubungi tim pengembang kami langsung melalui email.",
+    "responseTitle": "Waktu Respons",
+    "responseDesc": "Kami biasanya membalas pesan dalam waktu 24–48 jam kerja.",
+    "responseHours": "Senin – Jumat (Waktu UTC)",
+    "formTitle": "Kirimkan Pesan",
+    "formSubtitle": "Isi formulir di bawah ini dan kami akan segera menindaklanjuti pesan Anda.",
     "nameLabel": "Nama Anda",
-    "namePlaceholder": "Budi Santoso",
-    "emailLabel": "Email Anda",
-    "emailPlaceholder": "budi@contoh.com",
+    "emailLabel": "Alamat Email",
     "subjectLabel": "Subjek",
-    "subjectPlaceholder": "Saran fitur, laporan masalah, pertanyaan...",
     "messageLabel": "Pesan",
-    "messagePlaceholder": "Tuliskan pesan atau kebutuhan Anda...",
     "submitBtn": "Kirim Pesan",
-    "submittingBtn": "Membuka Aplikasi Email...",
-    "successMsg": "Terima kasih! Membuka aplikasi email Anda untuk mengirim pesan.",
-    "fillAllFieldsError": "Harap lengkapi semua kolom yang wajib diisi.",
-    "invalidEmailError": "Harap masukkan alamat email yang valid."
+    "successMsg": "Terima kasih! Pesan Anda telah siap dikirimkan.",
+    "validationName": "Harap masukkan nama Anda.",
+    "validationEmail": "Harap masukkan alamat email yang valid.",
+    "validationMessage": "Harap tuliskan pesan Anda (minimal 10 karakter)."
   },
   "privacy": {
-    "title": "Kebijakan Privasi",
-    "metaDesc": "Kebijakan privasi ToolNest: bebas pelacakan, tidak ada penyimpanan data pribadi, pemrosesan lokal.",
-    "badge": "Komitmen Privasi",
-    "heading": "Tanpa pelacakan. Tanpa akun. Tanpa pengumpulan data.",
-    "lastUpdated": "Terakhir diperbarui",
+    "title": "Kebijakan Privasi — Keamanan Data & Transparansi | ToolNest",
+    "metaDesc": "Baca Kebijakan Privasi ToolNest secara menyeluruh. Pelajari arsitektur murni di peramban, penggunaan penyimpanan lokal, dan komitmen privasi kami.",
+    "badge": "Transparansi & Tata Kelola Data",
+    "heading": "Kebijakan Privasi",
+    "lastUpdated": "Pembaruan Terakhir",
     "dateStr": "September 2026",
-    "introTitle": "1. Prinsip Utama Kami",
-    "introP": "Di ToolNest, kami percaya menggunakan alat praktis online tidak boleh mengorbankan privasi. Kami tidak memerlukan akun dan tidak menjual data apa pun.",
-    "collectTitle": "2. Informasi yang Tidak Kami Kumpulkan",
-    "collectP1": "Saat Anda menggunakan Kalkulator Usia, Fakta Ulang Tahun, atau Roda Keputusan, semua perhitungan berjalan di peramban Anda sendiri.",
-    "collectP2": "Kami tidak menyimpan tanggal lahir, daftar nama, atau opsi pilihan Anda pada server basis data mana pun.",
-    "cookiesTitle": "3. Kuki & Preferensi Lokal",
-    "cookiesP1": "Kami hanya memakai localStorage dan kuki ringan untuk mengingat tema pilihan Anda (gelap/terang) serta bahasa antarmuka.",
-    "analyticsTitle": "4. Hosting & Analitik",
-    "analyticsP": "Situs kami dihosting di Cloudflare Workers yang hanya mencatat statistik teknis agregat tanpa melacak identitas pengguna individu.",
-    "urlTitle": "5. Berbagi Tautan Tanpa Server",
-    "urlP": "Saat Anda membagikan hitung mundur atau roda acak, opsinya tersimpan langsung pada tautan URL. Penerima tautan dapat melihat hal yang sama tanpa bergantung pada server kami."
+    "introTitle": "1. Pendahuluan",
+    "introP": "ToolNest beroperasi sebagai platform web statis yang menyediakan utilitas berbasis peramban. Kami berkomitmen penuh pada transparansi serta perlindungan privasi para pengunjung kami.",
+    "collectTitle": "2. Informasi yang Kami Kumpulkan",
+    "collectP1": "Tanpa Penyimpanan di Server: Berbeda dengan layanan web pada umumnya, ToolNest tidak memiliki sistem akun pengguna, basis data profil, atau pencatatan server jarak jauh untuk input Anda. Semua kalkulasi berjalan murni di lingkungan peramban lokal Anda.",
+    "collectP2": "Penyimpanan Lokal Peramban: Kami menyimpan riwayat penggunaan alat dan preferensi tema tampilan hanya di memori lokal peramban perangkat Anda — data tersebut tidak pernah dikirim ke luar perangkat dan dapat Anda hapus kapan saja.",
+    "cookiesTitle": "3. Cookie & Iklan",
+    "cookiesP1": "Untuk mendukung ketersediaan alat secara gratis, ToolNest dapat menampilkan iklan pihak ketiga seperti Google AdSense yang menggunakan cookie periklanan standar untuk menayangkan iklan relevan berdasarkan kunjungan sebelumnya.",
+    "analyticsTitle": "4. Analisis Akses Web",
+    "analyticsP": "Kami dapat menggunakan statistik agregat tanpa identitas pribadi pada jaringan tepi untuk memantau volume lalu lintas pengunjung, halaman yang populer, dan kompatibilitas perangkat pengguna.",
+    "urlTitle": "5. Penyimpanan Status pada Tautan (URL)",
+    "urlP": "Beberapa alat menyematkan parameter pilihan langsung ke dalam tautan (URL) peramban Anda, sehingga Anda dapat menyimpan bookmark atau membagikannya kepada rekan tanpa memerlukan basis data eksternal."
   },
   "notFound": {
-    "title": "Halaman Tidak Ditemukan",
-    "heading": "Ups! Halaman Tidak Ditemukan",
-    "subtext": "Alat mikro atau halaman yang Anda cari tidak tersedia atau telah dipindahkan. Jelajahi alat populer kami di bawah ini.",
+    "title": "Halaman Tidak Ditemukan (404) | ToolNest",
+    "heading": "Halaman ini tidak dapat ditemukan",
+    "subtext": "Kami tidak dapat menemukan halaman yang Anda cari. Halaman mungkin telah dipindahkan, diubah namanya, atau memang tidak pernah ada.",
     "backHome": "Kembali ke Beranda",
-    "exploreTitle": "Jelajahi Semua Alat Mikro"
+    "exploreTitle": "Jelajahi Pilihan Alat Gratis Kami"
   },
   "errors": {
-    "timeout": "Waktu proses habis. Silakan coba lagi dengan topik yang lebih ringkas.",
-    "rateLimit": "Terlalu banyak permintaan. Mohon tunggu sejenak sebelum mencoba lagi.",
-    "serverConfig": "Konfigurasi server sedang disesuaikan. Silakan periksa kembali nanti.",
-    "upstreamUnavailable": "Layanan AI sedang menerima beban tinggi. Silakan coba lagi sebentar lagi.",
-    "serverError": "Tidak dapat menyelesaikan proses. Silakan coba lagi atau masukkan opsi secara manual.",
-    "networkError": "Koneksi jaringan terputus. Mohon periksa koneksi internet Anda.",
-    "unknownError": "Terjadi kesalahan tak terduga. Silakan muat ulang halaman."
+    "requiredField": "Bagian ini wajib diisi.",
+    "invalidEmail": "Harap masukkan alamat email yang valid.",
+    "networkError": "Kendala jaringan. Periksa koneksi internet Anda dan coba lagi.",
+    "rateLimit": "Batas permintaan tercapai. Harap tunggu satu menit sebelum mencoba lagi.",
+    "serverError": "Terjadi kesalahan pada server. Silakan coba kembali sebentar lagi.",
+    "timeoutError": "Waktu proses habis. Silakan coba kembali.",
+    "unavailableError": "Layanan sementara tidak tersedia. Coba lagi beberapa saat lagi.",
+    "parseError": "Gagal membaca respons data. Silakan coba dengan parameter lain.",
+    "genericError": "Terjadi kesalahan yang tidak terduga. Silakan coba kembali."
+  },
+  "tags": {
+    "popular": "Populer",
+    "trivia": "Fakta Unik",
+    "randomizer": "Pengacak",
+    "utility": "Utilitas",
+    "time": "Waktu",
+    "aiDatabase": "AI + Database",
+    "fun": "Hiburan",
+    "daily": "Harian",
+    "classroom": "Kelas",
+    "party": "Pesta",
+    "age": "Usia",
+    "facts": "Fakta",
+    "wheel": "Roda",
+    "picker": "Pengundi",
+    "countdown": "Hitung Mundur",
+    "names": "Nama",
+    "astrology": "Astrologi",
+    "numerology": "Numerologi"
+  },
+  "share": {
+    "whatsappShare": "Lihat alat gratis keren ini di ToolNest:",
+    "twitterShare": "Lihat alat gratis keren ini di ToolNest:",
+    "countdownShareText": "Lihat hitung mundur langsung untuk \"{title}\"!",
+    "countdownShareTitle": "⏳ Hitung Mundur: {title}",
+    "countdownJoinText": "Ikuti hitung mundur langsung untuk \"{title}\":",
+    "countdownTrackText": "Yuk pantau hitung mundur ini bareng aku: \"{title}\"",
+    "birthdayShareTitle": "Fakta Hari Lahir Saya di ToolNest",
+    "ageShareTitle": "Usia Tepat Saya di ToolNest",
+    "wheelShareTitle": "Roda Keputusan di ToolNest",
+    "pickerShareTitle": "Pemenang Terpilih di ToolNest",
+    "watermark": "dibuat dengan ToolNest • toolnest.pages.dev",
+    "stickerShared": "Stiker hitung mundur berhasil dibagikan!",
+    "linkShared": "Tautan hitung mundur berhasil dibagikan!",
+    "imageSaved": "Gambar tersimpan — bagikan ke mana saja!",
+    "renderImage": "Merender Gambar...",
+    "prepareShare": "Menyiapkan Berbagi...",
+    "generatingSticker": "Membuat stiker resolusi tinggi...",
+    "imageDownloaded": "Gambar berhasil diunduh!",
+    "imageFailed": "Gagal membuat gambar. Silakan coba lagi!"
+  },
+  "forms": {
+    "required": "Wajib",
+    "optional": "Opsional",
+    "clear": "Hapus",
+    "reset": "Atur Ulang",
+    "submit": "Kirim",
+    "save": "Simpan",
+    "cancel": "Batal",
+    "close": "Tutup",
+    "search": "Cari",
+    "filter": "Filter",
+    "select": "Pilih",
+    "copy": "Salin",
+    "share": "Bagikan",
+    "download": "Unduh",
+    "namePlaceholder": "Alex",
+    "emailPlaceholder": "alex@contoh.com",
+    "subjectPlaceholder": "Saran fitur baru...",
+    "messagePlaceholder": "Tulis pesanmu di sini...",
+    "searchPlaceholder": "Ketik untuk mencari..."
+  },
+  "faq": {
+    "title": "Pertanyaan yang Sering Diajukan",
+    "description": "Semua yang perlu kamu ketahui tentang cara kerja alat ini.",
+    "answersCount": "8 Jawaban",
+    "quickNav": "Navigasi Cepat — Pertanyaan Umum",
+    "wheel": [
+      {
+        "q": "Apakah putaran roda ini benar-benar acak dan adil secara matematis?",
+        "a": "Ya. Roda menggunakan API kriptografi bawaan peramban untuk menentukan kecepatan awal dan durasi putaran. Setiap juring memiliki sudut dan peluang menang yang sama besar."
+      },
+      {
+        "q": "Bisakah AI membuatkan pilihan khusus untuk roda secara otomatis?",
+        "a": "Bisa! ToolNest dilengkapi generator AI berbasis Google Gemini. Cukup ceritakan dilemamu (seperti \"menu makan siang\" atau \"ide game seru\"), dan AI akan menyusun opsi pilihan dalam sekejap."
+      },
+      {
+        "q": "Bisakah ini digunakan sebagai alternatif Wheel of Names atau roda hadiah?",
+        "a": "Tentu saja. ToolNest adalah alternatif Wheel of Names yang bersih, modern, dan bebas iklan mengganggu untuk guru di kelas, undian giveaway online, atau rapat tim."
+      },
+      {
+        "q": "Bagaimana cara membuat roda Ya atau Tidak atau penentu makan malam?",
+        "a": "Cukup masukkan dua pilihan: \"Ya\" dan \"Tidak\". Untuk memilih makan malam, kamu bisa memilih template siap pakai kami atau mengetik restoran favoritmu."
+      },
+      {
+        "q": "Bagaimana cara kerja simulasi fisika perlambatan roda?",
+        "a": "Roda dijalankan dengan mesin grafis Canvas 60 FPS menggunakan kurva gesekan Bezier kuadratik, meniru putaran dan deselerasi alami roda karnaval mekanis."
+      },
+      {
+        "q": "Bisakah saya membagikan setelan roda keputusan saya lewat tautan?",
+        "a": "Ya! Semua pilihan tersimpan langsung di parameter URL secara real-time. Klik \"Bagikan Roda\" untuk menyalin tautan sehingga temanmu dapat memutar pilihan yang sama persis."
+      },
+      {
+        "q": "Berapa banyak pilihan yang bisa dimasukkan ke dalam roda?",
+        "a": "Kamu dapat memasukkan antara 2 hingga 12 opsi. Batas 12 pilihan menjaga teks tetap mudah dibaca dan warna tetap tajam di layar ponsel."
+      },
+      {
+        "q": "Bisakah saya menghapus opsi yang menang setelah diputar?",
+        "a": "Bisa. Saat jendela perayaan kemenangan muncul, klik \"Hapus Pemenang\". Opsi yang terpilih akan langsung dihapus dan roda mengatur ulang sudut bagian lainnya."
+      }
+    ],
+    "picker": [
+      {
+        "q": "Apakah pengacak nama ini benar-benar adil dan tanpa rekayasa?",
+        "a": "Berbeda dari pengacak standar yang memakai Math.random terduga, ToolNest memanfaatkan API Kriptografi peramban (crypto.getRandomValues) dipadu algoritma Fisher-Yates untuk keadilan statistik mutlak."
+      },
+      {
+        "q": "Bagaimana cara menggunakan alat ini untuk membagi kelompok atau tim?",
+        "a": "Untuk membagi tim, klik \"Acak Daftar\" terlebih dahulu untuk mengacak urutan nama secara total, lalu bagi nama-nama tersebut sesuai jumlah regu yang diinginkan."
+      },
+      {
+        "q": "Bisakah saya mengundi beberapa pemenang giveaway sekaligus?",
+        "a": "Bisa! Atur jumlah pemenang antara 1 hingga 10 nama sekaligus. Algoritma memastikan tidak ada nama pemenang ganda jika opsi pengulangan dimatikan."
+      },
+      {
+        "q": "Apa perbedaan antara crypto.getRandomValues dan Math.random?",
+        "a": "Math.random menggunakan generator angka semu (PRNG) dengan pola internal yang bisa diprediksi. crypto.getRandomValues mengakses entropi sistem operasi perangkatmu, sangat aman untuk undian resmi."
+      },
+      {
+        "q": "Bisakah nama pemenang langsung dihapus setelah diundi?",
+        "a": "Bisa. Aktifkan opsi \"Hapus pemenang setelah terpilih\". Setiap kali nama terpilih keluar, namanya langsung dihapus dari daftar sehingga undian beberapa babak berjalan praktis."
+      },
+      {
+        "q": "Apakah ToolNest menyimpan atau mengunggah daftar nama saya ke server?",
+        "a": "Tidak. Daftar namamu tidak pernah keluar dari memori peramban. Semua pemilahan teks, penghapusan duplikat, dan pengundian berjalan 100% lokal di perangkatmu."
+      },
+      {
+        "q": "Format daftar apa saja yang bisa ditempelkan ke pengacak ini?",
+        "a": "Kamu bisa menempelkan daftar nama yang dipisahkan baris baru, koma, atau titik koma. Sistem otomatis merapikan spasi dan mengabaikan baris kosong."
+      },
+      {
+        "q": "Bisakah saya menyaring nama yang ganda sebelum mengundi?",
+        "a": "Bisa! Alat ini otomatis mendeteksi nama ganda dan menampilkan tombol praktis \"Hapus Duplikat\" dalam sekali klik."
+      }
+    ],
+    "age": [
+      {
+        "q": "Berapa usia saya hari ini dalam tahun, bulan, dan hari secara tepat?",
+        "a": "Usia tepatmu dihitung berdasarkan tahun kalender penuh, sisa bulan kalender, dan sisa hari sejak tanggal lahirmu menggunakan acuan waktu UTC tanpa distorsi zona waktu."
+      },
+      {
+        "q": "Bagaimana kalkulator tanggal lahir ini menghitung usia saya dengan tepat?",
+        "a": "Algoritma menghitung tahun yang telah genap, mencocokkan jumlah hari aktual pada setiap bulan kalender masehi, dan menjumlahkan sisa hari tanpa pembulatan kasar."
+      },
+      {
+        "q": "Kapan setengah ulang tahun saya dan apakah alat ini menghitungnya?",
+        "a": "Ya! ToolNest secara otomatis menghitung setengah ulang tahun (half birthday) kamu, yaitu tepat 6 bulan setelah tanggal lahirmu (atau sekitar 182,5 hari)."
+      },
+      {
+        "q": "Mengapa hitungan hari atau bulan bisa berbeda antar kalkulator online?",
+        "a": "Banyak kalkulator sederhana membagi total hari dengan 365 atau 30,4375 sehingga menimbulkan selisih. ToolNest menghitung hari riil pada kalender Gregorian dan tahun kabisat."
+      },
+      {
+        "q": "Bisakah saya menghitung usia saya pada tanggal tertentu di masa lalu?",
+        "a": "Bisa! Buka opsi \"Hitung usia pada tanggal tertentu\" di bawah kolom tanggal lahir. Pilih tanggal bersejarah mana pun untuk mengetahui usiamu saat itu."
+      },
+      {
+        "q": "Bagaimana perhitungan untuk tahun kabisat dan yang lahir pada 29 Februari?",
+        "a": "Bagi yang lahir pada 29 Februari, sistem mencatat 29 hari pada tahun kabisat, sedangkan pada tahun biasa dihitung genap pada 1 Maret sesuai konvensi hukum umum."
+      },
+      {
+        "q": "Apakah ToolNest menyimpan data tanggal lahir saya ke server?",
+        "a": "Tidak. ToolNest berjalan tanpa server database, tanpa login, dan tanpa cookie pelacak. Seluruh kalkulasi diproses lokal di memori perambanmu."
+      },
+      {
+        "q": "Seberapa akurat penghitung detik langsung dan detak jantung?",
+        "a": "Penghitung detik berjalan langsung sesuai jam presisi perambanmu. Estimasi detak jantung (rata-rata 70 BPM) dan tarikan napas (16/menit) menyajikan statistik hidup yang memukau."
+      }
+    ],
+    "birthday": [
+      {
+        "q": "Pada hari apa dalam seminggu saya lahir dan bagaimana cara memastikannya?",
+        "a": "Hari kelahiranmu ditentukan melalui perhitungan hari kalender Gregorian dari titik acuan standar dengan memperhitungkan seluruh tahun kabisat secara matematis."
+      },
+      {
+        "q": "Bagaimana cara mengetahui zodiak saya dan apa arti elemennya?",
+        "a": "Zodiak matahari barat ditentukan oleh posisi Matahari melintasi 12 rasi 30 derajat. Setiap zodiak mewakili salah satu dari empat elemen: Api, Tanah, Udara, atau Air."
+      },
+      {
+        "q": "Apa makna batu kelahiran bulanan dan bunga kelahiran saya?",
+        "a": "Batu kelahiran distandardisasi sejak 1912 oleh National Association of Jewelers, dan bunga kelahiran berakar dari tradisi Romawi kuno yang melambangkan kebajikan dan harapan baik."
+      },
+      {
+        "q": "Apa itu ulang tahun emas (golden birthday) dan kapan terjadinya?",
+        "a": "Ulang tahun emas terjadi ketika usiamu sama persis dengan tanggal lahirmu—misalnya menginjak usia 25 tahun pada tanggal 25 bulan tersebut."
+      },
+      {
+        "q": "Apa itu angka jalur hidup dalam numerologi dan bagaimana cara menghitungnya?",
+        "a": "Angka jalur hidup dihitung dengan menjumlahkan seluruh angka hari, bulan, dan tahun lahir hingga menghasilkan satu digit (atau angka master 11, 22, 33) yang mencerminkan kepribadianmu."
+      },
+      {
+        "q": "Kapan setengah ulang tahun saya dan mengapa orang merayakannya?",
+        "a": "Setengah ulang tahun jatuh tepat 6 bulan setelah tanggal ulang tahunmu. Ini populer dirayakan untuk anak-anak atau bagi mereka yang tanggal lahirnya berdekatan dengan libur akhir tahun."
+      },
+      {
+        "q": "Bagaimana generasi seperti Gen Z dan Milenial ditentukan?",
+        "a": "Rentang generasi dipetakan berdasarkan kerangka demografi Pew Research Center, yang mengaitkan tahun kelahiran dengan perkembangan sejarah dan teknologi penting."
+      },
+      {
+        "q": "Bisakah saya mengunduh dan membagikan kartu fakta hari lahir saya?",
+        "a": "Bisa! ToolNest membuat kartu stiker resolusi tinggi (PNG) langsung di perambanmu tanpa mengirim data ke server. Kamu bisa menyimpan atau membagikannya seketika."
+      }
+    ],
+    "countdown": [
+      {
+        "q": "Apakah penghitung waktu mundur ini gratis dan tanpa perlu akun?",
+        "a": "Ya, 100% gratis tanpa perlu daftar akun, email, atau kata sandi. Kamu bisa membuat dan membagikan hitung mundur acara apa pun tanpa batas."
+      },
+      {
+        "q": "Bisakah ini dipakai untuk menghitung sisa hari menuju Tahun Baru atau liburan?",
+        "a": "Tentu saja! Kamu bisa memakai template cepat untuk Tahun Baru, Natal, liburan, atau menentukan tanggal target khusus untuk memantau sisa hari, jam, dan menit."
+      },
+      {
+        "q": "Di mana data hitung mundur disimpan dan bagaimana cara kerja tautannya?",
+        "a": "Data acaramu (judul, waktu ISO, dan emoji) tersimpan langsung di dalam tautan lewat pengkodean Base64URL yang aman, tanpa perlu server basis data."
+      },
+      {
+        "q": "Bagaimana cara membagikan tautan hitung mundur ke WhatsApp atau media sosial?",
+        "a": "Cukup klik \"Salin Tautan\" atau tombol bagikan langsung. Di ponsel, kamu juga bisa membuat stiker gambar PNG berkualitas tinggi untuk status dan story."
+      },
+      {
+        "q": "Bagaimana jika teman saya berada di zona waktu yang berbeda?",
+        "a": "Waktu disimpan dalam format universal UTC (ISO-8601). Saat temanmu membuka tautan, peramban mereka otomatis menyesuaikan ke zona waktu lokal secara sinkron."
+      },
+      {
+        "q": "Apa yang terjadi saat hitungan waktu mundur mencapai nol?",
+        "a": "Tampilan jam otomatis berubah ke mode perayaan dengan animasi pesta, konfeti ceria, dan menampilkan hitungan berapa lama waktu telah berlalu sejak momen tersebut."
+      },
+      {
+        "q": "Bisakah saya mengatur jam dan menit yang tepat untuk acara saya?",
+        "a": "Bisa! Pemilih waktu mendukung ketepatan hingga hitungan menit, sangat pas untuk jadwal penerbangan, ujian, peluncuran karya, maupun pesta kejutan."
+      },
+      {
+        "q": "Bisakah saya menampilkan jam ini dalam layar penuh untuk livestream?",
+        "a": "Bisa! Halaman penampil di /countdown/view memiliki tampilan bersih dan responsif, sangat cocok untuk tangkapan layar OBS, proyektor, dan tayangan langsung."
+      }
+    ],
+    "nameMeaning": [
+      {
+        "q": "Apa arti nama saya dan bagaimana asal-usulnya ditentukan?",
+        "a": "Arti nama mencerminkan akar etimologi dari bahasa kuno seperti Ibrani, Latin, Yunani, Nordik Kuno, Keltik, atau Arab yang dicocokkan dengan kamus onomastik sejarah."
+      },
+      {
+        "q": "Bisakah saya mencari nama unik atau langka dengan alat ini?",
+        "a": "Bisa! Selain 200+ koleksi nama pilihan kami, ToolNest memiliki fitur analisis AI dengan Google Gemini untuk menelusuri nama langka dan internasional apa pun."
+      },
+      {
+        "q": "Bisakah saya mencari nama yang bermakna kebajikan seperti cahaya atau kekuatan?",
+        "a": "Bisa! Banyak nama indah melambangkan kebaikan: nama bermakna cahaya seperti Lucia dan Aaron; nama bermakna kekuatan seperti Ethan dan Audrey; serta nama bermakna cinta seperti Amara dan David."
+      },
+      {
+        "q": "Seberapa akurat arti nama dan ulasan kepribadian dari AI?",
+        "a": "Koleksi nama utama diverifikasi dari catatan sejarah dan sensus resmi. Analisis AI menyatukan simbolisme budaya dunia serta irama fonetik untuk inspirasi kreatif."
+      },
+      {
+        "q": "Bagaimana sistem menentukan hasil dari database atau analisis AI?",
+        "a": "Saat kamu memasukkan nama, ToolNest memeriksa apakah nama tersebut ada di direktori utama. Jika ada, kamu diarahkan ke profil lengkap. Jika belum, AI akan menganalisisnya langsung di halaman ini."
+      },
+      {
+        "q": "Apakah pencarian nama ini aman dan sepenuhnya gratis?",
+        "a": "Ya, 100% gratis tanpa cookie pelacak dan tanpa perlu daftar akun. Riwayat pencarianmu hanya tersimpan di peramban lokal perangkatmu."
+      },
+      {
+        "q": "Tradisi bahasa apa saja yang tercakup dalam database nama ini?",
+        "a": "Database kami mencakup tradisi Latin, Jermanik, Yunani, Ibrani, Keltik, Nordik, Slavia, Sanskerta, Jepang, hingga Yoruba dari berbagai belahan dunia."
+      },
+      {
+        "q": "Bisakah saya melihat nama populer yang disaring berdasarkan abjad atau gender?",
+        "a": "Bisa! Kunjungi Direktori Nama lengkap kami di /names/ untuk menjelajahi 200+ profil nama yang diurutkan dari A sampai Z dan disaring menurut gender dan popularitas."
+      }
+    ],
+    "nameDetail": {
+      "q1": "Apa arti dari nama {name}?",
+      "a1": "Nama {name} berakar dari bahasa {origin} dan secara tradisional memiliki arti \"{meaning}\".",
+      "q2": "Seberapa populer nama {name} saat ini?",
+      "a2": "Nama {name} saat ini memiliki tingkat kepopuleran {popularity} di antara nama-nama bayi di berbagai penjuru dunia.",
+      "q3": "Ingin wawasan lebih mendalam? Buka analisis AI untuk nama apa saja",
+      "a3": "Kamu bisa menekan tombol \"Buka Analisis AI\" di halaman ini untuk menghasilkan interpretasi kaya dan personal—termasuk sifat kepribadian, gaya nama, dan fakta sejarah menarik berbasis Google Gemini."
+    }
+  },
+  "nameMeaning": {
+    "useCases": {
+      "title": "Kegunaan Populer Pencarian Arti Nama & Asal-usul",
+      "u1Title": "Pemilihan Nama Bayi & Calon Buah Hati",
+      "u1Desc": "Temukan ide nama bayi dengan makna mendalam, pelafalan indah, dan harmoni budaya untuk mempersiapkan kelahiran sang buah hati.",
+      "u2Title": "Penulis, Novelis & Pembuat Skenario",
+      "u2Desc": "Beri nama tokoh utama, antagonis, dan karakter dunia fantasi dengan asal-usul kata yang pas dengan jalan cerita dan watak mereka.",
+      "u3Title": "Silsilah Keluarga & Warisan Leluhur",
+      "u3Desc": "Telusuri jejak migrasi keluarga dan profesi bersejarah melalui akar bahasa nama leluhur yang diwariskan turun-temurun."
+    },
+    "trivia": {
+      "title": "Tahukah Anda? Fakta Unik tentang Fonetik & Ilmu Nama",
+      "t1Title": "Efek Bouba/Kiki",
+      "t1Desc": "Eksperimen linguistik membuktikan manusia secara alami mengaitkan bunyi vokal bulat yang lembut dengan kehangatan, dan konsonan tajam dengan ketegasan.",
+      "t2Title": "Siklus Nama 100 Tahun",
+      "t2Desc": "Tren nama bayi mengikuti siklus 100 tahun: nama yang terasa kuno bagi orang tua kerap dirasa klasik dan anggun bagi generasi cucu saat mengenang kakek-nenek buyut.",
+      "t3Title": "500 Akar Kata Purba",
+      "t3Desc": "Lebih dari 80% nama tradisional Eropa dan Mediterania berakar dari kurang dari 500 kata purba yang memiliki makna cahaya, kedamaian, alam, dan keberanian."
+    },
+    "ui": {
+      "aiPoweredFinder": "Berkas Nama Berbasis AI & Pilihan",
+      "enterNameLabel": "Masukkan Nama Apa Saja",
+      "searchBtn": "Cari Arti Nama",
+      "curatedBadge": "Berkas Terverifikasi Tersedia",
+      "aiBadge": "Analisis Linguistik AI",
+      "viewFullDossier": "Lihat Berkas Lengkap →",
+      "keyTakeawaysTitle": "Jawaban Singkat & Poin Penting",
+      "kt1": "Database Onomastik Global: Menghubungkan ribuan akar budaya dan kamus bahasa klasik.",
+      "kt2": "Wawasan AI Instan: Membuka arketipe psikologis, ritme fonetik, dan kisah asal-usul nama unik apa pun.",
+      "kt3": "Privasi 100% di Sisi Klien: Riwayat pencarian tetap rahasia di penyimpanan lokal peramban Anda."
+    }
+  },
+  "data": {
+    "birthstones": {
+      "1": {
+        "name": "Garnet",
+        "meaning": "Melambangkan perlindungan, vitalitas, dan persahabatan sejati."
+      },
+      "2": {
+        "name": "Ametis",
+        "meaning": "Melambangkan kedamaian, kejernihan pikiran, dan keteguhan batin."
+      },
+      "3": {
+        "name": "Akuamarin",
+        "meaning": "Melambangkan keberanian, ketenangan, dan keselamatan perjalanan."
+      },
+      "4": {
+        "name": "Berlian",
+        "meaning": "Melambangkan cinta abadi, kekuatan, dan keteguhan tak terpatahkan."
+      },
+      "5": {
+        "name": "Zamrud",
+        "meaning": "Melambangkan kelahiran kembali, pertumbuhan, kebijaksanaan, dan kesabaran."
+      },
+      "6": {
+        "name": "Mutiara",
+        "meaning": "Melambangkan kemurnian, keanggunan, dan kebijaksanaan abadi."
+      },
+      "7": {
+        "name": "Rubi",
+        "meaning": "Melambangkan gairah, energi, keberanian, dan semangat hidup."
+      },
+      "8": {
+        "name": "Peridot",
+        "meaning": "Melambangkan keharmonisan, keberuntungan, dan energi positif."
+      },
+      "9": {
+        "name": "Safir",
+        "meaning": "Melambangkan kebijaksanaan, kesetiaan, kebenaran, dan kemuliaan."
+      },
+      "10": {
+        "name": "Opal",
+        "meaning": "Melambangkan kreativitas, harapan, spontanitas, dan ketulusan."
+      },
+      "11": {
+        "name": "Topas",
+        "meaning": "Melambangkan kehangatan, empati, pemulihan, dan kekuatan."
+      },
+      "12": {
+        "name": "Pirus",
+        "meaning": "Melambangkan perlindungan, kesuksesan, keberuntungan, dan ketenangan."
+      }
+    },
+    "birthFlowers": {
+      "1": {
+        "name": "Anyelir",
+        "meaning": "Melambangkan kekaguman, kesetiaan mendalam, dan kasih sayang tulus."
+      },
+      "2": {
+        "name": "Violet",
+        "meaning": "Melambangkan kesederhanaan, ketulusan spiritual, dan keindahan anggun."
+      },
+      "3": {
+        "name": "Bakung Kuning",
+        "meaning": "Melambangkan awal baru, harapan cerah, dan kelahiran kembali yang penuh sukacita."
+      },
+      "4": {
+        "name": "Aster Daisy",
+        "meaning": "Melambangkan kepolosan, kesederhanaan ceria, dan kasih sayang tulus."
+      },
+      "5": {
+        "name": "Bakung Lembah",
+        "meaning": "Melambangkan kembalinya kebahagiaan, kerendahan hati, dan keanggunan lembut."
+      },
+      "6": {
+        "name": "Mawar",
+        "meaning": "Melambangkan romansa mendalam, gairah abadi, dan kehormatan."
+      },
+      "7": {
+        "name": "Larkspur",
+        "meaning": "Melambangkan kehangatan hati, tawa riang, dan pikiran positif."
+      },
+      "8": {
+        "name": "Gladiol",
+        "meaning": "Melambangkan keteguhan karakter, integritas moral, dan kenangan indah."
+      },
+      "9": {
+        "name": "Aster",
+        "meaning": "Melambangkan keanggunan halus, kesabaran, dan kasih sayang puitis."
+      },
+      "10": {
+        "name": "Marigold (Bunga Tahi Ayam)",
+        "meaning": "Melambangkan kehangatan cerah, ambisi penuh semangat, dan tekad kuat."
+      },
+      "11": {
+        "name": "Krisan",
+        "meaning": "Melambangkan umur panjang, persahabatan erat, dan keceriaan abadi."
+      },
+      "12": {
+        "name": "Holly",
+        "meaning": "Melambangkan optimisme perayaan, kebahagiaan keluarga, dan niat baik."
+      }
+    },
+    "generations": [
+      {
+        "name": "Generasi Silent",
+        "shortName": "Silent",
+        "startYear": 1928,
+        "endYear": 1945,
+        "description": "Dikenal atas ketangguhan, etos kerja tinggi, dan dedikasi sosial."
+      },
+      {
+        "name": "Baby Boomers",
+        "shortName": "Boomers",
+        "startYear": 1946,
+        "endYear": 1964,
+        "description": "Ditandai oleh optimisme pascaperang, revolusi budaya, dan ambisi besar."
+      },
+      {
+        "name": "Generasi X",
+        "shortName": "Gen X",
+        "startYear": 1965,
+        "endYear": 1980,
+        "description": "Dicirikan oleh kemandirian kuat, kemampuan adaptasi, dan keseimbangan hidup."
+      },
+      {
+        "name": "Milenial (Generasi Y)",
+        "shortName": "Milenial",
+        "startYear": 1981,
+        "endYear": 1996,
+        "description": "Pelopor era digital yang menjunjung nilai kebermaknaan dan kolaborasi."
+      },
+      {
+        "name": "Generasi Z",
+        "shortName": "Gen Z",
+        "startYear": 1997,
+        "endYear": 2012,
+        "description": "Generasi melek digital yang mengedepankan keaslian, dampak sosial, dan kreativitas."
+      },
+      {
+        "name": "Generasi Alfa",
+        "shortName": "Gen Alfa",
+        "startYear": 2013,
+        "endYear": 2025,
+        "description": "Generasi yang tumbuh bersama kecerdasan buatan dan dunia terhubung seutuhnya."
+      }
+    ],
+    "zodiac": {
+      "aries": {
+        "name": "Aries",
+        "element": "Api",
+        "traits": [
+          "Pemberani",
+          "Energik",
+          "Tangguh",
+          "Penuh Semangat"
+        ]
+      },
+      "taurus": {
+        "name": "Taurus",
+        "element": "Tanah",
+        "traits": [
+          "Dapat Diandalkan",
+          "Sabar",
+          "Praktis",
+          "Setia"
+        ]
+      },
+      "gemini": {
+        "name": "Gemini",
+        "element": "Udara",
+        "traits": [
+          "Mudah Beradaptasi",
+          "Penasaran",
+          "Cerdas",
+          "Ekspresif"
+        ]
+      },
+      "cancer": {
+        "name": "Cancer",
+        "element": "Air",
+        "traits": [
+          "Intuitif",
+          "Empatis",
+          "Protektif",
+          "Penyayang"
+        ]
+      },
+      "leo": {
+        "name": "Leo",
+        "element": "Api",
+        "traits": [
+          "Percaya Diri",
+          "Murah Hati",
+          "Karismatik",
+          "Ambisius"
+        ]
+      },
+      "virgo": {
+        "name": "Virgo",
+        "element": "Tanah",
+        "traits": [
+          "Analitis",
+          "Teliti",
+          "Suka Membantu",
+          "Rendah Hati"
+        ]
+      },
+      "libra": {
+        "name": "Libra",
+        "element": "Udara",
+        "traits": [
+          "Diplomatis",
+          "Adil",
+          "Menawan",
+          "Artistik"
+        ]
+      },
+      "scorpio": {
+        "name": "Scorpio",
+        "element": "Air",
+        "traits": [
+          "Tegas",
+          "Banyak Akal",
+          "Penuh Gairah",
+          "Setia"
+        ]
+      },
+      "sagittarius": {
+        "name": "Sagitarius",
+        "element": "Api",
+        "traits": [
+          "Optimis",
+          "Suka Petualangan",
+          "Filosofis",
+          "Bebas"
+        ]
+      },
+      "capricorn": {
+        "name": "Capricorn",
+        "element": "Tanah",
+        "traits": [
+          "Disiplin",
+          "Ambisius",
+          "Sabar",
+          "Strategis"
+        ]
+      },
+      "aquarius": {
+        "name": "Aquarius",
+        "element": "Udara",
+        "traits": [
+          "Inovatif",
+          "Mandiri",
+          "Humanis",
+          "Visioner"
+        ]
+      },
+      "pisces": {
+        "name": "Pisces",
+        "element": "Air",
+        "traits": [
+          "Penuh Welas Asih",
+          "Imajinatif",
+          "Intuitif",
+          "Lembut"
+        ]
+      }
+    },
+    "lifePath": {
+      "1": {
+        "title": "Sang Pemimpin",
+        "traits": "Mandiri, Inovatif, Ambisius",
+        "summary": "Jiwa perintis yang terdorong membuka jalan baru, mandiri, dan memimpin dengan visi orisinal."
+      },
+      "2": {
+        "title": "Sang Penengah Damai",
+        "traits": "Diplomatis, Empatis, Intuitif",
+        "summary": "Penengah alami dan pendengar setia yang bertumbuh dengan menciptakan harmoni serta kerja sama erat."
+      },
+      "3": {
+        "title": "Sang Kreator",
+        "traits": "Ekspresif, Optimis, Karismatik",
+        "summary": "Pribadi menyenangkan dan berjiwa seni dengan bakat bercerita, humor, serta menginspirasi orang lain."
+      },
+      "4": {
+        "title": "Sang Pembangun",
+        "traits": "Disiplin, Praktis, Terpercaya",
+        "summary": "Pondasi kokoh masyarakat yang membangun nilai abadi melalui usaha terencana dan integritas."
+      },
+      "5": {
+        "title": "Sang Petualang",
+        "traits": "Fleksibel, Berjiwa Bebas, Penasaran",
+        "summary": "Pribadi dinamis berjiwa bebas yang berkembang lewat penjelajahan, keragaman budaya, dan perubahan."
+      },
+      "6": {
+        "title": "Sang Pengayom",
+        "traits": "Penuh Kasih, Melindungi, Bertanggung Jawab",
+        "summary": "Penjaga berhati tulus yang fokus pada keluarga, kesejahteraan bersama, dan kehangatan rumah tangga."
+      },
+      "7": {
+        "title": "Sang Pencari Kebenaran",
+        "traits": "Analitis, Introspektif, Spiritual",
+        "summary": "Pemikir mendalam yang tertarik menyingkap misteri kehidupan, ilmu pengetahuan, dan kebenaran hakiki."
+      },
+      "8": {
+        "title": "Sang Eksekutif",
+        "traits": "Berwibawa, Ambisius, Strategis",
+        "summary": "Visioner berorientasi target dengan pemahaman tajam akan kepemimpinan strategis dan kesuksesan nyata."
+      },
+      "9": {
+        "title": "Sang Humanis",
+        "traits": "Altruis, Berwawasan Luas, Penuh Empati",
+        "summary": "Insan berjiwa mulia yang mengabdikan diri pada kasih sayang universal dan kemajuan kemanusiaan."
+      },
+      "11": {
+        "title": "Sang Guru Intuitif (Master 11)",
+        "traits": "Tercerahkan, Visioner, Menginspirasi",
+        "summary": "Angka Master langka yang membawa intuisi spiritual mendalam, kepekaan batin, dan pandangan visioner."
+      },
+      "22": {
+        "title": "Sang Pembangun Agung (Master 22)",
+        "traits": "Visioner, Pragmatis, Transformatif",
+        "summary": "Angka Master luar biasa yang mampu mewujudkan cita-cita besar menjadi karya nyata pembawa perubahan."
+      },
+      "33": {
+        "title": "Sang Guru Agung (Master 33)",
+        "traits": "Penuh Welas Asih, Pembimbing, Tulus",
+        "summary": "Puncak Angka Master yang mewujudkan empati tertinggi, bimbingan kebajikan, dan ketulusan bagi sesama."
+      }
+    }
   }
 }

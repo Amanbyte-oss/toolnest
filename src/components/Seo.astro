@@ -1,16 +1,18 @@
 ---
 /**
  * src/components/Seo.astro
- * Wrapper around LocalizedHead for backward compatibility.
+ * Advanced SEO metadata, hreflang alternates, and Schema.org structured data generator.
  */
-import LocalizedHead, { type BreadcrumbItem } from './LocalizedHead.astro';
-import type { Lang } from '../i18n';
+import { getLocalizedPath, type Lang, getTranslations } from '../i18n';
 
-export type { BreadcrumbItem };
+export interface BreadcrumbItem {
+  name: string;
+  item: string;
+}
 
 export interface Props {
-  title?: string;
-  description?: string;
+  title: string;
+  description: string;
   canonicalPath?: string;
   ogImage?: string;
   type?: 'website' | 'article';
@@ -18,10 +20,156 @@ export interface Props {
   extraSchemas?: Record<string, any>[];
   noindex?: boolean;
   lang?: Lang;
-  metaKey?: string;
 }
 
-const props = Astro.props;
+const {
+  title,
+  description,
+  canonicalPath = Astro.url.pathname,
+  ogImage = '/og/home.svg',
+  type = 'website',
+  breadcrumbs = [],
+  extraSchemas = [],
+  noindex = false,
+  lang = 'en',
+} = Astro.props;
+
+const siteUrl = Astro.site ? Astro.site.toString().replace(/\/$/, '') : 'https://toolnest.pages.dev';
+
+// Ensure canonical URL is absolute and cleanly formatted
+const cleanCanonicalPath = canonicalPath.startsWith('/') ? canonicalPath : `/${canonicalPath}`;
+const canonicalUrl = new URL(cleanCanonicalPath, siteUrl).toString();
+const absoluteOgImage = ogImage.startsWith('http') ? ogImage : new URL(ogImage, siteUrl).toString();
+
+// Target strict length limits (< 60 chars title, < 155 chars description)
+const siteName = 'ToolNest';
+const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
+const formattedTitle = fullTitle.length > 60 ? `${fullTitle.slice(0, 57)}...` : fullTitle;
+const formattedDescription = description.length > 155 ? `${description.slice(0, 152)}...` : description;
+
+const isHomePage =
+  cleanCanonicalPath === '/' ||
+  cleanCanonicalPath === '' ||
+  cleanCanonicalPath === '/pt/' ||
+  cleanCanonicalPath === '/pt' ||
+  cleanCanonicalPath === '/id/' ||
+  cleanCanonicalPath === '/id' ||
+  cleanCanonicalPath === '/ar/' ||
+  cleanCanonicalPath === '/ar';
+
+const ogLocaleMap: Record<Lang, string> = {
+  en: 'en_US',
+  pt: 'pt_BR',
+  id: 'id_ID',
+  ar: 'ar_EG',
+};
+const ogLocale = ogLocaleMap[lang] || 'en_US';
+
+// Schema: Organization
+const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': `${siteUrl}/#organization`,
+  name: siteName,
+  url: siteUrl,
+  logo: {
+    '@type': 'ImageObject',
+    url: `${siteUrl}/favicon.svg`,
+  },
+  sameAs: [],
+};
+
+// Schema: WebSite
+const websiteJsonLd = isHomePage
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      '@id': `${siteUrl}/#website`,
+      name: siteName,
+      url: siteUrl,
+      description: formattedDescription,
+      inLanguage: lang,
+      publisher: {
+        '@id': `${siteUrl}/#organization`,
+      },
+    }
+  : null;
+
+// Schema: Unified @graph for Homepage
+const homeGraphJsonLd = isHomePage
+  ? {
+      '@context': 'https://schema.org',
+      '@graph': [organizationJsonLd, websiteJsonLd],
+    }
+  : null;
+
+// Schema: BreadcrumbList
+const breadcrumbsList = [
+  { name: lang === 'en' ? 'Home' : getTranslations(lang).nav.home, item: `${siteUrl}${getLocalizedPath('/', lang)}` },
+  ...breadcrumbs.map((b) => ({
+    name: b.name,
+    item: b.item.startsWith('http') ? b.item : new URL(b.item.startsWith('/') ? b.item : `/${b.item}`, siteUrl).toString(),
+  })),
+];
+
+const breadcrumbJsonLd =
+  breadcrumbs.length > 0
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: breadcrumbsList.map((crumb, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: crumb.name,
+          item: crumb.item,
+        })),
+      }
+    : null;
 ---
 
-<LocalizedHead {...props} />
+<!-- Primary Meta Tags -->
+<title>{formattedTitle}</title>
+<meta name="title" content={formattedTitle} />
+<meta name="description" content={formattedDescription} />
+<link rel="canonical" href={canonicalUrl} />
+{noindex ? (
+  <meta name="robots" content="noindex, nofollow" />
+) : (
+  <meta name="robots" content="index, follow" />
+)}
+
+<!-- Reciprocal Hreflang Alternates (SEO Critical) -->
+<link rel="alternate" hreflang="en" href={`${siteUrl}${getLocalizedPath(cleanCanonicalPath, 'en')}`} />
+<link rel="alternate" hreflang="pt" href={`${siteUrl}${getLocalizedPath(cleanCanonicalPath, 'pt')}`} />
+<link rel="alternate" hreflang="id" href={`${siteUrl}${getLocalizedPath(cleanCanonicalPath, 'id')}`} />
+<link rel="alternate" hreflang="ar" href={`${siteUrl}${getLocalizedPath(cleanCanonicalPath, 'ar')}`} />
+<link rel="alternate" hreflang="x-default" href={`${siteUrl}${getLocalizedPath(cleanCanonicalPath, 'en')}`} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:title" content={formattedTitle} />
+<meta property="og:description" content={formattedDescription} />
+<meta property="og:image" content={absoluteOgImage} />
+<meta property="og:site_name" content={siteName} />
+<meta property="og:locale" content={ogLocale} />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonicalUrl} />
+<meta name="twitter:title" content={formattedTitle} />
+<meta name="twitter:description" content={formattedDescription} />
+<meta name="twitter:image" content={absoluteOgImage} />
+
+<!-- Structured Data (JSON-LD) -->
+{isHomePage && homeGraphJsonLd && (
+  <script type="application/ld+json" set:html={JSON.stringify(homeGraphJsonLd)} />
+)}
+
+{breadcrumbJsonLd && (
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
+)}
+
+{extraSchemas.map((schema) => (
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+))}

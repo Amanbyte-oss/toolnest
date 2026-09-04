@@ -1,186 +1,331 @@
 {
   "common": {
     "siteName": "ToolNest",
-    "tagline": "Micro-ferramentas Online Gratuitas",
-    "description": "Micro-ferramentas online rápidas, privadas e gratuitas que simplesmente funcionam — sem cadastro, sem anúncios intrusivos e sem armazenamento em servidor.",
-    "badges": {
-      "free": "100% Gratuito",
-      "noSignup": "Sem Cadastro",
-      "privacy": "Zero Rastreamento"
-    },
+    "tagline": "Ferramentas online gratuitas que funcionam de verdade — sem cadastro, sem anúncios bloqueando sua tela, nada sai do seu navegador.",
+    "description": "Uma seleção de microferramentas modernas, rápidas e com privacidade total. Roleta de decisões, sorteador de nomes, calculadora de idade, fatos de aniversário, contagem regressiva e significado de nomes.",
+    "badgeFree": "100% Grátis",
+    "badgeNoSignup": "Sem Cadastro",
+    "badgePrivacy": "Privacidade Total",
+    "footerTagline": "Microferramentas gratuitas, privadas e feitas para celular que rodam direto no seu navegador.",
+    "footerCopyright": "ToolNest. Todos os direitos reservados. Sem rastreamento. Sem servidores guardando seus dados.",
     "nav": {
       "home": "Início",
       "ageCalculator": "Calculadora de Idade",
       "birthdayFacts": "Fatos de Aniversário",
       "decisionWheel": "Roleta de Decisões",
-      "randomPicker": "Sorteador Aleatório",
+      "randomPicker": "Sorteador",
       "countdown": "Contagem Regressiva",
-      "nameMeaning": "Significado do Nome",
+      "nameMeaning": "Significado dos Nomes",
       "about": "Sobre",
       "privacy": "Privacidade",
       "contact": "Contato",
-      "switchLanguage": "Mudar Idioma",
-      "skipToContent": "Pular para o conteúdo principal"
-    },
-    "footer": {
-      "tagline": "Micro-ferramentas gratuitas, privadas e focadas no navegador que respeitam seu tempo e dados.",
-      "copyright": "ToolNest. Criado para velocidade, privacidade e simplicidade.",
-      "allRightsReserved": "Todos os direitos reservados."
+      "switchLanguage": "Idioma"
     },
     "buttons": {
       "calculate": "Calcular",
-      "spin": "Girar Roleta",
-      "pick": "Sortear Vencedor",
+      "spin": "Girar a Roleta",
+      "pick": "Sortear",
       "create": "Criar Contagem",
       "share": "Compartilhar",
       "shareAsImage": "Compartilhar Imagem",
-      "downloadImage": "Baixar Cartão",
+      "downloadImage": "Baixar Imagem",
       "copyLink": "Copiar Link",
-      "copied": "Copiado!",
+      "linkCopied": "Link copiado para a área de transferência!",
       "reset": "Redefinir",
-      "clear": "Limpar Tudo",
+      "clear": "Limpar",
       "retry": "Tentar Novamente",
       "loading": "Carregando...",
       "generating": "Gerando...",
-      "retrying": "Tentando novamente...",
+      "retrying": "Tentando de novo...",
+      "error": "Ocorreu um erro",
+      "success": "Sucesso!",
+      "howItWorks": "Como Funciona",
+      "useCases": "Casos de Uso",
+      "faq": "Perguntas Frequentes",
+      "relatedTools": "Ferramentas Relacionadas",
+      "exploreMore": "Ver Mais Ferramentas",
+      "madeWith": "feito com ToolNest • toolnest.pages.dev",
+      "quickIdeas": "Ideias Rápidas",
+      "winner": "Vencedor",
+      "shuffle": "Embaralhar",
       "remove": "Remover",
       "add": "Adicionar",
-      "save": "Salvar",
-      "close": "Fechar",
-      "back": "Voltar",
-      "exploreMore": "Explorar Mais Ferramentas",
-      "switchTheme": "Alternar tema"
+      "options": "Opções",
+      "result": "Resultado",
+      "downloadCard": "Baixar Cartão",
+      "backHome": "Voltar ao Início",
+      "viewDetails": "Ver Detalhes",
+      "confirm": "Confirmar",
+      "cancel": "Cancelar"
     },
     "toasts": {
       "copied": "Copiado para a área de transferência!",
-      "linkCopied": "Link compartilhável copiado para a área de transferência!",
-      "error": "Algo deu errado. Por favor, tente novamente.",
-      "saved": "Salvo com sucesso!",
-      "removed": "Removido com sucesso.",
-      "cannotRemove": "Não é possível remover: requisitos mínimos não atendidos.",
-      "shareFailed": "Não foi possível compartilhar neste dispositivo. Link copiado.",
-      "invalidDate": "Por favor, insira uma data válida.",
-      "futureDate": "A data não pode estar no futuro."
+      "errorOccurred": "Ocorreu um erro inesperado.",
+      "loaded": "Carregado com sucesso!"
     },
-    "sections": {
-      "howItWorks": "Como Funciona",
-      "useCases": "Casos de Uso Populares",
-      "faq": "Perguntas Frequentes",
-      "relatedTools": "Ferramentas Relacionadas",
-      "quickIdeas": "Predefinições Rápidas"
-    },
-    "watermark": "Criado com ToolNest"
+    "skipToContent": "Pular para o conteúdo principal",
+    "sitemap": "Mapa do Site",
+    "privacyBadge100": "Privacidade 100% no Navegador",
+    "clientPrivacy": "Salvo apenas no seu navegador",
+    "recentActivity": "Atividade Recente",
+    "recentCalculations": "Nenhum cálculo recente salvo ainda",
+    "entriesSavedPrivately": "Seus dados são salvos de forma privada apenas neste dispositivo.",
+    "clearAll": "Limpar tudo",
+    "clearAllConfirm": "Limpar tudo?",
+    "yes": "Sim",
+    "cancel": "Cancelar",
+    "restore": "Restaurar",
+    "restoreArrow": "Restaurar →",
+    "userReviews": "avaliações de usuários",
+    "popular": "Popular",
+    "openTool": "Abrir Ferramenta",
+    "relatedTools": "Ferramentas Gratuitas Relacionadas",
+    "viewAllTools": "Ver todas as ferramentas",
+    "close": "Fechar",
+    "lightMode": "Modo Claro",
+    "darkMode": "Modo Escuro",
+    "switchTheme": "Alternar tema",
+    "openMenu": "Abrir menu",
+    "closeMenu": "Fechar menu",
+    "quickAnswerTitle": "Resposta Rápida e Principais Pontos",
+    "lastUpdated": "Última atualização",
+    "methodologyGuarantee": "Metodologia e Garantia de Precisão",
+    "howToUse": "Como Usar em 3 Passos",
+    "exploreMore": "Explorar Ferramentas",
+    "backHome": "Voltar ao Início",
+    "copied": "Copiado para a área de transferência!",
+    "unableToCopy": "Não foi possível copiar.",
+    "dismiss": "Dispensar"
   },
   "meta": {
     "home": {
-      "title": "ToolNest — Micro-ferramentas Online Gratuitas para o Dia a Dia",
-      "description": "Ferramentas online rápidas e privadas: Roleta de Decisões, Fatos de Aniversário, Sorteador Aleatório, Contagem Regressiva, Calculadora de Idade e Nomes."
+      "title": "ToolNest — Ferramentas Online Gratuitas Que Funcionam de Verdade",
+      "description": "Ferramentas rápidas, privadas e feitas para celular. Roleta de decisões, sorteador, calculadora de idade, fatos de aniversário e contagem regressiva."
     },
     "wheel": {
-      "title": "Roleta de Decisões Aleatórias Online | ToolNest",
-      "description": "Gire a roleta interativa com IA para tomar decisões rápidas. Crie opções personalizadas com o Google Gemini ou insira as suas."
+      "title": "Roleta de Decisões — Roleta Personalizada com IA Grátis",
+      "description": "Gire a roleta interativa para tomar decisões rápidas e justas. Escolha onde comer, sorteie jogos ou crie opções instantâneas com IA."
     },
     "picker": {
-      "title": "Sorteador de Nomes e Gerador de Times | ToolNest",
-      "description": "Sorteie nomes, rifas e divida grupos equilibrados com aleatoriedade matematicamente justa e segura no seu navegador."
+      "title": "Sorteador de Nomes e Números — Sorteios e Times Grátis",
+      "description": "Sorteie nomes ou números aleatórios sem repetições, escolha alunos em sala de aula ou divida grupos em equipes equilibradas."
     },
     "age": {
-      "title": "Calculadora de Idade Exata e Marcos da Vida | ToolNest",
-      "description": "Calcule sua idade cronológica exata até os segundos, compare datas e descubra seus próximos grandes aniversários."
+      "title": "Calculadora de Idade — Idade Exata em Anos, Dias e Segundos",
+      "description": "Descubra sua idade cronológica exata, contagem regressiva para o próximo aniversário, dias vividos e compare datas facilmente."
     },
     "birthday": {
-      "title": "Fatos de Aniversário e Cartão de Curiosidades | ToolNest",
-      "description": "Descubra curiosidades do seu aniversário: dia da semana, signo, pedras astrais, pessoas famosas e cartões para redes sociais."
+      "title": "Fatos de Aniversário — Signo, Pedra, Flor e Marcos Históricos",
+      "description": "Descubra seu signo do zodíaco, pedra do mês, flor de nascimento, dia da semana em que nasceu e baixe um cartão personalizado lindo."
     },
     "countdown": {
-      "title": "Criador de Contagem Regressiva ao Vivo | ToolNest",
-      "description": "Crie contagens regressivas elegantes para aniversários, viagens, casamentos, formaturas e compartilhe com amigos."
+      "title": "Contagem Regressiva Online — Crie e Compartilhe Eventos",
+      "description": "Crie relógios de contagem regressiva em tempo real. Compartilhe com amigos por link direto ou baixe um cartão visual para redes sociais."
     },
     "countdownView": {
-      "title": "Contagem Regressiva ao Vivo | ToolNest",
-      "description": "Acompanhe este evento especial em tempo real. Veja dias, horas, minutos e segundos até a celebração."
+      "title": "Visualizador de Contagem Regressiva | ToolNest",
+      "description": "Acompanhe sua contagem regressiva ao vivo em tempo real. Compartilhável, gratuito e otimizado para celular."
     },
     "names": {
-      "title": "Significado de Nomes de Bebê e Tendências | ToolNest",
-      "description": "Explore centenas de nomes de bebês com origens, significados culturais, popularidade e análises de personalidade com IA."
+      "title": "Significado dos Nomes e Origens — Mais de 200 Nomes com IA",
+      "description": "Explore significados, pronúncias fonéticas, origens culturais e receba insights personalizados com inteligência artificial."
     },
     "nameMeaning": {
-      "title": "Significado do Nome e Análise de Personalidade com IA | ToolNest",
-      "description": "Descubra a etimologia profunda, origem cultural, traços de caráter e figuras históricas com o seu nome."
+      "title": "Pesquisa e Análise de Significado de Nomes | ToolNest",
+      "description": "Consulte origens etimológicas completas, traços de personalidade, popularidade histórica e variações fonéticas de nomes."
     },
     "about": {
-      "title": "Sobre o ToolNest — Filosofia e Padrões Editoriais",
-      "description": "Conheça por que criamos o ToolNest: ferramentas gratuitas, privadas, sem contas e focadas no usuário."
+      "title": "Sobre o ToolNest — Utilitários Web Rápidos e Privados",
+      "description": "Conheça a missão do ToolNest: fornecer ferramentas rápidas, sem rastreadores, com metodologia matemática rigorosa e privacidade total."
     },
     "contact": {
-      "title": "Contato ToolNest — Feedback e Sugestões",
-      "description": "Fale com a equipe do ToolNest. Sugira uma nova micro-ferramenta, reporte um problema ou envie uma mensagem."
+      "title": "Contato ToolNest — Suporte e Sugestões",
+      "description": "Fale com a equipe do ToolNest para dúvidas, sugestões de ferramentas, feedback ou reporte de problemas. Respondemos em 24 a 48 horas."
     },
     "privacy": {
-      "title": "Política de Privacidade — Garantia de Zero Rastreamento | ToolNest",
-      "description": "Nosso compromisso de privacidade: zero dados pessoais armazenados, execução local no navegador e transparência total."
+      "title": "Política de Privacidade — Dados e Transparência | ToolNest",
+      "description": "Leia nossa Política de Privacidade. Conheça nossa arquitetura 100% no navegador, armazenamento local e compromisso com sua privacidade."
     },
     "notFound": {
       "title": "Página Não Encontrada (404) | ToolNest",
-      "description": "A página que você procura não existe ou mudou de endereço. Conheça nossa coleção de micro-ferramentas gratuitas."
+      "description": "A página solicitada não foi encontrada no ToolNest."
     }
   },
   "wheel": {
-    "title": "Roleta de Decisões Aleatórias",
-    "subtitle": "Em dúvida do que escolher? Deixe a roleta decidir por você. Gire manualmente ou gere opções criativas com a inteligência artificial do Google Gemini.",
-    "spinButton": "GIRAR",
+    "title": "Roleta de Decisões",
+    "subtitle": "Indeciso? Coloque suas opções em uma roleta interativa e deixe a sorte decidir.",
+    "spinButton": "GIRAR A ROLETA",
     "spinning": "Girando...",
     "optionsHeading": "Opções da Roleta",
-    "addPlaceholder": "Digite uma nova opção...",
+    "addPlaceholder": "Adicionar opção...",
     "quickIdeasHeading": "Ideias Rápidas",
+    "ideas": {
+      "whatToEat": "Onde comer",
+      "workout": "Treino de hoje",
+      "movie": "Noite de filme",
+      "travel": "Destino de viagem"
+    },
+    "aiGeneratorTitle": "Gerador de Opções com IA",
+    "aiGeneratorSubtitle": "Crie opções personalizadas em segundos",
+    "aiPromptLabel": "Descreva o que você precisa decidir",
+    "aiPromptPlaceholder": "Descreva o que você precisa decidir (ex: o que jantar hoje, filmes para assistir, tarefas de casa)...",
+    "aiGenerateBtn": "Gerar com IA",
+    "aiCountLabel": "Quantidade:",
+    "aiGeneratingText": "Gerando… pode levar até 20 segundos na primeira tentativa",
+    "aiRetryingText": "Tentando de novo… a primeira requisição demorou um pouco mais",
+    "replaceConfirmTitle": "Substituir as opções atuais da roleta?",
+    "replaceConfirmDesc": "Sua roleta já possui opções personalizadas. Deseja substituí-las pelas novas opções geradas por IA?",
+    "replaceConfirmBtn": "Substituir Opções",
+    "replaceCancelBtn": "Manter Opções Atuais",
+    "winnerAnnounce": "Opção Sorteada:",
     "presetEat": "O que Comer",
     "presetWatch": "O que Assistir",
     "presetYesNo": "Sim ou Não",
-    "aiGeneratorTitle": "Gerador de Opções com IA",
-    "aiGeneratorSubtitle": "Descreva seu dilema (ex: 'atividades para um dia chuvoso') e receba opções equilibradas instantaneamente.",
-    "aiPromptPlaceholder": "ex: pratos saudáveis para jantar, destinos de viagem...",
-    "aiGenerateBtn": "Gerar com IA",
-    "aiCountLabel": "Quantidade de Opções",
-    "aiGeneratingText": "Gerando opções com IA Gemini... pode levar até 20 segundos na primeira tentativa.",
-    "aiRetryingText": "Tentando novamente... aguarde um instante!",
-    "replaceConfirmTitle": "Substituir Opções Atuais?",
-    "replaceConfirmDesc": "Carregar estas opções irá substituir os itens atuais da sua roleta.",
-    "replaceConfirmBtn": "Sim, Substituir",
-    "replaceCancelBtn": "Cancelar",
-    "winnerAnnounce": "Opção Escolhida!",
-    "winnerModalTitle": "Vencedor",
-    "removeWinnerBtn": "Remover Escolhido e Girar Novamente",
-    "minOptionsError": "É necessário no mínimo 2 opções para girar a roleta.",
-    "maxOptionsError": "Limite máximo de 12 opções atingido para melhor visualização.",
-    "duplicateError": "Esta opção já existe na roleta.",
-    "emptyError": "Por favor, digite o nome de uma opção primeiro.",
-    "shareSuccessToast": "Link da sua roleta copiado para a área de transferência!",
-    "removeWinnerToast": "Opção \"{winner}\" removida da roleta."
+    "toasts": {
+      "generatedCount": "Geradas {count} opções!",
+      "keptOptions": "Opções atuais mantidas.",
+      "loadedHistory": "Opções da roleta carregadas.",
+      "removedWinner": "Opção vencedora removida.",
+      "requiresTwo": "Adicione pelo menos 2 opções para girar.",
+      "alreadyExists": "Essa opção já está na roleta.",
+      "maxOptions": "Máximo de 12 opções atingido.",
+      "shuffled": "Opções embaralhadas.",
+      "cannotRemoveWinner": "Não é possível remover o vencedor: mínimo de 2 opções necessárias.",
+      "historyCleared": "Histórico de giros limpo."
+    },
+    "howTo": {
+      "title": "Como Usar a Roleta de Decisões em 3 Passos",
+      "subtitle": "Livre-se da indecisão com física suave em poucos segundos.",
+      "s1Title": "Digite as Opções ou Use IA",
+      "s1Desc": "Digite até 12 opções personalizadas, escolha predefinições rápidas ou deixe a IA do Gemini sugerir fatias para você.",
+      "s2Title": "Gire a Roleta",
+      "s2Desc": "Toque no botão central GIRAR, pressione a barra de espaço ou deslize o dedo na tela do celular para girar.",
+      "s3Title": "Comemore e Elimine",
+      "s3Desc": "Comemore a fatia sorteada com confetes, copie o link para compartilhar ou remova o vencedor para uma nova rodada."
+    },
+    "methodology": {
+      "m1Title": "Como Funciona a Desaceleração Física da Roleta?",
+      "m1Desc": "Diferente de sorteadores estáticos que apenas saltam para um valor pré-definido, o ToolNest simula o momento angular real. A roleta começa com uma velocidade angular aleatória e desacelera suavemente por meio de arrasto quadrático calculado a 60 FPS via requestAnimationFrame. A fatia vencedora é determinada pelo ângulo exato sob o ponteiro superior.",
+      "m2Title": "A Roleta Online é Matematicamente Justa?",
+      "m2Desc": "Cada fatia na roleta ocupa um segmento angular exatamente igual (360° / N). Como a força de giro, o tempo de desaceleração e o ângulo de parada são gerados sem pesos ou distorções, cada opção possui probabilidade matemática idêntica de vitória.",
+      "noteTitle": "Metodologia e Física de Desaceleração",
+      "noteDesc": "Os cálculos rodam 100% no seu navegador usando HTML5 Canvas nativo e ciclos do requestAnimationFrame sem nenhum viés de servidor."
+    },
+    "useCases": {
+      "title": "Casos de Uso Populares para a Roleta de Decisões",
+      "u1Title": "Decidir o que Comer no Jantar",
+      "u1Desc": "Acabe com a indecisão na hora do jantar entre amigos e família girando uma roleta personalizada com seus pratos favoritos e restaurantes de entrega.",
+      "u2Title": "Roleta de Sala de Aula para Professores",
+      "u2Desc": "Chame alunos para responder perguntas, defina turnos de leitura e atribua tarefas de classe de maneira 100% justa e transparente.",
+      "u3Title": "Roleta de Prêmios e Sorteios",
+      "u3Desc": "Faça sorteios em lives da Twitch, comunidades do Discord, gincanas de festas e jogos com uma experiência visual envolvente."
+    },
+    "trivia": {
+      "title": "Você Sabia? Curiosidades sobre Decisões e Roletas",
+      "t1Title": "Paralisia por Análise",
+      "t1Desc": "Estudos da psicologia mostram que tomamos cerca de 35.000 decisões por dia. Terceirizar escolhas simples economiza foco e energia mental.",
+      "t2Title": "A Roda da Fortuna Romana",
+      "t2Desc": "A ideia de girar uma roda remonta à deusa romana Fortuna (Rota Fortunae), simbolizando as reviravoltas do destino e da vida.",
+      "t3Title": "O Efeito da Aleatoriedade Visual",
+      "t3Desc": "Acompanhar a roleta desacelerando ativa picos de dopamina e expectativa, tornando escolhas em grupo muito mais divertidas."
+    },
+    "ui": {
+      "physicsRandomizer": "Sorteador com Física e IA",
+      "wheelAria": "Roleta de decisão interativa",
+      "spinButton": "GIRAR",
+      "orSpace": "ou Espaço",
+      "optionsListHeading": "Opções da Roleta",
+      "winnerModalTitle": "Temos um Vencedor!",
+      "removeWinner": "Remover Vencedor",
+      "spinAgain": "Girar Novamente",
+      "keyTakeawaysTitle": "Resposta Rápida e Principais Destaques",
+      "kt1": "Justiça Criptográfica: Utiliza física realista de desaceleração sem paradas pré-determinadas.",
+      "kt2": "Gerador com IA: Gere opções sob medida com a IA Gemini ou cole sua própria lista de 2 a 12 itens.",
+      "kt3": "Compartilhamento por Link: Codifica as opções diretamente na URL para compartilhar sem precisar de cadastro."
+    }
   },
   "picker": {
-    "title": "Sorteador de Nomes e Gerador de Times",
-    "subtitle": "Sorteios justos e seguros com criptografia do navegador. Escolha vencedores, embaralhe listas ou divida times instantaneamente.",
-    "itemsLabel": "Sua Lista de Itens (um por linha)",
-    "itemsPlaceholder": "Ana\nBruno\nCarla\nDiego\nEduardo\nFernanda",
-    "pickWinnerBtn": "Sortear Vencedor(es)",
+    "title": "Sorteador Aleatório",
+    "subtitle": "Realize sorteios justos e transparentes para brindes, salas de aula, rifas e divisão de times.",
+    "itemsLabel": "Insira os itens (um por linha ou separados por vírgula)",
+    "itemsPlaceholder": "Ana\nBruno\nCarlos\nDaniela\nEduardo\nFernanda",
+    "pickWinnerBtn": "Sortear Vencedor",
     "splitTeamsBtn": "Dividir em Times",
     "pickStudentBtn": "Sortear Aluno",
-    "allowDuplicates": "Permitir Vencedores Repetidos",
-    "numWinners": "Número de Vencedores",
-    "numTeams": "Número de Times",
+    "allowDuplicates": "Permitir sorteios repetidos",
+    "numWinners": "Quantidade de vencedores:",
+    "numTeams": "Número de equipes:",
     "teamLabel": "Time",
-    "remainingItems": "Itens Restantes",
-    "emptyError": "Por favor, insira pelo menos 2 itens para sortear ou gerar times.",
-    "winnerHeader": "Vencedor(es) Selecionado(s)",
-    "teamsHeader": "Times Gerados",
-    "shuffleBtn": "Embaralhar Lista",
-    "clearBtn": "Limpar Tudo",
-    "copiedToast": "Resultados copiados para a área de transferência!"
+    "remainingItems": "Itens restantes na lista:",
+    "emptyError": "Por favor, insira pelo menos 2 itens na lista.",
+    "toasts": {
+      "winnerPicked": "Vencedor sorteado!",
+      "teamsGenerated": "Equipes geradas com sucesso!",
+      "itemsCleared": "Lista limpa com sucesso.",
+      "duplicatesRemoved": "Duplicatas removidas."
+    },
+    "howTo": {
+      "title": "Como Usar o Sorteador de Nomes em 3 Passos",
+      "subtitle": "Sorteie vencedores aleatórios e auditáveis em 3 etapas simples.",
+      "s1Title": "Cole sua Lista",
+      "s1Desc": "Cole nomes separados por linhas ou vírgulas. A ferramenta detecta o formato e avisa caso existam duplicatas.",
+      "s2Title": "Escolha as Opções e Quantidade",
+      "s2Desc": "Defina quantos ganhadores sortear (de 1 a 10) e decida se deseja remover os vencedores para rodadas seguintes.",
+      "s3Title": "Sortear e Copiar Vencedores",
+      "s3Desc": "Veja a animação sortear os vencedores com chuva de confetes. Copie os resultados com apenas um clique."
+    },
+    "methodology": {
+      "m1Title": "Por que a Aleatoriedade Criptográfica é Importante para Sorteios?",
+      "m1Desc": "Sorteadores web comuns frequentemente usam Math.random(), um gerador pseudoaleatório que pode gerar aglomerados estatísticos em listas curtas. O ToolNest usa a Web Cryptography API (crypto.getRandomValues), aproveitando a entropia de hardware e do sistema operacional para garantir imparcialidade total em rifas, sorteios de redes sociais e concursos.",
+      "m2Title": "Como Sortear Vários Vencedores Sem Repetição?",
+      "m2Desc": "Ao sortear múltiplos nomes, sorteadores simples correm o risco de selecionar a mesma pessoa duas vezes. O ToolNest aplica o algoritmo moderno Fisher-Yates. Ao percorrer a lista de trás para frente e trocar posições com índices criptograficamente uniformes, cada permutação tem probabilidade idêntica e cada ganhador é estritamente único.",
+      "noteTitle": "Metodologia e Entropia Criptográfica",
+      "noteDesc": "O algoritmo utiliza window.crypto.getRandomValues para assegurar aleatoriedade criptograficamente forte, livre de padrões previsíveis."
+    },
+    "useCases": {
+      "title": "Casos de Uso Populares para o Sorteador de Nomes e Times",
+      "u1Title": "Sorteador de Alunos para Professores",
+      "u1Desc": "Selecione estudantes para apresentações, respostas orais e tarefas semanais com neutralidade comprovada.",
+      "u2Title": "Sorteador de Prêmios e Brindes",
+      "u2Desc": "Realize sorteios transparentes e auditáveis para Instagram, servidores do Discord e eventos empresariais com total confiabilidade.",
+      "u3Title": "Divisor de Times e Equipes",
+      "u3Desc": "Embaralhe listas com dezenas de nomes em segundos para dividir turmas, hackathons, peladas e campeonatos de videogame em equipes equilibradas."
+    },
+    "trivia": {
+      "title": "Você Sabia? Curiosidades sobre Aleatoriedade e Sorteios",
+      "t1Title": "Entropia Térmica de Hardware",
+      "t1Desc": "Algoritmos comuns podem repetir sequências com o tempo. A Web Cryptography API extrai ruído físico de oscilações térmicas do processador para garantir nível profissional de segurança.",
+      "t2Title": "Democracia na Grécia Antiga",
+      "t2Desc": "Na Atenas antiga, magistrados e jurados eram escolhidos por sorteio (sortição) com máquinas de pedra chamadas clerotérios, e não por eleições diretas.",
+      "t3Title": "A Garantia de Fisher-Yates",
+      "t3Desc": "Para uma lista de N itens, existem N! ordens possíveis. O algoritmo Fisher-Yates garante matematicamente que cada permutação tenha exatamente 1 / N! de chance."
+    },
+    "ui": {
+      "cryptoSortition": "Sorteio Criptográfico Aleatório",
+      "pasteListLabel": "Cole ou Digite a Lista de Itens",
+      "itemsCount": "itens na lista",
+      "pickWinnerBtn": "Sortear Vencedor",
+      "pickCaptainBtn": "Sortear Capitão de Equipe",
+      "pickStudentBtn": "Sortear Aluno Aleatório",
+      "shuffleListBtn": "Embaralhar Lista",
+      "removeDuplicatesBtn": "Remover Duplicados",
+      "clearListBtn": "Limpar Lista",
+      "allowDuplicates": "Permitir escolhas repetidas",
+      "removeWinnerAfterPick": "Remover vencedores após o sorteio",
+      "numWinners": "Vencedores a sortear:",
+      "numTeams": "Número de equipes:",
+      "teamLabel": "Equipe",
+      "remainingItems": "Itens restantes na lista:",
+      "keyTakeawaysTitle": "Resposta Rápida e Principais Destaques",
+      "kt1": "Entropia de Hardware: Alimentado pela Web Cryptography API para sorteios comprovadamente neutros.",
+      "kt2": "Sorteios Múltiplos Imparciais: Utiliza o algoritmo Fisher-Yates para garantir escolhas sem repetições.",
+      "kt3": "Privacidade Garantida: Suas listas de nomes permanecem estritamente na memória do seu navegador."
+    }
   },
   "age": {
-    "title": "Calculadora de Idade Exata e Marcos da Vida",
-    "subtitle": "Calcule sua idade precisa até os segundos, descubra a contagem regressiva para seu próximo aniversário e compare diferenças de idade.",
-    "birthDateLabel": "Data de Nascimento",
+    "title": "Calculadora de Idade",
+    "subtitle": "Calcule sua idade cronológica exata com precisão em tempo real até os segundos.",
+    "birthDateLabel": "Informe sua Data de Nascimento",
     "calculateBtn": "Calcular Idade Exata",
     "exactAgeHeading": "Sua Idade Exata",
     "years": "Anos",
@@ -190,165 +335,1084 @@
     "hours": "Horas",
     "minutes": "Minutos",
     "seconds": "Segundos",
-    "nextBirthdayHeading": "Próximo Aniversário",
-    "milestoneHeading": "Próximos Marcos",
-    "dateDiffHeading": "Comparação de Diferença de Idade",
-    "compareDateLabel": "Comparar com Outra Data",
-    "futureDateError": "A data de nascimento não pode estar no futuro.",
-    "invalidDateError": "Por favor, selecione uma data válida.",
-    "copiedToast": "Cálculo de idade copiado para a área de transferência!"
+    "nextBirthdayHeading": "Contagem para o Próximo Aniversário",
+    "milestoneHeading": "Próximos Marcos de Vida",
+    "dateDiffHeading": "Comparar Duas Datas",
+    "compareDateLabel": "Segunda Data",
+    "daysUntilNext": "Dias até o próximo aniversário:",
+    "daysLived": "Total de dias vividos:",
+    "heartbeatsEstimate": "Batimentos cardíacos estimados:",
+    "breathsEstimate": "Respirações estimadas:",
+    "toasts": {
+      "calculated": "Idade calculada com sucesso!",
+      "copiedSummary": "Resumo de idade copiado!",
+      "invalidDate": "Por favor, selecione uma data de nascimento válida."
+    },
+    "howTo": {
+      "title": "Como Calcular sua Idade Exata Online em 3 Passos",
+      "subtitle": "Um guia rápido para descobrir sua idade cronológica exata em anos, meses, dias e segundos ao vivo.",
+      "s1Title": "Escolha sua data de nascimento",
+      "s1Desc": "Selecione o ano, mês e dia de nascimento usando os menus suspensos ou clique no ícone do calendário para abrir o seletor nativo.",
+      "s2Title": "Escolha uma data de referência opcional",
+      "s2Desc": "Por padrão, sua idade é calculada em relação a hoje. Abra o painel opcional para descobrir sua idade em formaturas passadas, casamentos ou metas futuras.",
+      "s3Title": "Calcule e descubra estatísticas fascinantes da sua vida",
+      "s3Desc": "Clique em Calcular Idade Exata para ver o detalhamento completo, o relógio de segundos vividos e a contagem regressiva para o próximo aniversário."
+    },
+    "methodology": {
+      "m1Title": "Como a Matemática de Calendário Calcula a Idade com Precisão?",
+      "m1Desc": "Para calcular a idade cronológica exata sem erros de arredondamento, nosso algoritmo avalia os limites reais do calendário gregoriano. Ele contabiliza os anos completos, meses restantes e compensa os dias exatos do mês anterior (considerando meses de 28, 29, 30 ou 31 dias e anos bissextos).",
+      "m2Title": "Por que Diferentes Calculadoras de Idade Mostram Resultados Distintos?",
+      "m2Desc": "Muitas calculadoras simplórias dividem os dias totais por 365 ou 30,4375, acumulando erros consideráveis. O ToolNest utiliza a progressão diária estrita do calendário gregoriano em UTC, eliminando distorções de fuso horário e anos bissextos.",
+      "noteTitle": "Metodologia e Garantia de Precisão",
+      "noteDesc": "Nosso algoritmo executa cálculos de calendário gregoriano em UTC diretamente no seu navegador, sem enviar nenhuma data de nascimento pela internet."
+    },
+    "useCases": {
+      "title": "Casos de Uso Populares para Cálculo de Idade Cronológica",
+      "u1Title": "Acompanhamento do Desenvolvimento Infantil",
+      "u1Desc": "Monitore o desenvolvimento de bebês em semanas, meses e dias exatos para gráficos de crescimento, vacinas e consultas pediátricas.",
+      "u2Title": "Elegibilidade Escolar e Esportiva",
+      "u2Desc": "Confira os limites de idade rigorosos para matrículas escolares, categorias esportivas juvenis, torneios e habilitação.",
+      "u3Title": "Planejamento Jurídico e Aposentadoria",
+      "u3Desc": "Determine as datas exatas de elegibilidade para renovação de passaporte, aposentadoria, assinatura de contratos e benefícios."
+    },
+    "trivia": {
+      "title": "Você Sabia? Fatos Fascinantes sobre Idade e Longevidade",
+      "t1Title": "Sua Idade em Marte",
+      "t1Desc": "Como Marte leva cerca de 687 dias terrestres para dar uma volta ao redor do Sol, sua idade lá é quase a metade da Terra. Quem tem 30 anos na Terra tem apenas 15,9 em Marte!",
+      "t2Title": "A Pessoa Mais Velha da História",
+      "t2Desc": "A francesa Jeanne Calment detém o recorde histórico comprovado de longevidade humana: 122 anos e 164 dias (um total de 44.724 dias vividos) de 1875 a 1997.",
+      "t3Title": "Bebês do Dia Bissexto",
+      "t3Desc": "Com chances de 1 em 1.461, quem nasce em 29 de fevereiro só comemora a data real a cada 4 anos, costumando festejar em 1º de março nos anos comuns."
+    },
+    "ui": {
+      "precisionMath": "Matemática de Calendário Precisa",
+      "enterDob": "Informe a Data de Nascimento",
+      "accurateToDay": "Exato até o dia",
+      "month": "Mês",
+      "day": "Dia",
+      "year": "Ano",
+      "orUseCalendar": "Ou use o seletor do calendário:",
+      "calculateAtDate": "Calcular idade em uma data específica (opcional)",
+      "targetDateDesc": "O padrão é a data de hoje. Altere para ver sua idade em um casamento passado, formatura ou momento futuro.",
+      "resetToToday": "Voltar para Hoje",
+      "copyResults": "Copiar Resultados",
+      "share": "Compartilhar",
+      "calculatingNextBday": "Calculando próximo aniversário...",
+      "happyBirthday": "Feliz Aniversário!",
+      "totalMilestones": "Marcos Totais da Sua Vida",
+      "totalMonths": "Total de Meses",
+      "totalWeeks": "Total de Semanas",
+      "totalDays": "Total de Dias",
+      "totalHours": "Total de Horas",
+      "funStatsHeading": "Estatísticas Fascinantes de Vida e Planetárias",
+      "hoursSlept": "Horas Dormidas (~8h/dia)",
+      "hoursSleptDesc": "Aproximadamente um terço da sua vida sonhando e recarregando energias.",
+      "heartbeatsTitle": "Batimentos Cardíacos (~80 bpm)",
+      "heartbeatsDesc": "Bombeando energia vital ininterruptamente por todo o seu corpo.",
+      "breathsTitle": "Respirações (~16/min)",
+      "breathsDesc": "Ciclos contínuos de oxigênio nutrindo cada célula e pensamento.",
+      "planetAgeTitle": "Sua Idade em Outros Planetas",
+      "planetAgeSubtitle": "Com base nos períodos orbitais",
+      "mercury": "Mercúrio (88d)",
+      "venus": "Vênus (225d)",
+      "mars": "Marte (687d)",
+      "jupiter": "Júpiter (4.333d)",
+      "yearsOld": "anos",
+      "liveSecondsPrefix": "Você tem exatamente",
+      "liveSecondsSuffix": "segundos de vida",
+      "keyTakeawaysTitle": "Resposta Rápida e Principais Destaques",
+      "kt1": "Matemática Calendária Exata: Calcula anos, meses e dias completos usando limites reais do calendário gregoriano, sem aproximações grosseiras de 365 dias.",
+      "kt2": "Datas Históricas e Futuras: Calcule sua idade exata em qualquer data histórica ou descubra sua idade em marcos futuros.",
+      "kt3": "Privacidade Absoluta: Funciona 100% no seu navegador. Sua data de nascimento nunca é transmitida, salva em servidores ou rastreada."
+    }
   },
   "birthday": {
-    "title": "Fatos de Aniversário e Cartão de Curiosidades",
-    "subtitle": "Informe sua data de nascimento para descobrir o dia da semana em que nasceu, signo, pedra astral e personalidades que compartilham seu dia.",
-    "inputDateLabel": "Data de Nascimento",
-    "revealBtn": "Descobrir Fatos",
+    "title": "Fatos de Aniversário",
+    "subtitle": "Descubra detalhes astrológicos, pedras preciosas, flores e marcos históricos para qualquer data.",
+    "inputDateLabel": "Selecione sua Data de Nascimento",
+    "revealBtn": "Ver Fatos de Aniversário",
     "zodiacLabel": "Signo do Zodíaco",
     "elementLabel": "Elemento",
     "stoneLabel": "Pedra do Mês",
-    "flowerLabel": "Flor do Mês",
-    "weekdayLabel": "Dia da Semana",
+    "flowerLabel": "Flor de Nascimento",
+    "weekdayLabel": "Dia da Semana em que Nasceu",
     "generationLabel": "Geração",
-    "milestonesHeading": "Marcos da Vida",
-    "famousHeading": "Famosos Nascidos Neste Dia",
-    "cardWatermark": "toolnest.dev",
-    "shareFactsBtn": "Compartilhar Fatos",
-    "downloadCardBtn": "Baixar Cartão de Aniversário",
-    "futureDateError": "A data de nascimento não pode estar no futuro.",
-    "invalidDateError": "Por favor, selecione uma data de nascimento válida.",
-    "copiedToast": "Curiosidades copiadas para a área de transferência!",
-    "shareHeader": "Curiosidades de Aniversário para {date}",
-    "noFamousPeople": "Você compartilha seu dia especial com milhões de pioneiros inspiradores em todo o mundo!"
+    "milestonesHeading": "Marcos de Vida",
+    "famousHeading": "Eventos Históricos Compartilhados",
+    "cardWatermark": "feito com ToolNest • toolnest.pages.dev",
+    "toasts": {
+      "invalidDate": "Por favor, selecione uma data válida.",
+      "cardCopied": "Cartão de aniversário copiado!",
+      "factsCopied": "Fatos de aniversário copiados!"
+    },
+    "howTo": {
+      "title": "Como Descobrir os Fatos do seu Aniversário em 3 Passos",
+      "subtitle": "Gere seu dossiê personalizado de nascimento em segundos e com total privacidade.",
+      "s1Title": "Selecione sua Data de Nascimento",
+      "s1Desc": "Informe seu dia, mês e ano de nascimento. Todas as datas desde 1920 até o presente são verificadas.",
+      "s2Title": "Gere seu Cartão",
+      "s2Desc": "Nosso sistema calcula o dia da semana em que você nasceu, signo, pedra, flor do mês e marcos de vida.",
+      "s3Title": "Baixe a Imagem ou Compartilhe",
+      "s3Desc": "Baixe seu cartão em formato PNG de alta qualidade para as redes sociais ou copie o resumo em texto."
+    },
+    "methodology": {
+      "m1Title": "Como Descobrir em Qual Dia da Semana Você Nasceu?",
+      "m1Desc": "O dia da semana de qualquer data histórica é obtido por meio da Congruência de Zeller ou algoritmos modulares em UTC. Ao calcular o resto da divisão por 7 a partir de uma data âncora, o dia da semana exato (de domingo a sábado) é determinado com precisão matemática.",
+      "m2Title": "O Que São Signos Solares e Pedras de Nascimento?",
+      "m2Desc": "Os signos solares representam o setor da constelação alinhado ao Sol na sua data de nascimento. Combinados com as pedras de nascimento tradicionais — padronizadas em 1912 — e com as flores sazonais, seu aniversário forma um mosaico cultural fascinante.",
+      "noteTitle": "Metodologia e Efemérides de Calendário",
+      "noteDesc": "Os cálculos utilizam aritmética modular gregoriana e tabelas internacionais padronizadas de gemas e signos."
+    },
+    "useCases": {
+      "title": "Usos Populares para Fatos de Aniversário e Numerologia",
+      "u1Title": "Astrologia e Numerologia",
+      "u1Desc": "Descubra seu arquétipo de caminho de vida, elementos do zodíaco e planetas regentes para enriquecer seu autoconhecimento.",
+      "u2Title": "Aniversários Dourados e Grandes Marcos",
+      "u2Desc": "Descubra seu aniversário de ouro (quando a idade coincide com o dia do mês) e celebre o marco do seu 10.000º dia de vida.",
+      "u3Title": "Presentes e Cartões Personalizados",
+      "u3Desc": "Crie e baixe cartões elegantes com flores e pedras de nascimento para imprimir ou enviar para amigos e familiares."
+    },
+    "trivia": {
+      "title": "Você Sabia? Curiosidades sobre Aniversários e Calendários",
+      "t1Title": "O Paradoxo do Aniversário",
+      "t1Desc": "Em uma sala com apenas 23 pessoas, a probabilidade de que duas delas façam aniversário no mesmo dia é superior a 50%.",
+      "t2Title": "Os Aniversários Mais Comuns",
+      "t2Desc": "Em todo o mundo, meados de setembro (especialmente os dias 9 e 19) registram historicamente a maior taxa de nascimentos do ano.",
+      "t3Title": "A Tradição do Aniversário Dourado",
+      "t3Desc": "Seu \"Aniversário de Ouro\" acontece quando sua idade coincide exatamente com o dia do mês em que você nasceu (ex: fazer 25 anos no dia 25)."
+    },
+    "zodiacTable": {
+      "heading": "Signos do Zodíaco por Mês (Referência de Calendário)",
+      "subheading": "Confira qual signo do zodíaco ocidental rege cada mês, acompanhado de seu elemento clássico e planeta regente.",
+      "colMonth": "Mês",
+      "colSigns": "Signos do Zodíaco",
+      "colRange": "Período",
+      "colElement": "Elemento",
+      "colPlanet": "Planeta Regente"
+    },
+    "ui": {
+      "personalDossier": "Dossiê Pessoal de Aniversário",
+      "selectDob": "Selecione Sua Data de Nascimento",
+      "day": "Dia",
+      "month": "Mês",
+      "year": "Ano",
+      "orPickCalendar": "Ou escolha pelo calendário:",
+      "revealFacts": "Descobrir Meus Fatos",
+      "personalCard": "Seu Cartão Pessoal de Aniversário",
+      "cardSubtitle": "Compartilhe seu selo comemorativo ou salve como uma imagem em alta resolução.",
+      "bornOn": "Nasceu em um(a)",
+      "zodiacSign": "Signo do Zodíaco",
+      "birthstone": "Pedra de Nascimento",
+      "birthFlower": "Flor de Nascimento",
+      "generation": "Geração",
+      "gemstone": "Gema Preciosa",
+      "botanical": "Botânica",
+      "daysOnEarth": "Dias na Terra:",
+      "saveCardImage": "Salvar Cartão como Imagem",
+      "shareFacts": "Compartilhar Fatos",
+      "calculateAnother": "Calcular Outra Data",
+      "famousBirthdays": "Aniversários Famosos",
+      "famousSubtitle": "Ícones notáveis, visionários e figuras históricas que comemoram aniversário junto com você.",
+      "historicalBornOnDay": "figuras históricas nascidas neste dia",
+      "noCelebrityRecords": "Nenhum registro de celebridades no nosso arquivo offline para esta data. Você compartilha seu dia especial com milhões de pioneiros do cotidiano pelo mundo!",
+      "archetypesHeading": "Dossiê de Aniversário e Arquétipos",
+      "archetypesSubtitle": "Facetas astrológicas, mineralógicas, botânicas e demográficas vinculadas à sua data de nascimento.",
+      "lifePathHeading": "Número do Caminho de Vida Pitagórico",
+      "lifePathLabel": "Caminho de Vida",
+      "coreTraits": "Traços Principais",
+      "journeyHeading": "Jornada de Vida e Marcos em Dias",
+      "journeySubtitle": "Acompanhe os marcadores exatos e grandes marcos da sua trajetória.",
+      "totalElapsed": "Total Decorrido",
+      "consecutiveDaysElapsed": "Total de dias corridos decorridos desde o momento exato do seu nascimento.",
+      "day10kLandmark": "Marco do 10.000º Dia de Vida",
+      "celebrated": "Comemorado",
+      "upcoming": "Próximo",
+      "dayLandmark": "º Marco em Dias",
+      "upcomingGoal": "Próxima Meta",
+      "recentBirthdays": "Aniversários Recentes",
+      "keyTakeawaysTitle": "Resposta Rápida e Principais Destaques",
+      "kt1": "Algoritmo de Dia da Semana: Utiliza aritmética modular gregoriana para identificar o dia da semana com zero erros de fuso horário.",
+      "kt2": "Tradições Astrológicas e Botânicas: Integra pedras de nascimento padronizadas desde 1912 e signos solares ocidentais.",
+      "kt3": "Privacidade no Dispositivo: Todo cartão e fato é renderizado na memória do navegador sem salvar dados em servidores."
+    }
   },
   "countdown": {
-    "title": "Criador de Contagem Regressiva ao Vivo",
-    "subtitle": "Acompanhe a espera para casamentos, viagens, aniversários, lançamentos ou metas com precisão e cartões compartilháveis.",
-    "eventTitleLabel": "Título do Evento",
-    "eventTitlePlaceholder": "ex: Viagem de Férias, Aniversário de 30 Anos, Casamento",
+    "title": "Contagem Regressiva",
+    "subtitle": "Crie um relógio de contagem regressiva ao vivo para aniversários, feriados, lançamentos ou eventos.",
+    "eventTitleLabel": "Nome do Evento",
+    "eventTitlePlaceholder": "Ex: Férias, Aniversário, Lançamento de Produto...",
     "targetDateLabel": "Data do Evento",
     "targetTimeLabel": "Horário do Evento",
-    "createBtn": "Criar Contagem",
-    "shareHeading": "Compartilhe Sua Contagem",
+    "createBtn": "Criar Contagem Regressiva",
+    "shareHeading": "Compartilhe sua Contagem",
     "daysRemaining": "Dias",
     "hoursRemaining": "Horas",
     "minutesRemaining": "Minutos",
     "secondsRemaining": "Segundos",
-    "eventPassed": "Este evento já aconteceu!",
-    "viewCountdownTitle": "Contagem Regressiva",
+    "eventPassed": "A contagem regressiva chegou ao fim!",
+    "viewCountdownTitle": "Contagem Regressiva do Evento",
     "liveCountdown": "Contagem ao Vivo",
-    "watermark": "Criado com ToolNest",
-    "copyLinkBtn": "Copiar Link ao Vivo",
-    "downloadCardBtn": "Baixar Cartão Visual",
-    "copiedToast": "Link da contagem copiado para a área de transferência!",
-    "titleRequiredError": "Por favor, informe o título do evento.",
-    "futureTargetError": "Escolha uma data e horário no futuro para a contagem.",
-    "createdLabel": "Criado",
-    "targetLabel": "Alvo",
-    "elapsedLabel": "decorrido"
+    "watermark": "feito com ToolNest",
+    "toasts": {
+      "invalidTitle": "Por favor, informe o nome do evento.",
+      "invalidDate": "Por favor, selecione uma data no futuro.",
+      "linkCopied": "Link da contagem copiado!",
+      "loaded": "Evento de contagem regressiva carregado."
+    },
+    "howTo": {
+      "title": "Como Criar e Compartilhar uma Contagem em 3 Passos",
+      "subtitle": "Crie relógios de contagem regressiva privados e compartilháveis sem precisar criar conta.",
+      "s1Title": "Defina a Data do Evento",
+      "s1Desc": "Dê um nome para a ocasião, defina data e horário e escolha um emoji para personalizar seu cronômetro.",
+      "s2Title": "Gere o Link Instantâneo",
+      "s2Desc": "Nosso sistema codifica os dados do seu evento diretamente na URL, sem precisar de banco de dados nem servidores.",
+      "s3Title": "Compartilhe Onde Quiser",
+      "s3Desc": "Envie o link pelo WhatsApp, Instagram ou Discord. Quem abrir verá o relógio ao vivo sincronizado com o fuso horário local."
+    },
+    "methodology": {
+      "m1Title": "Como Funcionam os Fusos Horários ao Compartilhar?",
+      "m1Desc": "Ao criar uma contagem, o ToolNest converte a data e hora em um registro padronizado ISO-8601 em UTC. Quando amigos e familiares em outros países abrem seu link, o navegador deles ajusta o momento alvo ao fuso horário local, sincronizando o momento exato da comemoração em todo o planeta.",
+      "m2Title": "O que São Contagens em URL Sem Estado e por que São Mais Seguras?",
+      "m2Desc": "Sites tradicionais gravam eventos em servidores centrais, correndo o risco de quebrar links ou exigir cadastros. O ToolNest guarda todas as informações na própria URL. O cronômetro reside no link, tornando-o eterno, imune a quedas de servidor e 100% confidencial.",
+      "noteTitle": "Metodologia e Precisão Temporal",
+      "noteDesc": "O relógio é sincronizado a cada 1.000 milissegundos com o relógio do sistema, compensando abas em segundo plano sem perder a sincronia."
+    },
+    "useCases": {
+      "title": "Casos de Uso Populares para Contagens Regressivas",
+      "u1Title": "Casamentos e Save-the-Date",
+      "u1Desc": "Compartilhe relógios ao vivo com convidados de casamentos, bodas e noivados através do WhatsApp e convites digitais.",
+      "u2Title": "Lançamentos de Produtos e Transmissões",
+      "u2Desc": "Gere expectativa para lançamentos de produtos, estreias de podcast, coleções e torneios com contagens em tela cheia.",
+      "u3Title": "Férias e Calculadora de Dias Faltantes",
+      "u3Desc": "Conte os dias exatos até as férias de verão, viagens de fim de ano, aposentadoria ou aniversários."
+    },
+    "trivia": {
+      "title": "Você Sabia? Curiosidades sobre Tempo e Contagens",
+      "t1Title": "A Invenção de Fritz Lang",
+      "t1Desc": "A contagem regressiva para lançamentos de foguetes foi criada pelo cineasta Fritz Lang em seu clássico de ficção de 1929 \"Frau im Mond\" para criar suspense, sendo adotada mais tarde pela NASA.",
+      "t2Title": "Percepção de Dilatação Temporal",
+      "t2Desc": "Psicólogos cognitivos demonstraram que a expectativa de um evento positivo faz com que a percepção subjetiva do tempo acelere à medida que a data se aproxima.",
+      "t3Title": "A Bola da Times Square",
+      "t3Desc": "A mais famosa contagem de Ano Novo do mundo começou em 31 de dezembro de 1907, com uma esfera de ferro e madeira de mais de 300 kg iluminada por 100 lâmpadas."
+    },
+    "ui": {
+      "liveTimerTitle": "Temporizador de Precisão ao Vivo",
+      "createCountdownHeading": "Criar uma Contagem Regressiva ao Vivo",
+      "eventNameLabel": "Nome do Evento",
+      "eventNamePlaceholder": "ex: Casamento da Sarah, Férias de Verão, Lançamento do Produto...",
+      "targetDateLabel": "Data e Hora Alvo",
+      "chooseEmoji": "Escolha um Emoji",
+      "createBtn": "Criar Contagem Regressiva",
+      "presetNewYear": "Ano Novo",
+      "presetSummer": "Verão",
+      "presetHalloween": "Halloween",
+      "presetChristmas": "Natal",
+      "presetBirthday": "Aniversário",
+      "days": "Dias",
+      "hours": "Horas",
+      "minutes": "Minutos",
+      "seconds": "Segundos",
+      "eventHere": "Chegou o grande momento! 🎉",
+      "timeSinceEvent": "Tempo decorrido desde o evento:",
+      "shareCountdown": "Compartilhar Contagem",
+      "copyLink": "Copiar Link",
+      "openFullscreen": "Modo Tela Cheia",
+      "keyTakeawaysTitle": "Resposta Rápida e Principais Destaques",
+      "kt1": "Compartilhamento Permanente: O evento é codificado na URL e funciona para sempre sem necessidade de cadastro.",
+      "kt2": "Sincronização de Fuso Horário: Destinatários em qualquer lugar veem o cronômetro convertido ao fuso horário local.",
+      "kt3": "Precisão ao Segundo: Transição instantânea com comemoração e confetes no momento zero."
+    }
   },
   "names": {
-    "title": "Significado de Nomes de Bebê e Tendências",
-    "subtitle": "Encontre nomes por gênero, origem linguística, popularidade e significados culturais profundos.",
-    "searchPlaceholder": "Pesquisar por nome ou significado (ex: Lucas, corajoso)...",
+    "title": "Significado dos Nomes e Origens",
+    "subtitle": "Explore a história, etimologia e significados profundos por trás de nomes de todo o mundo.",
+    "searchPlaceholder": "Buscar nomes ou significados...",
     "allGenders": "Todos os Gêneros",
-    "boyNames": "Meninos",
-    "girlNames": "Meninas",
+    "boyNames": "Nomes Masculinos",
+    "girlNames": "Nomes Femininos",
     "unisexNames": "Unissex",
     "allOrigins": "Todas as Origens",
     "meaningLabel": "Significado",
     "originLabel": "Origem",
     "pronounceLabel": "Pronúncia",
-    "aiInsightsHeading": "Análise de Personalidade com IA",
-    "siblingHeading": "Sugestões de Nomes para Irmãos",
-    "analyzeWithAiBtn": "Analisar Nome com IA",
-    "analyzingBtn": "Analisando com IA Gemini...",
-    "popularNamesHeading": "Nomes Populares",
-    "namesFound": "{count} nomes encontrados",
-    "noNamesFound": "Nenhum nome encontrado para esses filtros. Tente outros termos de busca.",
-    "copiedToast": "Detalhes do nome copiados para a área de transferência!",
-    "errorToast": "Falha ao analisar o nome. Por favor, tente novamente."
+    "aiInsightsHeading": "Insights de Nomes com IA",
+    "siblingHeading": "Nomes de Irmãos Recomendados",
+    "popularLabel": "Popular",
+    "trendingLabel": "Em Alta",
+    "toasts": {
+      "copiedName": "Nome copiado!",
+      "copiedMeaning": "Detalhes do nome copiados!"
+    },
+    "methodology": {
+      "title": "Metodologia do Diretório e Pesquisa Onomástica",
+      "desc": "Cada nome é verificado em léxicos históricos e registros demográficos oficiais. As notas de popularidade refletem percentis estatísticos reais de nascimentos."
+    },
+    "emptyState": {
+      "title": "Nenhum nome corresponde à sua busca",
+      "desc": "Tente usar outros termos, verificar a ortografia ou limpar o filtro de gênero."
+    },
+    "counter": {
+      "showingOf": "Mostrando {count} de {total} nomes",
+      "clearFilters": "Limpar filtros",
+      "recentlyViewed": "Nomes Vistos Recentemente"
+    },
+    "ui": {
+      "directoryAtoZ": "Índice Alfabético (A–Z)",
+      "curatedProfiles": "Nomes Selecionados",
+      "aiPrompt": "Procurando um nome raro ou personalizado que não está listado abaixo?",
+      "aiPromptBtn": "Buscar Significado com IA →",
+      "searchPlaceholder": "Pesquisar por nome, origem (ex: Latim, Grego) ou significado...",
+      "allGenders": "Todos",
+      "female": "Feminino",
+      "male": "Masculino",
+      "unisex": "Unissex",
+      "showingCount": "Exibindo {shown} de {total} nomes",
+      "clearFilters": "Limpar filtros",
+      "meaningLabel": "Significado",
+      "noNamesFound": "Nenhum nome encontrado para sua busca",
+      "noNamesFoundDesc": "Tente ajustar suas palavras-chave, verificar a ortografia ou limpar os filtros de gênero.",
+      "recentlyViewed": "Nomes Vistos Recentemente",
+      "methodologyTitle": "Metodologia do Diretório e Pesquisa Onomástica",
+      "methodologyDesc": "Cada nome é verificado em fontes históricas e registros demográficos oficiais. As classificações de popularidade refletem dados estatísticos reais, garantindo precisão etimológica e cultural.",
+      "keyTakeawaysTitle": "Resposta Rápida e Principais Destaques",
+      "kt1": "Mais de 200 Perfis Selecionados: Dossiês completos detalhando origens históricas, pronúncias e popularidade.",
+      "kt2": "Navegação Rápida A–Z: Navegue facilmente pelas letras ou filtre por gênero, origem cultural e popularidade.",
+      "kt3": "Busca 100% Privada: Pesquise instantaneamente no navegador sem rastreamento ou necessidade de login."
+    }
+  },
+  "home": {
+    "heroTitle": "Ferramentas do Dia a Dia Que Funcionam",
+    "heroSubtitle": "Microferramentas gratuitas e ultrarrápidas feitas para celular e computador. Sem contas, sem assinaturas e com privacidade absoluta.",
+    "exploreToolsHeading": "Conheça Nossas Microferramentas",
+    "whyChooseTitle": "Por Que Usar o ToolNest?",
+    "whyFast": "Ultrarrápido",
+    "whyFastDesc": "Desenvolvido com padrões modernos da web para carregar instantaneamente, mesmo em conexões lentas.",
+    "whyPrivate": "100% Privado",
+    "whyPrivateDesc": "Todos os cálculos rodam localmente no seu dispositivo. Suas datas, nomes e dados nunca tocam um servidor.",
+    "whyFree": "Completamente Grátis",
+    "whyFreeDesc": "Sem cobranças, sem limite de uso e sem cadastro obrigatório. Acesso ilimitado para sempre."
   },
   "about": {
-    "title": "Sobre o ToolNest",
-    "metaDesc": "O ToolNest oferece ferramentas online rápidas, sem anúncios e com total respeito à sua privacidade.",
-    "badge": "Nossa Missão",
-    "heading": "Ferramentas que respeitam seu tempo e seus dados.",
-    "subheading": "Utilitários gratuitos, rápidos e seguros criados para resolver dilemas cotidianos sem anúncios pesados nem cadastros obrigatórios.",
-    "philosophyTitle": "Nossa Filosofia",
-    "philosophyP1": "A internet moderna ficou cheia de páginas lentas, cadastros forçados e banners invasivos apenas para girar uma roleta ou calcular uma idade.",
-    "philosophyP2": "O ToolNest foi desenvolvido como uma alternativa limpa: ferramentas focadas que rodam no seu próprio navegador e nunca guardam suas escolhas.",
-    "methodologyTitle": "Privacidade em Primeiro Lugar",
-    "methodologyP1": "Tudo é processado localmente na sua sessão. Suas datas, nomes ou eventos nunca são enviados para bancos de dados centrais.",
-    "editorialTitle": "Imparcialidade e Precisão",
-    "editorialP1": "Nossos algoritmos utilizam a API de Criptografia Web para assegurar aleatoriedade autêntica e sem viés em todos os sorteios.",
-    "toolsTitle": "Nossas Ferramentas",
-    "launchTool": "Abrir Ferramenta",
-    "techTitle": "Construído com Tecnologia Edge Moderna",
-    "techP1": "Desenvolvido com Astro e implantado em mais de 300 data centers da Cloudflare para carregar em menos de 50 milissegundos.",
+    "title": "Sobre o ToolNest — Utilitários Web Rápidos e Privados | ToolNest",
+    "metaDesc": "Conheça o ToolNest: nossa missão de oferecer ferramentas rápidas, sem rastreadores, com precisão matemática verificada e padrões editoriais rigorosos.",
+    "badge": "Sobre a Plataforma",
+    "heading": "Sobre o ToolNest",
+    "subheading": "O ToolNest é uma suíte independente de utilitários web rápidos, leves e focados em privacidade, criados para responder dúvidas diárias sem cadastros nem rastreadores.",
+    "philosophyTitle": "Nossa Filosofia: Velocidade, Privacidade e Integridade",
+    "philosophyP1": "Muitas ferramentas simples hoje estão sobrecarregadas com rastreadores, anúncios invasivos, respostas lentas de servidores e cadastros forçados por e-mail. O ToolNest foi criado para provar que utilitários digitais devem ser instantâneos, confiáveis e totalmente privados.",
+    "philosophyP2": "Cada cálculo, giro de roleta, sorteio e contagem regressiva roda exclusivamente dentro do seu navegador usando JavaScript moderno. Não mantemos bancos de dados de usuários nem coletamos seus dados em servidores remotos.",
+    "methodologyTitle": "Metodologia e Padrões de Cálculo",
+    "methodologyP1": "Nossos cálculos utilizam algoritmos padronizados e auditados: calendário gregoriano padronizado em UTC para idade exata, Web Cryptography API com Fisher-Yates para sorteios 100% justos e curvas físicas reais para a roleta.",
+    "editorialTitle": "Padrões Editoriais e Pesquisa de Nomes",
+    "editorialP1": "Nosso banco de dados de significado de nomes abrange nomes curados de diversas tradições linguísticas. Os significados e raízes etimológicas são conferidos em registros históricos primários e dicionários clássicos.",
+    "toolsTitle": "Utilitários Disponíveis",
+    "launchTool": "Abrir ferramenta →",
+    "techTitle": "Arquitetura Técnica e Entrega Global",
+    "techP1": "O ToolNest é gerado estaticamente com Astro e estilizado com Tailwind CSS, distribuído mundialmente através da rede de borda do Cloudflare com HTTPS automático e proteção DDoS.",
     "contactTitle": "Dúvidas ou Sugestões?",
-    "contactDesc": "Tem uma sugestão de nova ferramenta ou melhoria? Adoraríamos ouvir sua opinião.",
-    "contactBtn": "Entrar em Contato"
+    "contactDesc": "Adoramos receber sugestões de novas ferramentas, melhorias e avisos de bugs. Fale com nossa equipe técnica a qualquer momento.",
+    "contactBtn": "Falar com o ToolNest →"
   },
   "contact": {
-    "title": "Fale Conosco",
-    "metaDesc": "Envie dúvidas, sugestões ou ideias de ferramentas para a equipe do ToolNest.",
-    "badge": "Fale Conosco",
-    "heading": "Vamos conversar.",
-    "subheading": "Tem um feedback, encontrou um bug ou quer sugerir uma nova ferramenta? Escreva para nós.",
+    "title": "Contato ToolNest — Suporte e Sugestões | ToolNest",
+    "metaDesc": "Entre em contato com a equipe do ToolNest para dúvidas, sugestões de ferramentas, feedback ou reporte de problemas. Respondemos em 24 a 48 horas.",
+    "badge": "Suporte e Feedback",
+    "heading": "Fale Conosco",
+    "subheading": "Tem uma sugestão de nova funcionalidade, encontrou um bug ou quer sugerir uma nova ferramenta? Lemos e respondemos todas as mensagens.",
     "emailTitle": "E-mail Direto",
-    "emailDesc": "Para dúvidas gerais, sugestões e parcerias.",
+    "emailDesc": "Fale diretamente com nossa equipe de engenharia por e-mail.",
     "responseTitle": "Tempo de Resposta",
-    "responseDesc": "Geralmente respondemos em 24 a 48 horas úteis.",
-    "responseHours": "Segunda a Sexta-feira",
-    "formTitle": "Enviar Mensagem",
-    "formSubtitle": "Preencha os campos abaixo e seu aplicativo de e-mail será aberto automaticamente.",
+    "responseDesc": "Costumamos responder a todas as mensagens em até 24 a 48 horas úteis.",
+    "responseHours": "Segunda a Sexta (Horário UTC)",
+    "formTitle": "Envie uma Mensagem",
+    "formSubtitle": "Preencha o formulário abaixo e entraremos em contato rapidamente.",
     "nameLabel": "Seu Nome",
-    "namePlaceholder": "João Silva",
     "emailLabel": "Seu E-mail",
-    "emailPlaceholder": "joao@exemplo.com",
     "subjectLabel": "Assunto",
-    "subjectPlaceholder": "Sugestão de ferramenta, dúvida, relato de erro...",
     "messageLabel": "Mensagem",
-    "messagePlaceholder": "Conte como podemos te ajudar...",
     "submitBtn": "Enviar Mensagem",
-    "submittingBtn": "Abrindo Aplicativo de E-mail...",
-    "successMsg": "Obrigado! Abrindo seu cliente de e-mail para enviar a mensagem.",
-    "fillAllFieldsError": "Por favor, preencha todos os campos obrigatórios.",
-    "invalidEmailError": "Por favor, insira um endereço de e-mail válido."
+    "successMsg": "Obrigado! Sua mensagem foi preparada com sucesso.",
+    "validationName": "Por favor, informe o seu nome.",
+    "validationEmail": "Por favor, informe um endereço de e-mail válido.",
+    "validationMessage": "Por favor, escreva uma mensagem com pelo menos 10 caracteres."
   },
   "privacy": {
-    "title": "Política de Privacidade",
-    "metaDesc": "Política de privacidade do ToolNest: zero rastreamento, zero retenção de dados pessoais e execução local.",
-    "badge": "Compromisso de Privacidade",
-    "heading": "Zero rastreamento. Zero contas. Zero coleta de dados.",
-    "lastUpdated": "Última atualização",
+    "title": "Política de Privacidade — Dados e Transparência | ToolNest",
+    "metaDesc": "Leia nossa Política de Privacidade. Conheça nossa arquitetura 100% no navegador, armazenamento local e compromisso com sua privacidade.",
+    "badge": "Governança de Dados e Transparência",
+    "heading": "Política de Privacidade",
+    "lastUpdated": "Última Atualização",
     "dateStr": "Setembro de 2026",
-    "introTitle": "1. Nosso Princípio Fundamental",
-    "introP": "No ToolNest, acreditamos que ferramentas online não devem exigir abrir mão da sua privacidade. Não exigimos contas, não criamos perfis para anúncios e não vendemos dados.",
-    "collectTitle": "2. Informações Que Não Coletamos",
-    "collectP1": "Ao usar a Calculadora de Idade, Fatos de Aniversário, Roleta ou Sorteador, todos os cálculos são feitos exclusivamente no seu navegador.",
-    "collectP2": "Não guardamos datas de nascimento, opções de escolhas ou listas de nomes em nenhum banco de dados.",
-    "cookiesTitle": "3. Cookies e Preferências Locais",
-    "cookiesP1": "Usamos apenas localStorage e cookies leves para salvar suas preferências de tema (claro/escuro) e idioma selecionado.",
-    "analyticsTitle": "4. Hospedagem e Estatísticas",
-    "analyticsP": "Nosso site é distribuído pela Cloudflare Workers, que monitora apenas dados técnicos agregados de requisições sem identificar indivíduos.",
-    "urlTitle": "5. Compartilhamento sem Servidor",
-    "urlP": "Quando você compartilha uma roleta ou contagem regressiva, as opções ficam salvas diretamente no link. Quem abrir o link verá exatamente o mesmo sem consultar nosso servidor."
+    "introTitle": "1. Introdução",
+    "introP": "O ToolNest opera como uma plataforma web descentralizada e estática, fornecendo ferramentas baseadas no navegador. Estamos comprometidos com a transparência e o respeito à privacidade dos nossos visitantes.",
+    "collectTitle": "2. Informações Que Coletamos",
+    "collectP1": "Zero Armazenamento no Servidor: Ao contrário de serviços web tradicionais, o ToolNest não possui contas de usuário, bancos de dados com perfis nem registros em servidores remotos. Os cálculos são executados exclusivamente dentro do navegador no seu dispositivo.",
+    "collectP2": "Armazenamento Local no Navegador: Salvamos seu histórico recente de uso e preferências de tema apenas no armazenamento local do seu próprio navegador — esses dados nunca saem do seu dispositivo e você pode limpá-los a qualquer momento.",
+    "cookiesTitle": "3. Cookies e Publicidade",
+    "cookiesP1": "Para manter nossos utilitários 100% gratuitos e acessíveis a todos, o site pode veicular publicidade através de redes parceiras como o Google AdSense. Provedores terceiros utilizam cookies para exibir anúncios com base em visitas anteriores.",
+    "analyticsTitle": "4. Métricas de Acesso",
+    "analyticsP": "Podemos utilizar métricas agregadas e sem identificação pessoal na rede de borda para avaliar o tráfego global, páginas mais acessadas e compatibilidade entre dispositivos.",
+    "urlTitle": "5. Persistência de Estado por URL",
+    "urlP": "Certas ferramentas salvam os parâmetros selecionados diretamente na barra de endereço (URL), permitindo que você guarde nos favoritos ou compartilhe links sem precisar de banco de dados externo."
   },
   "notFound": {
-    "title": "Página Não Encontrada",
-    "heading": "Ops! Página Não Encontrada",
-    "subtext": "A ferramenta ou página que você procura não existe ou foi movida. Conheça nossas ferramentas mais populares abaixo.",
-    "backHome": "Voltar para o Início",
-    "exploreTitle": "Explorar Todas as Ferramentas"
+    "title": "Página Não Encontrada (404) | ToolNest",
+    "heading": "Esta página desapareceu",
+    "subtext": "Não conseguimos encontrar a página que você estava procurando. Ela pode ter sido movida, renomeada ou talvez nunca tenha existido.",
+    "backHome": "Voltar à Página Inicial",
+    "exploreTitle": "Conheça Nossas Ferramentas Gratuitas"
   },
   "errors": {
-    "timeout": "A geração demorou muito. Tente novamente com um tema mais simples.",
-    "rateLimit": "Muitas solicitações seguidas. Aguarde um instante e tente novamente.",
-    "serverConfig": "Erro de configuração do servidor. Voltaremos em breve.",
-    "upstreamUnavailable": "O serviço de IA está com alta demanda no momento. Tente em alguns instantes.",
-    "serverError": "Não foi possível concluir. Tente novamente ou insira opções manualmente.",
-    "networkError": "Erro de conexão. Verifique sua internet.",
-    "unknownError": "Ocorreu um erro inesperado. Por favor, recarregue a página."
+    "requiredField": "Este campo é obrigatório.",
+    "invalidEmail": "Por favor, insira um e-mail válido.",
+    "networkError": "Erro de rede. Verifique sua conexão e tente novamente.",
+    "rateLimit": "Limite de requisições atingido. Aguarde um minuto antes de tentar novamente.",
+    "serverError": "Ocorreu um erro no servidor. Tente novamente em instantes.",
+    "timeoutError": "A operação demorou muito e expirou. Tente novamente.",
+    "unavailableError": "O serviço está temporariamente indisponível. Tente mais tarde.",
+    "parseError": "Não foi possível processar a resposta. Tente com parâmetros diferentes.",
+    "genericError": "Ocorreu um erro inesperado. Por favor, tente novamente."
+  },
+  "tags": {
+    "popular": "Popular",
+    "trivia": "Curiosidades",
+    "randomizer": "Sorteador",
+    "utility": "Utilitário",
+    "time": "Tempo",
+    "aiDatabase": "IA + Banco de Dados",
+    "fun": "Diversão",
+    "daily": "Dia a Dia",
+    "classroom": "Sala de Aula",
+    "party": "Festa",
+    "age": "Idade",
+    "facts": "Fatos",
+    "wheel": "Roleta",
+    "picker": "Sorteio",
+    "countdown": "Contagem",
+    "names": "Nomes",
+    "astrology": "Astrologia",
+    "numerology": "Numerologia"
+  },
+  "share": {
+    "whatsappShare": "Confira esta ferramenta gratuita no ToolNest:",
+    "twitterShare": "Confira esta ferramenta gratuita no ToolNest:",
+    "countdownShareText": "Confira esta contagem regressiva para \"{title}\"!",
+    "countdownShareTitle": "⏳ Contagem Regressiva: {title}",
+    "countdownJoinText": "Acompanhe a contagem regressiva para \"{title}\":",
+    "countdownTrackText": "Vem acompanhar essa contagem regressiva comigo: \"{title}\"",
+    "birthdayShareTitle": "Meus Fatos de Aniversário no ToolNest",
+    "ageShareTitle": "Minha Idade Exata no ToolNest",
+    "wheelShareTitle": "Roleta de Decisões no ToolNest",
+    "pickerShareTitle": "Ganhadores Sorteados no ToolNest",
+    "watermark": "feito com ToolNest • toolnest.pages.dev",
+    "stickerShared": "Cartão de contagem compartilhado!",
+    "linkShared": "Link da contagem compartilhado!",
+    "imageSaved": "Imagem salva — compartilhe onde quiser!",
+    "renderImage": "Gerando imagem...",
+    "prepareShare": "Preparando para compartilhar...",
+    "generatingSticker": "Criando adesivo em alta resolução...",
+    "imageDownloaded": "Imagem baixada com sucesso!",
+    "imageFailed": "Falha ao gerar imagem. Tente de novo!"
+  },
+  "forms": {
+    "required": "Obrigatório",
+    "optional": "Opcional",
+    "clear": "Limpar",
+    "reset": "Redefinir",
+    "submit": "Enviar",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "close": "Fechar",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "select": "Selecionar",
+    "copy": "Copiar",
+    "share": "Compartilhar",
+    "download": "Baixar",
+    "namePlaceholder": "Alex",
+    "emailPlaceholder": "alex@exemplo.com",
+    "subjectPlaceholder": "Sugestão de funcionalidade...",
+    "messagePlaceholder": "Sua mensagem...",
+    "searchPlaceholder": "Digite para buscar..."
+  },
+  "faq": {
+    "title": "Perguntas Frequentes",
+    "description": "Tudo o que você precisa saber sobre o funcionamento desta ferramenta.",
+    "answersCount": "8 Respostas",
+    "quickNav": "Navegação Rápida — Perguntas Frequentes",
+    "wheel": [
+      {
+        "q": "A roleta de decisões é realmente aleatória e matematicamente justa?",
+        "a": "Sim. A roleta utiliza a API de criptografia do navegador para gerar a velocidade inicial do giro e a duração. Cada fatia possui ângulo geométrico idêntico e probabilidade matemática igual de ser sorteada."
+      },
+      {
+        "q": "A inteligência artificial pode sugerir opções personalizadas para a roleta?",
+        "a": "Sim! O ToolNest conta com um gerador inteligente com Google Gemini. Basta descrever seu dilema (como \"onde jantar\" ou \"brincadeiras para festa\") e a IA cria opções equilibradas em instantes."
+      },
+      {
+        "q": "Posso usar esta roleta como alternativa ao Wheel of Names ou para sorteios?",
+        "a": "Com certeza. O ToolNest é uma alternativa leve, moderna e sem anúncios intrusivos ao Wheel of Names, perfeita para salas de aula, sorteios online, dinâmicas de equipe e noites de jogos."
+      },
+      {
+        "q": "Como criar uma roleta de Sim ou Não ou escolher o que comer?",
+        "a": "Basta inserir duas opções simples: \"Sim\" e \"Não\". Para decidir o jantar, você pode carregar nosso modelo pronto de restaurantes ou digitar seus pratos favoritos."
+      },
+      {
+        "q": "Como funciona a física de desaceleração da roleta?",
+        "a": "A roleta roda um motor gráfico próprio em Canvas a 60 FPS com curvas de amortecimento Bezier, simulando a inércia e o atrito real de uma roleta mecânica de parque de diversões."
+      },
+      {
+        "q": "Posso compartilhar minha roleta personalizada através de um link?",
+        "a": "Sim! Suas opções são salvas diretamente nos parâmetros do link em tempo real. Ao clicar em \"Compartilhar Roleta\", você gera um link para seus amigos abrirem exatamente a mesma configuração."
+      },
+      {
+        "q": "Quantas opções posso colocar na roleta?",
+        "a": "Você pode adicionar de 2 a 12 opções. O limite de 12 itens garante máxima legibilidade do texto, renderização nítida e contraste de cores perfeito em telas de celulares."
+      },
+      {
+        "q": "Posso eliminar a opção vencedora após cada giro?",
+        "a": "Sim. Quando o aviso de vitória surgir na tela, basta clicar em \"Remover Vencedor\". A fatia sorteada é retirada e a roleta recalcula os ângulos restantes na hora."
+      }
+    ],
+    "picker": [
+      {
+        "q": "Este sorteador de nomes é realmente justo e livre de viés?",
+        "a": "Diferente de sorteadores comuns que usam Math.random previsível, o ToolNest utiliza a API Cryptographic do navegador (crypto.getRandomValues) e o algoritmo Fisher-Yates para garantir imparcialidade matemática comprovada."
+      },
+      {
+        "q": "Como uso este sorteador para dividir grupos e equipes?",
+        "a": "Para sortear times, clique primeiro em \"Embaralhar Lista\" para randomizar a ordem dos nomes e depois distribua os participantes sequencialmente nos grupos desejados."
+      },
+      {
+        "q": "Posso sortear vários ganhadores de uma só vez para um sorteio?",
+        "a": "Sim! Ajuste o seletor de ganhadores para sortear de 1 a 10 nomes simultaneamente. O algoritmo garante que nenhum nome seja repetido quando a repetição estiver desmarcada."
+      },
+      {
+        "q": "Qual a diferença entre crypto.getRandomValues e Math.random?",
+        "a": "O Math.random utiliza geradores pseudoaleatórios com sementes previsíveis. O crypto.getRandomValues utiliza a entropia do sistema operacional do seu dispositivo, sendo ideal para concursos e sorteios auditáveis."
+      },
+      {
+        "q": "Posso eliminar os ganhadores sorteados a cada rodada?",
+        "a": "Sim. Ative a chave \"Remover ganhadores após o sorteio\". A cada rodada, o nome premiado é retirado da lista principal automaticamente, permitindo várias rodadas sem duplicidade."
+      },
+      {
+        "q": "O ToolNest salva ou envia minha lista de nomes para algum servidor?",
+        "a": "Não. Sua lista nunca sai da memória do seu navegador. Toda a leitura, remoção de duplicados e o sorteio acontecem 100% no seu dispositivo com total sigilo."
+      },
+      {
+        "q": "Que formato de lista posso colar no sorteador?",
+        "a": "Você pode colar listas com nomes separados por quebra de linha, vírgulas ou ponto e vírgula. O sistema limpa espaços extras e linhas vazias automaticamente."
+      },
+      {
+        "q": "É possível filtrar nomes repetidos antes de realizar o sorteio?",
+        "a": "Sim! A ferramenta analisa a lista instantaneamente, exibe um alerta caso encontre nomes repetidos e oferece um botão para \"Remover Duplicados\" com apenas um clique."
+      }
+    ],
+    "age": [
+      {
+        "q": "Quantos anos, meses e dias eu tenho hoje exatamente?",
+        "a": "Sua idade exata corresponde ao número de anos civis completos, meses restantes e dias exatos desde o seu nascimento, calculados com base em datas UTC para evitar distorções de fuso horário."
+      },
+      {
+        "q": "Como a calculadora de idade calcula o tempo de vida com precisão?",
+        "a": "Para garantir exatidão, o algoritmo computa os anos completos, avalia a quantidade exata de dias em cada mês individual do calendário e soma os dias restantes sem arredondamentos."
+      },
+      {
+        "q": "Quando comemoro meu meio aniversário e a ferramenta calcula isso?",
+        "a": "Sim! O ToolNest inclui uma calculadora automática de meio aniversário. Ele ocorre exatamente seis meses após o seu aniversário (ou cerca de 182,5 dias)."
+      },
+      {
+        "q": "Por que minha idade em dias ou meses varia entre calculadoras online?",
+        "a": "Muitas calculadoras simples dividem o total de dias por 365 ou 30,4375 gerando erros. O ToolNest calcula mês a mês com base no calendário gregoriano real e anos bissextos."
+      },
+      {
+        "q": "Posso calcular a idade que eu tinha em uma data específica do passado?",
+        "a": "Sim! Abra a opção \"Calcular idade em uma data específica\" logo abaixo dos campos de data. Escolha qualquer data histórica para saber sua idade exata naquele momento."
+      },
+      {
+        "q": "Como são calculados os anos bissextos e quem nasceu em 29 de fevereiro?",
+        "a": "Para quem nasceu em 29 de fevereiro, o sistema computa o dia 29 nos anos bissextos e, em anos comuns, adota o padrão legal convencional comemorado em 1º de março."
+      },
+      {
+        "q": "O ToolNest armazena ou envia minha data de nascimento para servidores?",
+        "a": "Não. O ToolNest funciona sem servidores de banco de dados, sem cadastros e sem cookies de rastreamento. Cada cálculo é executado localmente na memória do seu navegador."
+      },
+      {
+        "q": "Qual a precisão do contador de segundos e batimentos cardíacos?",
+        "a": "O contador de segundos atualiza em tempo real com o relógio de alta precisão do navegador. As estimativas de batimentos (média de 70 BPM) e respirações (16/min) oferecem projeções estatísticas fascinantes."
+      }
+    ],
+    "birthday": [
+      {
+        "q": "Em qual dia da semana eu nasci e como isso é verificado?",
+        "a": "O dia da semana do seu nascimento é determinado pelo cômputo exato de dias transcorridos pelo calendário gregoriano a partir de uma data de referência, considerando todos os anos bissextos."
+      },
+      {
+        "q": "Como descubro meu signo do zodíaco e o que significa seu elemento?",
+        "a": "Seu signo solar ocidental é definido pela posição aparente do Sol entre as doze constelações de 30 graus. Cada signo é associado a um elemento clássico: Fogo, Terra, Ar ou Água."
+      },
+      {
+        "q": "O que simbolizam a minha pedra do mês e a minha flor de nascimento?",
+        "a": "As pedras de nascimento foram padronizadas em 1912 pela Associação Nacional de Joalheiros, e as flores de nascimento seguem tradições históricas que atribuem virtudes e significados afetivos a cada mês."
+      },
+      {
+        "q": "O que significa o aniversário de ouro e quando ele acontece?",
+        "a": "O aniversário de ouro (ou aniversário de champanhe) ocorre quando você completa a idade exata correspondente ao dia do seu nascimento — por exemplo, fazer 25 anos no dia 25 do mês."
+      },
+      {
+        "q": "O que é o número do caminho de vida na numerologia e como calculá-lo?",
+        "a": "O caminho de vida é obtido somando e reduzindo os dígitos do dia, mês e ano de nascimento a um único algarismo (ou números mestres 11, 22, 33), revelando traços da sua personalidade arquetípica."
+      },
+      {
+        "q": "Quando é o meu meio aniversário e por que as pessoas comemoram?",
+        "a": "Seu meio aniversário ocorre seis meses exatos após o seu aniversário. É uma data muito comemorada para crianças ou por quem faz aniversário perto de datas festivas de fim de ano."
+      },
+      {
+        "q": "Como são definidas as gerações como Geração Z e Millennials?",
+        "a": "As faixas geracionais são mapeadas com base nos parâmetros demográficos consagrados pelo Pew Research Center, relacionando os anos de nascimento a marcos históricos e tecnológicos."
+      },
+      {
+        "q": "Posso baixar e compartilhar o cartão com os fatos do meu aniversário?",
+        "a": "Sim! O ToolNest gera um cartão adesivo em alta resolução (PNG) direto no navegador sem enviar nenhuma imagem a servidores externos. Você pode salvar ou compartilhar na hora."
+      }
+    ],
+    "countdown": [
+      {
+        "q": "Este cronômetro de contagem regressiva é gratuito e sem cadastro?",
+        "a": "Sim, 100% gratuito, sem exigir cadastro, e-mail ou senhas. Você pode criar, personalizar e compartilhar quantas contagens regressivas desejar em segundos."
+      },
+      {
+        "q": "Posso usar como calculadora de quantos dias faltam para o Ano Novo ou férias?",
+        "a": "Com certeza! Você pode utilizar nossos modelos prontos para Ano Novo, Natal, férias ou inserir qualquer data futura para acompanhar dias, horas e minutos restantes."
+      },
+      {
+        "q": "Onde fica salva a minha contagem regressiva e como funciona o link?",
+        "a": "Os dados do seu evento (título, data e emoji) são gravados diretamente no próprio link usando codificação URL Base64URL segura, sem depender de banco de dados central."
+      },
+      {
+        "q": "Como compartilho o link da contagem no WhatsApp, Instagram ou Discord?",
+        "a": "Basta clicar em \"Copiar Link\" ou usar os botões de compartilhamento direto. No celular, você também pode baixar um cartão adesivo em imagem PNG pronto para stories e status."
+      },
+      {
+        "q": "Como a contagem lida com amigos que estão em fusos horários diferentes?",
+        "a": "As datas são padronizadas no padrão universal UTC (ISO-8601). Quando alguém abre o link em outro país, o navegador ajusta o fuso automaticamente, garantindo sincronia perfeita."
+      },
+      {
+        "q": "O que acontece quando o relógio da contagem chega a zero?",
+        "a": "O cronômetro entra instantaneamente em modo de comemoração com animações festivas, confetes digitais e passa a mostrar há quanto tempo o marco histórico foi atingido."
+      },
+      {
+        "q": "Posso definir a hora e o minuto exatos para o evento?",
+        "a": "Sim! O seletor de data e hora permite definir o horário exato até os minutos, ideal para lançamentos de produtos, horários de voos, provas e festas de aniversário."
+      },
+      {
+        "q": "Posso exibir o cronômetro em tela cheia para transmissões ao vivo?",
+        "a": "Sim! A página de visualização em /countdown/view oferece uma interface limpa e elegante, perfeita para janelas de transmissão no OBS, telões e apresentações."
+      }
+    ],
+    "nameMeaning": [
+      {
+        "q": "O que significa meu nome e como a origem dele é determinada?",
+        "a": "O significado de um nome reflete sua raiz etimológica em idiomas ancestrais como hebraico, latim, grego, nórdico antigo, celta ou árabe, comparado a dicionários onomásticos históricos."
+      },
+      {
+        "q": "Posso consultar nomes raros ou internacionais no localizador de origens?",
+        "a": "Sim! Além do nosso catálogo com mais de 200 nomes consagrados, o ToolNest conta com inteligência artificial via Google Gemini para analisar qualquer nome raro ou personalizado."
+      },
+      {
+        "q": "É possível encontrar nomes que significam virtudes como luz, amor ou força?",
+        "a": "Sim! Muitos nomes clássicos trazem virtudes: nomes que significam luz incluem Lúcia, Helena e Aaron; nomes associados a força incluem Gabriel e Valéria; e nomes que remetem a amor incluem Amara e Davi."
+      },
+      {
+        "q": "Qual o nível de precisão dos significados e traços de personalidade da IA?",
+        "a": "Os nomes do catálogo fixo são verificados com base em registros históricos e etimológicos. As interpretações da IA combinam simbolismos culturais globais e cadência fonética."
+      },
+      {
+        "q": "Como a busca decide entre exibir o dossiê fixo ou gerar com IA?",
+        "a": "Ao digitar um nome, o sistema verifica se ele já existe em nosso diretório curado. Em caso positivo, direciona para o dossiê completo. Caso contrário, a IA gera a análise na própria página."
+      },
+      {
+        "q": "Minha pesquisa de nomes é privada e 100% gratuita?",
+        "a": "Sim, totalmente gratuita, sem cookies invasivos e sem necessidade de criar conta. As buscas acontecem sob demanda e seu histórico recente fica apenas no seu navegador."
+      },
+      {
+        "q": "Quais tradições linguísticas estão contempladas no acervo de nomes?",
+        "a": "Nosso banco de dados reúne origens do latim, germânico, grego, hebraico, celta, nórdico, eslavo, sânscrito, iorubá e japonês, refletindo a rica diversidade cultural dos nomes."
+      },
+      {
+        "q": "Posso ver os nomes mais populares filtrados por letra ou gênero?",
+        "a": "Sim! Acesse nosso Diretório de Nomes em /names/ para navegar por mais de 200 perfis ordenados de A a Z, filtrando por gênero (menino, menina, unissex) e popularidade."
+      }
+    ],
+    "nameDetail": {
+      "q1": "Qual é o significado do nome {name}?",
+      "a1": "O nome {name} possui origem no idioma {origin} e tradicionalmente simboliza \"{meaning}\".",
+      "q2": "Qual é a popularidade do nome {name} nos dias de hoje?",
+      "a2": "O nome {name} apresenta atualmente um nível de popularidade {popularity} entre os nomes de bebês no Brasil e no mundo.",
+      "q3": "Quer saber mais? Descubra análises de IA para qualquer nome",
+      "a3": "Você pode clicar no botão \"Liberar Análise com IA\" nesta página para gerar interpretações personalizadas — incluindo traços de personalidade, estilo e curiosidades históricas com Google Gemini."
+    }
+  },
+  "nameMeaning": {
+    "useCases": {
+      "title": "Casos de Uso Populares para Busca de Significados de Nomes",
+      "u1Title": "Escolha do Nome do Bebê",
+      "u1Desc": "Encontre ideias de nomes de bebê com ricas raízes culturais, sonoridade agradável e equilíbrio. Compare significados em diferentes tradições.",
+      "u2Title": "Escritores e Roteiristas",
+      "u2Desc": "Batize protagonistas, vilões e líderes de mundos fictícios com etimologias simbólicas alinhadas à personalidade de cada personagem.",
+      "u3Title": "Genealogia e Tradição Familiar",
+      "u3Desc": "Rastreie origens familiares, migrações e antigas profissões através das raízes linguísticas herdadas dos seus antepassados."
+    },
+    "trivia": {
+      "title": "Você Sabia? Curiosidades sobre Fonética e Onomástica",
+      "t1Title": "O Efeito Bouba/Kiki",
+      "t1Desc": "Experimentos linguísticos provam que associamos sons vocálicos suaves (como Amara ou Noah) à ternura, enquanto consoantes oclusivas transmitem energia marcante.",
+      "t2Title": "O Ciclo dos 100 Anos nos Nomes",
+      "t2Desc": "A moda dos nomes de bebês segue um ciclo previsível de um século: nomes que pareciam antigos aos pais costumam soar clássicos e charmosos aos netos.",
+      "t3Title": "500 Raízes Ancestrais",
+      "t3Desc": "Mais de 80% dos nomes tradicionais europeus e mediterrâneos derivam de menos de 500 raízes ancestrais que significavam luz, paz, natureza e bravura."
+    },
+    "ui": {
+      "aiPoweredFinder": "Dossiê com IA e Nomes Selecionados",
+      "enterNameLabel": "Digite Qualquer Nome",
+      "searchBtn": "Descobrir Significado",
+      "curatedBadge": "Dossiê Verificado Disponível",
+      "aiBadge": "Análise Linguística por IA",
+      "viewFullDossier": "Ver Dossiê Completo →",
+      "keyTakeawaysTitle": "Resposta Rápida e Principais Destaques",
+      "kt1": "Banco Global de Nomes: Cruza milhares de raízes culturais e dicionários de línguas clássicas.",
+      "kt2": "Percepções Instantâneas por IA: Revela arquétipos psicológicos, ritmo fonético e folclore de qualquer nome.",
+      "kt3": "Privacidade 100% no Dispositivo: Buscas e histórico permanecem confidenciais no armazenamento local."
+    }
+  },
+  "data": {
+    "birthstones": {
+      "1": {
+        "name": "Granada",
+        "meaning": "Simboliza proteção, vitalidade e amizade duradoura."
+      },
+      "2": {
+        "name": "Ametista",
+        "meaning": "Simboliza paz, clareza mental e força interior."
+      },
+      "3": {
+        "name": "Água-Marinha",
+        "meaning": "Simboliza coragem, tranquilidade e viagens seguras."
+      },
+      "4": {
+        "name": "Diamante",
+        "meaning": "Simboliza amor eterno, força inabalável e invencibilidade."
+      },
+      "5": {
+        "name": "Esmeralda",
+        "meaning": "Simboliza renascimento, crescimento, sabedoria e paciência."
+      },
+      "6": {
+        "name": "Pérola",
+        "meaning": "Simboliza pureza, inocência e sabedoria atemporal."
+      },
+      "7": {
+        "name": "Rubi",
+        "meaning": "Simboliza paixão, energia, coragem e vitalidade."
+      },
+      "8": {
+        "name": "Peridoto",
+        "meaning": "Simboliza harmonia, boa sorte e energia positiva."
+      },
+      "9": {
+        "name": "Safira",
+        "meaning": "Simboliza sabedoria, lealdade, verdade e nobreza."
+      },
+      "10": {
+        "name": "Opala",
+        "meaning": "Simboliza criatividade, esperança, espontaneidade e fidelidade."
+      },
+      "11": {
+        "name": "Topázio",
+        "meaning": "Simboliza calor humano, empatia, cura e força."
+      },
+      "12": {
+        "name": "Turquesa",
+        "meaning": "Simboliza proteção, sucesso, sorte e serenidade."
+      }
+    },
+    "birthFlowers": {
+      "1": {
+        "name": "Cravo",
+        "meaning": "Simboliza admiração, profunda devoção e amor incondicional."
+      },
+      "2": {
+        "name": "Violeta",
+        "meaning": "Simboliza modéstia, fidelidade espiritual e beleza delicada."
+      },
+      "3": {
+        "name": "Narciso",
+        "meaning": "Simboliza novos começos, esperança vibrante e alegre renascimento."
+      },
+      "4": {
+        "name": "Margarida",
+        "meaning": "Simboliza inocência, simplicidade alegre e afeto verdadeiro."
+      },
+      "5": {
+        "name": "Lírio-do-Vale",
+        "meaning": "Simboliza o retorno da felicidade, humildade e doce delicadeza."
+      },
+      "6": {
+        "name": "Rosa",
+        "meaning": "Simboliza romance profundo, paixão duradoura e honra."
+      },
+      "7": {
+        "name": "Esporinha",
+        "meaning": "Simboliza coração aberto, riso alegre e atitude positiva."
+      },
+      "8": {
+        "name": "Gladíolo",
+        "meaning": "Simboliza força de caráter, integridade moral e lembrança sincera."
+      },
+      "9": {
+        "name": "Áster",
+        "meaning": "Simboliza elegância delicada, paciência e afeto poético."
+      },
+      "10": {
+        "name": "Cravo-de-Defunto (Calêndula)",
+        "meaning": "Simboliza calor radiante, ambição calorosa e motivação interior."
+      },
+      "11": {
+        "name": "Crisântemo",
+        "meaning": "Simboliza longevidade, amizade sincera e alegria constante."
+      },
+      "12": {
+        "name": "Azevinho",
+        "meaning": "Simboliza otimismo festivo, felicidade no lar e boas intenções."
+      }
+    },
+    "generations": [
+      {
+        "name": "Geração Silenciosa",
+        "shortName": "Silenciosa",
+        "startYear": 1928,
+        "endYear": 1945,
+        "description": "Conhecida pela resiliência, forte ética profissional e dever cívico."
+      },
+      {
+        "name": "Baby Boomers",
+        "shortName": "Boomers",
+        "startYear": 1946,
+        "endYear": 1964,
+        "description": "Marcada pelo otimismo pós-guerra, transformações culturais e ambição."
+      },
+      {
+        "name": "Geração X",
+        "shortName": "Geração X",
+        "startYear": 1965,
+        "endYear": 1980,
+        "description": "Caracterizada por autossuficiência, grande adaptabilidade e equilíbrio."
+      },
+      {
+        "name": "Millennials (Geração Y)",
+        "shortName": "Millennials",
+        "startYear": 1981,
+        "endYear": 1996,
+        "description": "Pioneiros da era digital conhecidos por valores com propósito e colaboração."
+      },
+      {
+        "name": "Geração Z",
+        "shortName": "Geração Z",
+        "startYear": 1997,
+        "endYear": 2012,
+        "description": "Nativos digitais que valorizam autenticidade, impacto social e criatividade."
+      },
+      {
+        "name": "Geração Alfa",
+        "shortName": "Geração Alfa",
+        "startYear": 2013,
+        "endYear": 2025,
+        "description": "Geração imersa em tecnologia que lidera a era conectada por inteligência artificial."
+      }
+    ],
+    "zodiac": {
+      "aries": {
+        "name": "Áries",
+        "element": "Fogo",
+        "traits": [
+          "Corajoso",
+          "Enérgico",
+          "Destemido",
+          "Apaixonado"
+        ]
+      },
+      "taurus": {
+        "name": "Touro",
+        "element": "Terra",
+        "traits": [
+          "Confiável",
+          "Paciente",
+          "Prático",
+          "Dedicado"
+        ]
+      },
+      "gemini": {
+        "name": "Gêmeos",
+        "element": "Ar",
+        "traits": [
+          "Adaptável",
+          "Curioso",
+          "Espirituoso",
+          "Expressivo"
+        ]
+      },
+      "cancer": {
+        "name": "Câncer",
+        "element": "Água",
+        "traits": [
+          "Intuitivo",
+          "Empático",
+          "Protetor",
+          "Carinhoso"
+        ]
+      },
+      "leo": {
+        "name": "Leão",
+        "element": "Fogo",
+        "traits": [
+          "Confiante",
+          "Generoso",
+          "Carismático",
+          "Ambicioso"
+        ]
+      },
+      "virgo": {
+        "name": "Virgem",
+        "element": "Terra",
+        "traits": [
+          "Analítico",
+          "Detalhista",
+          "Prestativo",
+          "Modesto"
+        ]
+      },
+      "libra": {
+        "name": "Libra",
+        "element": "Ar",
+        "traits": [
+          "Diplomático",
+          "Justo",
+          "Charmoso",
+          "Artístico"
+        ]
+      },
+      "scorpio": {
+        "name": "Escorpião",
+        "element": "Água",
+        "traits": [
+          "Intenso",
+          "Engenhoso",
+          "Apaixonado",
+          "Leal"
+        ]
+      },
+      "sagittarius": {
+        "name": "Sagitário",
+        "element": "Fogo",
+        "traits": [
+          "Otimista",
+          "Aventureiro",
+          "Filosófico",
+          "Espírito Livre"
+        ]
+      },
+      "capricorn": {
+        "name": "Capricórnio",
+        "element": "Terra",
+        "traits": [
+          "Disciplinado",
+          "Ambicioso",
+          "Paciente",
+          "Estratégico"
+        ]
+      },
+      "aquarius": {
+        "name": "Aquário",
+        "element": "Ar",
+        "traits": [
+          "Inovador",
+          "Independente",
+          "Humanitário",
+          "Visionário"
+        ]
+      },
+      "pisces": {
+        "name": "Peixes",
+        "element": "Água",
+        "traits": [
+          "Compassivo",
+          "Imaginativo",
+          "Intuitivo",
+          "Gentil"
+        ]
+      }
+    },
+    "lifePath": {
+      "1": {
+        "title": "O Líder",
+        "traits": "Independente, Inovador, Ambicioso",
+        "summary": "Pioneiros impulsionados a desbravar novos caminhos, confiar em si mesmos e liderar com visão autêntica."
+      },
+      "2": {
+        "title": "O Pacificador",
+        "traits": "Diplomático, Empático, Intuitivo",
+        "summary": "Mediadores natos e ouvintes atentos que prosperam cultivando a harmonia e parcerias verdadeiras."
+      },
+      "3": {
+        "title": "O Criativo",
+        "traits": "Expressivo, Otimista, Carismático",
+        "summary": "Comunicadores carismáticos e almas artísticas com dom para contar histórias, encantar e inspirar."
+      },
+      "4": {
+        "title": "O Construtor",
+        "traits": "Disciplinado, Prático, Confiável",
+        "summary": "Pilares sólidos que constroem realizações duradouras por meio de trabalho metódico e integridade."
+      },
+      "5": {
+        "title": "O Aventureiro",
+        "traits": "Adaptável, Amante da Liberdade, Curioso",
+        "summary": "Espíritos livres e dinâmicos que se realizam explorando o mundo, culturas diversas e transformações."
+      },
+      "6": {
+        "title": "O Protetor",
+        "traits": "Compassivo, Protetor, Responsável",
+        "summary": "Guardiões afetuosos dedicados à família, ao bem-estar coletivo, ao cuidado e à harmonia do lar."
+      },
+      "7": {
+        "title": "O Buscador",
+        "traits": "Analítico, Introspectivo, Espiritual",
+        "summary": "Pensadores filosóficos e analíticos atraídos por desvendar os mistérios da vida, da ciência e da sabedoria."
+      },
+      "8": {
+        "title": "O Realizador",
+        "traits": "Confiante, Ambicioso, Estratégico",
+        "summary": "Visionários focados em metas, com talento nato para gestão estratégica, liderança e realizações concretas."
+      },
+      "9": {
+        "title": "O Humanitário",
+        "traits": "Altruísta, Mente Aberta, Empático",
+        "summary": "Cidadãos do mundo dedicados à compaixão universal, sabedoria artística e evolução coletiva."
+      },
+      "11": {
+        "title": "O Mestre Intuitivo",
+        "traits": "Iluminado, Visionário, Inspirador",
+        "summary": "Um Número Mestre raro que carrega profunda intuição espiritual, alta sensibilidade e visão inspiradora."
+      },
+      "22": {
+        "title": "O Mestre Construtor",
+        "traits": "Visionário, Pragmático, Transformador",
+        "summary": "Um poderoso Número Mestre capaz de transformar grandes ideais globais em estruturas reais e transformadoras."
+      },
+      "33": {
+        "title": "O Mestre Educador",
+        "traits": "Compassivo, Guia, Desprendido",
+        "summary": "O mais elevado Número Mestre, personificando empatia sublime, mentoria espiritual e devoção altruísta."
+      }
+    }
   }
 }

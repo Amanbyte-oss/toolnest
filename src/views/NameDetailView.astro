@@ -2,18 +2,14 @@
 import Base from '../layouts/Base.astro';
 import Faq from '../components/Faq.astro';
 import namesData from '../data/names.json';
-import { getTranslations, getLocalizedPath, type Lang } from '../i18n';
-
-export interface NameEntry {
-  name: string;
-  slug: string;
-  gender: 'male' | 'female' | 'unisex';
-  origin: string;
-  meaning: string;
-  popularity: 'very high' | 'high' | 'medium';
-  famous: string[];
-  similar: string[];
-}
+import {
+  getNamespace,
+  getLocalizedPath,
+  type Lang,
+  generateEditorial,
+  getNameDetailFaqs,
+  type NameEntry,
+} from '../i18n';
 
 export interface Props {
   nameData: NameEntry;
@@ -23,7 +19,17 @@ export interface Props {
 }
 
 const { nameData, prevName, nextName, lang = 'en' } = Astro.props;
-const t = getTranslations(lang);
+const common = getNamespace(lang, 'common');
+const names = getNamespace(lang, 'names');
+const errors = getNamespace(lang, 'errors');
+
+const t = {
+  names,
+  common,
+  errors,
+  nav: common.nav,
+  siteName: common.siteName,
+};
 
 // Popularity dots score
 const popularityScore =
@@ -40,126 +46,33 @@ const validSlugMap = JSON.stringify(
   Object.fromEntries(namesData.map((n) => [n.name.toLowerCase(), n.slug]))
 );
 
-// Deterministic variant selector
-function getVariantIndex(name: string, salt: number, count: number): number {
-  let hash = 0;
-  for (let i = 0; i < name.length; i++) {
-    hash = ((hash << 5) - hash + name.charCodeAt(i) + salt) | 0;
-  }
-  return Math.abs(hash) % count;
-}
+// Editorial paragraphs in active language
+const { p1, p2, openingSentence } = generateEditorial(nameData, lang);
 
-// Natural language paragraphs generator with 3+ variants per slot
-function generateEditorial(item: NameEntry) {
-  const genderDescriptor =
-    item.gender === 'female'
-      ? 'feminine'
-      : item.gender === 'male'
-      ? 'masculine'
-      : 'versatile gender-neutral';
-
-  const v1 = getVariantIndex(item.name, 1, 3);
-  const v2 = getVariantIndex(item.name, 2, 3);
-  const v3 = getVariantIndex(item.name, 3, 3);
-
-  // Slot 1: Opening Sentence
-  const introVariants = [
-    `The name ${item.name} is a celebrated ${genderDescriptor} personal name rooted in ${item.origin} heritage, traditionally signifying "${item.meaning}".`,
-    `Rooted in storied ${item.origin} traditions, ${item.name} is a distinctive ${genderDescriptor} name that carries the classic definition of "${item.meaning}".`,
-    `Carrying the historic translation of "${item.meaning}", ${item.name} has long flourished as a beloved ${genderDescriptor} name of ${item.origin} lineage.`,
-  ];
-  const openingSentence = introVariants[v1];
-
-  const originHistories: Record<string, string> = {
-    German: `has deep historical branches within Germanic traditions, conveying an air of enduring poise and classical character`,
-    Latin: `originates in classical antiquity, retaining a timeless melodiousness celebrated across European and Mediterranean cultures`,
-    Greek: `carries profound philosophical and mythological heritage, echoing ancient principles of virtue and enlightenment`,
-    Hebrew: `is steeped in rich historical narratives and biblical literature, bearing spiritual significance that transcends centuries`,
-    Irish: `embodies the poetic lore and spirited resilience of Gaelic culture, renowned for lyrical cadence and charm`,
-    Italian: `reflects Romance elegance and vibrant warmth, distinguished by musical phonetics and artistic prestige`,
-    French: `exudes timeless sophistication and understated grace, widely cherished across centuries of continental literature`,
-    Spanish: `carries lively warmth and proud cultural lineage, resonating across vibrant Spanish-speaking communities worldwide`,
-    English: `draws from storied Anglo-Saxon and Old English heritage, combining pastoral warmth with steadfast distinction`,
-    Norse: `derives from heroic Scandinavian folklore, evoking strength, adventurous curiosity, and natural beauty`,
-    Arabic: `radiates poetic majesty and deep linguistic nuance, symbolizing cherished aspirations and dignity`,
-    Scottish: `carries the storied resilience of the Highlands, marked by rugged authenticity and traditional honor`,
-    Celtic: `draws on mystical ancient folklore, celebrating kinship with the natural elements and heroic legend`,
-    Slavic: `radiates warmth, gentle fortitude, and a rich lineage celebrated across Eastern and Central European traditions`,
-    Swahili: `celebrates purposeful intention, melodic joy, and community pride originating from East African traditions`,
-    Japanese: `embraces poetic harmony, nature-inspired grace, and profound cultural reverence`,
-    Persian: `is steeped in royal elegance, classical poetry, and celestial symbolism celebrated across ancient dynasties`,
-    Polynesian: `echoes ocean voyages, natural wonder, and communal reverence woven deeply through Pacific heritage`,
-    Dutch: `carries steadfast optimism, warm simplicity, and historical maritime prestige`,
-  };
-
-  const originText =
-    originHistories[item.origin] ||
-    `carries a distinctive linguistic tradition renowned for melodious timbre and timeless dignity`;
-
-  // Slot 2: Cultural and Linguistic Narrative
-  const culturalVariants = [
-    `Etymologically, it reflects an evocative concept that ${originText}. Throughout generational naming shifts, parents have continually gravitated toward ${item.name} for its balanced phonetics and cultural depth.`,
-    `Linguistically, the root meaning offers an enduring narrative that ${originText}. Its rhythmic balance allows it to bridge historical customs and modern sensibilities with remarkable ease.`,
-    `Historically prized across generations, the moniker ${originText}. Its clear syllables and evocative etymology make it an enduring favorite across borders.`,
-  ];
-  const culturalSentence = culturalVariants[v2];
-
-  // Slot 3: Modern Popularity & Persona
-  const popularityVariants: Record<string, string[]> = {
-    'very high': [
-      `In contemporary naming registries, ${item.name} commands a very high popularity rating, consistently ranking near the top of global charts. Those who carry the name often project an aura of effortless charisma, creativity, and natural presence.`,
-      `Currently enjoying very high frequency across international birth records, ${item.name} is one of the most embraced names of our era. It evokes qualities of warmth, intellectual poise, and leadership.`,
-      `With its very high popularity standing today, ${item.name} is celebrated worldwide for its accessible elegance. It combines contemporary style with ancestral distinction.`,
-    ],
-    high: [
-      `In modern nomenclature, ${item.name} holds a high popularity standing, striking a harmonious balance between universal familiarity and distinctive character. It conveys quiet confidence and gracious warmth.`,
-      `Bearing a high popularity rating today, ${item.name} is widely favored by parents seeking a name that feels both established and contemporary. Its bearers are frequently associated with curiosity, empathy, and resilience.`,
-      `With a strong, high ranking on demographic charts, ${item.name} maintains a stylish presence without feeling overused, radiating timeless dignity and charm.`,
-    ],
-    medium: [
-      `Holding a distinguished medium popularity standing, ${item.name} is a refined choice that stands out tastefully from crowded trend cycles. It suggests an artistic spirit and steadfast individuality.`,
-      `With a steady medium popularity rating, ${item.name} appeals to families desiring a classic name that retains an air of exclusivity and quiet sophistication.`,
-      `In modern naming registries, ${item.name} enjoys an enduring medium frequency, representing an authentic, thoughtful choice with historical resonance.`,
-    ],
-  };
-
-  const popArray = popularityVariants[item.popularity] || popularityVariants['high'];
-  const popularitySentence = popArray[v3];
-
-  const p1 = `${openingSentence} ${culturalSentence}`;
-  const p2 = popularitySentence;
-
-  return { p1, p2, openingSentence };
-}
-
-const { p1, p2, openingSentence } = generateEditorial(nameData);
-
-// FAQs
-const faqs = [
-  {
-    question: `What does the name ${nameData.name} mean?`,
-    answer: `The name ${nameData.name} is of ${nameData.origin} origin and traditionally signifies "${nameData.meaning}".`,
-  },
-  {
-    question: `How popular is the name ${nameData.name} today?`,
-    answer: `${nameData.name} currently holds a ${nameData.popularity} popularity rating among contemporary baby names worldwide.`,
-  },
-  {
-    question: 'Want deeper insights? Unlock AI analysis of any name',
-    answer: `You can click the "Unlock AI Insights" button on this page to generate rich, personalized interpretations—including personality traits, psychological archetypes, style classification, and unique historical fun facts powered by Google Gemini.`,
-  },
-];
+// FAQs in active language
+const faqs = getNameDetailFaqs(nameData, lang);
 
 // SEO formatting (<60 title, <155 desc)
-const pageTitle = `${nameData.name} — Meaning, Origin & Traits | ToolNest`;
 const shortMeaning = nameData.meaning.length > 30 ? `${nameData.meaning.slice(0, 27)}...` : nameData.meaning;
-const metaDescription = `What does ${nameData.name} mean? Explore ${nameData.origin} origin, meaning ("${shortMeaning}"), ${nameData.gender} traits, and popularity on ToolNest.`;
+let pageTitle = `${nameData.name} — Meaning, Origin & Traits | ToolNest`;
+let metaDescription = `What does ${nameData.name} mean? Explore ${nameData.origin} origin, meaning ("${shortMeaning}"), ${nameData.gender} traits, and popularity on ToolNest.`;
+
+if (lang === 'pt') {
+  pageTitle = `${nameData.name} — Significado, Origem e Traços | ToolNest`;
+  metaDescription = `O que significa ${nameData.name}? Explore a origem ${nameData.origin}, significado ("${shortMeaning}"), traços e popularidade no ToolNest.`;
+} else if (lang === 'id') {
+  pageTitle = `${nameData.name} — Arti Nama, Asal Usul & Karakter | ToolNest`;
+  metaDescription = `Apa arti nama ${nameData.name}? Temukan asal usul ${nameData.origin}, arti ("${shortMeaning}"), karakter, dan popularitas di ToolNest.`;
+} else if (lang === 'ar') {
+  pageTitle = `${nameData.name} — معنى الاسم، أصله وصفاته | ToolNest`;
+  metaDescription = `ما معنى اسم ${nameData.name}؟ اكتشف أصل ${nameData.origin} ومعناه ("${shortMeaning}") وصفاته وشعبيته على ToolNest.`;
+}
 
 // Structured Data
 const articleSchema = {
   '@context': 'https://schema.org',
   '@type': 'Article',
-  headline: `${nameData.name} — Name Meaning, Origin & Personality Traits`,
+  headline: lang === 'ar' ? `${nameData.name} — معنى الاسم، أصله وصفاته` : lang === 'pt' ? `${nameData.name} — Significado, Origem e Traços` : lang === 'id' ? `${nameData.name} — Arti Nama, Asal Usul & Karakter` : `${nameData.name} — Name Meaning, Origin & Personality Traits`,
   description: metaDescription,
   datePublished: '2024-01-01T00:00:00Z',
   dateModified: new Date().toISOString(),
@@ -177,13 +90,13 @@ const articleSchema = {
       url: 'https://toolnest.pages.dev/favicon.svg',
     },
   },
-  mainEntityOfPage: `https://toolnest.pages.dev/name/${nameData.slug}`,
+  mainEntityOfPage: `https://toolnest.pages.dev${getLocalizedPath(`/name/${nameData.slug}`, lang)}`,
 };
 
 const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  mainEntity: faqs.map((f) => ({
+  mainEntity: faqs.map((f: any) => ({
     '@type': 'Question',
     name: f.question,
     acceptedAnswer: {
@@ -207,6 +120,13 @@ const faqSchema = {
   extraSchemas={[articleSchema, faqSchema]}
   lang={lang}
 >
+  <!-- Pass localized data to client script -->
+  <script is:inline define:vars={{ pageLang: lang, commonI18n: common, errorsI18n: errors }}>
+    window.__PAGE_LANG__ = pageLang;
+    window.__COMMON_I18N__ = commonI18n;
+    window.__ERRORS_I18N__ = errorsI18n;
+  </script>
+
   <article
     id="name-page-article"
     data-name={nameData.name}
@@ -218,54 +138,56 @@ const faqSchema = {
       <div class="flex items-center justify-between flex-wrap gap-2">
         <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-accent/10 text-accent dark:bg-accent/20">
           <span>📖</span>
-          <span class="capitalize">{nameData.gender} Name</span>
+          <span class="capitalize">
+            {lang === 'ar' ? (nameData.gender === 'female' ? 'اسم مؤنث' : nameData.gender === 'male' ? 'اسم مذكر' : 'اسم للجنسين') : lang === 'pt' ? (nameData.gender === 'female' ? 'Nome Feminino' : nameData.gender === 'male' ? 'Nome Masculino' : 'Nome Unissex') : lang === 'id' ? (nameData.gender === 'female' ? 'Nama Perempuan' : nameData.gender === 'male' ? 'Nama Laki-laki' : 'Nama Uniseks') : `${nameData.gender} Name`}
+          </span>
         </div>
         <a
           href={getLocalizedPath('/names', lang)}
           class="inline-flex items-center gap-1 text-xs font-semibold text-accent hover:underline"
         >
           <span>&larr;</span>
-          <span>Back to all names</span>
+          <span>{common.buttons?.exploreMore || 'Back to all names'}</span>
         </a>
       </div>
 
       <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-primary-light dark:text-primary-dark">
-        {nameData.name} — Name Meaning, Origin & Traits
+        {nameData.name} — {lang === 'ar' ? 'معنى الاسم، أصله وصفاته' : lang === 'pt' ? 'Significado, Origem e Características' : lang === 'id' ? 'Arti Nama, Asal Usul & Karakter' : 'Name Meaning, Origin & Traits'}
       </h1>
       <!-- Unique intro sentence combining origin + meaning + gender -->
       <p class="text-sm sm:text-base text-secondary-light dark:text-secondary-dark leading-relaxed font-medium">
-        {nameData.name} is a {nameData.gender !== 'unisex' ? nameData.gender : 'versatile'} name of {nameData.origin} origin, traditionally meaning "{nameData.meaning}".
+        {openingSentence}
       </p>
     </header>
 
     <!-- PREV / NEXT ALPHABETICAL NAVIGATION -->
-    <nav class="flex items-center justify-between border-y border-border-light dark:border-border-dark py-3" aria-label="Alphabetical Name Navigation">
+    <nav class="flex items-center justify-between gap-2 border-y border-border-light dark:border-border-dark py-3 min-w-0" aria-label="Alphabetical Name Navigation">
       <a
         href={getLocalizedPath(`/name/${prevName.slug}`, lang)}
-        class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-secondary-light dark:text-secondary-dark hover:text-accent transition-colors"
+        class="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-secondary-light dark:text-secondary-dark hover:text-accent transition-colors min-w-0 max-w-[48%] sm:max-w-none"
       >
-        <span>&larr;</span>
-        <span>Prev: <strong class="text-primary-light dark:text-primary-dark">{prevName.name}</strong></span>
+        <span class="rtl:rotate-180 shrink-0" aria-hidden="true">&larr;</span>
+        <span class="truncate">{lang === 'ar' ? 'السابق:' : lang === 'pt' ? 'Anterior:' : lang === 'id' ? 'Sebelumnya:' : 'Prev:'} <strong class="text-primary-light dark:text-primary-dark">{prevName.name}</strong></span>
       </a>
       <a
         href={getLocalizedPath('/names', lang)}
-        class="text-xs font-bold text-accent uppercase tracking-wider hover:underline hidden sm:inline-block"
+        class="text-xs font-bold text-accent uppercase tracking-wider hover:underline hidden sm:inline-block shrink-0 px-2"
       >
-        Directory (A–Z)
+        {names.ui?.directoryAtoZ || "Directory (A–Z)"}
       </a>
       <a
         href={getLocalizedPath(`/name/${nextName.slug}`, lang)}
-        class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-secondary-light dark:text-secondary-dark hover:text-accent transition-colors text-right"
+        class="inline-flex items-center justify-end gap-1 text-xs sm:text-sm font-semibold text-secondary-light dark:text-secondary-dark hover:text-accent transition-colors min-w-0 max-w-[48%] sm:max-w-none text-end"
       >
-        <span>Next: <strong class="text-primary-light dark:text-primary-dark">{nextName.name}</strong></span>
-        <span>&rarr;</span>
+        <span class="truncate">{lang === 'ar' ? 'التالي:' : lang === 'pt' ? 'Próximo:' : lang === 'id' ? 'Berikutnya:' : 'Next:'} <strong class="text-primary-light dark:text-primary-dark">{nextName.name}</strong></span>
+        <span class="rtl:rotate-180 shrink-0" aria-hidden="true">&rarr;</span>
       </a>
     </nav>
 
     <!-- KEY ATTRIBUTES CARD -->
     <section class="card p-6 sm:p-7 space-y-6" aria-labelledby="overview-heading">
       <h2 id="overview-heading" class="text-lg font-bold text-primary-light dark:text-primary-dark border-b border-border-light dark:border-border-dark pb-3">
-        Name Overview
+        {lang === 'ar' ? 'نظرة عامة على الاسم' : lang === 'pt' ? 'Visão Geral do Nome' : lang === 'id' ? 'Ringkasan Nama' : 'Name Overview'}
       </h2>
 
       <!-- Meaning, Origin, Gender Chips -->
@@ -273,7 +195,7 @@ const faqSchema = {
         <!-- Meaning Chip -->
         <div class="p-4 rounded-xl bg-input-light dark:bg-input-dark border border-border-light dark:border-border-dark space-y-1">
           <span class="text-[11px] uppercase tracking-wider font-bold text-secondary-light dark:text-secondary-dark block">
-            Meaning
+            {names.meaningLabel || "Meaning"}
           </span>
           <span class="text-base font-bold text-primary-light dark:text-primary-dark capitalize">
             "{nameData.meaning}"
@@ -283,7 +205,7 @@ const faqSchema = {
         <!-- Origin Chip -->
         <div class="p-4 rounded-xl bg-input-light dark:bg-input-dark border border-border-light dark:border-border-dark space-y-1">
           <span class="text-[11px] uppercase tracking-wider font-bold text-secondary-light dark:text-secondary-dark block">
-            Origin
+            {names.originLabel || "Origin"}
           </span>
           <span class="text-base font-bold text-primary-light dark:text-primary-dark">
             {nameData.origin}
@@ -293,10 +215,10 @@ const faqSchema = {
         <!-- Gender Chip -->
         <div class="p-4 rounded-xl bg-input-light dark:bg-input-dark border border-border-light dark:border-border-dark space-y-1">
           <span class="text-[11px] uppercase tracking-wider font-bold text-secondary-light dark:text-secondary-dark block">
-            Gender
+            {lang === 'ar' ? 'الجنس' : lang === 'pt' ? 'Gênero' : lang === 'id' ? 'Jenis Kelamin' : 'Gender'}
           </span>
           <span class="text-base font-bold text-primary-light dark:text-primary-dark capitalize">
-            {nameData.gender}
+            {nameData.gender === 'female' ? (names.ui?.female || 'Female') : nameData.gender === 'male' ? (names.ui?.male || 'Male') : (names.ui?.unisex || 'Unisex')}
           </span>
         </div>
       </div>
@@ -305,10 +227,10 @@ const faqSchema = {
       <div class="pt-2 space-y-2">
         <div class="flex items-center justify-between">
           <span class="text-xs font-semibold uppercase tracking-wider text-secondary-light dark:text-secondary-dark">
-            Popularity Scale
+            {lang === 'ar' ? 'مقياس الشعبية' : lang === 'pt' ? 'Escala de Popularidade' : lang === 'id' ? 'Skala Popularitas' : 'Popularity Scale'}
           </span>
           <span class="text-xs font-bold text-accent capitalize">
-            {nameData.popularity} ({popularityScore} / 5)
+            {nameData.popularity === 'very high' ? (lang === 'ar' ? 'عالية جداً' : lang === 'pt' ? 'Muito alta' : lang === 'id' ? 'Sangat tinggi' : 'Very high') : nameData.popularity === 'high' ? (lang === 'ar' ? 'عالية' : lang === 'pt' ? 'Alta' : lang === 'id' ? 'Tinggi' : 'High') : (lang === 'ar' ? 'متوسطة' : lang === 'pt' ? 'Média' : lang === 'id' ? 'Menengah' : 'Medium')} ({popularityScore} / 5)
           </span>
         </div>
         <div class="flex items-center gap-2" aria-label={`Popularity rating ${popularityScore} out of 5`}>
@@ -317,13 +239,13 @@ const faqSchema = {
               class={`h-3 flex-1 rounded-full transition-colors ${
                 dot <= popularityScore
                   ? 'bg-accent shadow-sm shadow-accent/40'
-                  : 'bg-border-light dark:bg-border-dark'
+                  : 'bg-border-light dark:border-border-dark'
               }`}
             />
           ))}
         </div>
         <p class="text-xs text-secondary-light dark:text-secondary-dark pt-0.5">
-          Based on modern birth records and international naming frequency.
+          {lang === 'ar' ? 'بناءً على سجلات المواليد الحديثة وتكرار التسمية دولياً.' : lang === 'pt' ? 'Com base em registros modernos de nascimentos e frequência internacional de nomes.' : lang === 'id' ? 'Berdasarkan data kelahiran modern dan frekuensi penamaan internasional.' : 'Based on modern birth records and international naming frequency.'}
         </p>
       </div>
     </section>
@@ -331,7 +253,7 @@ const faqSchema = {
     <!-- IN-DEPTH EDITORIAL PARAGRAPHS -->
     <section class="card p-6 sm:p-7 space-y-4 leading-relaxed" aria-labelledby="analysis-heading">
       <h2 id="analysis-heading" class="text-lg font-bold text-primary-light dark:text-primary-dark">
-        About the Name {nameData.name}
+        {lang === 'ar' ? `حول اسم ${nameData.name}` : lang === 'pt' ? `Sobre o Nome ${nameData.name}` : lang === 'id' ? `Tentang Nama ${nameData.name}` : `About the Name ${nameData.name}`}
       </h2>
       <p class="text-sm sm:text-base text-secondary-light dark:text-secondary-dark">
         {p1}
@@ -347,7 +269,7 @@ const faqSchema = {
         <div class="flex items-center gap-2">
           <span class="text-xl">🌟</span>
           <h2 id="famous-heading" class="text-lg font-bold text-primary-light dark:text-primary-dark">
-            Notable People Named {nameData.name}
+            {lang === 'ar' ? `شخصيات بارزة باسم ${nameData.name}` : lang === 'pt' ? `Personalidades Notáveis Chamadas ${nameData.name}` : lang === 'id' ? `Tokoh Terkenal Bernama ${nameData.name}` : `Notable People Named ${nameData.name}`}
           </h2>
         </div>
         <ul class="divide-y divide-border-light dark:divide-border-dark">
@@ -371,7 +293,7 @@ const faqSchema = {
       <div class="flex items-center justify-between flex-wrap gap-2">
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-accent/15 text-accent border border-accent/30">
           <span>✨</span>
-          <span>AI Name Insights</span>
+          <span>{names.aiInsightsHeading || "AI Name Insights"}</span>
         </div>
         <span class="text-[11px] text-secondary-light dark:text-secondary-dark font-medium">
           Powered by Gemini
@@ -380,10 +302,10 @@ const faqSchema = {
 
       <div class="space-y-1">
         <h2 id="ai-insights-heading" class="text-xl sm:text-2xl font-bold tracking-tight text-primary-light dark:text-primary-dark">
-          Deep Cultural & Personality Analysis for {nameData.name}
+          {lang === 'ar' ? `تحليل ثقافي وشخصي عميق لاسم ${nameData.name}` : lang === 'pt' ? `Análise Cultural e de Personalidade Profunda para ${nameData.name}` : lang === 'id' ? `Analisis Budaya & Kepribadian Mendalam untuk ${nameData.name}` : `Deep Cultural & Personality Analysis for ${nameData.name}`}
         </h2>
         <p class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark">
-          Unlock on-demand AI personality traits, emotional essence, style classification, and fascinating historical trivia.
+          {lang === 'ar' ? 'اكتشف سمات الشخصية المدعومة بالذكاء الاصطناعي، والجوهر العاطفي، وتصنيف النمط، ومعلومات تاريخية مشوقة.' : lang === 'pt' ? 'Desbloqueie traços de personalidade por IA, essência emocional, classificação de estilo e curiosidades históricas.' : lang === 'id' ? 'Dapatkan wawasan kepribadian AI, esensi emosional, klasifikasi gaya, dan fakta sejarah menarik.' : 'Unlock on-demand AI personality traits, emotional essence, style classification, and fascinating historical trivia.'}
         </p>
       </div>
 
@@ -395,7 +317,7 @@ const faqSchema = {
           class="btn-primary inline-flex items-center gap-2.5 py-3 px-6 text-sm font-bold shadow-md shadow-accent/20 cursor-pointer min-h-[48px]"
         >
           <span>✨</span>
-          <span>Unlock AI Insights</span>
+          <span>{lang === 'ar' ? 'فتح تحليلات الذكاء الاصطناعي' : lang === 'pt' ? 'Desbloquear Análise com IA' : lang === 'id' ? 'Buka Wawasan AI' : 'Unlock AI Insights'}</span>
         </button>
       </div>
 
@@ -406,7 +328,7 @@ const faqSchema = {
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"></circle>
             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
           </svg>
-          <span id="ai-loading-status">Consulting the name experts...</span>
+          <span id="ai-loading-status">{common.buttons?.loading || "Consulting the name experts..."}</span>
         </div>
 
         <div class="space-y-3 animate-pulse">
@@ -433,7 +355,7 @@ const faqSchema = {
           type="button"
           class="btn-secondary text-xs px-3.5 py-1.5 font-semibold min-h-[36px]"
         >
-          Try Again
+          {lang === 'ar' ? 'إعادة المحاولة' : lang === 'pt' ? 'Tentar Novamente' : lang === 'id' ? 'Coba Lagi' : 'Try Again'}
         </button>
       </div>
 
@@ -443,7 +365,7 @@ const faqSchema = {
         <div class="p-4 sm:p-5 rounded-2xl bg-accent/10 dark:bg-accent/15 border border-accent/30 space-y-1.5">
           <div class="text-[11px] font-bold uppercase tracking-wider text-accent flex items-center gap-1.5">
             <span>💫</span>
-            <span>Core Essence</span>
+            <span>{names.meaningLabel || "Core Essence"}</span>
           </div>
           <p id="ai-essence-text" class="text-sm sm:text-base font-semibold text-primary-light dark:text-primary-dark leading-relaxed italic"></p>
         </div>
@@ -453,7 +375,7 @@ const faqSchema = {
           <div class="p-3.5 rounded-xl bg-bg-light dark:bg-bg-dark border border-border-light dark:border-border-dark flex items-center gap-2 text-xs sm:text-sm">
             <span class="text-base">🧭</span>
             <div>
-              <span class="text-[10px] uppercase font-bold text-secondary-light dark:text-secondary-dark block">Cultural Root</span>
+              <span class="text-[10px] uppercase font-bold text-secondary-light dark:text-secondary-dark block">{names.originLabel || "Cultural Root"}</span>
               <span id="ai-origin-text" class="font-bold text-primary-light dark:text-primary-dark"></span>
             </div>
           </div>
@@ -461,7 +383,7 @@ const faqSchema = {
           <div class="p-3.5 rounded-xl bg-bg-light dark:bg-bg-dark border border-border-light dark:border-border-dark flex items-center justify-between text-xs sm:text-sm">
             <div class="flex items-center gap-2">
               <span class="text-base">🏷️</span>
-              <span class="text-[10px] uppercase font-bold text-secondary-light dark:text-secondary-dark block">Style</span>
+              <span class="text-[10px] uppercase font-bold text-secondary-light dark:text-secondary-dark block">{lang === 'ar' ? 'النمط' : lang === 'pt' ? 'Estilo' : lang === 'id' ? 'Gaya' : 'Style'}</span>
             </div>
             <span id="ai-style-badge" class="px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-accent/15 text-accent border border-accent/30"></span>
           </div>
@@ -471,7 +393,7 @@ const faqSchema = {
         <div class="space-y-2">
           <div class="text-xs font-bold uppercase tracking-wider text-secondary-light dark:text-secondary-dark flex items-center gap-1.5">
             <span>🎭</span>
-            <span>Personality Archetype</span>
+            <span>{lang === 'ar' ? 'نمط الشخصية' : lang === 'pt' ? 'Arquétipo de Personalidade' : lang === 'id' ? 'Arketipe Kepribadian' : 'Personality Archetype'}</span>
           </div>
           <div id="ai-personality-chips" class="flex flex-wrap gap-2"></div>
         </div>
@@ -480,7 +402,7 @@ const faqSchema = {
         <div class="space-y-2">
           <div class="text-xs font-bold uppercase tracking-wider text-secondary-light dark:text-secondary-dark flex items-center gap-1.5">
             <span>⭐</span>
-            <span>Notable Namesakes</span>
+            <span>{lang === 'ar' ? 'شخصيات بارزة' : lang === 'pt' ? 'Personalidades Notáveis' : lang === 'id' ? 'Tokoh Terkenal' : 'Notable Namesakes'}</span>
           </div>
           <ul id="ai-famous-list" class="space-y-1.5 text-xs sm:text-sm"></ul>
         </div>
@@ -489,7 +411,7 @@ const faqSchema = {
         <div class="p-4 rounded-xl border border-border-light dark:border-border-dark bg-bg-light dark:bg-bg-dark space-y-1.5">
           <div class="text-xs font-bold text-secondary-light dark:text-secondary-dark flex items-center gap-1.5">
             <span>🎲</span>
-            <span>Fascinating Fact</span>
+            <span>{lang === 'ar' ? 'حقيقة مشوقة' : lang === 'pt' ? 'Curiosidade Fascinante' : lang === 'id' ? 'Fakta Menarik' : 'Fascinating Fact'}</span>
           </div>
           <p id="ai-funfact-text" class="text-xs sm:text-sm text-primary-light dark:text-primary-dark leading-relaxed"></p>
         </div>
@@ -498,7 +420,7 @@ const faqSchema = {
         <div class="space-y-2">
           <div class="text-xs font-bold uppercase tracking-wider text-secondary-light dark:text-secondary-dark flex items-center gap-1.5">
             <span>🔗</span>
-            <span>Related Names</span>
+            <span>{lang === 'ar' ? 'أسماء ذات صلة' : lang === 'pt' ? 'Nomes Relacionados' : lang === 'id' ? 'Nama Terkait' : 'Related Names'}</span>
           </div>
           <div id="ai-similar-chips" class="flex flex-wrap gap-2"></div>
         </div>
@@ -510,10 +432,10 @@ const faqSchema = {
       <section class="space-y-4" aria-labelledby="similar-heading">
         <div class="flex items-center justify-between">
           <h2 id="similar-heading" class="text-lg font-bold text-primary-light dark:text-primary-dark">
-            Similar Names to {nameData.name}
+            {lang === 'ar' ? `أسماء مشابهة لاسم ${nameData.name}` : lang === 'pt' ? `Nomes Semelhantes a ${nameData.name}` : lang === 'id' ? `Nama Serupa dengan ${nameData.name}` : `Similar Names to ${nameData.name}`}
           </h2>
           <a href={getLocalizedPath('/names', lang)} class="text-xs font-semibold text-accent hover:underline">
-            Explore 200+ names &rarr;
+            {lang === 'ar' ? 'استكشف أكثر من 200 اسم' : lang === 'pt' ? 'Explorar 200+ nomes' : lang === 'id' ? 'Jelajahi 200+ nama' : 'Explore 200+ names'} &rarr;
           </a>
         </div>
 
@@ -529,7 +451,7 @@ const faqSchema = {
                     {sim.name}
                   </span>
                   <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded-md bg-input-light dark:bg-input-dark text-secondary-light dark:text-secondary-dark">
-                    {sim.gender}
+                    {sim.gender === 'female' ? (names.ui?.female || 'Female') : sim.gender === 'male' ? (names.ui?.male || 'Male') : (names.ui?.unisex || 'Unisex')}
                   </span>
                 </div>
                 <p class="text-xs text-secondary-light dark:text-secondary-dark line-clamp-1">
@@ -545,9 +467,9 @@ const faqSchema = {
     <!-- FREQUENTLY ASKED QUESTIONS -->
     <section class="space-y-4">
       <h2 class="text-lg font-bold text-primary-light dark:text-primary-dark">
-        Frequently Asked Questions
+        {common.buttons?.faq || 'Frequently Asked Questions'}
       </h2>
-      <Faq items={faqs} />
+      <Faq items={faqs} lang={lang} />
     </section>
 
     <!-- CROSS-TOOL CTA BANNERS (Link to /birthday-facts and /name-meaning) -->
@@ -555,20 +477,26 @@ const faqSchema = {
       <section class="card p-6 bg-gradient-to-r from-accent/10 via-surface-light to-surface-light dark:from-accent/20 dark:via-surface-dark dark:to-surface-dark border-accent/30 space-y-3">
         <div class="flex items-center gap-2 text-accent font-bold text-xs uppercase tracking-wider">
           <span>🎉</span>
-          <span>Birthday Personality</span>
+          <span>{lang === 'ar' ? 'شخصية يوم الميلاد' : lang === 'pt' ? 'Personalidade do Aniversário' : lang === 'id' ? 'Kepribadian Hari Lahir' : 'Birthday Personality'}</span>
         </div>
         <h2 class="text-base sm:text-lg font-bold text-primary-light dark:text-primary-dark">
-          What does your birthday reveal?
+          {lang === 'ar' ? 'ماذا يكشف تاريخ ميلادك؟' : lang === 'pt' ? 'O que seu aniversário revela?' : lang === 'id' ? 'Apa yang diungkapkan hari lahir Anda?' : 'What does your birthday reveal?'}
         </h2>
         <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
-          Discover your zodiac sign, life path number, birthstone, and famous birthday twins on our <a href="/birthday-facts" class="text-accent font-semibold hover:underline">birthday facts dossier</a>.
+          {lang === 'ar'
+            ? 'اكتشف برجك، ورقم مسار حياتك، وحجر ميلادك، ومشاهير يشاركونك يوم الميلاد في ملف حقائق أعياد الميلاد.'
+            : lang === 'pt'
+            ? 'Descubra seu signo do zodíaco, número do caminho de vida, pedra do nascimento e famosos aniversariantes no nosso dossiê de fatos de aniversário.'
+            : lang === 'id'
+            ? 'Temukan zodiak, angka jalur hidup, batu kelahiran, dan tokoh yang lahir di hari yang sama di kalkulator fakta ulang tahun kami.'
+            : 'Discover your zodiac sign, life path number, birthstone, and famous birthday twins on our birthday facts dossier.'}
         </p>
         <div class="pt-1">
           <a
-            href="/birthday-facts"
+            href={getLocalizedPath('/birthday-facts', lang)}
             class="btn-primary inline-flex py-2 px-4 text-xs font-bold shadow-sm shadow-accent/20"
           >
-            <span>Check Birthday Facts &rarr;</span>
+            <span>{lang === 'ar' ? 'اكتشف حقائق الميلاد' : lang === 'pt' ? 'Ver Fatos do Aniversário' : lang === 'id' ? 'Cek Fakta Hari Lahir' : 'Check Birthday Facts'} &rarr;</span>
           </a>
         </div>
       </section>
@@ -576,20 +504,26 @@ const faqSchema = {
       <section class="card p-6 bg-gradient-to-r from-accent/10 via-surface-light to-surface-light dark:from-accent/20 dark:via-surface-dark dark:to-surface-dark border-accent/30 space-y-3">
         <div class="flex items-center gap-2 text-accent font-bold text-xs uppercase tracking-wider">
           <span>✨</span>
-          <span>Custom Name Insights</span>
+          <span>{names.aiInsightsHeading || "Custom Name Insights"}</span>
         </div>
         <h2 class="text-base sm:text-lg font-bold text-primary-light dark:text-primary-dark">
-          Analyze another unique name
+          {lang === 'ar' ? 'تحليل اسم مميز آخر' : lang === 'pt' ? 'Analisar outro nome único' : lang === 'id' ? 'Analisis nama unik lainnya' : 'Analyze another unique name'}
         </h2>
         <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
-          Search any international, rare, or modern baby name on our AI-assisted <a href="/name-meaning" class="text-accent font-semibold hover:underline">name meaning finder</a> to get instant etymology and traits.
+          {lang === 'ar'
+            ? 'ابحث عن أي اسم مولود نادر أو دولي باستخدام محرك معاني الأسماء بالذكاء الاصطناعي للحصول على معانٍ فورية.'
+            : lang === 'pt'
+            ? 'Pesquise qualquer nome internacional, raro ou moderno em nosso localizador de significados com IA para obter etimologia e traços instantâneos.'
+            : lang === 'id'
+            ? 'Cari nama bayi internasional, unik, atau modern di pencari arti nama AI kami untuk mendapatkan etimologi dan karakter secara instan.'
+            : 'Search any international, rare, or modern baby name on our AI-assisted name meaning finder to get instant etymology and traits.'}
         </p>
         <div class="pt-1">
           <a
-            href="/name-meaning"
+            href={getLocalizedPath('/name-meaning', lang)}
             class="btn-secondary inline-flex py-2 px-4 text-xs font-bold"
           >
-            <span>Search Another Name &rarr;</span>
+            <span>{lang === 'ar' ? 'ابحث عن اسم آخر' : lang === 'pt' ? 'Buscar Outro Nome' : lang === 'id' ? 'Cari Nama Lain' : 'Search Another Name'} &rarr;</span>
           </a>
         </div>
       </section>
@@ -602,19 +536,19 @@ const faqSchema = {
         class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-secondary-light dark:text-secondary-dark hover:text-accent transition-colors"
       >
         <span>&larr;</span>
-        <span>Previous: <strong class="text-primary-light dark:text-primary-dark">{prevName.name}</strong></span>
+        <span>{lang === 'ar' ? 'السابق:' : lang === 'pt' ? 'Anterior:' : lang === 'id' ? 'Sebelumnya:' : 'Previous:'} <strong class="text-primary-light dark:text-primary-dark">{prevName.name}</strong></span>
       </a>
       <a
         href={getLocalizedPath('/names', lang)}
         class="text-xs font-bold text-accent uppercase tracking-wider hover:underline"
       >
-        All Names (A–Z)
+        {names.ui?.directoryAtoZ || "All Names (A–Z)"}
       </a>
       <a
         href={getLocalizedPath(`/name/${nextName.slug}`, lang)}
         class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-secondary-light dark:text-secondary-dark hover:text-accent transition-colors text-right"
       >
-        <span>Next: <strong class="text-primary-light dark:text-primary-dark">{nextName.name}</strong></span>
+        <span>{lang === 'ar' ? 'التالي:' : lang === 'pt' ? 'Próximo:' : lang === 'id' ? 'Berikutnya:' : 'Next:'} <strong class="text-primary-light dark:text-primary-dark">{nextName.name}</strong></span>
         <span>&rarr;</span>
       </a>
     </nav>
@@ -630,13 +564,16 @@ const faqSchema = {
 
     const name = article.getAttribute('data-name');
     const slug = article.getAttribute('data-slug');
+    const pageLang = (window as any).__PAGE_LANG__ || 'en';
+    const langPrefix = pageLang !== 'en' ? `/${pageLang}` : '';
 
     // 1. Record in History module
     if (name && slug) {
+      const historyTitle = pageLang === 'ar' ? `عرض الاسم: ${name}` : pageLang === 'pt' ? `Visualizou nome: ${name}` : pageLang === 'id' ? `Melihat nama: ${name}` : `Viewed name: ${name}`;
       saveHistory('names', {
-        t: `Viewed name: ${name}`,
+        t: historyTitle,
         d: new Date().toISOString(),
-        x: { name, slug, url: `/name/${slug}` },
+        x: { name, slug, url: `${langPrefix}/name/${slug}` },
       });
     }
 
@@ -661,7 +598,7 @@ const faqSchema = {
 
     if (!unlockBtn || !name) return;
 
-    let validSlugs = {};
+    let validSlugs: Record<string, string> = {};
     try {
       const rawSlugs = aiSection?.getAttribute('data-valid-slugs');
       if (rawSlugs) validSlugs = JSON.parse(rawSlugs);
@@ -669,17 +606,17 @@ const faqSchema = {
       validSlugs = {};
     }
 
-    function renderInsights(insights) {
+    function renderInsights(insights: any) {
       if (!insights) return;
 
       if (essenceText) essenceText.textContent = `"${insights.meaning}"`;
-      if (originText) originText.textContent = insights.origin || 'International';
+      if (originText) originText.textContent = insights.origin || (pageLang === 'ar' ? 'عالمي' : pageLang === 'pt' ? 'Internacional' : pageLang === 'id' ? 'Internasional' : 'International');
       if (styleBadge) styleBadge.textContent = insights.style || 'timeless';
 
       if (personalityChips) {
         personalityChips.innerHTML = (insights.personality || [])
           .map(
-            (trait) =>
+            (trait: string) =>
               `<span class="px-3 py-1 rounded-xl text-xs font-semibold bg-input-light dark:bg-input-dark border border-border-light dark:border-border-dark text-primary-light dark:text-primary-dark shadow-xs">${trait}</span>`
           )
           .join('');
@@ -688,7 +625,7 @@ const faqSchema = {
       if (famousList) {
         famousList.innerHTML = (insights.famous || [])
           .map(
-            (person) =>
+            (person: string) =>
               `<li class="flex items-center gap-2.5 text-primary-light dark:text-primary-dark font-medium"><span class="w-1.5 h-1.5 rounded-full bg-accent shrink-0"></span><span>${person}</span></li>`
           )
           .join('');
@@ -697,10 +634,8 @@ const faqSchema = {
       if (funfactText) funfactText.textContent = insights.funFact || '';
 
       if (similarChips) {
-        const curLang = document.documentElement.lang || 'en';
-        const langPrefix = curLang !== 'en' ? `/${curLang}` : '';
         similarChips.innerHTML = (insights.similar || [])
-          .map((simName) => {
+          .map((simName: string) => {
             const clean = simName.trim();
             const targetSlug = validSlugs[clean.toLowerCase()];
             if (targetSlug) {
@@ -740,19 +675,18 @@ const faqSchema = {
       if (unlockBtn) unlockBtn.setAttribute('disabled', 'true');
 
       try {
-        const curLang = document.documentElement.lang || 'en';
         const res = await fetch('/api/name-insights', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, lang: curLang }),
+          body: JSON.stringify({ name, lang: pageLang }),
         });
 
         if (!res.ok) {
           if (res.status === 429) {
-            throw new Error('Too many lookups — try again in a minute.');
+            throw new Error((window as any).__ERRORS_I18N__?.rateLimit || 'Too many lookups — try again in a minute.');
           }
           const errData = await res.json().catch(() => null);
-          throw new Error(errData?.error || 'Unable to load insights at this time. Please try again.');
+          throw new Error(errData?.error || (window as any).__ERRORS_I18N__?.aiUnavailable || 'Unable to load insights at this time. Please try again.');
         }
 
         const data = await res.json();
@@ -766,14 +700,15 @@ const faqSchema = {
         }
 
         // Save AI insights lookup in history
+        const aiTitle = pageLang === 'ar' ? `تحليلات ذكاء اصطناعي: ${name}` : pageLang === 'pt' ? `Análise IA: ${name}` : pageLang === 'id' ? `Wawasan AI: ${name}` : `AI Insights: ${name}`;
         saveHistory('names', {
-          t: `AI Insights: ${name}`,
+          t: aiTitle,
           d: new Date().toISOString(),
-          x: { name, slug, url: `/name/${slug}` },
+          x: { name, slug, url: `${langPrefix}/name/${slug}` },
         });
 
         renderInsights(data.insights);
-      } catch (err) {
+      } catch (err: any) {
         if (loadingEl) loadingEl.classList.add('hidden');
         if (errorEl) {
           errorEl.classList.remove('hidden');

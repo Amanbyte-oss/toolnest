@@ -23,6 +23,14 @@
     --color-accent: #6366F1;
   }
 
+  html,
+  body {
+    overflow-x: clip;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
   html {
     font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     background-color: var(--color-bg);
@@ -37,7 +45,8 @@
     line-height: 1.625;
     background-color: var(--color-bg);
     color: var(--color-text-primary);
-    overflow-x: hidden;
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
 
   /* RTL Support for Arabic */
@@ -48,30 +57,26 @@
   }
 
   html[dir="rtl"] body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, 'Noto Sans Arabic', 'Inter', system-ui, sans-serif;
-    letter-spacing: normal;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, 'Inter', system-ui, sans-serif;
   }
 
   [dir="rtl"] .text-left {
-    text-align: start;
+    text-align: right;
   }
 
   [dir="rtl"] .text-right {
-    text-align: end;
+    text-align: left;
   }
 
-  [dir="rtl"] input,
-  [dir="rtl"] textarea,
-  [dir="rtl"] select {
-    text-align: start;
-  }
-
-  /* Directional icons and chevrons automatically flip in RTL */
-  [dir="rtl"] .icon-flip,
-  [dir="rtl"] .arrow-flip,
-  [dir="rtl"] .chevron-flip,
-  [dir="rtl"] .rtl-flip {
+  /* Directional icon mirroring for Arabic RTL (chevrons, back arrows) */
+  [dir="rtl"] .rtl-flip,
+  html[dir="rtl"] .rtl-flip {
     transform: scaleX(-1);
+  }
+
+  /* Prevent media elements, canvases, svgs, and embeds from overflowing containers */
+  img, svg, video, canvas, audio, iframe, embed, object {
+    max-width: 100%;
   }
 
   /* Prevent text zoom on iOS Safari while maintaining tap ergonomics */

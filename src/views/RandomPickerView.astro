@@ -3,76 +3,43 @@ import Base from '../layouts/Base.astro';
 import Faq from '../components/Faq.astro';
 import ToolCard from '../components/ToolCard.astro';
 import HistoryCard from '../components/HistoryCard.astro';
-import relatedLinksData from '../data/related-links.json';
-import { getTranslations, getLocalizedPath, type Lang } from '../i18n';
+import { getLocalizedRelatedLinks } from '../i18n/relatedLinks';
+import { getNamespace, getLocalizedPath, type Lang } from '../i18n';
 
 export interface Props {
   lang?: Lang;
 }
 
 const { lang = 'en' } = Astro.props;
-const t = getTranslations(lang);
+const common = getNamespace(lang, 'common');
+const picker = getNamespace(lang, 'picker');
+const errors = getNamespace(lang, 'errors');
+const faqNs = getNamespace(lang, 'faq');
+const t = { picker, common, errors, nav: common.nav, siteName: common.siteName };
 
-const lastUpdatedDate = new Date().toLocaleDateString(lang === 'ar' ? 'ar-EG' : lang === 'pt' ? 'pt-BR' : lang === 'id' ? 'id-ID' : 'en-US', {
+const localeCode = lang === 'ar' ? 'ar-EG' : lang === 'pt' ? 'pt-BR' : lang === 'id' ? 'id-ID' : 'en-US';
+const lastUpdatedDate = new Date().toLocaleDateString(localeCode, {
   year: 'numeric',
   month: 'long',
   day: 'numeric',
 });
 
-// Comprehensive FAQ definitions (8 questions targeting core search clusters)
-const faqs = [
-  {
-    question: 'Is this random name picker truly fair and cryptographically unbiased?',
-    answer:
-      'Unlike standard randomizers relying on Math.random, ToolNest utilizes the browser Cryptographic API (crypto.getRandomValues). This supplies hardware-seeded entropy ensuring every entry has a strictly identical mathematical probability of being selected.',
-  },
-  {
-    question: 'How do I use this tool as a random team picker or group generator?',
-    answer:
-      'To split names into random teams, first tap "Shuffle List" to completely randomize the roster order with a cryptographic Fisher-Yates shuffle. Then divide the shuffled list into your desired group size (such as pairs or teams of 4). You can also use the winner count stepper to draw team captains one round at a time.',
-  },
-  {
-    question: 'Can I draw multiple unique giveaway winners at the same time?',
-    answer:
-      'Yes! Use the winner stepper to draw between 1 and 10 winners simultaneously. The selection algorithm implements an unbiased Fisher–Yates shuffle to guarantee all drawn giveaway winners are distinct without repeat duplicates.',
-  },
-  {
-    question: 'What is the difference between crypto.getRandomValues and Math.random?',
-    answer:
-      'Math.random uses a pseudo-random number generator (PRNG) with predictable internal seed states that can exhibit statistical clustering over short sequences. The Web Cryptography API draws entropy from your operating system, ensuring zero statistical bias for raffles.',
-  },
-  {
-    question: 'Can I automatically eliminate winners after each raffle draw round?',
-    answer:
-      'Yes. Toggle the "Remove winners after pick" switch above the button. Whenever a winner is drawn, their entry is automatically stripped from the roster so they cannot be chosen again in successive raffle rounds.',
-  },
-  {
-    question: 'Does ToolNest store or upload my student or giveaway roster?',
-    answer:
-      'No. Your list never leaves your local browser memory. Text parsing, duplicate cleaning, and winner selection occur 100% client-side with zero server roundtrips, guaranteeing complete privacy for confidential rosters.',
-  },
-  {
-    question: 'What types of lists can I paste into the list randomizer?',
-    answer:
-      'You can paste any list separated by line breaks, commas, or semicolons. The parser automatically trims whitespace and empty lines, making it easy to paste directly from spreadsheets like Excel or Google Sheets.',
-  },
-  {
-    question: 'Can I filter duplicate names before drawing winners?',
-    answer:
-      'Yes! The tool automatically scans your list for repeated entries and displays a duplicate warning badge. Clicking "Remove Duplicates" instantly deduplicates your list while preserving original casing.',
-  },
-];
+// Comprehensive Localized FAQ definitions
+const faqs = (faqNs.picker || []).map((f: any) => ({
+  question: f.question || f.q,
+  answer: f.answer || f.a,
+}));
 
-const relatedTools = relatedLinksData['random-picker'];
+const relatedTools = getLocalizedRelatedLinks(lang, 'random-picker');
 
 // JSON-LD Schemas
 const webAppSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
-  '@id': 'https://toolnest.pages.dev/random-picker#app',
-  name: 'Random Name Picker & Giveaway Winner Generator',
-  url: 'https://toolnest.pages.dev/random-picker',
-  description: 'Cryptographically fair random name picker and list randomizer. Draw single or multiple giveaway winners, classroom students, and raffle items.',
+  '@id': `https://toolnest.pages.dev${getLocalizedPath('/random-picker', lang)}#app`,
+  name: t.picker.title,
+  url: `https://toolnest.pages.dev${getLocalizedPath('/random-picker', lang)}`,
+  description: t.picker.subtitle,
   applicationCategory: 'UtilitiesApplication',
   operatingSystem: 'Any',
   offers: {
@@ -85,38 +52,31 @@ const webAppSchema = {
     name: 'ToolNest',
     url: 'https://toolnest.pages.dev',
   },
-  featureList: [
-    'Cryptographically sound random entropy via Web Crypto API',
-    'Fisher-Yates unbiased shuffle algorithm',
-    'Draw 1 to 10 unique simultaneous winners without duplicates',
-    'Automatic duplicate entry filtering and winner elimination switch',
-    '100% private client-side execution with zero roster server storage',
-  ],
 };
 
 const howToSchema = {
   '@context': 'https://schema.org',
   '@type': 'HowTo',
-  name: 'How to Pick Random Winners from a List in 3 Steps',
-  description: 'A quick guide to drawing fair raffle winners, student names, and giveaway entrants using ToolNest.',
+  name: t.picker.howTo.title,
+  description: t.picker.howTo.subtitle,
   step: [
     {
       '@type': 'HowToStep',
       position: 1,
-      name: 'Paste or type your list of names',
-      text: 'Enter names or options into the text area separated by new lines or commas.',
+      name: t.picker.howTo.s1Title,
+      text: t.picker.howTo.s1Desc,
     },
     {
       '@type': 'HowToStep',
       position: 2,
-      name: 'Configure winner settings',
-      text: 'Choose how many winners to draw (1 to 10) and enable duplicate filtering or elimination.',
+      name: t.picker.howTo.s2Title,
+      text: t.picker.howTo.s2Desc,
     },
     {
       '@type': 'HowToStep',
       position: 3,
-      name: 'Pick winners with true randomness',
-      text: 'Click Pick Random Winner to draw unbiased results powered by Web Crypto API.',
+      name: t.picker.howTo.s3Title,
+      text: t.picker.howTo.s3Desc,
     },
   ],
 };
@@ -136,11 +96,10 @@ const faqSchema = {
 ---
 
 <Base
-  title={`${t.picker.metaTitle} | ${t.siteName}`}
-  description={t.picker.metaDescription}
+  metaKey="picker"
   canonicalPath={getLocalizedPath('/random-picker', lang)}
   ogImage="/og/random-picker.svg"
-  breadcrumbs={[{ name: t.nav.home, item: getLocalizedPath('/', lang) }, { name: t.nav.randomPicker, item: getLocalizedPath('/random-picker', lang) }]}
+  breadcrumbs={[{ name: common.nav.home, item: getLocalizedPath('/', lang) }, { name: common.nav.randomPicker, item: getLocalizedPath('/random-picker', lang) }]}
   extraSchemas={[webAppSchema, howToSchema, faqSchema]}
   lang={lang}
 >
@@ -151,7 +110,7 @@ const faqSchema = {
   <header class="text-center py-4 sm:py-6 space-y-3">
     <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-accent/10 text-accent dark:bg-accent/20">
       <span>🎯</span>
-      <span>Cryptographically Fair Randomizer</span>
+      <span>{t.picker.ui?.cryptoSortition || 'Cryptographically Fair Randomizer'}</span>
     </div>
     <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-primary-light dark:text-primary-dark">
       {t.picker.title}
@@ -161,16 +120,16 @@ const faqSchema = {
     </p>
   </header>
 
-  <!-- KEY TAKEAWAYS / FEATURED SNIPPET SUMMARY BOX -->
+  <!-- KEY TAKEAWAYS -->
   <aside class="card mt-4 p-4 sm:p-5 border-l-4 border-accent bg-accent/5 space-y-2" aria-label="Key Takeaways">
     <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent">
       <span>⚡</span>
-      <span>Quick Answer & Key Takeaways</span>
+      <span>{t.picker.ui?.keyTakeawaysTitle || 'Quick Answer & Key Takeaways'}</span>
     </div>
     <ul class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark space-y-1.5 list-disc list-inside leading-relaxed">
-      <li><strong>Cryptographic Randomness:</strong> Powered by the Web Cryptography API for true uniform probability distribution free from pseudo-random bias.</li>
-      <li><strong>Multiple Unique Winners:</strong> Draw 1 to 10 winners simultaneously without duplicate repeats via Fisher–Yates shuffling.</li>
-      <li><strong>Confidential Rosters:</strong> Your list is processed 100% inside your browser memory and is never uploaded or saved to remote databases.</li>
+      <li>{t.picker.ui?.kt1}</li>
+      <li>{t.picker.ui?.kt2}</li>
+      <li>{t.picker.ui?.kt3}</li>
     </ul>
   </aside>
 
@@ -178,21 +137,21 @@ const faqSchema = {
   <section class="card mt-6 space-y-5" aria-labelledby="picker-input-heading">
     <div class="flex items-center justify-between border-b border-border-light dark:border-border-dark pb-3">
       <h2 id="picker-input-heading" class="text-base font-bold text-primary-light dark:text-primary-dark">
-        Enter Items or Names
+        {t.picker.ui?.pasteListLabel || t.picker.itemsLabel || 'Enter Items or Names'}
       </h2>
       <button
         id="clear-input-btn"
         type="button"
         class="text-xs text-secondary-light dark:text-secondary-dark hover:text-error transition-colors cursor-pointer"
       >
-        Clear List
+        {t.picker.ui?.clearListBtn || 'Clear List'}
       </button>
     </div>
 
     <!-- Textarea Area -->
     <div class="space-y-2">
       <label for="items-textarea" class="block text-xs font-semibold uppercase tracking-wider text-secondary-light dark:text-secondary-dark">
-        One entry per line or comma-separated:
+        {t.picker.itemsLabel || 'One entry per line or comma-separated:'}
       </label>
       <textarea
         id="items-textarea"
@@ -224,7 +183,7 @@ Fiona</textarea>
           type="button"
           class="underline font-bold hover:text-primary-light dark:hover:text-primary-dark cursor-pointer"
         >
-          Remove duplicates
+          {t.picker.ui?.removeDuplicatesBtn || 'Remove duplicates'}
         </button>
       </div>
     </div>
@@ -234,7 +193,7 @@ Fiona</textarea>
       <!-- Winner Count Stepper -->
       <div class="space-y-1.5">
         <label class="block text-xs font-semibold uppercase tracking-wider text-secondary-light dark:text-secondary-dark">
-          Number of Winners
+          {t.picker.ui?.numWinners || t.picker.numWinners || 'Number of Winners'}
         </label>
         <div class="flex items-center gap-3">
           <div class="inline-flex items-center rounded-xl border border-border-light dark:border-border-dark bg-input-light dark:bg-input-dark p-1">
@@ -263,7 +222,7 @@ Fiona</textarea>
             </button>
           </div>
           <span class="text-xs text-secondary-light dark:text-secondary-dark" id="stepper-hint">
-            Max 10
+            {lang === 'ar' ? 'الحد الأقصى 10' : lang === 'pt' ? 'Máx 10' : lang === 'id' ? 'Maks 10' : 'Max 10'}
           </span>
         </div>
       </div>
@@ -271,7 +230,7 @@ Fiona</textarea>
       <!-- Toggles Column -->
       <div class="space-y-2.5">
         <label class="block text-xs font-semibold uppercase tracking-wider text-secondary-light dark:text-secondary-dark">
-          Pick Options
+          {lang === 'ar' ? 'خيارات السحب' : lang === 'pt' ? 'Opções de Sorteio' : lang === 'id' ? 'Opsi Undian' : 'Pick Options'}
         </label>
 
         <!-- Toggle: Remove winners after pick -->
@@ -283,7 +242,7 @@ Fiona</textarea>
           />
           <div class="w-9 h-5 bg-border-light dark:bg-border-dark peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-accent relative"></div>
           <span class="text-xs sm:text-sm font-medium text-primary-light dark:text-primary-dark">
-            Remove winners after pick
+            {t.picker.ui?.removeWinnerAfterPick || 'Remove winners after pick'}
           </span>
         </label>
 
@@ -297,7 +256,7 @@ Fiona</textarea>
           />
           <div class="w-9 h-5 bg-border-light dark:bg-border-dark peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-accent relative"></div>
           <span class="text-xs sm:text-sm font-medium text-primary-light dark:text-primary-dark">
-            Case-insensitive duplicates
+            {lang === 'ar' ? 'تجاهل حالة الأحرف للمكررات' : lang === 'pt' ? 'Ignorar maiúsculas/minúsculas' : lang === 'id' ? 'Abaikan huruf besar/kecil' : 'Case-insensitive duplicates'}
           </span>
         </label>
       </div>
@@ -305,7 +264,6 @@ Fiona</textarea>
 
     <!-- Actions Row -->
     <div class="pt-3 border-t border-border-light dark:border-border-dark flex flex-col sm:flex-row items-center gap-3">
-      <!-- Shuffle list button -->
       <button
         id="shuffle-list-btn"
         type="button"
@@ -318,21 +276,20 @@ Fiona</textarea>
           <line x1="15" y1="15" x2="21" y2="21"/>
           <line x1="4" y1="4" x2="9" y2="9"/>
         </svg>
-        <span>Shuffle List</span>
+        <span>{t.picker.ui?.shuffleListBtn || 'Shuffle List'}</span>
       </button>
 
-      <!-- Desktop Primary Pick Button -->
       <button
         id="pick-winner-btn"
         type="button"
         class="btn-primary w-full sm:w-auto sm:px-8 py-3.5 text-base font-bold shadow-md shadow-accent/20 cursor-pointer"
       >
-        Pick Winner(s)
+        {t.picker.ui?.pickWinnerBtn || t.picker.pickWinnerBtn || 'Pick Winner(s)'}
       </button>
     </div>
 
     <!-- Sticky Mobile Button -->
-    <div class="sm:hidden fixed bottom-3 left-4 right-4 z-30 pb-[calc(0.5rem+env(safe-area-inset-bottom,0))]">
+    <div class="sm:hidden fixed bottom-3 inset-x-4 z-30 pb-[calc(0.5rem+env(safe-area-inset-bottom,0))]">
       <button
         id="mobile-pick-winner-btn"
         type="button"
@@ -340,12 +297,12 @@ Fiona</textarea>
         style="touch-action: manipulation;"
       >
         <span>🎯</span>
-        <span>PICK WINNER(S)</span>
+        <span>{t.picker.ui?.pickWinnerBtn || t.picker.pickWinnerBtn || 'PICK WINNER(S)'}</span>
       </button>
     </div>
   </section>
 
-  <!-- RESULTS SECTION (Smooth Reveal) -->
+  <!-- RESULTS SECTION -->
   <section
     id="results-section"
     class="hidden mt-8 card space-y-6 text-center scroll-mt-20"
@@ -355,7 +312,7 @@ Fiona</textarea>
     <div class="space-y-1">
       <div class="text-3xl sm:text-4xl animate-bounce" id="results-icon">🎉</div>
       <h2 id="results-heading" class="text-xs uppercase tracking-wider font-semibold text-secondary-light dark:text-secondary-dark">
-        Selected Winner(s)
+        {lang === 'ar' ? 'الفائز (الفائزون) المختار' : lang === 'pt' ? 'Vencedor(es) Selecionado(s)' : lang === 'id' ? 'Pemenang Terpilih' : 'Selected Winner(s)'}
       </h2>
     </div>
 
@@ -365,23 +322,22 @@ Fiona</textarea>
       class="hidden py-6 rounded-2xl bg-bg-light dark:bg-bg-dark border border-border-light dark:border-border-dark"
     >
       <div class="text-xs text-secondary-light dark:text-secondary-dark mb-1">
-        Drawing with cryptographic entropy...
+        {lang === 'ar' ? 'جارٍ السحب بإنتروبيا تشفيرية...' : lang === 'pt' ? 'Sorteando com entropia criptográfica...' : lang === 'id' ? 'Mengundi dengan entropi kriptografi...' : 'Drawing with cryptographic entropy...'}
       </div>
       <div
         id="cycling-name-display"
         class="text-2xl sm:text-3xl font-black text-accent tracking-tight animate-pulse truncate max-w-sm mx-auto px-4"
       >
-        Selecting...
+        {lang === 'ar' ? 'جارٍ الاختيار...' : lang === 'pt' ? 'Selecionando...' : lang === 'id' ? 'Memilih...' : 'Selecting...'}
       </div>
     </div>
 
     <!-- Final Winners Container -->
     <div id="final-winners-box" class="space-y-4">
       <div id="winners-list" class="flex flex-col items-center gap-2.5">
-        <!-- Injected via JavaScript -->
       </div>
 
-      <!-- Action Buttons (Copy & Share) -->
+      <!-- Action Buttons -->
       <div class="flex flex-wrap items-center justify-center gap-2.5 pt-2">
         <button
           id="copy-winners-btn"
@@ -392,7 +348,7 @@ Fiona</textarea>
             <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
             <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
           </svg>
-          <span>Copy Winner(s)</span>
+          <span>{common.buttons.copy || 'Copy Winner(s)'}</span>
         </button>
 
         <button
@@ -407,7 +363,7 @@ Fiona</textarea>
             <line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/>
             <line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/>
           </svg>
-          <span>Share</span>
+          <span>{common.buttons.share || common.share || 'Share'}</span>
         </button>
 
         <button
@@ -415,7 +371,7 @@ Fiona</textarea>
           type="button"
           class="btn-secondary py-2.5 px-5 text-xs sm:text-sm font-semibold cursor-pointer"
         >
-          Pick Again
+          {lang === 'ar' ? 'السحب مرة أخرى' : lang === 'pt' ? 'Sortear Novamente' : lang === 'id' ? 'Undi Lagi' : 'Pick Again'}
         </button>
       </div>
 
@@ -423,10 +379,9 @@ Fiona</textarea>
     </div>
   </section>
 
-  <!-- PICK HISTORY SECTION -->
   <!-- Recent Activity History Card -->
   <div class="mt-8">
-    <HistoryCard toolId="picker" title="Recent Draws" icon="🎲" />
+    <HistoryCard toolId="picker" title={lang === 'ar' ? 'عمليات السحب الأخيرة' : lang === 'pt' ? 'Sorteios Recentes' : lang === 'id' ? 'Undian Terakhir' : 'Recent Draws'} icon="🎲" lang={lang} />
   </div>
 
   <!-- WINNER REVEAL MODAL DIALOG -->
@@ -447,10 +402,9 @@ Fiona</textarea>
 
       <div class="space-y-1.5">
         <span id="modal-winner-title" class="text-xs uppercase tracking-wider font-semibold text-secondary-light dark:text-secondary-dark block">
-          Winner Selected!
+          {lang === 'ar' ? 'تم اختيار الفائز!' : lang === 'pt' ? 'Vencedor Selecionado!' : lang === 'id' ? 'Pemenang Terpilih!' : 'Winner Selected!'}
         </span>
         <div id="modal-winner-list" class="space-y-2 pt-1 max-h-48 overflow-y-auto custom-scrollbar">
-          <!-- Injected via JavaScript -->
         </div>
       </div>
 
@@ -461,7 +415,7 @@ Fiona</textarea>
           type="button"
           class="btn-primary w-full py-3 text-sm font-bold shadow-md shadow-accent/20 cursor-pointer"
         >
-          Pick Again 🎯
+          {lang === 'ar' ? 'السحب مرة أخرى 🎯' : lang === 'pt' ? 'Sortear Novamente 🎯' : lang === 'id' ? 'Undi Lagi 🎯' : 'Pick Again 🎯'}
         </button>
 
         <div class="flex gap-2">
@@ -470,14 +424,14 @@ Fiona</textarea>
             type="button"
             class="btn-secondary flex-1 py-2.5 text-xs font-semibold cursor-pointer"
           >
-            Copy
+            {common.buttons.copy || 'Copy'}
           </button>
           <button
             id="modal-share-btn"
             type="button"
             class="btn-secondary flex-1 py-2.5 text-xs font-semibold cursor-pointer"
           >
-            Share
+            {common.buttons.share || common.share || 'Share'}
           </button>
         </div>
 
@@ -486,22 +440,21 @@ Fiona</textarea>
           type="button"
           class="text-xs text-secondary-light dark:text-secondary-dark hover:text-primary-light dark:hover:text-primary-dark pt-1 cursor-pointer"
         >
-          Close
+          {common.buttons.cancel || 'Close'}
         </button>
       </div>
     </div>
   </div>
 
-  <!-- SEO CONTENT & QUESTION-FORM HEADINGS -->
+  <!-- HOW TO USE -->
   <section class="mt-14 pt-10 border-t border-border-light dark:border-border-dark space-y-10">
-    <!-- How to use -->
     <div class="space-y-4">
       <div class="space-y-1">
         <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-primary-light dark:text-primary-dark">
-          How to Use the Random Name Picker in 3 Steps
+          {t.picker.howTo.title}
         </h2>
         <p class="text-sm text-secondary-light dark:text-secondary-dark">
-          Draw verifiable random winners in 3 quick steps.
+          {t.picker.howTo.subtitle}
         </p>
       </div>
 
@@ -511,10 +464,10 @@ Fiona</textarea>
             1
           </div>
           <h3 class="text-base font-bold text-primary-light dark:text-primary-dark">
-            Paste Your List
+            {t.picker.howTo.s1Title}
           </h3>
           <p class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark leading-relaxed">
-            Paste names separated by newlines or commas. The tool automatically detects formatting and alerts you if duplicates exist.
+            {t.picker.howTo.s1Desc}
           </p>
         </div>
 
@@ -523,10 +476,10 @@ Fiona</textarea>
             2
           </div>
           <h3 class="text-base font-bold text-primary-light dark:text-primary-dark">
-            Select Options & Count
+            {t.picker.howTo.s2Title}
           </h3>
           <p class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark leading-relaxed">
-            Set how many winners to draw (1 to 10) and choose whether to automatically remove winning entries for subsequent rounds.
+            {t.picker.howTo.s2Desc}
           </p>
         </div>
 
@@ -535,34 +488,34 @@ Fiona</textarea>
             3
           </div>
           <h3 class="text-base font-bold text-primary-light dark:text-primary-dark">
-            Draw & Copy Winners
+            {t.picker.howTo.s3Title}
           </h3>
           <p class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark leading-relaxed">
-            Watch the cycling animation settle on your winners with celebratory confetti. Copy the results to your clipboard with one click.
+            {t.picker.howTo.s3Desc}
           </p>
         </div>
       </div>
     </div>
 
-    <!-- Long-Tail Educational Content & Question-Form Subheadings -->
+    <!-- Methodology -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div class="card p-6 space-y-3">
         <h2 class="text-lg font-bold text-primary-light dark:text-primary-dark flex items-center gap-2">
           <span>🔒</span>
-          <span>Why Does Cryptographic Randomness Matter for Contests?</span>
+          <span>{t.picker.methodology.m1Title}</span>
         </h2>
         <p class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark leading-relaxed">
-          Standard web randomizers often use Math.random(), an algorithmic pseudo-random number generator that can produce statistical clustering over small lists. ToolNest queries the Web Cryptography API (crypto.getRandomValues), harvesting hardware and OS entropy to ensure uncompromised mathematical fairness for school raffles, social media giveaways, and corporate draws.
+          {t.picker.methodology.m1Desc}
         </p>
       </div>
 
       <div class="card p-6 space-y-3">
         <h2 class="text-lg font-bold text-primary-light dark:text-primary-dark flex items-center gap-2">
           <span>👥</span>
-          <span>How Do You Draw Multiple Unique Winners Without Repeats?</span>
+          <span>{t.picker.methodology.m2Title}</span>
         </h2>
         <p class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark leading-relaxed">
-          When drawing multiple winners, naive random pickers risk selecting the same participant twice. ToolNest executes an in-place modern Fisher–Yates shuffle algorithm. By iterating through the array in reverse and swapping elements using cryptographically uniform indices, every permutation is equally probable and each drawn winner is guaranteed to be unique.
+          {t.picker.methodology.m2Desc}
         </p>
       </div>
     </div>
@@ -571,28 +524,28 @@ Fiona</textarea>
     <section class="space-y-4" aria-labelledby="use-cases-heading">
       <h2 id="use-cases-heading" class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark flex items-center gap-2">
         <span>💡</span>
-        <span>Popular Use Cases for the Random Name Picker & Team Generator</span>
+        <span>{t.picker.useCases.title}</span>
       </h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div class="card p-5 space-y-2">
           <div class="text-2xl">👩‍🏫</div>
-          <h3 class="text-base font-bold text-primary-light dark:text-primary-dark">Name Picker for Teachers</h3>
+          <h3 class="text-base font-bold text-primary-light dark:text-primary-dark">{t.picker.useCases.u1Title}</h3>
           <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
-            Select classroom students fairly for presentations, cold-call answers, and weekly classroom jobs with verified neutrality. If you prefer a visual spin animation, try our <a href="/decision-wheel" class="text-accent hover:underline font-medium">interactive wheel spinner</a>.
+            {t.picker.useCases.u1Desc}
           </p>
         </div>
         <div class="card p-5 space-y-2">
           <div class="text-2xl">🎟️</div>
-          <h3 class="text-base font-bold text-primary-light dark:text-primary-dark">Giveaway Winner Picker & Raffles</h3>
+          <h3 class="text-base font-bold text-primary-light dark:text-primary-dark">{t.picker.useCases.u2Title}</h3>
           <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
-            Execute transparent, cryptographically sound prize drawings for Instagram giveaways, Discord community raffles, and corporate promotions using a provably fair raffle drawer online.
+            {t.picker.useCases.u2Desc}
           </p>
         </div>
         <div class="card p-5 space-y-2">
           <div class="text-2xl">⚽</div>
-          <h3 class="text-base font-bold text-primary-light dark:text-primary-dark">Random Team Picker & Squads</h3>
+          <h3 class="text-base font-bold text-primary-light dark:text-primary-dark">{t.picker.useCases.u3Title}</h3>
           <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
-            Shuffle large rosters in seconds to divide classrooms, hackathons, sports leagues, and video game tournaments into balanced, randomized squads.
+            {t.picker.useCases.u3Desc}
           </p>
         </div>
       </div>
@@ -603,32 +556,32 @@ Fiona</textarea>
       <div class="flex items-center gap-2">
         <span class="text-lg">🧠</span>
         <h2 id="trivia-strip-heading" class="text-sm font-bold uppercase tracking-wider text-accent">
-          Did You Know? Randomness & Sortition Trivia
+          {t.picker.trivia.title}
         </h2>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
         <div class="space-y-1">
           <span class="text-xs font-bold text-primary-light dark:text-primary-dark flex items-center gap-1.5">
-            <span>🔐</span> Hardware Thermal Entropy
+            <span>🔐</span> {t.picker.trivia.t1Title}
           </span>
           <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
-            Standard Math.random algorithms can repeat patterns over time. The Web Cryptography API samples real physical noise from device CPU thermal fluctuations for casino-grade fairness.
+            {t.picker.trivia.t1Desc}
           </p>
         </div>
         <div class="space-y-1">
           <span class="text-xs font-bold text-primary-light dark:text-primary-dark flex items-center gap-1.5">
-            <span>🏛️</span> Ancient Athenian Democracy
+            <span>🏛️</span> {t.picker.trivia.t2Title}
           </span>
           <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
-            In ancient Athens, political officials and court jurors were chosen by *sortition* (random lottery) using marble-slotted machines called *kleroterion* rather than elections.
+            {t.picker.trivia.t2Desc}
           </p>
         </div>
         <div class="space-y-1">
           <span class="text-xs font-bold text-primary-light dark:text-primary-dark flex items-center gap-1.5">
-            <span>🔀</span> The Fisher-Yates Guarantee
+            <span>🔀</span> {t.picker.trivia.t3Title}
           </span>
           <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
-            For a list of N items, there are N! possible orderings. The Fisher-Yates algorithm guarantees that every single permutation has an exact 1 / N! chance of occurring.
+            {t.picker.trivia.t3Desc}
           </p>
         </div>
       </div>
@@ -639,14 +592,14 @@ Fiona</textarea>
       <div class="flex flex-wrap items-center justify-between gap-2">
         <h3 class="text-xs font-bold uppercase tracking-wider text-primary-light dark:text-primary-dark flex items-center gap-1.5">
           <span>📐</span>
-          <span>Methodology & Cryptographic Entropy</span>
+          <span>{t.picker.methodology.noteTitle}</span>
         </h3>
         <span class="text-[11px] text-secondary-light dark:text-secondary-dark">
-          Last updated: {lastUpdatedDate}
+          {common.ui?.lastUpdated || 'Last updated'}: {lastUpdatedDate}
         </span>
       </div>
       <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
-        Random number generation utilizes the W3C Web Cryptography Standard. List parsing, sanitization, and duplicate stripping execute exclusively inside client memory without transmitting data over the network.
+        {t.picker.methodology.noteDesc}
       </p>
     </div>
   </section>
@@ -656,9 +609,9 @@ Fiona</textarea>
     <div class="card p-4 space-y-2.5 bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark">
       <div class="flex items-center justify-between">
         <span class="text-xs font-bold uppercase tracking-wider text-secondary-light dark:text-secondary-dark">
-          Quick Navigation — Common Questions
+          {common.ui?.quickJump || 'Quick Jump'}
         </span>
-        <span class="text-xs text-accent font-medium">8 Answers</span>
+        <span class="text-xs text-accent font-medium">{faqs.length} {common.ui?.answers || 'Answers'}</span>
       </div>
       <div class="flex flex-wrap gap-1.5">
         {faqs.map((faq, idx) => (
@@ -673,17 +626,17 @@ Fiona</textarea>
     </div>
 
     <!-- FAQ SECTION ACCORDION -->
-    <Faq items={faqs} />
+    <Faq items={faqs} lang={lang} />
   </section>
 
   <!-- RELATED TOOLS SECTION -->
   <section class="mt-14 pt-10 border-t border-border-light dark:border-border-dark space-y-4">
     <div class="flex items-center justify-between">
       <h2 class="text-lg sm:text-xl font-bold tracking-tight text-primary-light dark:text-primary-dark">
-        Related Free Tools
+        {common.headings?.relatedTools || 'Related Free Tools'}
       </h2>
-      <a href="/" class="text-xs font-semibold text-accent hover:underline">
-        View all tools &rarr;
+      <a href={getLocalizedPath('/', lang)} class="text-xs font-semibold text-accent hover:underline">
+        {common.links?.viewAllTools || 'View all tools'} &rarr;
       </a>
     </div>
 
@@ -695,12 +648,17 @@ Fiona</textarea>
           href={tool.href}
           anchor={tool.anchor}
           icon={tool.href.includes('wheel') ? 'target' : tool.href.includes('countdown') ? 'clock' : 'calendar'}
+          lang={lang}
         />
       ))}
     </div>
   </section>
 
   <!-- Toast notification handled globally via src/components/Toast.astro and src/scripts/toast.js -->
+  <script is:inline define:vars={{ pickerI18n: { common, picker, errors }, pageLang: lang }}>
+    window.__PICKER_I18N__ = pickerI18n;
+    window.__PAGE_LANG__ = pageLang;
+  </script>
 </Base>
 
 <script>
@@ -720,7 +678,12 @@ Fiona</textarea>
   import { showToast } from '../scripts/toast.js';
 
   function initRandomPicker() {
-    const textarea = document.getElementById('items-textarea');
+    const i18n = (window as any).__PICKER_I18N__ || {};
+    const tPicker = i18n.picker || {};
+    const tCommon = i18n.common || {};
+    const tErrors = i18n.errors || {};
+
+    const textarea = document.getElementById('items-textarea') as HTMLTextAreaElement;
     const clearBtn = document.getElementById('clear-input-btn');
     const countDisplay = document.getElementById('items-count-display');
     const duplicateWarning = document.getElementById('duplicate-warning');
@@ -729,11 +692,11 @@ Fiona</textarea>
     const stepperMinus = document.getElementById('stepper-minus-btn');
     const stepperPlus = document.getElementById('stepper-plus-btn');
     const winnersCountDisplay = document.getElementById('winners-count-display');
-    const toggleRemoveWinners = document.getElementById('toggle-remove-winners');
-    const toggleCaseInsensitive = document.getElementById('toggle-case-insensitive');
+    const toggleRemoveWinners = document.getElementById('toggle-remove-winners') as HTMLInputElement;
+    const toggleCaseInsensitive = document.getElementById('toggle-case-insensitive') as HTMLInputElement;
     const shuffleListBtn = document.getElementById('shuffle-list-btn');
-    const pickBtn = document.getElementById('pick-winner-btn');
-    const mobilePickBtn = document.getElementById('mobile-pick-winner-btn');
+    const pickBtn = document.getElementById('pick-winner-btn') as HTMLButtonElement;
+    const mobilePickBtn = document.getElementById('mobile-pick-winner-btn') as HTMLButtonElement;
 
     // Results Elements
     const resultsSection = document.getElementById('results-section');
@@ -757,6 +720,10 @@ Fiona</textarea>
 
     if (!textarea || !pickBtn) return;
 
+    let winnersCount = 1;
+    let isPicking = false;
+    let currentWinners: string[] = [];
+
     function updateCounts() {
       const rawText = textarea.value;
       const items = parseItems(rawText);
@@ -764,12 +731,12 @@ Fiona</textarea>
       const analysis = analyzeDuplicates(items, isCaseInsensitive);
 
       if (countDisplay) {
-        countDisplay.textContent = `${analysis.totalCount} item${analysis.totalCount === 1 ? '' : 's'} (${analysis.uniqueCount} unique)`;
+        countDisplay.textContent = `${analysis.totalCount} items (${analysis.uniqueCount} unique)`;
       }
 
       if (duplicateWarning && duplicateCountText) {
         if (analysis.duplicateCount > 0) {
-          duplicateCountText.textContent = `${analysis.duplicateCount} duplicate${analysis.duplicateCount === 1 ? '' : 's'} detected — duplicates will be ignored`;
+          duplicateCountText.textContent = `${analysis.duplicateCount} duplicates`;
           duplicateWarning.classList.remove('hidden');
           duplicateWarning.classList.add('flex');
         } else {
@@ -778,7 +745,6 @@ Fiona</textarea>
         }
       }
 
-      // Clamp winnersCount to available unique items
       const maxAllowed = Math.max(1, Math.min(10, analysis.uniqueCount || 1));
       if (winnersCount > maxAllowed) {
         winnersCount = maxAllowed;
@@ -789,18 +755,16 @@ Fiona</textarea>
     textarea.addEventListener('input', updateCounts);
     if (toggleCaseInsensitive) toggleCaseInsensitive.addEventListener('change', updateCounts);
 
-    // Clear Textarea
     if (clearBtn) {
       clearBtn.addEventListener('click', () => {
         if (isPicking) return;
         textarea.value = '';
         updateCounts();
         textarea.focus();
-        showToast('List cleared.');
+        showToast(tPicker.toasts?.itemsCleared || 'List cleared.');
       });
     }
 
-    // Remove Duplicates Quick-Fix
     if (removeDuplicatesBtn) {
       removeDuplicatesBtn.addEventListener('click', () => {
         if (isPicking) return;
@@ -809,11 +773,10 @@ Fiona</textarea>
         const analysis = analyzeDuplicates(items, isCaseInsensitive);
         textarea.value = analysis.unique.join('\n');
         updateCounts();
-        showToast(`Removed ${analysis.duplicateCount} duplicate${analysis.duplicateCount === 1 ? '' : 's'}.`);
+        showToast(tPicker.toasts?.duplicatesRemoved || `Removed ${analysis.duplicateCount} duplicates.`);
       });
     }
 
-    // Stepper Handlers
     if (stepperMinus) {
       stepperMinus.addEventListener('click', () => {
         if (isPicking) return;
@@ -836,30 +799,26 @@ Fiona</textarea>
           winnersCount++;
           if (winnersCountDisplay) winnersCountDisplay.textContent = String(winnersCount);
         } else {
-          showToast(`Cannot exceed ${maxAllowed} winner${maxAllowed === 1 ? '' : 's'} with current unique items.`);
+          showToast(tPicker.emptyError || `Max ${maxAllowed} winners.`);
         }
       });
     }
 
-    // Shuffle Entire List
     if (shuffleListBtn) {
       shuffleListBtn.addEventListener('click', () => {
         if (isPicking) return;
         const items = parseItems(textarea.value);
         if (items.length < 2) {
-          showToast('Add at least 2 items to shuffle.');
+          showToast(tPicker.emptyError || 'Add at least 2 items to shuffle.');
           return;
         }
         const shuffled = shuffleList(items);
         textarea.value = shuffled.join('\n');
         updateCounts();
-        showToast('List shuffled randomly.');
+        showToast(tCommon.toasts?.loaded || 'List shuffled.');
       });
     }
 
-    // Clear old history references
-
-    // Main Pick Execution
     function handlePick() {
       if (isPicking) return;
       const rawText = textarea.value;
@@ -868,7 +827,7 @@ Fiona</textarea>
       const analysis = analyzeDuplicates(items, isCaseInsensitive);
 
       if (analysis.uniqueCount === 0) {
-        showToast('Please enter at least one item.');
+        showToast(tErrors.requiredField || 'Please enter at least one item.');
         return;
       }
 
@@ -881,14 +840,12 @@ Fiona</textarea>
       pickBtn.setAttribute('disabled', 'true');
       if (mobilePickBtn) mobilePickBtn.setAttribute('disabled', 'true');
 
-      // Show Results Section and Cycling Box
       if (resultsSection) resultsSection.classList.remove('hidden');
       if (shuffleAnimBox) shuffleAnimBox.classList.remove('hidden');
       if (finalWinnersBox) finalWinnersBox.classList.add('hidden');
 
       resultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
-      // Run Cycling Animation for ~1.5s
       let interval = 70;
       const duration = 1400;
       const startTime = performance.now();
@@ -902,25 +859,22 @@ Fiona</textarea>
         }
 
         if (elapsed < duration) {
-          // Progressively slow down interval
           interval += 12;
           setTimeout(cycleStep, interval);
         } else {
-          // Final Winner Determination via crypto
           const winners = pickWinners(pool, winnersCount);
           currentWinners = winners;
-          finishPick(winners);
+          finishPick(winners, analysis.uniqueCount);
         }
       }
 
       cycleStep();
     }
 
-    function finishPick(winners) {
+    function finishPick(winners: string[], totalUnique: number) {
       if (shuffleAnimBox) shuffleAnimBox.classList.add('hidden');
       if (finalWinnersBox) finalWinnersBox.classList.remove('hidden');
 
-      // Populate Winners List
       if (winnersList) {
         winnersList.innerHTML = winners
           .map((w, idx) => {
@@ -938,7 +892,6 @@ Fiona</textarea>
           .join('');
       }
 
-      // Populate & Open Winner Celebration Modal
       if (modalWinnerList && winnerModal && modalCard) {
         modalWinnerList.innerHTML = winners
           .map((w, idx) => {
@@ -954,12 +907,10 @@ Fiona</textarea>
         if (modalPickAgainBtn) modalPickAgainBtn.focus();
       }
 
-      // Safe capped input for storage (limit to first 5000 characters)
       const safeRaw = textarea.value.length > 5000 ? textarea.value.slice(0, 5000) : textarea.value;
 
-      // Save to recent activity history and last state
       saveHistory('picker', {
-        t: `Picked ${winners.length} from ${analysis.uniqueCount} items`,
+        t: `${tPicker.title || 'Picker'}: ${winners.join(', ')}`,
         d: new Date().toISOString(),
         x: {
           rawInput: safeRaw,
@@ -975,16 +926,14 @@ Fiona</textarea>
         caseInsensitive: toggleCaseInsensitive ? toggleCaseInsensitive.checked : true,
       });
 
-      // Trigger Confetti
-      if (typeof window.confetti === 'function') {
-        window.confetti({
+      if (typeof (window as any).confetti === 'function') {
+        (window as any).confetti({
           particleCount: 90,
           spread: 75,
           origin: { y: 0.6 },
         });
       }
 
-      // Handle "Remove winners after pick" option
       if (toggleRemoveWinners && toggleRemoveWinners.checked) {
         const isCaseInsensitive = toggleCaseInsensitive ? toggleCaseInsensitive.checked : true;
         const newText = removeWinnersFromText(textarea.value, winners, isCaseInsensitive);
@@ -993,14 +942,13 @@ Fiona</textarea>
 
         const remainingItems = parseItems(newText);
         if (remainingCountNotice) {
-          remainingCountNotice.textContent = `Winners removed from list (${remainingItems.length} remaining).`;
+          remainingCountNotice.textContent = `${remainingItems.length} remaining.`;
           remainingCountNotice.classList.remove('hidden');
         }
       } else {
         if (remainingCountNotice) remainingCountNotice.classList.add('hidden');
       }
 
-      // Reset controls
       isPicking = false;
       pickBtn.removeAttribute('disabled');
       if (mobilePickBtn) mobilePickBtn.removeAttribute('disabled');
@@ -1010,48 +958,43 @@ Fiona</textarea>
     if (mobilePickBtn) mobilePickBtn.addEventListener('click', handlePick);
     if (pickAgainBtn) pickAgainBtn.addEventListener('click', handlePick);
 
-    // Copy Winners
     if (copyWinnersBtn) {
       copyWinnersBtn.addEventListener('click', async () => {
         if (currentWinners.length === 0) return;
         const textToCopy = currentWinners.join('\n');
         try {
           await navigator.clipboard.writeText(textToCopy);
-          showToast(`Copied ${currentWinners.length} winner${currentWinners.length === 1 ? '' : 's'} to clipboard!`);
+          showToast(tCommon.toasts?.copied || 'Copied to clipboard!');
         } catch (e) {
-          showToast('Unable to copy.');
+          showToast(tCommon.toasts?.errorOccurred || 'Unable to copy.');
         }
       });
     }
 
-    // Share Winners
     if (shareWinnersBtn) {
       shareWinnersBtn.addEventListener('click', async () => {
         if (currentWinners.length === 0) return;
         const shareData = {
-          title: 'Winners Picked on ToolNest',
-          text: `🎉 Selected winner${currentWinners.length === 1 ? '' : 's'}:\n${currentWinners.join('\n')}\n\nFairly drawn with ToolNest Random Picker:`,
+          title: `${tPicker.title || 'Random Picker'} • ToolNest`,
+          text: `🎉 Selected winner:\n${currentWinners.join('\n')}\n\nToolNest:`,
           url: window.location.href,
         };
 
         if (navigator.share) {
           try {
             await navigator.share(shareData);
-          } catch (e) {
-            // User cancelled
-          }
+          } catch (e) {}
         } else {
           try {
             await navigator.clipboard.writeText(`${shareData.text} ${shareData.url}`);
-            showToast('Result copied to clipboard!');
+            showToast(tCommon.toasts?.copied || 'Result copied to clipboard!');
           } catch (e) {
-            showToast('Unable to share.');
+            showToast(tCommon.toasts?.errorOccurred || 'Unable to share.');
           }
         }
       });
     }
 
-    // Modal Close Function
     function closeModal() {
       if (!winnerModal || !modalCard) return;
       winnerModal.classList.remove('opacity-100', 'pointer-events-auto');
@@ -1072,24 +1015,24 @@ Fiona</textarea>
 
     modalPickAgainBtn?.addEventListener('click', () => {
       closeModal();
-      handlePick(true);
+      handlePick();
     });
 
     modalCopyBtn?.addEventListener('click', async () => {
       if (currentWinners.length === 0) return;
       try {
         await navigator.clipboard.writeText(currentWinners.join('\n'));
-        showToast('Winner(s) copied to clipboard!');
+        showToast(tCommon.toasts?.copied || 'Copied to clipboard!');
       } catch (e) {
-        showToast('Unable to copy to clipboard.');
+        showToast(tCommon.toasts?.errorOccurred || 'Unable to copy.');
       }
     });
 
     modalShareBtn?.addEventListener('click', async () => {
       if (currentWinners.length === 0) return;
       const shareData = {
-        title: 'Random Winner Selection',
-        text: `🎉 Selected winner${currentWinners.length === 1 ? '' : 's'}:\n${currentWinners.join('\n')}\n\nFairly drawn with ToolNest Random Picker:`,
+        title: `${tPicker.title || 'Random Picker'} • ToolNest`,
+        text: `🎉 Selected winner:\n${currentWinners.join('\n')}\n\nToolNest:`,
         url: window.location.href,
       };
       if (navigator.share) {
@@ -1099,14 +1042,13 @@ Fiona</textarea>
       } else {
         try {
           await navigator.clipboard.writeText(`${shareData.text} ${shareData.url}`);
-          showToast('Result copied to clipboard!');
+          showToast(tCommon.toasts?.copied || 'Result copied to clipboard!');
         } catch (e) {
-          showToast('Unable to share.');
+          showToast(tCommon.toasts?.errorOccurred || 'Unable to share.');
         }
       }
     });
 
-    // Immediate persistence of checkbox toggles
     toggleRemoveWinners?.addEventListener('change', () => {
       const last = getLastState('picker') || {};
       saveLastState('picker', { ...last, removeWinners: toggleRemoveWinners.checked });
@@ -1116,8 +1058,7 @@ Fiona</textarea>
       saveLastState('picker', { ...last, caseInsensitive: toggleCaseInsensitive.checked });
     });
 
-    // Restore from history
-    function restorePicker(data) {
+    function restorePicker(data: any) {
       if (!data) return;
       if (typeof data.rawInput === 'string') {
         textarea.value = data.rawInput;
@@ -1133,10 +1074,9 @@ Fiona</textarea>
         toggleCaseInsensitive.checked = data.caseInsensitive !== false;
       }
       updateCounts();
-      showToast('Restored picker list.');
+      showToast(tCommon.toasts?.loaded || 'Restored picker list.');
     }
 
-    // Prefill from last state if available ("welcome back" effect)
     const lastPicker = getLastState('picker');
     if (lastPicker) {
       if (typeof lastPicker.rawInput === 'string' && lastPicker.rawInput.trim()) {
@@ -1155,8 +1095,6 @@ Fiona</textarea>
     }
 
     initHistoryCard({ toolId: 'picker', onRestore: restorePicker });
-
-    // Initial count analysis
     updateCounts();
   }
 

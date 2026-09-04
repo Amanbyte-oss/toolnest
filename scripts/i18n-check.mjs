@@ -46,7 +46,7 @@ function getValueByPath(obj, keyPath) {
   return current;
 }
 
-console.log('🔍 Running i18n translation integrity check...');
+console.log('🔍 Running i18n-check: Comparing en.json keys against pt, id, and ar...');
 
 const enDict = loadJson(EN_PATH);
 const enKeys = getLeafKeys(enDict);
@@ -96,9 +96,9 @@ for (const lang of TARGET_LANGS) {
 }
 
 if (totalErrors > 0) {
-  console.error(`\n💥 Translation verification failed with ${totalErrors} issue(s).`);
+  console.error(`\n💥 Translation verification failed with ${totalErrors} missing or empty key(s).`);
   process.exit(1);
 } else {
-  console.log('\n✨ All translation dictionaries are complete and synchronized!');
+  console.log('\n✨ All translation dictionaries have 100% key parity and no empty strings!');
   process.exit(0);
 }

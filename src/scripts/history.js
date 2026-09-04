@@ -209,15 +209,68 @@ export function getLastState(toolId) {
  * Formats an ISO date into a human-readable relative time string.
  * Examples: "just now", "5 mins ago", "2 hours ago", "yesterday", "3 days ago"
  * @param {string|Date} dateInput
+ * @param {string} [locale]
  * @returns {string}
  */
-export function formatRelativeTime(dateInput) {
+export function formatRelativeTime(dateInput, locale) {
   if (!dateInput) return '';
   const date = new Date(dateInput);
   if (isNaN(date.getTime())) return '';
 
+  const lang = locale || (typeof document !== 'undefined' ? document.documentElement.lang : 'en') || 'en';
   const now = Date.now();
   const diffSec = Math.floor((now - date.getTime()) / 1000);
+
+  if (lang === 'pt') {
+    if (diffSec < 45) return 'Agora mesmo';
+    if (diffSec < 90) return 'Há 1 min';
+    const diffMin = Math.floor(diffSec / 60);
+    if (diffMin < 60) return `Há ${diffMin} min`;
+    const diffHours = Math.floor(diffMin / 60);
+    if (diffHours === 1) return 'Há 1 hora';
+    if (diffHours < 24) return `Há ${diffHours} horas`;
+    const diffDays = Math.floor(diffHours / 24);
+    if (diffDays === 1) return 'Ontem';
+    if (diffDays < 7) return `Há ${diffDays} dias`;
+    const diffWeeks = Math.floor(diffDays / 7);
+    if (diffWeeks === 1) return 'Há 1 semana';
+    if (diffWeeks < 4) return `Há ${diffWeeks} semanas`;
+    return date.toLocaleDateString('pt-BR', { month: 'short', day: 'numeric' });
+  }
+
+  if (lang === 'id') {
+    if (diffSec < 45) return 'Baru saja';
+    if (diffSec < 90) return '1 mnt yang lalu';
+    const diffMin = Math.floor(diffSec / 60);
+    if (diffMin < 60) return `${diffMin} mnt yang lalu`;
+    const diffHours = Math.floor(diffMin / 60);
+    if (diffHours === 1) return '1 jam yang lalu';
+    if (diffHours < 24) return `${diffHours} jam yang lalu`;
+    const diffDays = Math.floor(diffHours / 24);
+    if (diffDays === 1) return 'Kemarin';
+    if (diffDays < 7) return `${diffDays} hari yang lalu`;
+    const diffWeeks = Math.floor(diffDays / 7);
+    if (diffWeeks === 1) return '1 minggu yang lalu';
+    if (diffWeeks < 4) return `${diffWeeks} minggu yang lalu`;
+    return date.toLocaleDateString('id-ID', { month: 'short', day: 'numeric' });
+  }
+
+  if (lang === 'ar') {
+    if (diffSec < 45) return 'الآن';
+    if (diffSec < 90) return 'منذ دقيقة';
+    const diffMin = Math.floor(diffSec / 60);
+    if (diffMin < 60) return `منذ ${diffMin} دقيقة`;
+    const diffHours = Math.floor(diffMin / 60);
+    if (diffHours === 1) return 'منذ ساعة';
+    if (diffHours < 24) return `منذ ${diffHours} ساعة`;
+    const diffDays = Math.floor(diffHours / 24);
+    if (diffDays === 1) return 'أمس';
+    if (diffDays < 7) return `منذ ${diffDays} أيام`;
+    const diffWeeks = Math.floor(diffDays / 7);
+    if (diffWeeks === 1) return 'منذ أسبوع';
+    if (diffWeeks < 4) return `منذ ${diffWeeks} أسابيع`;
+    return date.toLocaleDateString('ar-EG', { month: 'short', day: 'numeric' });
+  }
 
   if (diffSec < 45) return 'Just now';
   if (diffSec < 90) return '1 min ago';
@@ -237,7 +290,7 @@ export function formatRelativeTime(dateInput) {
   if (diffWeeks === 1) return '1 week ago';
   if (diffWeeks < 4) return `${diffWeeks} weeks ago`;
 
-  return date.toLocaleDateString(undefined, {
+  return date.toLocaleDateString('en-US', {
     month: 'short',
     day: 'numeric',
   });
@@ -321,6 +374,10 @@ export function initHistoryCard(config) {
     listEl.classList.remove('hidden');
 
     const icon = TOOL_ICONS[toolId] || '🕘';
+    const lang = (typeof document !== 'undefined' ? document.documentElement.lang : 'en') || 'en';
+    const restoreText = lang === 'pt' ? 'Restaurar' : lang === 'id' ? 'Pulihkan' : lang === 'ar' ? 'استعادة' : 'Restore';
+    const restoreArrow = lang === 'ar' ? '← استعادة' : `${restoreText} &rarr;`;
+    const removeLabel = lang === 'pt' ? 'Remover do histórico' : lang === 'id' ? 'Hapus dari riwayat' : lang === 'ar' ? 'حذف من السجل' : 'Remove from history';
 
     listEl.innerHTML = items
       .map(
@@ -330,7 +387,7 @@ export function initHistoryCard(config) {
           type="button"
           class="history-restore-btn flex items-center gap-3 text-left flex-1 min-w-0 py-1 cursor-pointer focus:outline-none focus:ring-2 focus:ring-accent rounded-lg"
           data-index="${idx}"
-          aria-label="Restore ${item.t}"
+          aria-label="${restoreText}: ${item.t}"
         >
           <span class="text-base shrink-0 select-none">${icon}</span>
           <div class="min-w-0 flex-1">
@@ -338,18 +395,18 @@ export function initHistoryCard(config) {
               ${item.t}
             </div>
             <div class="text-xs text-secondary-light dark:text-secondary-dark">
-              ${formatRelativeTime(item.d)}
+              ${formatRelativeTime(item.d, lang)}
             </div>
           </div>
           <span class="text-xs font-semibold text-accent opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity flex items-center gap-1 shrink-0 ml-2">
-            Restore &rarr;
+            ${restoreArrow}
           </span>
         </button>
         <button
           type="button"
           class="history-delete-btn w-10 h-10 flex items-center justify-center rounded-lg text-secondary-light dark:text-secondary-dark hover:text-red-500 hover:bg-red-500/10 transition-colors shrink-0 ml-2 focus:outline-none focus:ring-2 focus:ring-red-500"
           data-index="${idx}"
-          aria-label="Remove '${item.t}' from history"
+          aria-label="${removeLabel}"
         >
           <svg class="w-4 h-4 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="18" y1="6" x2="6" y2="18"/>

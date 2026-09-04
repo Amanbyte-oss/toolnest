@@ -1,18 +1,25 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getTranslations, getLocalizedPath, type Lang } from '../i18n';
+import { getNamespace, getLocalizedPath, type Lang } from '../i18n';
 
 export interface Props {
   lang?: Lang;
 }
 
 const { lang = 'en' } = Astro.props;
-const t = getTranslations(lang);
+const common = getNamespace(lang, 'common');
+const privacy = getNamespace(lang, 'privacy');
+
+const t = {
+  privacy,
+  common,
+  nav: common.nav,
+  siteName: common.siteName,
+};
 ---
 
 <Base
-  title={t.privacy.title}
-  description={t.privacy.metaDesc}
+  metaKey="privacy"
   canonicalPath={getLocalizedPath('/privacy-policy', lang)}
   ogImage="/og/about.svg"
   breadcrumbs={[{ name: t.nav.privacy, item: getLocalizedPath('/privacy-policy', lang) }]}

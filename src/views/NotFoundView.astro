@@ -1,27 +1,40 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getTranslations, getLocalizedPath, type Lang } from '../i18n';
+import { getNamespace, getLocalizedPath, type Lang } from '../i18n';
 
 export interface Props {
   lang?: Lang;
 }
 
 const { lang = 'en' } = Astro.props;
-const t = getTranslations(lang);
+const common = getNamespace(lang, 'common');
+const notFound = getNamespace(lang, 'notFound');
+const age = getNamespace(lang, 'age');
+const birthday = getNamespace(lang, 'birthday');
+const wheel = getNamespace(lang, 'wheel');
+const picker = getNamespace(lang, 'picker');
+const countdown = getNamespace(lang, 'countdown');
+const names = getNamespace(lang, 'names');
+
+const t = {
+  notFound,
+  common,
+  nav: common.nav,
+  siteName: common.siteName,
+};
 
 const tools = [
-  { name: `🎂 ${t.nav.ageCalculator}`, href: getLocalizedPath('/age-calculator', lang), desc: t.age.subtitle },
-  { name: `🎉 ${t.nav.birthdayFacts}`, href: getLocalizedPath('/birthday-facts', lang), desc: t.birthday.subtitle },
-  { name: `🎡 ${t.nav.decisionWheel}`, href: getLocalizedPath('/decision-wheel', lang), desc: t.wheel.subtitle },
-  { name: `🎲 ${t.nav.randomPicker}`, href: getLocalizedPath('/random-picker', lang), desc: t.picker.subtitle },
-  { name: `⏳ ${t.nav.countdown}`, href: getLocalizedPath('/countdown', lang), desc: t.countdown.subtitle },
-  { name: `🏷️ ${t.nav.nameMeaning}`, href: getLocalizedPath('/name-meaning', lang), desc: t.names.subtitle },
+  { name: `🎂 ${common.nav?.ageCalculator || 'Age Calculator'}`, href: getLocalizedPath('/age-calculator', lang), desc: age.subtitle },
+  { name: `🎉 ${common.nav?.birthdayFacts || 'Birthday Facts'}`, href: getLocalizedPath('/birthday-facts', lang), desc: birthday.subtitle },
+  { name: `🎡 ${common.nav?.decisionWheel || 'Decision Wheel'}`, href: getLocalizedPath('/decision-wheel', lang), desc: wheel.subtitle },
+  { name: `🎲 ${common.nav?.randomPicker || 'Random Picker'}`, href: getLocalizedPath('/random-picker', lang), desc: picker.subtitle },
+  { name: `⏳ ${common.nav?.countdown || 'Countdown Timer'}`, href: getLocalizedPath('/countdown', lang), desc: countdown.subtitle },
+  { name: `🏷️ ${common.nav?.nameMeaning || 'Name Meaning'}`, href: getLocalizedPath('/name-meaning', lang), desc: names.subtitle },
 ];
 ---
 
 <Base
-  title={t.notFound.title}
-  description={t.notFound.subtext}
+  metaKey="notFound"
   canonicalPath={getLocalizedPath('/404', lang)}
   noindex={true}
   lang={lang}

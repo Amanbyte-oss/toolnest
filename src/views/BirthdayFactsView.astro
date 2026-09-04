@@ -3,84 +3,55 @@ import Base from '../layouts/Base.astro';
 import Faq from '../components/Faq.astro';
 import ToolCard from '../components/ToolCard.astro';
 import HistoryCard from '../components/HistoryCard.astro';
-import relatedLinksData from '../data/related-links.json';
-import { MONTH_NAMES } from '../scripts/birthday-facts.js';
-import { getTranslations, getLocalizedPath, type Lang } from '../i18n';
+import { getLocalizedRelatedLinks } from '../i18n/relatedLinks';
+import { getNamespace, getLocalizedPath, type Lang } from '../i18n';
 
 export interface Props {
   lang?: Lang;
 }
 
 const { lang = 'en' } = Astro.props;
-const t = getTranslations(lang);
+const common = getNamespace(lang, 'common');
+const birthday = getNamespace(lang, 'birthday');
+const errors = getNamespace(lang, 'errors');
+const faqNs = getNamespace(lang, 'faq');
+const dataNs = getNamespace(lang, 'data');
+const t = { birthday, common, errors, nav: common.nav, siteName: common.siteName, data: dataNs };
 
 const currentYear = new Date().getFullYear();
 const currentMonth = new Date().getMonth() + 1;
 const currentDay = new Date().getDate();
-const lastUpdatedDate = new Date().toLocaleDateString(lang === 'ar' ? 'ar-EG' : lang === 'pt' ? 'pt-BR' : lang === 'id' ? 'id-ID' : 'en-US', {
+const localeCode = lang === 'ar' ? 'ar-EG' : lang === 'pt' ? 'pt-BR' : lang === 'id' ? 'id-ID' : 'en-US';
+const lastUpdatedDate = new Date().toLocaleDateString(localeCode, {
   year: 'numeric',
   month: 'long',
   day: 'numeric',
 });
 
+// Month names using native Intl
+const monthFormatter = new Intl.DateTimeFormat(localeCode, { month: 'long' });
+const monthNames = Array.from({ length: 12 }, (_, i) => monthFormatter.format(new Date(2024, i, 1)));
+
 // Years array descending from current year down to 1920
 const years = Array.from({ length: currentYear - 1920 + 1 }, (_, i) => currentYear - i);
 const days = Array.from({ length: 31 }, (_, i) => i + 1);
 
-// Comprehensive FAQ definitions (8 questions targeting core search clusters)
-const faqs = [
-  {
-    question: 'What day of the week was I born on and how is it verified?',
-    answer:
-      'Your birth weekday is determined by calculating the elapsed days under the Gregorian calendar from a fixed historical anchor point using UTC-standardized timestamps, ensuring that daylight saving time transitions never cause date shift errors.',
-  },
-  {
-    question: 'How do I find my zodiac sign by birthday and what does its element mean?',
-    answer:
-      'Your Western zodiac sun sign is established by the apparent position of the Sun across the twelve 30-degree celestial sectors (Aries through Pisces). Each sign belongs to an element (Fire, Earth, Air, or Water) that shapes your natural temperament and birthday personality.',
-  },
-  {
-    question: 'What does my birthstone by month and birth flower symbolize?',
-    answer:
-      'Birthstones are historically attributed gemstones standardized in 1912 by the National Association of Jewelers. Each gem—such as Garnet for January or Emerald for May—carries centuries of cultural lore symbolizing virtues such as strength, wisdom, protection, and prosperity.',
-  },
-  {
-    question: 'What is a golden birthday meaning and when does it happen?',
-    answer:
-      'A golden birthday (also known as a lucky or champagne birthday) occurs when you turn the exact age matching the calendar day of the month you were born—for example, turning 24 on the 24th of the month. It represents a rare once-in-a-lifetime personal celebration.',
-  },
-  {
-    question: 'What is my numerology life path number and how is it calculated?',
-    answer:
-      'Your life path number is derived by reducing each component of your birth date (month, day, and year) to single digits using the Pythagorean numerology system, then summing the totals. Master Numbers 11, 22, and 33 are preserved, revealing your overarching life archetype and core personality purpose.',
-  },
-  {
-    question: 'When is my half birthday and why do people celebrate it?',
-    answer:
-      'Your half birthday occurs exactly six calendar months after your birth date (or approximately 182.5 days). Half birthdays are popular for holiday-born babies (like Christmas or New Year) who prefer celebrating during milder weather, or for tracking mid-year personal milestones.',
-  },
-  {
-    question: 'How are generational cohorts like Gen Z and Millennials determined?',
-    answer:
-      'Generational cohorts are mapped based on demographic frameworks established by the Pew Research Center. Major cohorts include the Silent Generation (1928–1945), Baby Boomers (1946–1964), Gen X (1965–1980), Millennials (1981–1996), and Gen Z (1997–2012).',
-  },
-  {
-    question: 'Can I download and share my birthday facts card?',
-    answer:
-      'Yes! ToolNest generates a high-resolution PNG sticker card directly in your browser without sending your personal data to any server. You can save the crisp graphic to your camera roll or tap Share to distribute a formatted text summary across social channels.',
-  },
-];
+// Localized FAQs
+const faqs = (faqNs.birthday || []).map((f: any) => ({
+  question: f.question || f.q,
+  answer: f.answer || f.a,
+}));
 
-const relatedTools = relatedLinksData['birthday-facts'];
+const relatedTools = getLocalizedRelatedLinks(lang, 'birthday-facts');
 
 // JSON-LD Schemas
 const webAppSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
-  '@id': 'https://toolnest.pages.dev/birthday-facts#app',
-  name: 'Birthday Facts & Trivia Dossier',
-  url: 'https://toolnest.pages.dev/birthday-facts',
-  description: 'Find out what day of the week you were born on, your zodiac sign, birthstone, birth flower, lifetime day milestones, and famous birthdays.',
+  '@id': `https://toolnest.pages.dev${getLocalizedPath('/birthday-facts', lang)}#app`,
+  name: t.birthday.title,
+  url: `https://toolnest.pages.dev${getLocalizedPath('/birthday-facts', lang)}`,
+  description: t.birthday.subtitle,
   applicationCategory: 'UtilitiesApplication',
   operatingSystem: 'Any',
   offers: {
@@ -93,38 +64,31 @@ const webAppSchema = {
     name: 'ToolNest',
     url: 'https://toolnest.pages.dev',
   },
-  featureList: [
-    'Day of the week birth calculation with calendar accuracy',
-    'Western astrological zodiac sign, element, and trait breakdown',
-    'Monthly birthstone and birth flower symbolism',
-    'Generational cohort identification (Gen Z, Millennial, Gen X, Boomer)',
-    'Exportable high-resolution birthday facts sticker card for social sharing',
-  ],
 };
 
 const howToSchema = {
   '@context': 'https://schema.org',
   '@type': 'HowTo',
-  name: 'How to Discover Your Birthday Facts and Trivia in 3 Steps',
-  description: 'A simple guide to discovering your birth weekday, astrological traits, birthstone, and lifetime milestones.',
+  name: t.birthday.howTo.title,
+  description: t.birthday.howTo.subtitle,
   step: [
     {
       '@type': 'HowToStep',
       position: 1,
-      name: 'Enter your birth date',
-      text: 'Select the month, day, and year you were born using the convenient dropdown selectors or calendar input.',
+      name: t.birthday.howTo.s1Title,
+      text: t.birthday.howTo.s1Desc,
     },
     {
       '@type': 'HowToStep',
       position: 2,
-      name: 'Reveal personalized birthday trivia',
-      text: 'Click Reveal My Birthday Facts to calculate your zodiac sign, birthstone, birth flower, and famous birthday twins.',
+      name: t.birthday.howTo.s2Title,
+      text: t.birthday.howTo.s2Desc,
     },
     {
       '@type': 'HowToStep',
       position: 3,
-      name: 'Save or share your trivia card',
-      text: 'Download your high-resolution card as a PNG image for social media or copy the summary to share with friends.',
+      name: t.birthday.howTo.s3Title,
+      text: t.birthday.howTo.s3Desc,
     },
   ],
 };
@@ -141,14 +105,28 @@ const faqSchema = {
     },
   })),
 };
+
+const zodiacRows = [
+  { monthIdx: 0, signs: 'Capricorn • Aquarius', range: 'Dec 22 – Jan 19 / Jan 20 – Feb 18', element: 'Earth / Air', elementColor: 'bg-amber-500/10 text-amber-600 dark:text-amber-400', planet: 'Saturn / Uranus' },
+  { monthIdx: 1, signs: 'Aquarius • Pisces', range: 'Jan 20 – Feb 18 / Feb 19 – Mar 20', element: 'Air / Water', elementColor: 'bg-sky-500/10 text-sky-600 dark:text-sky-400', planet: 'Uranus / Neptune' },
+  { monthIdx: 2, signs: 'Pisces • Aries', range: 'Feb 19 – Mar 20 / Mar 21 – Apr 19', element: 'Water / Fire', elementColor: 'bg-red-500/10 text-red-600 dark:text-red-400', planet: 'Neptune / Mars' },
+  { monthIdx: 3, signs: 'Aries • Taurus', range: 'Mar 21 – Apr 19 / Apr 20 – May 20', element: 'Fire / Earth', elementColor: 'bg-orange-500/10 text-orange-600 dark:text-orange-400', planet: 'Mars / Venus' },
+  { monthIdx: 4, signs: 'Taurus • Gemini', range: 'Apr 20 – May 20 / May 21 – Jun 20', element: 'Earth / Air', elementColor: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400', planet: 'Venus / Mercury' },
+  { monthIdx: 5, signs: 'Gemini • Cancer', range: 'May 21 – Jun 20 / Jun 21 – Jul 22', element: 'Air / Water', elementColor: 'bg-blue-500/10 text-blue-600 dark:text-blue-400', planet: 'Mercury / Moon' },
+  { monthIdx: 6, signs: 'Cancer • Leo', range: 'Jun 21 – Jul 22 / Jul 23 – Aug 22', element: 'Water / Fire', elementColor: 'bg-yellow-500/10 text-yellow-600 dark:text-yellow-400', planet: 'Moon / Sun' },
+  { monthIdx: 7, signs: 'Leo • Virgo', range: 'Jul 23 – Aug 22 / Aug 23 – Sep 22', element: 'Fire / Earth', elementColor: 'bg-amber-500/10 text-amber-600 dark:text-amber-400', planet: 'Sun / Mercury' },
+  { monthIdx: 8, signs: 'Virgo • Libra', range: 'Aug 23 – Sep 22 / Sep 23 – Oct 22', element: 'Earth / Air', elementColor: 'bg-teal-500/10 text-teal-600 dark:text-teal-400', planet: 'Mercury / Venus' },
+  { monthIdx: 9, signs: 'Libra • Scorpio', range: 'Sep 23 – Oct 22 / Oct 23 – Nov 21', element: 'Air / Water', elementColor: 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400', planet: 'Venus / Pluto' },
+  { monthIdx: 10, signs: 'Scorpio • Sagittarius', range: 'Oct 23 – Nov 21 / Nov 22 – Dec 21', element: 'Water / Fire', elementColor: 'bg-purple-500/10 text-purple-600 dark:text-purple-400', planet: 'Pluto / Jupiter' },
+  { monthIdx: 11, signs: 'Sagittarius • Capricorn', range: 'Nov 22 – Dec 21 / Dec 22 – Jan 19', element: 'Fire / Earth', elementColor: 'bg-rose-500/10 text-rose-600 dark:text-rose-400', planet: 'Jupiter / Saturn' },
+];
 ---
 
 <Base
-  title={`${t.birthday.metaTitle} | ${t.siteName}`}
-  description={t.birthday.metaDescription}
+  metaKey="birthday"
   canonicalPath={getLocalizedPath('/birthday-facts', lang)}
   ogImage="/og/birthday-facts.svg"
-  breadcrumbs={[{ name: t.nav.home, item: getLocalizedPath('/', lang) }, { name: t.nav.birthdayFacts, item: getLocalizedPath('/birthday-facts', lang) }]}
+  breadcrumbs={[{ name: common.nav.home, item: getLocalizedPath('/', lang) }, { name: common.nav.birthdayFacts, item: getLocalizedPath('/birthday-facts', lang) }]}
   extraSchemas={[webAppSchema, howToSchema, faqSchema]}
   lang={lang}
 >
@@ -183,7 +161,7 @@ const faqSchema = {
       <svg class="w-3.5 h-3.5 text-accent shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
       </svg>
-      <span>Personal Birthday Dossier</span>
+      <span>{t.birthday.ui.personalDossier || 'Personal Birthday Dossier'}</span>
     </div>
     <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-primary-light dark:text-primary-dark">
       {t.birthday.title}
@@ -193,7 +171,7 @@ const faqSchema = {
     </p>
   </header>
 
-  <!-- 2. INPUT CARD (Clean, thumb-friendly, max-w-xl centered, zero layout shift) -->
+  <!-- 2. INPUT CARD -->
   <section
     id="dob-tool"
     class="card max-w-xl mx-auto p-5 sm:p-8 space-y-5 transition-all duration-200"
@@ -201,7 +179,7 @@ const faqSchema = {
   >
     <div class="flex items-center justify-between border-b border-border-light dark:border-border-dark pb-3">
       <h2 id="dob-input-heading" class="text-sm sm:text-base font-bold text-primary-light dark:text-primary-dark">
-        Select Your Date of Birth
+        {t.birthday.ui.selectDob || t.birthday.inputDateLabel || 'Select Your Date of Birth'}
       </h2>
       <span class="text-xs text-secondary-light dark:text-secondary-dark font-medium">
         1920 – {currentYear}
@@ -209,12 +187,11 @@ const faqSchema = {
     </div>
 
     <div class="space-y-4">
-      <!-- 3 selects in a single row on mobile (Day/Month/Year each flex-1, min-height 48px, 16px font, visible labels above) -->
       <div class="flex items-start gap-2 sm:gap-3.5">
         <!-- Day Dropdown -->
         <div class="flex-1 min-w-0 space-y-1.5">
           <label for="dob-day" class="block text-xs font-semibold uppercase tracking-wider text-secondary-light dark:text-secondary-dark">
-            Day
+            {t.birthday.ui.day || 'Day'}
           </label>
           <select
             id="dob-day"
@@ -231,13 +208,13 @@ const faqSchema = {
         <!-- Month Dropdown -->
         <div class="flex-1 min-w-0 space-y-1.5">
           <label for="dob-month" class="block text-xs font-semibold uppercase tracking-wider text-secondary-light dark:text-secondary-dark">
-            Month
+            {t.birthday.ui.month || 'Month'}
           </label>
           <select
             id="dob-month"
             class="w-full min-h-[48px] text-base px-2 sm:px-3 py-2.5 rounded-xl border border-border-light dark:border-border-dark bg-input-light dark:bg-input-dark text-primary-light dark:text-primary-dark focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent cursor-pointer font-medium transition-colors"
           >
-            {MONTH_NAMES.map((name, index) => (
+            {monthNames.map((name, index) => (
               <option value={index + 1} selected={index + 1 === 1}>
                 {name}
               </option>
@@ -248,7 +225,7 @@ const faqSchema = {
         <!-- Year Dropdown -->
         <div class="flex-1 min-w-0 space-y-1.5">
           <label for="dob-year" class="block text-xs font-semibold uppercase tracking-wider text-secondary-light dark:text-secondary-dark">
-            Year
+            {t.birthday.ui.year || 'Year'}
           </label>
           <select
             id="dob-year"
@@ -275,15 +252,14 @@ const faqSchema = {
           <line x1="12" y1="8" x2="12" y2="12"/>
           <line x1="12" y1="16" x2="12.01" y2="16"/>
         </svg>
-        <span id="facts-date-error-text">Please enter a valid calendar date.</span>
+        <span id="facts-date-error-text">{t.birthday.toasts.invalidDate}</span>
       </div>
 
-      <!-- Footer Action Area: Native Picker + Reveal Button -->
+      <!-- Footer Action Area -->
       <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 pt-1">
-        <!-- Native Date Picker toggle -->
         <div class="flex items-center gap-2 text-xs text-secondary-light dark:text-secondary-dark">
           <label for="native-dob-date" class="cursor-pointer hover:text-accent transition-colors">
-            Or pick from calendar:
+            {t.birthday.ui.orPickCalendar || 'Or pick from calendar:'}
           </label>
           <input
             type="date"
@@ -296,7 +272,6 @@ const faqSchema = {
           />
         </div>
 
-        <!-- Reveal My Facts Button: sticky bottom on mobile, inline right-aligned on lg -->
         <div class="sticky bottom-3 z-20 lg:static lg:z-auto pt-2 pb-[calc(0.5rem+env(safe-area-inset-bottom,0))] lg:pb-0 bg-surface-light/95 dark:bg-surface-dark/95 lg:bg-transparent backdrop-blur-md lg:backdrop-blur-none -mx-2 px-2 lg:mx-0 lg:px-0">
           <button
             id="reveal-facts-btn"
@@ -304,28 +279,28 @@ const faqSchema = {
             class="btn-primary w-full lg:w-auto px-7 py-3 text-sm sm:text-base font-bold shadow-md shadow-accent/20 cursor-pointer justify-center"
             aria-describedby="facts-date-error"
           >
-            Reveal My Facts
+            {t.birthday.ui.revealFacts || t.birthday.revealBtn || 'Reveal My Facts'}
           </button>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 3. RESULTS CONTAINER (Revealed on click with 50ms stagger) -->
+  <!-- 3. RESULTS CONTAINER -->
   <div id="facts-results-container" class="hidden mt-10 space-y-12 sm:space-y-14 scroll-mt-24">
     
     <!-- 3A. SHAREABLE RESULT CARD & ACTIONS -->
     <section class="result-section-anim flex flex-col items-center space-y-4" aria-label="Personal Birthday Card">
       <div class="text-center space-y-1">
         <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-primary-light dark:text-primary-dark">
-          Your Personal Birthday Card
+          {t.birthday.ui.personalCard || 'Your Personal Birthday Card'}
         </h2>
         <p class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark">
-          Share your celebration sticker or save as a crisp high-res image.
+          {t.birthday.ui.cardSubtitle || 'Share your celebration sticker or save as a crisp high-res image.'}
         </p>
       </div>
 
-      <!-- Centerpiece Shareable Card: max-w-sm (420px), fixed 4:5 aspect, container-relative sizing -->
+      <!-- Centerpiece Shareable Card -->
       <div class="shareable-card-container w-full max-w-[420px] mx-auto px-1 sm:px-0">
         <div
           id="shareable-card"
@@ -334,21 +309,21 @@ const faqSchema = {
           <!-- Top decorative gradient line -->
           <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-accent via-indigo-400 to-purple-500"></div>
 
-          <!-- Card Header: Emoji, Generation Badge, Weekday Headline -->
+          <!-- Card Header -->
           <div class="text-center space-y-1 pt-1">
             <div class="text-2xl sm:text-3xl leading-none" id="card-emoji">🎂</div>
             <div class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider bg-accent/10 text-accent mx-auto" id="card-generation-badge">
-              Generation
+              {t.birthday.ui.generation || 'Generation'}
             </div>
             <h3 class="text-base sm:text-xl font-extrabold text-slate-900 tracking-tight leading-tight">
-              Born on <span id="card-weekday" class="text-accent">Wednesday</span>
+              {t.birthday.ui.bornOn || 'Born on'} <span id="card-weekday" class="text-accent">Wednesday</span>
             </h3>
             <p id="card-formatted-date" class="text-[11px] sm:text-xs font-semibold text-slate-500">
               January 1, 1995
             </p>
           </div>
 
-          <!-- Zodiac Row: Symbol + Sign Name + Element + Traits -->
+          <!-- Zodiac Row -->
           <div class="p-2 sm:p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-center space-y-1">
             <div class="flex items-center justify-center gap-1.5 sm:gap-2">
               <span id="card-zodiac-symbol" class="text-xl leading-none">♈</span>
@@ -358,17 +333,15 @@ const faqSchema = {
               </span>
             </div>
             <div id="card-zodiac-traits" class="flex flex-wrap items-center justify-center gap-1">
-              <!-- Dynamic trait chips -->
             </div>
           </div>
 
-          <!-- Mini Cards: Birthstone + Birth Flower (Side by side, robust truncation) -->
+          <!-- Mini Cards: Birthstone + Birth Flower -->
           <div class="grid grid-cols-2 gap-2">
-            <!-- Birthstone Mini Card -->
             <div class="p-2 sm:p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-center space-y-0.5 min-w-0">
               <span class="text-base sm:text-lg block leading-none">💎</span>
               <span class="text-[9px] sm:text-[10px] uppercase font-bold text-slate-400 block tracking-wider">
-                Birthstone
+                {t.birthday.ui.birthstone || 'Birthstone'}
               </span>
               <span id="card-stone-name" class="text-xs sm:text-sm font-bold text-slate-900 block truncate">
                 Garnet
@@ -378,11 +351,10 @@ const faqSchema = {
               </p>
             </div>
 
-            <!-- Birth Flower Mini Card -->
             <div class="p-2 sm:p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-center space-y-0.5 min-w-0">
               <span class="text-base sm:text-lg block leading-none">🌸</span>
               <span class="text-[9px] sm:text-[10px] uppercase font-bold text-slate-400 block tracking-wider">
-                Birth Flower
+                {t.birthday.ui.birthFlower || 'Birth Flower'}
               </span>
               <span id="card-flower-name" class="text-xs sm:text-sm font-bold text-slate-900 block truncate">
                 Carnation
@@ -393,13 +365,13 @@ const faqSchema = {
             </div>
           </div>
 
-          <!-- Alive for X Days Accent Line -->
+          <!-- Days on Earth line -->
           <div class="py-1.5 sm:py-2 px-3 rounded-xl bg-accent/5 border border-accent/15 flex items-center justify-between">
             <span class="text-[10px] sm:text-xs font-semibold text-slate-600">
-              {lang === 'pt' ? 'Dias na Terra:' : lang === 'id' ? 'Hari di Bumi:' : lang === 'ar' ? 'أيام على الأرض:' : 'Days on Earth:'}
+              {t.birthday.ui.daysOnEarth || 'Days on Earth:'}
             </span>
             <span class="text-xs sm:text-sm font-black text-accent tracking-tight" id="card-days-lived">
-              0 days
+              0
             </span>
           </div>
 
@@ -411,7 +383,7 @@ const faqSchema = {
         </div>
       </div>
 
-      <!-- Action Buttons Row (stacked mobile, inline sm+) -->
+      <!-- Action Buttons Row -->
       <div class="w-full max-w-[420px] mx-auto flex flex-col sm:flex-row items-center gap-2.5 pt-2">
         <button
           id="download-card-btn"
@@ -423,7 +395,7 @@ const faqSchema = {
             <polyline points="7 10 12 15 17 10"/>
             <line x1="12" y1="15" x2="12" y2="3"/>
           </svg>
-          <span>Save Card as Image</span>
+          <span>{t.birthday.ui.saveCardImage || 'Save Card as Image'}</span>
         </button>
 
         <button
@@ -438,7 +410,7 @@ const faqSchema = {
             <line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/>
             <line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/>
           </svg>
-          <span>Share Facts</span>
+          <span>{t.birthday.ui.shareFacts || 'Share Facts'}</span>
         </button>
 
         <button
@@ -446,45 +418,41 @@ const faqSchema = {
           type="button"
           class="btn-secondary w-full sm:w-auto px-4 py-3 text-xs sm:text-sm font-medium justify-center shrink-0 cursor-pointer"
         >
-          Calculate Another
+          {t.birthday.ui.calculateAnother || 'Calculate Another'}
         </button>
       </div>
     </section>
 
-    <!-- 3B. FAMOUS BIRTHDAYS (responsive grid: 1 -> sm:2 -> lg:3 with fixed height & truncation) -->
+    <!-- 3B. FAMOUS BIRTHDAYS -->
     <section id="famous-section" class="result-section-anim space-y-4 pt-6 border-t border-border-light dark:border-border-dark" aria-labelledby="famous-heading">
       <div class="space-y-1 text-center sm:text-left">
         <h2 id="famous-heading" class="text-xl sm:text-2xl font-bold tracking-tight text-primary-light dark:text-primary-dark flex items-center justify-center sm:justify-start gap-2">
           <span>🌟</span>
-          <span>Famous Birthdays (<span id="famous-date-heading">Date</span>)</span>
+          <span>{t.birthday.ui.famousBirthdays || 'Famous Birthdays'} (<span id="famous-date-heading">Date</span>)</span>
         </h2>
         <p class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark">
-          Notable icons, visionaries, and historical figures who share your birthday.
+          {t.birthday.ui.famousSubtitle || 'Notable icons, visionaries, and historical figures who share your birthday.'}
         </p>
       </div>
 
-      <!-- Leap day notice if applicable -->
       <div id="leap-day-notice" class="hidden p-3 rounded-xl bg-accent/10 border border-accent/20 text-xs text-accent font-medium"></div>
 
-      <!-- Famous People Responsive Grid -->
       <div id="famous-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-        <!-- Injected via JavaScript -->
       </div>
     </section>
 
-    <!-- 3C. FACTS GRID (4-card responsive grid: 1 -> sm:2 -> lg:4 + Life Path Card) -->
+    <!-- 3C. FACTS GRID -->
     <section id="facts-grid-section" class="result-section-anim space-y-4 pt-6 border-t border-border-light dark:border-border-dark" aria-labelledby="facts-grid-heading">
       <div class="space-y-1 text-center sm:text-left">
         <h2 id="facts-grid-heading" class="text-xl sm:text-2xl font-bold tracking-tight text-primary-light dark:text-primary-dark flex items-center justify-center sm:justify-start gap-2">
           <span>✨</span>
-          <span>Birthday Dossier & Archetypes</span>
+          <span>{t.birthday.ui.archetypesHeading || 'Birthday Dossier & Archetypes'}</span>
         </h2>
         <p class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark">
-          Astrological, mineralogical, botanical, and demographic facets linked to your birth date.
+          {t.birthday.ui.archetypesSubtitle || 'Astrological, mineralogical, botanical, and demographic facets linked to your birth date.'}
         </p>
       </div>
 
-      <!-- 4-Card Responsive Grid with consistent min-height for row alignment -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <!-- Card 1: Zodiac Sign -->
         <div class="card p-5 flex flex-col justify-between min-h-[170px] space-y-2 border border-border-light dark:border-border-dark">
@@ -493,11 +461,10 @@ const faqSchema = {
               <span id="detail-zodiac-symbol" class="text-2xl">♈</span>
               <span id="detail-zodiac-element" class="text-xs px-2.5 py-0.5 rounded-full font-semibold bg-accent/10 text-accent border border-accent/20">Fire</span>
             </div>
-            <span class="text-xs font-semibold uppercase tracking-wider text-secondary-light dark:text-secondary-dark block">Zodiac Sign</span>
+            <span class="text-xs font-semibold uppercase tracking-wider text-secondary-light dark:text-secondary-dark block">{t.birthday.ui.zodiacSign || 'Zodiac Sign'}</span>
             <h3 id="detail-zodiac-name" class="text-base sm:text-lg font-bold text-primary-light dark:text-primary-dark">Aries</h3>
           </div>
           <p id="detail-zodiac-meaning" class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
-            Bold, energetic, and courageous temperament.
           </p>
         </div>
 
@@ -506,13 +473,12 @@ const faqSchema = {
           <div>
             <div class="flex items-center justify-between mb-2">
               <span class="text-2xl">💎</span>
-              <span class="text-xs px-2.5 py-0.5 rounded-full font-semibold bg-slate-100 dark:bg-surface-dark text-secondary-light dark:text-secondary-dark border border-border-light dark:border-border-dark">Gemstone</span>
+              <span class="text-xs px-2.5 py-0.5 rounded-full font-semibold bg-slate-100 dark:bg-surface-dark text-secondary-light dark:text-secondary-dark border border-border-light dark:border-border-dark">{t.birthday.ui.gemstone || 'Gemstone'}</span>
             </div>
-            <span class="text-xs font-semibold uppercase tracking-wider text-secondary-light dark:text-secondary-dark block">Birthstone</span>
+            <span class="text-xs font-semibold uppercase tracking-wider text-secondary-light dark:text-secondary-dark block">{t.birthday.ui.birthstone || 'Birthstone'}</span>
             <h3 id="detail-stone-name" class="text-base sm:text-lg font-bold text-primary-light dark:text-primary-dark">Garnet</h3>
           </div>
           <p id="detail-stone-meaning" class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
-            Symbolizes protection, trust, and vitality.
           </p>
         </div>
 
@@ -521,13 +487,12 @@ const faqSchema = {
           <div>
             <div class="flex items-center justify-between mb-2">
               <span class="text-2xl">🌸</span>
-              <span class="text-xs px-2.5 py-0.5 rounded-full font-semibold bg-slate-100 dark:bg-surface-dark text-secondary-light dark:text-secondary-dark border border-border-light dark:border-border-dark">Botanical</span>
+              <span class="text-xs px-2.5 py-0.5 rounded-full font-semibold bg-slate-100 dark:bg-surface-dark text-secondary-light dark:text-secondary-dark border border-border-light dark:border-border-dark">{t.birthday.ui.botanical || 'Botanical'}</span>
             </div>
-            <span class="text-xs font-semibold uppercase tracking-wider text-secondary-light dark:text-secondary-dark block">Birth Flower</span>
+            <span class="text-xs font-semibold uppercase tracking-wider text-secondary-light dark:text-secondary-dark block">{t.birthday.ui.birthFlower || 'Birth Flower'}</span>
             <h3 id="detail-flower-name" class="text-base sm:text-lg font-bold text-primary-light dark:text-primary-dark">Carnation</h3>
           </div>
           <p id="detail-flower-meaning" class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
-            Symbolizes devotion, love, and distinction.
           </p>
         </div>
 
@@ -538,11 +503,10 @@ const faqSchema = {
               <span class="text-2xl">👥</span>
               <span id="detail-generation-years" class="text-xs px-2.5 py-0.5 rounded-full font-semibold bg-slate-100 dark:bg-surface-dark text-secondary-light dark:text-secondary-dark border border-border-light dark:border-border-dark">1981–1996</span>
             </div>
-            <span class="text-xs font-semibold uppercase tracking-wider text-secondary-light dark:text-secondary-dark block">Generation</span>
+            <span class="text-xs font-semibold uppercase tracking-wider text-secondary-light dark:text-secondary-dark block">{t.birthday.ui.generation || 'Generation'}</span>
             <h3 id="detail-generation-name" class="text-base sm:text-lg font-bold text-primary-light dark:text-primary-dark">Millennials</h3>
           </div>
           <p id="detail-generation-meaning" class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
-            Digital pioneers, collaborative, and purpose-driven.
           </p>
         </div>
       </div>
@@ -557,10 +521,10 @@ const faqSchema = {
               <line x1="10" x2="8" y1="3" y2="21"/>
               <line x1="16" x2="14" y1="3" y2="21"/>
             </svg>
-            <span class="text-xs font-bold uppercase tracking-wider text-accent">Pythagorean Life Path Number</span>
+            <span class="text-xs font-bold uppercase tracking-wider text-accent">{t.birthday.ui.lifePathHeading || 'Pythagorean Life Path Number'}</span>
           </div>
           <div class="flex items-center gap-1.5">
-            <span class="text-xs text-secondary-light dark:text-secondary-dark font-medium">Life Path</span>
+            <span class="text-xs text-secondary-light dark:text-secondary-dark font-medium">{t.birthday.ui.lifePathLabel || 'Life Path'}</span>
             <span id="result-lifepath-num" class="text-xl font-black text-accent px-2.5 py-0.5 rounded-lg bg-accent/15 border border-accent/30"></span>
           </div>
         </div>
@@ -572,87 +536,84 @@ const faqSchema = {
       </div>
     </section>
 
-    <!-- 3D. MILESTONES (Horizontal scroll-snap on mobile, 3-col grid on lg — never squished text) -->
-    <section id="milestones-section" class="result-section-anim space-y-4 pt-6 border-t border-border-light dark:border-border-dark" aria-labelledby="milestones-heading">
-      <div class="space-y-1 text-center sm:text-left">
+    <!-- 3D. MILESTONES -->
+    <section id="milestones-section" class="result-section-anim space-y-4 pt-6 border-t border-border-light dark:border-border-dark w-full max-w-full overflow-hidden lg:overflow-visible" aria-labelledby="milestones-heading">
+      <div class="space-y-1 text-center sm:text-start">
         <h2 id="milestones-heading" class="text-xl sm:text-2xl font-bold tracking-tight text-primary-light dark:text-primary-dark flex items-center justify-center sm:justify-start gap-2">
           <span>🚀</span>
-          <span>Life Journey & Day Milestones</span>
+          <span>{t.birthday.ui.journeyHeading || 'Life Journey & Day Milestones'}</span>
         </h2>
         <p class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark">
-          Track the exact calendar markers and landmarks of your life journey.
+          {t.birthday.ui.journeySubtitle || 'Track the exact calendar markers and landmarks of your life journey.'}
         </p>
       </div>
 
-      <!-- Horizontal scroll-snap row on mobile, 3-column grid on lg -->
       <div class="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-3 -mx-4 px-4 sm:mx-0 sm:px-0 lg:grid lg:grid-cols-3 lg:overflow-visible lg:pb-0 custom-scrollbar">
         <!-- Milestone 1: Days on Earth -->
-        <div class="card p-5 shrink-0 w-[80vw] max-w-[320px] snap-center lg:w-auto lg:max-w-none flex flex-col justify-between space-y-3 border border-border-light dark:border-border-dark">
+        <div class="card p-5 shrink-0 w-[80vw] max-w-[280px] snap-center lg:w-auto lg:max-w-none flex flex-col justify-between space-y-3 border border-border-light dark:border-border-dark">
           <div class="space-y-1">
             <div class="flex items-center justify-between">
               <span class="text-2xl">⏳</span>
-              <span class="text-[11px] px-2.5 py-0.5 rounded-full font-semibold bg-accent/10 text-accent">Total Elapsed</span>
+              <span class="text-[11px] px-2.5 py-0.5 rounded-full font-semibold bg-accent/10 text-accent">{t.birthday.ui.totalElapsed || 'Total Elapsed'}</span>
             </div>
-            <span class="text-xs font-semibold uppercase tracking-wider text-secondary-light dark:text-secondary-dark block">Days on Earth</span>
+            <span class="text-xs font-semibold uppercase tracking-wider text-secondary-light dark:text-secondary-dark block">{t.birthday.ui.daysOnEarth || 'Days on Earth'}</span>
             <div class="text-2xl sm:text-3xl font-black text-accent tracking-tight" id="milestone-days-count">
-              0 days
+              0
             </div>
           </div>
           <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
-            Total consecutive calendar days elapsed since your exact moment of birth.
+            {t.birthday.ui.consecutiveDaysElapsed || 'Total consecutive calendar days elapsed since your exact moment of birth.'}
           </p>
         </div>
 
         <!-- Milestone 2: 10,000th Day Landmark -->
-        <div class="card p-5 shrink-0 w-[80vw] max-w-[320px] snap-center lg:w-auto lg:max-w-none flex flex-col justify-between space-y-3 border border-border-light dark:border-border-dark">
+        <div class="card p-5 shrink-0 w-[80vw] max-w-[280px] snap-center lg:w-auto lg:max-w-none flex flex-col justify-between space-y-3 border border-border-light dark:border-border-dark">
           <div class="space-y-1">
             <div class="flex items-center justify-between">
               <span class="text-2xl">🎯</span>
-              <span id="milestone-10k-badge" class="text-[11px] px-2.5 py-0.5 rounded-full font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">Celebrated</span>
+              <span id="milestone-10k-badge" class="text-[11px] px-2.5 py-0.5 rounded-full font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">{t.birthday.ui.celebrated || 'Celebrated'}</span>
             </div>
-            <span class="text-xs font-semibold uppercase tracking-wider text-secondary-light dark:text-secondary-dark block">10,000th Day Landmark</span>
+            <span class="text-xs font-semibold uppercase tracking-wider text-secondary-light dark:text-secondary-dark block">{t.birthday.ui.day10kLandmark || '10,000th Day Landmark'}</span>
             <div class="text-base sm:text-lg font-bold text-primary-light dark:text-primary-dark" id="milestone-10k-date">
-              Calculating...
+              ...
             </div>
           </div>
           <p id="milestone-10k-status" class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
-            Occurs around age 27 years and 4.5 months. A rare milestone in every lifetime!
           </p>
         </div>
 
         <!-- Milestone 3: Next Major Day Landmark -->
-        <div class="card p-5 shrink-0 w-[80vw] max-w-[320px] snap-center lg:w-auto lg:max-w-none flex flex-col justify-between space-y-3 border border-border-light dark:border-border-dark">
+        <div class="card p-5 shrink-0 w-[80vw] max-w-[280px] snap-center lg:w-auto lg:max-w-none flex flex-col justify-between space-y-3 border border-border-light dark:border-border-dark">
           <div class="space-y-1">
             <div class="flex items-center justify-between">
               <span class="text-2xl">🌟</span>
-              <span class="text-[11px] px-2.5 py-0.5 rounded-full font-semibold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400">Upcoming Goal</span>
+              <span class="text-[11px] px-2.5 py-0.5 rounded-full font-semibold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400">{t.birthday.ui.upcomingGoal || 'Upcoming Goal'}</span>
             </div>
-            <span class="text-xs font-semibold uppercase tracking-wider text-secondary-light dark:text-secondary-dark block" id="milestone-next-label">Next Milestone</span>
+            <span class="text-xs font-semibold uppercase tracking-wider text-secondary-light dark:text-secondary-dark block" id="milestone-next-label">{t.birthday.ui.dayLandmark || 'Next Landmark'}</span>
             <div class="text-base sm:text-lg font-bold text-primary-light dark:text-primary-dark" id="milestone-next-date">
-              Calculating...
+              ...
             </div>
           </div>
           <p id="milestone-next-countdown" class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
-            Coming up in your journey.
           </p>
         </div>
       </div>
     </section>
 
-    <!-- Recent Activity History Card (Unobtrusive) -->
+    <!-- Recent Activity History Card -->
     <div class="pt-2">
-      <HistoryCard toolId="facts" title="Recent Birthdays" />
+      <HistoryCard toolId="facts" title={t.birthday.ui.recentBirthdays || 'Recent Birthdays'} lang={lang} />
     </div>
   </div>
 
-  <!-- 4. HOW IT WORKS (3 steps) -->
+  <!-- 4. HOW IT WORKS -->
   <section class="mt-14 pt-10 border-t border-border-light dark:border-border-dark space-y-6" aria-labelledby="how-it-works-heading">
     <div class="space-y-1 text-center sm:text-left">
       <h2 id="how-it-works-heading" class="text-xl sm:text-2xl font-bold tracking-tight text-primary-light dark:text-primary-dark">
-        How to Discover Your Birthday Facts in 3 Steps
+        {t.birthday.howTo.title}
       </h2>
       <p class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark max-w-prose">
-        Generate your personalized birth date dossier in seconds with zero tracking.
+        {t.birthday.howTo.subtitle}
       </p>
     </div>
 
@@ -662,10 +623,10 @@ const faqSchema = {
           1
         </div>
         <h3 class="text-base font-bold text-primary-light dark:text-primary-dark">
-          Select Your Birth Date
+          {t.birthday.howTo.s1Title}
         </h3>
         <p class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark leading-relaxed">
-          Input your day, month, and year of birth. All dates from 1920 to the present are checked for calendar validity.
+          {t.birthday.howTo.s1Desc}
         </p>
       </div>
 
@@ -674,10 +635,10 @@ const faqSchema = {
           2
         </div>
         <h3 class="text-base font-bold text-primary-light dark:text-primary-dark">
-          Generate Your Card
+          {t.birthday.howTo.s2Title}
         </h3>
         <p class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark leading-relaxed">
-          Our engine calculates your exact birth weekday, zodiac element, birthstone, flower, and lifetime day milestones.
+          {t.birthday.howTo.s2Desc}
         </p>
       </div>
 
@@ -686,10 +647,10 @@ const faqSchema = {
           3
         </div>
         <h3 class="text-base font-bold text-primary-light dark:text-primary-dark">
-          Save Image or Share
+          {t.birthday.howTo.s3Title}
         </h3>
         <p class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark leading-relaxed">
-          Download your sticker card as a crisp PNG image for social media, or copy the text summary directly.
+          {t.birthday.howTo.s3Desc}
         </p>
       </div>
     </div>
@@ -701,132 +662,57 @@ const faqSchema = {
       <div class="card p-6 space-y-3">
         <h3 class="text-lg font-bold text-primary-light dark:text-primary-dark flex items-center gap-2">
           <span>🗓️</span>
-          <span>How Do You Find What Day of the Week You Were Born?</span>
+          <span>{t.birthday.methodology.m1Title}</span>
         </h3>
         <p class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark leading-relaxed">
-          The day of the week for any historical Gregorian calendar date is determined using Zeller's Congruence or UTC modular day-offset algorithms. By calculating the modulo 7 remainder of elapsed days from a known anchor date, the exact weekday (Sunday through Saturday) is derived with mathematical certainty regardless of regional daylight saving transitions.
+          {t.birthday.methodology.m1Desc}
         </p>
       </div>
 
       <div class="card p-6 space-y-3">
         <h3 class="text-lg font-bold text-primary-light dark:text-primary-dark flex items-center gap-2">
           <span>✨</span>
-          <span>What Are Astrological Sun Signs and Birthstones?</span>
+          <span>{t.birthday.methodology.m2Title}</span>
         </h3>
         <p class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark leading-relaxed">
-          Astrological sun signs represent the constellation sector aligned with the Sun on your birth date. Paired with historical birthstones—gemstones standardized by the National Association of Jewelers in 1912—and seasonal birth flowers, your birthday forms a unique cultural tapestry linking ancestral traditions to modern celebratory customs.
+          {t.birthday.methodology.m2Desc}
         </p>
       </div>
     </div>
 
-    <!-- ZODIAC SIGNS BY MONTH (Complete Reference Table) -->
+    <!-- ZODIAC SIGNS BY MONTH -->
     <div class="card p-5 sm:p-6 space-y-4" aria-labelledby="zodiac-table-heading">
       <div class="space-y-1">
         <h2 id="zodiac-table-heading" class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark flex items-center gap-2">
           <span>♈</span>
-          <span>Zodiac Signs by Month (Calendar Reference)</span>
+          <span>{t.birthday.zodiacTable.heading}</span>
         </h2>
         <p class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark">
-          Look up which Western astrological sign governs each calendar month, along with classical elemental affinities and planetary rulers.
+          {t.birthday.zodiacTable.subheading}
         </p>
       </div>
 
       <div class="overflow-x-auto custom-scrollbar">
-        <table class="w-full text-left text-xs sm:text-sm border-collapse min-w-[500px]">
+        <table class="w-full text-start text-xs sm:text-sm border-collapse min-w-[500px]">
           <thead>
             <tr class="border-b border-border-light dark:border-border-dark text-secondary-light dark:text-secondary-dark text-[11px] uppercase tracking-wider">
-              <th class="py-2.5 px-3 font-bold">Month</th>
-              <th class="py-2.5 px-3 font-bold">Zodiac Signs</th>
-              <th class="py-2.5 px-3 font-bold">Date Range</th>
-              <th class="py-2.5 px-3 font-bold">Element</th>
-              <th class="py-2.5 px-3 font-bold">Ruling Planet</th>
+              <th class="py-2.5 px-3 font-bold">{t.birthday.zodiacTable.colMonth}</th>
+              <th class="py-2.5 px-3 font-bold">{t.birthday.zodiacTable.colSigns}</th>
+              <th class="py-2.5 px-3 font-bold">{t.birthday.zodiacTable.colRange}</th>
+              <th class="py-2.5 px-3 font-bold">{t.birthday.zodiacTable.colElement}</th>
+              <th class="py-2.5 px-3 font-bold">{t.birthday.zodiacTable.colPlanet}</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-border-light/60 dark:divide-border-dark/60 text-primary-light dark:text-primary-dark">
-            <tr>
-              <td class="py-2.5 px-3 font-semibold">January</td>
-              <td class="py-2.5 px-3">Capricorn &bull; Aquarius</td>
-              <td class="py-2.5 px-3 text-secondary-light dark:text-secondary-dark">Dec 22 – Jan 19 / Jan 20 – Feb 18</td>
-              <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded text-[11px] bg-amber-500/10 text-amber-600 dark:text-amber-400">Earth / Air</span></td>
-              <td class="py-2.5 px-3 text-secondary-light dark:text-secondary-dark">Saturn / Uranus</td>
-            </tr>
-            <tr>
-              <td class="py-2.5 px-3 font-semibold">February</td>
-              <td class="py-2.5 px-3">Aquarius &bull; Pisces</td>
-              <td class="py-2.5 px-3 text-secondary-light dark:text-secondary-dark">Jan 20 – Feb 18 / Feb 19 – Mar 20</td>
-              <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded text-[11px] bg-sky-500/10 text-sky-600 dark:text-sky-400">Air / Water</span></td>
-              <td class="py-2.5 px-3 text-secondary-light dark:text-secondary-dark">Uranus / Neptune</td>
-            </tr>
-            <tr>
-              <td class="py-2.5 px-3 font-semibold">March</td>
-              <td class="py-2.5 px-3">Pisces &bull; Aries</td>
-              <td class="py-2.5 px-3 text-secondary-light dark:text-secondary-dark">Feb 19 – Mar 20 / Mar 21 – Apr 19</td>
-              <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded text-[11px] bg-red-500/10 text-red-600 dark:text-red-400">Water / Fire</span></td>
-              <td class="py-2.5 px-3 text-secondary-light dark:text-secondary-dark">Neptune / Mars</td>
-            </tr>
-            <tr>
-              <td class="py-2.5 px-3 font-semibold">April</td>
-              <td class="py-2.5 px-3">Aries &bull; Taurus</td>
-              <td class="py-2.5 px-3 text-secondary-light dark:text-secondary-dark">Mar 21 – Apr 19 / Apr 20 – May 20</td>
-              <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded text-[11px] bg-orange-500/10 text-orange-600 dark:text-orange-400">Fire / Earth</span></td>
-              <td class="py-2.5 px-3 text-secondary-light dark:text-secondary-dark">Mars / Venus</td>
-            </tr>
-            <tr>
-              <td class="py-2.5 px-3 font-semibold">May</td>
-              <td class="py-2.5 px-3">Taurus &bull; Gemini</td>
-              <td class="py-2.5 px-3 text-secondary-light dark:text-secondary-dark">Apr 20 – May 20 / May 21 – Jun 20</td>
-              <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded text-[11px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">Earth / Air</span></td>
-              <td class="py-2.5 px-3 text-secondary-light dark:text-secondary-dark">Venus / Mercury</td>
-            </tr>
-            <tr>
-              <td class="py-2.5 px-3 font-semibold">June</td>
-              <td class="py-2.5 px-3">Gemini &bull; Cancer</td>
-              <td class="py-2.5 px-3 text-secondary-light dark:text-secondary-dark">May 21 – Jun 20 / Jun 21 – Jul 22</td>
-              <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded text-[11px] bg-blue-500/10 text-blue-600 dark:text-blue-400">Air / Water</span></td>
-              <td class="py-2.5 px-3 text-secondary-light dark:text-secondary-dark">Mercury / Moon</td>
-            </tr>
-            <tr>
-              <td class="py-2.5 px-3 font-semibold">July</td>
-              <td class="py-2.5 px-3">Cancer &bull; Leo</td>
-              <td class="py-2.5 px-3 text-secondary-light dark:text-secondary-dark">Jun 21 – Jul 22 / Jul 23 – Aug 22</td>
-              <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded text-[11px] bg-yellow-500/10 text-yellow-600 dark:text-yellow-400">Water / Fire</span></td>
-              <td class="py-2.5 px-3 text-secondary-light dark:text-secondary-dark">Moon / Sun</td>
-            </tr>
-            <tr>
-              <td class="py-2.5 px-3 font-semibold">August</td>
-              <td class="py-2.5 px-3">Leo &bull; Virgo</td>
-              <td class="py-2.5 px-3 text-secondary-light dark:text-secondary-dark">Jul 23 – Aug 22 / Aug 23 – Sep 22</td>
-              <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded text-[11px] bg-amber-500/10 text-amber-600 dark:text-amber-400">Fire / Earth</span></td>
-              <td class="py-2.5 px-3 text-secondary-light dark:text-secondary-dark">Sun / Mercury</td>
-            </tr>
-            <tr>
-              <td class="py-2.5 px-3 font-semibold">September</td>
-              <td class="py-2.5 px-3">Virgo &bull; Libra</td>
-              <td class="py-2.5 px-3 text-secondary-light dark:text-secondary-dark">Aug 23 – Sep 22 / Sep 23 – Oct 22</td>
-              <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded text-[11px] bg-teal-500/10 text-teal-600 dark:text-teal-400">Earth / Air</span></td>
-              <td class="py-2.5 px-3 text-secondary-light dark:text-secondary-dark">Mercury / Venus</td>
-            </tr>
-            <tr>
-              <td class="py-2.5 px-3 font-semibold">October</td>
-              <td class="py-2.5 px-3">Libra &bull; Scorpio</td>
-              <td class="py-2.5 px-3 text-secondary-light dark:text-secondary-dark">Sep 23 – Oct 22 / Oct 23 – Nov 21</td>
-              <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded text-[11px] bg-indigo-500/10 text-indigo-600 dark:text-indigo-400">Air / Water</span></td>
-              <td class="py-2.5 px-3 text-secondary-light dark:text-secondary-dark">Venus / Pluto</td>
-            </tr>
-            <tr>
-              <td class="py-2.5 px-3 font-semibold">November</td>
-              <td class="py-2.5 px-3">Scorpio &bull; Sagittarius</td>
-              <td class="py-2.5 px-3 text-secondary-light dark:text-secondary-dark">Oct 23 – Nov 21 / Nov 22 – Dec 21</td>
-              <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded text-[11px] bg-purple-500/10 text-purple-600 dark:text-purple-400">Water / Fire</span></td>
-              <td class="py-2.5 px-3 text-secondary-light dark:text-secondary-dark">Pluto / Jupiter</td>
-            </tr>
-            <tr>
-              <td class="py-2.5 px-3 font-semibold">December</td>
-              <td class="py-2.5 px-3">Sagittarius &bull; Capricorn</td>
-              <td class="py-2.5 px-3 text-secondary-light dark:text-secondary-dark">Nov 22 – Dec 21 / Dec 22 – Jan 19</td>
-              <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded text-[11px] bg-rose-500/10 text-rose-600 dark:text-rose-400">Fire / Earth</span></td>
-              <td class="py-2.5 px-3 text-secondary-light dark:text-secondary-dark">Jupiter / Saturn</td>
-            </tr>
+            {zodiacRows.map((row) => (
+              <tr>
+                <td class="py-2.5 px-3 font-semibold">{monthNames[row.monthIdx]}</td>
+                <td class="py-2.5 px-3">{row.signs}</td>
+                <td class="py-2.5 px-3 text-secondary-light dark:text-secondary-dark">{row.range}</td>
+                <td class="py-2.5 px-3"><span class={`px-2 py-0.5 rounded text-[11px] ${row.elementColor}`}>{row.element}</span></td>
+                <td class="py-2.5 px-3 text-secondary-light dark:text-secondary-dark">{row.planet}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
@@ -838,7 +724,7 @@ const faqSchema = {
         <svg class="w-5 h-5 text-accent shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
         </svg>
-        <span>Popular Use Cases for Birthday Facts & Astrology</span>
+        <span>{t.birthday.useCases.title}</span>
       </h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div class="card p-5 space-y-2">
@@ -847,9 +733,9 @@ const faqSchema = {
               <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
             </svg>
           </div>
-          <h3 class="text-base font-bold text-primary-light dark:text-primary-dark">Astrology & Numerology</h3>
+          <h3 class="text-base font-bold text-primary-light dark:text-primary-dark">{t.birthday.useCases.u1Title}</h3>
           <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
-            Discover your western zodiac sign by birthday, elemental traits, and Pythagorean life path number to explore your innate strengths and birthday personality.
+            {t.birthday.useCases.u1Desc}
           </p>
         </div>
         <div class="card p-5 space-y-2">
@@ -858,9 +744,9 @@ const faqSchema = {
               <path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/>
             </svg>
           </div>
-          <h3 class="text-base font-bold text-primary-light dark:text-primary-dark">Milestone & Golden Birthdays</h3>
+          <h3 class="text-base font-bold text-primary-light dark:text-primary-dark">{t.birthday.useCases.u2Title}</h3>
           <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
-            Plan your once-in-a-lifetime golden birthday or celebrate reaching your 10,000th day alive with unique milestone birthday parties and custom themes.
+            {t.birthday.useCases.u2Desc}
           </p>
         </div>
         <div class="card p-5 space-y-2">
@@ -869,9 +755,9 @@ const faqSchema = {
               <path d="M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zm0 0h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
             </svg>
           </div>
-          <h3 class="text-base font-bold text-primary-light dark:text-primary-dark">Personalized Gifts & Cards</h3>
+          <h3 class="text-base font-bold text-primary-light dark:text-primary-dark">{t.birthday.useCases.u3Title}</h3>
           <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
-            Uncover meaningful monthly birthstones, birth flowers, and famous historical birthday twins to write deeply touching personalized birthday messages.
+            {t.birthday.useCases.u3Desc}
           </p>
         </div>
       </div>
@@ -884,7 +770,7 @@ const faqSchema = {
           <path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/>
         </svg>
         <h2 id="trivia-strip-heading" class="text-sm font-bold uppercase tracking-wider text-accent">
-          Did You Know? Fascinating Birthday & Calendar Trivia
+          {t.birthday.trivia.title}
         </h2>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
@@ -895,10 +781,10 @@ const faqSchema = {
               <circle cx="9" cy="7" r="4"/>
               <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
             </svg>
-            The Birthday Paradox
+            {t.birthday.trivia.t1Title}
           </span>
           <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
-            In a group of only 23 people, there is a 50.7% mathematical probability that at least two people share an exact birthday. In a room of 75 people, the odds rise to 99.9%.
+            {t.birthday.trivia.t1Desc}
           </p>
         </div>
         <div class="space-y-1">
@@ -907,10 +793,10 @@ const faqSchema = {
               <polygon points="12 2 2 8.5 12 15 22 8.5 12 2"/>
               <polygon points="2 15.5 12 22 22 15.5 12 9 2 15.5"/>
             </svg>
-            Origin of Birthstones
+            {t.birthday.trivia.t2Title}
           </span>
           <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
-            The 12 monthly birthstones trace back to the ceremonial breastplate of Aaron in the Book of Exodus, but were officially formalized for modern jewelry in 1912.
+            {t.birthday.trivia.t2Desc}
           </p>
         </div>
         <div class="space-y-1">
@@ -921,10 +807,10 @@ const faqSchema = {
               <line x1="8" y1="2" x2="8" y2="6"/>
               <line x1="3" y1="10" x2="21" y2="10"/>
             </svg>
-            Most Common Birthdays
+            {t.birthday.trivia.t3Title}
           </span>
           <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
-            Globally, mid-September (specifically September 9 and September 19) records the highest frequency of birthdays, while Tuesdays and Thursdays see the most hospital births.
+            {t.birthday.trivia.t3Desc}
           </p>
         </div>
       </div>
@@ -935,14 +821,14 @@ const faqSchema = {
       <div class="flex flex-wrap items-center justify-between gap-2">
         <h3 class="text-xs font-bold uppercase tracking-wider text-primary-light dark:text-primary-dark flex items-center gap-1.5">
           <span>📐</span>
-          <span>Methodology & Historical Verification</span>
+          <span>{t.birthday.methodology.noteTitle}</span>
         </h3>
         <span class="text-[11px] text-secondary-light dark:text-secondary-dark">
-          Last updated: {lastUpdatedDate}
+          {common.ui?.lastUpdated || 'Last updated'}: {lastUpdatedDate}
         </span>
       </div>
       <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
-        Birthdays, generational cohorts, and famous historical figures are verified against authoritative encyclopedic archives and Pew Research demographic frameworks. All calculations execute client-side with zero network tracking.
+        {t.birthday.methodology.noteDesc}
       </p>
     </div>
   </section>
@@ -951,10 +837,10 @@ const faqSchema = {
   <section class="mt-14 space-y-4" id="faq-section">
     <div class="text-center sm:text-left space-y-1">
       <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-primary-light dark:text-primary-dark">
-        Frequently Asked Questions
+        {common.headings?.faq || 'Frequently Asked Questions'}
       </h2>
       <p class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark">
-        Everything you need to know about calculating birth weekdays, zodiac signs, and life milestones.
+        {t.birthday.ui.faqSubtitle || 'Everything you need to know about calculating birth weekdays, zodiac signs, and life milestones.'}
       </p>
     </div>
 
@@ -962,9 +848,9 @@ const faqSchema = {
     <div class="card p-4 space-y-2.5 bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark">
       <div class="flex items-center justify-between">
         <span class="text-xs font-bold uppercase tracking-wider text-secondary-light dark:text-secondary-dark">
-          Quick Jump
+          {common.ui?.quickJump || 'Quick Jump'}
         </span>
-        <span class="text-xs text-accent font-medium">{faqs.length} Answers</span>
+        <span class="text-xs text-accent font-medium">{faqs.length} {common.ui?.answers || 'Answers'}</span>
       </div>
       <div class="flex flex-wrap gap-1.5">
         {faqs.map((faq, idx) => (
@@ -979,17 +865,17 @@ const faqSchema = {
     </div>
 
     <!-- FAQ Accordion Component -->
-    <Faq items={faqs} />
+    <Faq items={faqs} lang={lang} />
   </section>
 
   <!-- 7. RELATED TOOLS SECTION -->
   <section class="mt-14 pt-10 border-t border-border-light dark:border-border-dark space-y-4">
     <div class="flex items-center justify-between">
       <h2 class="text-lg sm:text-xl font-bold tracking-tight text-primary-light dark:text-primary-dark">
-        Related Free Tools
+        {common.headings?.relatedTools || 'Related Free Tools'}
       </h2>
-      <a href="/" class="text-xs font-semibold text-accent hover:underline">
-        View all tools &rarr;
+      <a href={getLocalizedPath('/', lang)} class="text-xs font-semibold text-accent hover:underline">
+        {common.links?.viewAllTools || 'View all tools'} &rarr;
       </a>
     </div>
 
@@ -1001,12 +887,17 @@ const faqSchema = {
           href={tool.href}
           anchor={tool.anchor}
           icon={tool.href.includes('age') ? 'calendar' : tool.href.includes('countdown') ? 'clock' : 'book'}
+          lang={lang}
         />
       ))}
     </div>
   </section>
 
-  <!-- Toast notification handled globally via src/components/Toast.astro and src/scripts/toast.js -->
+  <!-- Pass localized dictionary to client script -->
+  <script is:inline define:vars={{ birthdayI18n: { common, birthday, errors, data: dataNs }, pageLang: lang }}>
+    window.__BIRTHDAY_I18N__ = birthdayI18n;
+    window.__PAGE_LANG__ = pageLang;
+  </script>
 </Base>
 
 <script>
@@ -1022,10 +913,18 @@ const faqSchema = {
   let currentFacts = null;
 
   function initBirthdayFacts() {
-    const monthSelect = document.getElementById('dob-month');
-    const daySelect = document.getElementById('dob-day');
-    const yearSelect = document.getElementById('dob-year');
-    const nativeDateInput = document.getElementById('native-dob-date');
+    const i18n = (window as any).__BIRTHDAY_I18N__ || {};
+    const tBirthday = i18n.birthday || {};
+    const tCommon = i18n.common || {};
+    const tErrors = i18n.errors || {};
+    const tData = i18n.data || {};
+    const pageLang = (window as any).__PAGE_LANG__ || 'en';
+    const localeCode = pageLang === 'ar' ? 'ar-EG' : pageLang === 'pt' ? 'pt-BR' : pageLang === 'id' ? 'id-ID' : 'en-US';
+
+    const monthSelect = document.getElementById('dob-month') as HTMLSelectElement;
+    const daySelect = document.getElementById('dob-day') as HTMLSelectElement;
+    const yearSelect = document.getElementById('dob-year') as HTMLSelectElement;
+    const nativeDateInput = document.getElementById('native-dob-date') as HTMLInputElement;
     const revealBtn = document.getElementById('reveal-facts-btn');
     const dobCard = document.getElementById('dob-tool');
     const errorContainer = document.getElementById('facts-date-error');
@@ -1073,10 +972,9 @@ const faqSchema = {
       errorText.textContent = msg;
       errorContainer.classList.remove('hidden');
 
-      // Subtle card shake on invalid submit
       if (dobCard) {
         dobCard.classList.remove('animate-card-shake');
-        void dobCard.offsetWidth; // force reflow
+        void dobCard.offsetWidth;
         dobCard.classList.add('animate-card-shake');
         setTimeout(() => dobCard.classList.remove('animate-card-shake'), 400);
       }
@@ -1096,16 +994,30 @@ const faqSchema = {
 
       const validation = validateDate(year, month, day);
       if (!validation.valid) {
-        showError(validation.error || 'Please enter a valid calendar date.');
+        showError(tBirthday.toasts?.invalidDate || validation.error || 'Please enter a valid calendar date.');
         return;
       }
 
       const facts = getBirthdayFacts(year, month, day);
       currentFacts = facts;
 
+      // Localized dates
+      const birthUtc = facts.birthUtc;
+      const birthDate = new Date(birthUtc);
+      const localizedWeekday = birthDate.toLocaleDateString(localeCode, { weekday: 'long', timeZone: 'UTC' });
+      const localizedFormattedDate = birthDate.toLocaleDateString(localeCode, { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+      const localizedShortDate = birthDate.toLocaleDateString(localeCode, { month: 'short', day: 'numeric', timeZone: 'UTC' });
+
+      // Localized Data Lookups
+      const genData = tData.generations?.find((g) => year >= g.startYear && year <= g.endYear) || facts.generation;
+      const zKey = facts.zodiac.id;
+      const zLoc = tData.zodiac?.[zKey] || facts.zodiac;
+      const stoneLoc = tData.birthstones?.[String(month)] || facts.birthstone;
+      const flowerLoc = tData.birthFlowers?.[String(month)] || facts.birthFlower;
+      const lpLoc = tData.lifePath?.[String(facts.lifePath.number)] || facts.lifePath;
+
       // Save to recent activity history and last state
-      const monthNames = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-      const birthdayTitle = `Birthday: ${day} ${monthNames[month] || ''} ${year}`;
+      const birthdayTitle = `${tBirthday.title || 'Birthday'}: ${day} ${monthSelect.options[monthSelect.selectedIndex]?.text || ''} ${year}`;
       saveHistory('facts', {
         t: birthdayTitle,
         d: new Date().toISOString(),
@@ -1127,16 +1039,17 @@ const faqSchema = {
       const cardFlowerMeaning = document.getElementById('card-flower-meaning');
       const cardDaysLived = document.getElementById('card-days-lived');
 
-      if (cardWeekday) cardWeekday.textContent = facts.weekday;
-      if (cardFormattedDate) cardFormattedDate.textContent = facts.formattedDate;
-      if (cardGenBadge) cardGenBadge.textContent = facts.generation.shortName || facts.generation.name;
+      if (cardWeekday) cardWeekday.textContent = localizedWeekday;
+      if (cardFormattedDate) cardFormattedDate.textContent = localizedFormattedDate;
+      if (cardGenBadge) cardGenBadge.textContent = genData.shortName || genData.name;
 
       if (cardZodiacSymbol) cardZodiacSymbol.textContent = facts.zodiac.symbol;
-      if (cardZodiacName) cardZodiacName.textContent = facts.zodiac.name;
-      if (cardZodiacElement) cardZodiacElement.textContent = facts.zodiac.element;
+      if (cardZodiacName) cardZodiacName.textContent = zLoc.name || facts.zodiac.name;
+      if (cardZodiacElement) cardZodiacElement.textContent = zLoc.element || facts.zodiac.element;
 
+      const traits = zLoc.traits || facts.zodiac.traits || [];
       if (cardZodiacTraits) {
-        cardZodiacTraits.innerHTML = facts.zodiac.traits
+        cardZodiacTraits.innerHTML = traits
           .map(
             (t) =>
               `<span class="px-2 py-0.5 rounded-full text-[10px] sm:text-[11px] font-medium bg-accent/10 text-accent border border-accent/20">${t}</span>`
@@ -1144,20 +1057,21 @@ const faqSchema = {
           .join('');
       }
 
-      if (cardStoneName) cardStoneName.textContent = facts.birthstone.name;
-      if (cardStoneMeaning) cardStoneMeaning.textContent = facts.birthstone.meaning;
+      if (cardStoneName) cardStoneName.textContent = stoneLoc.name;
+      if (cardStoneMeaning) cardStoneMeaning.textContent = stoneLoc.meaning;
 
-      if (cardFlowerName) cardFlowerName.textContent = facts.birthFlower.name;
-      if (cardFlowerMeaning) cardFlowerMeaning.textContent = facts.birthFlower.meaning;
+      if (cardFlowerName) cardFlowerName.textContent = flowerLoc.name;
+      if (cardFlowerMeaning) cardFlowerMeaning.textContent = flowerLoc.meaning;
 
-      if (cardDaysLived) cardDaysLived.textContent = `${facts.milestones.daysLived.toLocaleString()} days`;
+      const daysLivedFormatted = `${facts.milestones.daysLived.toLocaleString(localeCode)} ${tBirthday.ui?.days || tBirthday.daysRemaining || 'days'}`;
+      if (cardDaysLived) cardDaysLived.textContent = daysLivedFormatted;
 
-      // 2. Populate Famous People Section (1 -> 2 -> 3 columns, fixed height + truncation, +N more handling)
+      // 2. Populate Famous People Section
       const famousDateHeading = document.getElementById('famous-date-heading');
       const famousGrid = document.getElementById('famous-grid');
       const leapNotice = document.getElementById('leap-day-notice');
 
-      if (famousDateHeading) famousDateHeading.textContent = facts.shortDate;
+      if (famousDateHeading) famousDateHeading.textContent = localizedShortDate;
 
       if (leapNotice) {
         if (facts.famous.leapDayNote) {
@@ -1194,8 +1108,8 @@ const faqSchema = {
           if (extraCount > 0) {
             html += `
             <div class="h-[82px] card p-3 flex flex-col items-center justify-center bg-accent/5 border border-accent/25 text-center">
-              <span class="text-xs sm:text-sm font-bold text-accent">+${extraCount} more</span>
-              <span class="text-[11px] text-secondary-light dark:text-secondary-dark">historical figures born on this day</span>
+              <span class="text-xs sm:text-sm font-bold text-accent">+${extraCount}</span>
+              <span class="text-[11px] text-secondary-light dark:text-secondary-dark">${tBirthday.ui?.historicalBornOnDay || 'historical figures born on this day'}</span>
             </div>
           `;
           }
@@ -1204,13 +1118,13 @@ const faqSchema = {
         } else {
           famousGrid.innerHTML = `
             <div class="col-span-full card p-5 text-center text-xs sm:text-sm text-secondary-light dark:text-secondary-dark">
-              No celebrity records in our offline archive for ${facts.shortDate}. You share your special day with millions of everyday pioneers worldwide!
+              ${tBirthday.ui?.noCelebrityRecords || 'No celebrity records in our offline archive for this date.'}
             </div>
           `;
         }
       }
 
-      // 3. Populate Facts Details Grid (Zodiac, Birthstone, Flower, Generation)
+      // 3. Populate Facts Details Grid
       const detailZodiacSymbol = document.getElementById('detail-zodiac-symbol');
       const detailZodiacElement = document.getElementById('detail-zodiac-element');
       const detailZodiacName = document.getElementById('detail-zodiac-name');
@@ -1227,30 +1141,30 @@ const faqSchema = {
       const detailGenMeaning = document.getElementById('detail-generation-meaning');
 
       if (detailZodiacSymbol) detailZodiacSymbol.textContent = facts.zodiac.symbol;
-      if (detailZodiacElement) detailZodiacElement.textContent = facts.zodiac.element;
-      if (detailZodiacName) detailZodiacName.textContent = facts.zodiac.name;
-      if (detailZodiacMeaning) detailZodiacMeaning.textContent = `${facts.zodiac.traits.join(', ')} temperament.`;
+      if (detailZodiacElement) detailZodiacElement.textContent = zLoc.element || facts.zodiac.element;
+      if (detailZodiacName) detailZodiacName.textContent = zLoc.name || facts.zodiac.name;
+      if (detailZodiacMeaning) detailZodiacMeaning.textContent = `${traits.join(', ')}.`;
 
-      if (detailStoneName) detailStoneName.textContent = facts.birthstone.name;
-      if (detailStoneMeaning) detailStoneMeaning.textContent = facts.birthstone.meaning;
+      if (detailStoneName) detailStoneName.textContent = stoneLoc.name;
+      if (detailStoneMeaning) detailStoneMeaning.textContent = stoneLoc.meaning;
 
-      if (detailFlowerName) detailFlowerName.textContent = facts.birthFlower.name;
-      if (detailFlowerMeaning) detailFlowerMeaning.textContent = facts.birthFlower.meaning;
+      if (detailFlowerName) detailFlowerName.textContent = flowerLoc.name;
+      if (detailFlowerMeaning) detailFlowerMeaning.textContent = flowerLoc.meaning;
 
-      if (detailGenYears) detailGenYears.textContent = `${facts.generation.startYear}–${facts.generation.endYear}`;
-      if (detailGenName) detailGenName.textContent = facts.generation.name;
-      if (detailGenMeaning) detailGenMeaning.textContent = facts.generation.description;
+      if (detailGenYears) detailGenYears.textContent = `${genData.startYear}–${genData.endYear}`;
+      if (detailGenName) detailGenName.textContent = genData.name;
+      if (detailGenMeaning) detailGenMeaning.textContent = genData.description;
 
-      // Populate Life Path Number
+      // Life Path
       const lifePathNum = document.getElementById('result-lifepath-num');
       const lifePathTitle = document.getElementById('result-lifepath-title');
       const lifePathTraits = document.getElementById('result-lifepath-traits');
       const lifePathSummary = document.getElementById('result-lifepath-summary');
 
       if (lifePathNum) lifePathNum.textContent = String(facts.lifePath.number);
-      if (lifePathTitle) lifePathTitle.textContent = `${facts.lifePath.number} — ${facts.lifePath.title}`;
-      if (lifePathTraits) lifePathTraits.textContent = `Core Traits: ${facts.lifePath.traits}`;
-      if (lifePathSummary) lifePathSummary.textContent = facts.lifePath.summary;
+      if (lifePathTitle) lifePathTitle.textContent = `${facts.lifePath.number} — ${lpLoc.title}`;
+      if (lifePathTraits) lifePathTraits.textContent = `${tBirthday.ui?.coreTraits || 'Core Traits'}: ${lpLoc.traits}`;
+      if (lifePathSummary) lifePathSummary.textContent = lpLoc.summary;
 
       // 4. Populate Milestones
       const milestoneDays = document.getElementById('milestone-days-count');
@@ -1262,39 +1176,51 @@ const faqSchema = {
       const milestoneNextDate = document.getElementById('milestone-next-date');
       const milestoneNextCountdown = document.getElementById('milestone-next-countdown');
 
-      if (milestoneDays) milestoneDays.textContent = `${facts.milestones.daysLived.toLocaleString()} days`;
+      if (milestoneDays) milestoneDays.textContent = daysLivedFormatted;
 
-      if (milestone10kDate) milestone10kDate.textContent = facts.milestones.day10k.date;
+      const day10kDateStr = new Date(facts.birthUtc + 10000 * 24 * 60 * 60 * 1000).toLocaleDateString(localeCode, {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+        timeZone: 'UTC',
+      });
+
+      if (milestone10kDate) milestone10kDate.textContent = day10kDateStr;
       if (milestone10kBadge && milestone10kStatus) {
         if (facts.milestones.day10k.isPassed) {
-          milestone10kBadge.textContent = 'Celebrated';
+          milestone10kBadge.textContent = tBirthday.ui?.celebrated || 'Celebrated';
           milestone10kBadge.className = 'text-[11px] px-2.5 py-0.5 rounded-full font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400';
-          milestone10kStatus.textContent = `Reached on ${facts.milestones.day10k.date}. You have already surpassed this landmark!`;
+          milestone10kStatus.textContent = day10kDateStr;
         } else {
-          milestone10kBadge.textContent = 'Upcoming';
+          milestone10kBadge.textContent = tBirthday.ui?.upcoming || 'Upcoming';
           milestone10kBadge.className = 'text-[11px] px-2.5 py-0.5 rounded-full font-semibold bg-amber-500/10 text-amber-600 dark:text-amber-400';
-          milestone10kStatus.textContent = `Arrives on ${facts.milestones.day10k.date} (in ${facts.milestones.day10k.daysUntil.toLocaleString()} days).`;
+          milestone10kStatus.textContent = day10kDateStr;
         }
       }
 
-      if (milestoneNextLabel) milestoneNextLabel.textContent = `${facts.milestones.nextMilestone.milestone.toLocaleString()}th Day Landmark`;
-      if (milestoneNextDate) milestoneNextDate.textContent = facts.milestones.nextMilestone.date;
-      if (milestoneNextCountdown) milestoneNextCountdown.textContent = `Arriving in ${facts.milestones.nextMilestone.daysUntil.toLocaleString()} days.`;
+      const nextMilestoneDateStr = new Date(facts.birthUtc + facts.milestones.nextMilestone.milestone * 24 * 60 * 60 * 1000).toLocaleDateString(localeCode, {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+        timeZone: 'UTC',
+      });
 
-      // 5. Reveal Results with Staggered Fade-Up (50ms stagger) & Scroll
+      if (milestoneNextLabel) milestoneNextLabel.textContent = `${facts.milestones.nextMilestone.milestone.toLocaleString(localeCode)} ${tBirthday.ui?.dayLandmark || 'Landmark'}`;
+      if (milestoneNextDate) milestoneNextDate.textContent = nextMilestoneDateStr;
+      if (milestoneNextCountdown) milestoneNextCountdown.textContent = nextMilestoneDateStr;
+
+      // 5. Reveal Results with Staggered Fade-Up
       if (resultsContainer) {
         resultsContainer.classList.remove('hidden');
 
-        // Staggered reveal of each child section
         const animSections = resultsContainer.querySelectorAll('.result-section-anim');
-        animSections.forEach((sec, idx) => {
+        animSections.forEach((sec: HTMLElement, idx) => {
           sec.classList.remove('animate-fade-slide-up');
-          void sec.offsetWidth; // force reflow
+          void sec.offsetWidth;
           sec.style.animationDelay = `${idx * 50}ms`;
           sec.classList.add('animate-fade-slide-up');
         });
 
-        // Smooth scroll to results with sticky header offset
         const headerOffset = 80;
         const rect = resultsContainer.getBoundingClientRect();
         const targetScrollY = rect.top + window.pageYOffset - headerOffset;
@@ -1306,10 +1232,9 @@ const faqSchema = {
         });
       }
 
-      // Confetti burst on reveal (respecting reduced motion & non-intrusive)
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (typeof window.confetti === 'function' && !prefersReducedMotion) {
-        window.confetti({
+      if (typeof (window as any).confetti === 'function' && !prefersReducedMotion) {
+        (window as any).confetti({
           particleCount: 70,
           spread: 60,
           origin: { y: 0.6 },
@@ -1324,16 +1249,16 @@ const faqSchema = {
     if (downloadBtn) {
       downloadBtn.addEventListener('click', async () => {
         const cardElement = document.getElementById('shareable-card');
-        if (!cardElement || !window.htmlToImage) {
-          showToast('Image generator is initializing. Please try again.');
+        if (!cardElement || !(window as any).htmlToImage) {
+          showToast(tCommon.toasts?.errorOccurred || 'Image generator is initializing. Please try again.');
           return;
         }
 
         try {
           downloadBtn.setAttribute('disabled', 'true');
-          showToast('Rendering high-res celebration card...');
+          showToast(tCommon.toasts?.loaded || 'Rendering celebration card...');
 
-          const dataUrl = await window.htmlToImage.toPng(cardElement, {
+          const dataUrl = await (window as any).htmlToImage.toPng(cardElement, {
             quality: 1,
             pixelRatio: 2,
             cacheBust: true,
@@ -1344,10 +1269,10 @@ const faqSchema = {
           link.href = dataUrl;
           link.click();
 
-          showToast('Card saved to your device!');
+          showToast(tBirthday.toasts?.cardCopied || 'Card saved to your device!');
         } catch (error) {
           console.error('Image capture error:', error);
-          showToast('Unable to export image. Try taking a screenshot!');
+          showToast(tCommon.toasts?.errorOccurred || 'Unable to export image. Try taking a screenshot!');
         } finally {
           downloadBtn.removeAttribute('disabled');
         }
@@ -1359,20 +1284,29 @@ const faqSchema = {
       shareBtn.addEventListener('click', async () => {
         if (!currentFacts) return;
         const f = currentFacts;
+        const birthDate = new Date(f.birthUtc);
+        const localizedWeekday = birthDate.toLocaleDateString(localeCode, { weekday: 'long', timeZone: 'UTC' });
+        const localizedFormattedDate = birthDate.toLocaleDateString(localeCode, { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+        const zKey = f.zodiac.id;
+        const zLoc = tData.zodiac?.[zKey] || f.zodiac;
+        const stoneLoc = tData.birthstones?.[String(f.month)] || f.birthstone;
+        const flowerLoc = tData.birthFlowers?.[String(f.month)] || f.birthFlower;
+        const genData = tData.generations?.find((g) => f.year >= g.startYear && f.year <= g.endYear) || f.generation;
+
         const shareText = [
-          `🎉 My Birthday Facts via ToolNest:`,
-          `Born on a ${f.weekday} (${f.formattedDate})`,
-          `Zodiac: ${f.zodiac.symbol} ${f.zodiac.name} (${f.zodiac.element})`,
-          `Birthstone: ${f.birthstone.name} • Flower: ${f.birthFlower.name}`,
-          `Generation: ${f.generation.name}`,
-          `Alive for: ${f.milestones.daysLived.toLocaleString()} days`,
-          `Discover yours: ${window.location.href}`,
+          `🎉 ${tBirthday.title || 'My Birthday Facts via ToolNest'}:`,
+          `${tBirthday.ui?.bornOn || 'Born on'} ${localizedWeekday} (${localizedFormattedDate})`,
+          `${tBirthday.ui?.zodiacSign || 'Zodiac'}: ${f.zodiac.symbol} ${zLoc.name || f.zodiac.name} (${zLoc.element || f.zodiac.element})`,
+          `${tBirthday.ui?.birthstone || 'Birthstone'}: ${stoneLoc.name} • ${tBirthday.ui?.birthFlower || 'Flower'}: ${flowerLoc.name}`,
+          `${tBirthday.ui?.generation || 'Generation'}: ${genData.name}`,
+          `${tBirthday.ui?.daysOnEarth || 'Alive for'}: ${f.milestones.daysLived.toLocaleString(localeCode)} ${tBirthday.ui?.days || tBirthday.daysRemaining || 'days'}`,
+          `${window.location.href}`,
         ].join('\n');
 
         if (navigator.share) {
           try {
             await navigator.share({
-              title: `My Birthday Facts on ToolNest`,
+              title: `${tBirthday.title || 'Birthday Facts'} • ToolNest`,
               text: shareText,
               url: window.location.href,
             });
@@ -1382,9 +1316,9 @@ const faqSchema = {
         } else {
           try {
             await navigator.clipboard.writeText(shareText);
-            showToast('Summary copied to clipboard!');
+            showToast(tBirthday.toasts?.factsCopied || 'Summary copied to clipboard!');
           } catch (e) {
-            showToast('Unable to share on this browser.');
+            showToast(tCommon.toasts?.errorOccurred || 'Unable to share on this browser.');
           }
         }
       });
@@ -1409,7 +1343,7 @@ const faqSchema = {
       handleReveal();
     }
 
-    // Prefill from last state if available ("welcome back" effect)
+    // Prefill from last state if available
     const last = getLastState('facts');
     if (last && last.year) {
       yearSelect.value = String(last.year);

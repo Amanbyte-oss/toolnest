@@ -1,21 +1,31 @@
 ---
 import Base from '../layouts/Base.astro';
 import CountdownShareCard from '../components/CountdownShareCard.astro';
-import { getTranslations, getLocalizedPath, type Lang } from '../i18n';
+import { getNamespace, getLocalizedPath, type Lang } from '../i18n';
 
 export interface Props {
   lang?: Lang;
 }
 
 const { lang = 'en' } = Astro.props;
-const t = getTranslations(lang);
+const common = getNamespace(lang, 'common');
+const countdown = getNamespace(lang, 'countdown');
+const errors = getNamespace(lang, 'errors');
+
+const t = {
+  countdown,
+  common,
+  errors,
+  nav: common.nav,
+  siteName: common.siteName,
+};
 
 // Base WebApplication Schema
 const webAppSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
-  name: 'Live Countdown Viewer',
-  url: 'https://toolnest.pages.dev/countdown/view',
+  name: countdown.viewCountdownTitle || 'Live Countdown Viewer',
+  url: `https://toolnest.pages.dev${getLocalizedPath('/countdown/view', lang)}`,
   description: 'View real-time countdown timers for events, deadlines, birthdays, and holidays in your local timezone.',
   applicationCategory: 'UtilityApplication',
   operatingSystem: 'All',
@@ -28,8 +38,7 @@ const webAppSchema = {
 ---
 
 <Base
-  title={`⏳ ${t.countdown.viewCountdownTitle} | ${t.siteName}`}
-  description="Someone created a live countdown for you! Open to see the remaining days, hours, minutes, and seconds until the event in real time."
+  metaKey="countdownView"
   canonicalPath={getLocalizedPath('/countdown/view', lang)}
   breadcrumbs={[
     { name: t.nav.home, item: getLocalizedPath('/', lang) },
@@ -44,6 +53,12 @@ const webAppSchema = {
   <script is:inline src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.4/dist/confetti.browser.min.js"></script>
   <script is:inline src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.min.js"></script>
 
+  <!-- Pass localized data to client script -->
+  <script is:inline define:vars={{ countdownViewI18n: { common, countdown, errors }, pageLang: lang }}>
+    window.__COUNTDOWN_VIEW_I18N__ = countdownViewI18n;
+    window.__PAGE_LANG__ = pageLang;
+  </script>
+
   <!-- Hidden Offscreen Render Target for High-Resolution PNG Export (540x675 @2x = 1080x1350) -->
   <CountdownShareCard id="viewer-share-card" lang={lang} />
 
@@ -56,14 +71,14 @@ const webAppSchema = {
     >
       <div class="text-4xl">⚠️</div>
       <h2 class="text-xl font-bold text-primary-light dark:text-primary-dark">
-        Countdown Not Found
+        {errors['404']?.title || 'Countdown Not Found'}
       </h2>
       <p class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark leading-relaxed">
-        This countdown link is missing or corrupted. You can easily create a fresh, shareable countdown in seconds!
+        {errors.generic || 'This countdown link is missing or corrupted. You can easily create a fresh, shareable countdown in seconds!'}
       </p>
       <div class="pt-2">
-        <a href="/countdown" class="btn-primary inline-flex py-3 px-6 text-sm font-bold">
-          Create a New Countdown &rarr;
+        <a href={getLocalizedPath('/countdown', lang)} class="btn-primary inline-flex py-3 px-6 text-sm font-bold">
+          {countdown.createBtn || 'Create a New Countdown'} &rarr;
         </a>
       </div>
     </div>
@@ -79,13 +94,13 @@ const webAppSchema = {
           id="viewer-title"
           class="text-2xl sm:text-4xl font-black text-primary-light dark:text-primary-dark tracking-tight px-2 break-words"
         >
-          Loading Event...
+          {common.buttons?.loading || 'Loading...'}
         </h1>
         <p
           id="viewer-target-date"
           class="text-xs sm:text-sm font-medium text-secondary-light dark:text-secondary-dark"
         >
-          Calculating target time...
+          {countdown.subtitle || 'Calculating target time...'}
         </p>
       </div>
 
@@ -94,7 +109,7 @@ const webAppSchema = {
         id="celebration-banner"
         class="hidden py-3 px-5 rounded-2xl bg-gradient-to-r from-amber-500/15 via-rose-500/15 to-purple-500/15 border border-accent/30 text-accent font-black text-lg sm:text-xl animate-pulse"
       >
-        🎉 It's here! The moment has arrived!
+        🎉 {countdown.eventPassed}
       </div>
 
       <!-- THE 4-UNIT BIG TIMER ROW -->
@@ -108,7 +123,7 @@ const webAppSchema = {
             00
           </span>
           <span class="text-[9px] sm:text-xs uppercase tracking-wider font-bold text-secondary-light dark:text-secondary-dark mt-1">
-            Days
+            {countdown.daysRemaining || 'Days'}
           </span>
         </div>
 
@@ -121,7 +136,7 @@ const webAppSchema = {
             00
           </span>
           <span class="text-[9px] sm:text-xs uppercase tracking-wider font-bold text-secondary-light dark:text-secondary-dark mt-1">
-            Hours
+            {countdown.hoursRemaining || 'Hours'}
           </span>
         </div>
 
@@ -134,7 +149,7 @@ const webAppSchema = {
             00
           </span>
           <span class="text-[9px] sm:text-xs uppercase tracking-wider font-bold text-secondary-light dark:text-secondary-dark mt-1">
-            Minutes
+            {countdown.minutesRemaining || 'Minutes'}
           </span>
         </div>
 
@@ -150,7 +165,7 @@ const webAppSchema = {
             00
           </span>
           <span class="text-[9px] sm:text-xs uppercase tracking-wider font-bold text-secondary-light dark:text-secondary-dark mt-1">
-            Seconds
+            {countdown.secondsRemaining || 'Seconds'}
           </span>
         </div>
       </div>
@@ -166,21 +181,21 @@ const webAppSchema = {
             id="viewer-download-image-btn"
             type="button"
             class="btn-secondary min-h-[48px] py-3 px-4 text-xs sm:text-sm font-bold gap-2 cursor-pointer flex items-center justify-center shadow-sm w-full transition-all duration-150 hover:-translate-y-0.5 active:scale-95"
-            aria-label="Download countdown as image"
+            aria-label={common.buttons?.downloadImage || 'Download image'}
           >
             <svg class="w-4 h-4 shrink-0 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
               <polyline points="7 10 12 15 17 10"/>
               <line x1="12" y1="15" x2="12" y2="3"/>
             </svg>
-            <span>Download image</span>
+            <span>{common.buttons?.downloadImage || 'Download image'}</span>
           </button>
 
           <button
             id="viewer-share-image-btn"
             type="button"
             class="btn-primary min-h-[48px] py-3 px-4 text-xs sm:text-sm font-bold gap-2 cursor-pointer flex items-center justify-center shadow-md shadow-accent/20 w-full transition-all duration-150 hover:-translate-y-0.5 active:scale-95"
-            aria-label="Share countdown card image"
+            aria-label={common.buttons?.shareAsImage || 'Share image'}
           >
             <svg class="w-4 h-4 shrink-0 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="18" cy="5" r="3"/>
@@ -189,7 +204,7 @@ const webAppSchema = {
               <line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/>
               <line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/>
             </svg>
-            <span>Share image</span>
+            <span>{common.buttons?.shareAsImage || 'Share image'}</span>
           </button>
         </div>
 
@@ -207,7 +222,7 @@ const webAppSchema = {
               <line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/>
               <line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/>
             </svg>
-            <span>Share Link</span>
+            <span>{common.buttons?.share || 'Share'}</span>
           </button>
 
           <button
@@ -219,14 +234,14 @@ const webAppSchema = {
               <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
               <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
             </svg>
-            <span>Copy Link</span>
+            <span>{common.buttons?.copyLink || 'Copy Link'}</span>
           </button>
 
           <a
-            href="/countdown"
+            href={getLocalizedPath('/countdown', lang)}
             class="btn-secondary py-2 px-3.5 text-xs font-medium"
           >
-            Make Your Own &rarr;
+            {countdown.createBtn || 'Make Your Own'} &rarr;
           </a>
         </div>
       </div>
@@ -241,6 +256,12 @@ const webAppSchema = {
   import { showToast } from '../scripts/toast.js';
 
   function initCountdownViewer() {
+    const tData = (window as any).__COUNTDOWN_VIEW_I18N__ || {};
+    const tCommon = tData.common || {};
+    const tCountdown = tData.countdown || {};
+    const tErrors = tData.errors || {};
+    const pageLang = (window as any).__PAGE_LANG__ || 'en';
+
     const errorCard = document.getElementById('countdown-error-card');
     const stage = document.getElementById('countdown-stage');
     const emojiEl = document.getElementById('viewer-emoji');
@@ -394,9 +415,9 @@ const webAppSchema = {
         } else {
           try {
             await navigator.clipboard.writeText(window.location.href);
-            showToast('Countdown link copied to clipboard!');
+            showToast(tCountdown.toasts?.linkCopied || 'Countdown link copied to clipboard!');
           } catch (e) {
-            showToast('Unable to share.');
+            showToast(tCommon.toasts?.errorOccurred || 'Unable to share.');
           }
         }
       });
@@ -407,9 +428,9 @@ const webAppSchema = {
       copyBtn.addEventListener('click', async () => {
         try {
           await navigator.clipboard.writeText(window.location.href);
-          showToast('Countdown link copied to clipboard!');
+          showToast(tCountdown.toasts?.linkCopied || 'Countdown link copied to clipboard!');
         } catch (e) {
-          showToast('Unable to copy.');
+          showToast(tCommon.toasts?.errorOccurred || 'Unable to copy.');
         }
       });
     }

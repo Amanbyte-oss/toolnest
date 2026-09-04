@@ -1,5 +1,5 @@
 ---
-import { getTranslations, type Lang } from '../i18n';
+import { getNamespace, type Lang } from '../i18n';
 
 interface Props {
   id?: string;
@@ -7,16 +7,21 @@ interface Props {
 }
 
 const { id = 'countdown-share-card', lang = 'en' } = Astro.props;
-const t = getTranslations(lang);
+const countdown = getNamespace(lang, 'countdown');
+const t = { countdown };
 ---
 
 <!-- Hidden Offscreen Render Target for High-Resolution PNG Export (540x675 at 2x = 1080x1350) -->
 <div
-  id={id}
-  class="fixed pointer-events-none z-[-100] select-none text-slate-900 overflow-hidden font-sans"
-  style="position: fixed; left: -9999px; top: 0; width: 540px; height: 675px; min-width: 540px; min-height: 675px; max-width: 540px; max-height: 675px; background: linear-gradient(145deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);"
+  class="fixed top-0 start-0 w-0 h-0 overflow-hidden pointer-events-none z-[-100]"
+  style="position: fixed; top: 0; left: 0; width: 0; height: 0; overflow: hidden; pointer-events: none; z-index: -100;"
   aria-hidden="true"
 >
+  <div
+    id={id}
+    class="select-none text-slate-900 font-sans"
+    style="width: 540px; height: 675px; min-width: 540px; min-height: 675px; max-width: 540px; max-height: 675px; background: linear-gradient(145deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);"
+  >
   <!-- Card Container (Sticker style with rounded border & subtle shadow) -->
   <div class="w-full h-full p-9 flex flex-col justify-between relative box-border border-2 border-slate-300/90 rounded-[40px] bg-gradient-to-b from-white/95 via-slate-50/90 to-slate-100/90 shadow-2xl">
     <!-- Top Decorative Line -->
@@ -54,9 +59,9 @@ const t = getTranslations(lang);
           <div data-card-progress-bar class="bg-gradient-to-r from-indigo-500 to-rose-500 h-full rounded-full transition-all duration-300" style="width: 0%;"></div>
         </div>
         <div class="flex justify-between items-center text-[10px] font-bold text-slate-500 px-0.5">
-          <span data-card-progress-start>Created</span>
-          <span data-card-progress-pct class="text-indigo-600 font-mono">0% elapsed</span>
-          <span>Target</span>
+          <span data-card-progress-start>{lang === 'ar' ? 'تم الإنشاء' : lang === 'pt' ? 'Criado' : lang === 'id' ? 'Dibuat' : 'Created'}</span>
+          <span data-card-progress-pct class="text-indigo-600 font-mono">0%</span>
+          <span>{lang === 'ar' ? 'الموعد المستهدف' : lang === 'pt' ? 'Data Alvo' : lang === 'id' ? 'Target' : 'Target'}</span>
         </div>
       </div>
     </div>
@@ -132,4 +137,5 @@ const t = getTranslations(lang);
       </div>
     </div>
   </div>
+</div>
 </div>

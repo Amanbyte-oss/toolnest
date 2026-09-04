@@ -1,20 +1,30 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getTranslations, getLocalizedPath, type Lang } from '../i18n';
+import { getNamespace, getLocalizedPath, type Lang } from '../i18n';
 
 export interface Props {
   lang?: Lang;
 }
 
 const { lang = 'en' } = Astro.props;
-const t = getTranslations(lang);
+const common = getNamespace(lang, 'common');
+const contact = getNamespace(lang, 'contact');
+const errors = getNamespace(lang, 'errors');
+
+const t = {
+  contact,
+  common,
+  errors,
+  nav: common.nav,
+  siteName: common.siteName,
+};
 
 const contactSchema = {
   '@context': 'https://schema.org',
   '@type': 'ContactPage',
-  name: t.contact.title,
+  name: contact.title || 'Contact ToolNest',
   url: `https://toolnest.pages.dev${getLocalizedPath('/contact', lang)}`,
-  description: t.contact.metaDesc,
+  description: contact.metaDesc,
   mainEntity: {
     '@type': 'Organization',
     name: 'ToolNest',
@@ -25,8 +35,7 @@ const contactSchema = {
 ---
 
 <Base
-  title={t.contact.title}
-  description={t.contact.metaDesc}
+  metaKey="contact"
   canonicalPath={getLocalizedPath('/contact', lang)}
   ogImage="/og/contact.svg"
   breadcrumbs={[{ name: t.nav.contact, item: getLocalizedPath('/contact', lang) }]}

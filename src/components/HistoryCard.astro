@@ -4,18 +4,26 @@
  * Standardized client-side history card for all tools.
  * Collapsible, accessible, mobile-first, and styled to the slate grey theme.
  */
+import { getLangFromPath, getNamespace, type Lang } from '../i18n';
 
 interface Props {
   toolId: string;
   title?: string;
   icon?: string;
+  lang?: Lang;
 }
 
+const currentPath = Astro.url.pathname;
+const detectedLang = getLangFromPath(currentPath);
 const {
   toolId,
-  title = 'Recent Activity',
+  title,
   icon = '🕘',
+  lang = detectedLang,
 } = Astro.props;
+
+const common = getNamespace(lang, 'common');
+const displayTitle = title || common.recentActivity || 'Recent Activity';
 ---
 
 <section
@@ -39,7 +47,7 @@ const {
         </svg>
       </span>
       <span id={`history-title-${toolId}`} class="text-sm sm:text-base group-hover:text-accent transition-colors">
-        {title}
+        {displayTitle}
       </span>
       <span
         id={`history-count-badge-${toolId}`}
@@ -67,29 +75,29 @@ const {
         id={`history-clear-prompt-${toolId}`}
         type="button"
         class="hidden text-xs font-semibold text-secondary-light hover:text-red-500 dark:text-secondary-dark dark:hover:text-red-400 transition-colors px-2 py-1 rounded focus:outline-none focus:ring-2 focus:ring-accent"
-        aria-label={`Clear all ${title} history`}
+        aria-label={`${common.clearAll || 'Clear all'} ${displayTitle}`}
       >
-        Clear all
+        {common.clearAll || 'Clear all'}
       </button>
 
       <div
         id={`history-confirm-box-${toolId}`}
         class="hidden items-center gap-2 text-xs bg-red-500/10 dark:bg-red-500/20 border border-red-500/30 rounded-lg px-2.5 py-1"
       >
-        <span class="text-red-600 dark:text-red-400 font-medium">Clear all?</span>
+        <span class="text-red-600 dark:text-red-400 font-medium">{common.clearAllConfirm || 'Clear all?'}</span>
         <button
           id={`history-confirm-yes-${toolId}`}
           type="button"
           class="font-bold text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 underline focus:outline-none"
         >
-          Yes
+          {common.yes || 'Yes'}
         </button>
         <button
           id={`history-confirm-no-${toolId}`}
           type="button"
           class="text-secondary-light dark:text-secondary-dark hover:underline focus:outline-none ml-1"
         >
-          Cancel
+          {common.cancel || 'Cancel'}
         </button>
       </div>
     </div>
@@ -115,10 +123,10 @@ const {
         </svg>
       </div>
       <p class="text-xs sm:text-sm font-medium text-secondary-light dark:text-secondary-dark">
-        No recent calculations saved yet
+        {common.recentCalculations || 'No recent calculations saved yet'}
       </p>
       <p class="text-[11px] text-secondary-light/80 dark:text-secondary-dark/80">
-        Your entries are automatically saved privately on this device.
+        {common.entriesSavedPrivately || 'Your entries are automatically saved privately on this device.'}
       </p>
     </div>
 
@@ -127,7 +135,7 @@ const {
       id={`history-list-${toolId}`}
       class="space-y-2 hidden"
       role="list"
-      aria-label={`${title} entries`}
+      aria-label={`${displayTitle}`}
     >
       <!-- Populated dynamically by initHistoryCard in src/scripts/history.js -->
     </div>
