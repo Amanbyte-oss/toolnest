@@ -1,0 +1,64 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bgGlow" cx="20%" cy="20%" r="70%">
+      <stop offset="0%" stop-color="#312E81" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#111315" stop-opacity="1"/>
+    </radialGradient>
+    <linearGradient id="accentLine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6366F1"/>
+      <stop offset="50%" stop-color="#A855F7"/>
+      <stop offset="100%" stop-color="#EC4899"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="1200" height="630" fill="#111315"/>
+  <rect width="1200" height="630" fill="url(#bgGlow)"/>
+
+  <!-- Subtle Blueprint Grid -->
+  <g stroke="#2A2E33" stroke-width="1" stroke-opacity="0.3">
+    <line x1="0" y1="105" x2="1200" y2="105"/>
+    <line x1="0" y1="210" x2="1200" y2="210"/>
+    <line x1="0" y1="315" x2="1200" y2="315"/>
+    <line x1="0" y1="420" x2="1200" y2="420"/>
+    <line x1="0" y1="525" x2="1200" y2="525"/>
+    <line x1="200" y1="0" x2="200" y2="630"/>
+    <line x1="400" y1="0" x2="400" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/>
+    <line x1="800" y1="0" x2="800" y2="630"/>
+    <line x1="1000" y1="0" x2="1000" y2="630"/>
+  </g>
+
+  <!-- Card Surface Container -->
+  <rect x="80" y="70" width="1040" height="490" rx="28" fill="#1B1E21" stroke="#2A2E33" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="80" y="70" width="1040" height="6" fill="url(#accentLine)" rx="3"/>
+
+  <!-- Top Badge Row -->
+  <g transform="translate(130, 130)">
+    <rect x="0" y="0" width="46" height="46" rx="14" fill="#26292D" stroke="#374151" stroke-width="1.5"/>
+    <text x="23" y="30" font-family="-apple-system, system-ui, sans-serif" font-size="22" text-anchor="middle" dominant-baseline="middle">🎡</text>
+    
+    <rect x="62" y="6" width="204.5" height="32" rx="16" fill="#312E81" fill-opacity="0.6" stroke="#6366F1" stroke-width="1.2"/>
+    <text x="164.25" y="23" font-family="-apple-system, system-ui, sans-serif" font-size="12" font-weight="800" fill="#EEF2FF" text-anchor="middle" dominant-baseline="middle" letter-spacing="1">INTERACTIVE PHYSICS</text>
+  </g>
+
+  <!-- Title (split if long) -->
+  <text x="130" y="245" font-family="-apple-system, system-ui, sans-serif" font-size="44" font-weight="900" fill="#F9FAFB" letter-spacing="-1">
+    Spin the Wheel — Random Decision Spinner
+  </text>
+
+  <!-- Description -->
+  <text x="130" y="320" font-family="-apple-system, system-ui, sans-serif" font-size="22" font-weight="400" fill="#9CA3AF">
+    Customizable decision wheel with realistic deceleration physics and AI preset generation. Spin to decide.
+  </text>
+
+  <!-- Footer Watermark -->
+  <g transform="translate(130, 480)">
+    <circle cx="10" cy="10" r="6" fill="#10B981"/>
+    <text x="26" y="15" font-family="-apple-system, system-ui, sans-serif" font-size="16" font-weight="700" fill="#F9FAFB">ToolNest</text>
+    <text x="106" y="15" font-family="-apple-system, system-ui, sans-serif" font-size="15" font-weight="400" fill="#6B7280">•  toolnest.pages.dev  •  100% Client-Side  •  Zero Tracking</text>
+  </g>
+</svg>

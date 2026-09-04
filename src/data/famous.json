@@ -1,0 +1,129 @@
+{
+  "01-01": [{ "name": "J.D. Salinger", "known": "Author of The Catcher in the Rye" }],
+  "01-08": [
+    { "name": "Stephen Hawking", "known": "Theoretical physicist, cosmologist, and author" },
+    { "name": "David Bowie", "known": "Iconic visionary musician and cultural innovator" }
+  ],
+  "01-15": [{ "name": "Martin Luther King Jr.", "known": "Civil rights leader, minister, and Nobel laureate" }],
+  "01-17": [
+    { "name": "Benjamin Franklin", "known": "Polymath, inventor, and founding statesman" },
+    { "name": "Muhammad Ali", "known": "Legendary three-time world heavyweight boxing champion" }
+  ],
+  "01-27": [{ "name": "Wolfgang Amadeus Mozart", "known": "Prolific and influential classical composer" }],
+  "01-29": [{ "name": "Oprah Winfrey", "known": "Global media mogul, television host, and philanthropist" }],
+  "01-30": [{ "name": "Franklin D. Roosevelt", "known": "32nd U.S. President who led during the Great Depression and WWII" }],
+
+  "02-04": [{ "name": "Rosa Parks", "known": "Pioneering civil rights activist and Congressional Gold Medal recipient" }],
+  "02-07": [{ "name": "Charles Dickens", "known": "Acclaimed Victorian novelist behind A Tale of Two Cities" }],
+  "02-11": [{ "name": "Thomas Edison", "known": "Prolific inventor of the phonograph, motion picture camera, and light bulb" }],
+  "02-12": [
+    { "name": "Abraham Lincoln", "known": "16th U.S. President who preserved the Union and abolished slavery" },
+    { "name": "Charles Darwin", "known": "Naturalist and biologist who introduced the theory of evolution" }
+  ],
+  "02-15": [{ "name": "Galileo Galilei", "known": "Astronomer, physicist, and father of modern observational science" }],
+  "02-17": [{ "name": "Michael Jordan", "known": "Basketball icon and six-time NBA champion" }],
+  "02-20": [{ "name": "Rihanna", "known": "Billionaire pop superstar, fashion icon, and entrepreneur" }],
+  "02-24": [{ "name": "Steve Jobs", "known": "Visionary co-founder of Apple Inc. and Pixar" }],
+  "02-28": [{ "name": "Linus Pauling", "known": "Biochemist and only person to win two unshared Nobel Prizes" }],
+
+  "03-01": [{ "name": "Frédéric Chopin", "known": "Celebrated Romantic composer and piano virtuoso" }],
+  "03-03": [{ "name": "Alexander Graham Bell", "known": "Engineer, scientist, and inventor of the first practical telephone" }],
+  "03-06": [
+    { "name": "Michelangelo", "known": "Italian Renaissance sculptor, painter of the Sistine Chapel ceiling" },
+    { "name": "Gabriel García Márquez", "known": "Nobel Prize-winning master of magical realism" }
+  ],
+  "03-14": [
+    { "name": "Albert Einstein", "known": "Theoretical physicist who developed the theory of relativity" },
+    { "name": "Stephen Curry", "known": "Four-time NBA champion and greatest shooter in basketball history" }
+  ],
+  "03-21": [
+    { "name": "Johann Sebastian Bach", "known": "Master composer of the Baroque period" },
+    { "name": "Ayrton Senna", "known": "Legendary three-time Formula 1 world champion" }
+  ],
+  "03-27": [{ "name": "Quentin Tarantino", "known": "Acclaimed auteur filmmaker and screenwriter" }],
+  "03-30": [{ "name": "Vincent van Gogh", "known": "Influential Post-Impressionist painter of The Starry Night" }],
+
+  "04-04": [{ "name": "Maya Angelou", "known": "Poet, memoirist, and civil rights activist" }],
+  "04-12": [{ "name": "Herbie Hancock", "known": "Legendary jazz keyboardist, bandleader, and composer" }],
+  "04-15": [{ "name": "Leonardo da Vinci", "known": "Renaissance polymath, painter of the Mona Lisa and mechanical visionary" }],
+  "04-16": [{ "name": "Charlie Chaplin", "known": "Iconic comic actor and filmmaker of silent cinema" }],
+  "04-22": [{ "name": "J. Robert Oppenheimer", "known": "Theoretical physicist and scientific director of the Manhattan Project" }],
+  "04-23": [{ "name": "William Shakespeare", "known": "World's preeminent dramatist and poet" }],
+  "04-25": [{ "name": "Ella Fitzgerald", "known": "The First Lady of Song and Queen of Jazz" }],
+  "04-28": [{ "name": "Harper Lee", "known": "Pulitzer Prize-winning author of To Kill a Mockingbird" }],
+
+  "05-04": [{ "name": "Audrey Hepburn", "known": "Beloved film icon, fashion legend, and UNICEF goodwill ambassador" }],
+  "05-06": [{ "name": "Sigmund Freud", "known": "Neurologist and founder of psychoanalysis" }],
+  "05-11": [{ "name": "Richard Feynman", "known": "Nobel laureate theoretical physicist and educator" }],
+  "05-14": [{ "name": "George Lucas", "known": "Creator of the epic Star Wars and Indiana Jones franchises" }],
+  "05-19": [{ "name": "Malcolm X", "known": "Influential civil rights leader, orator, and human rights advocate" }],
+  "05-21": [{ "name": "The Notorious B.I.G.", "known": "One of the most acclaimed and influential lyricists in hip-hop history" }],
+  "05-26": [{ "name": "Sally Ride", "known": "Astrophysicist and first American woman in space" }],
+  "05-29": [{ "name": "John F. Kennedy", "known": "35th U.S. President who launched the Apollo lunar program" }],
+
+  "06-01": [{ "name": "Morgan Freeman", "known": "Academy Award-winning actor and iconic narrator" }],
+  "06-07": [{ "name": "Prince", "known": "Grammy-winning musical virtuoso and multi-instrumentalist" }],
+  "06-14": [{ "name": "Donald Trump", "known": "45th and 47th U.S. President and entrepreneur" }],
+  "06-18": [{ "name": "Paul McCartney", "known": "Legendary singer-songwriter and co-lead of The Beatles" }],
+  "06-23": [{ "name": "Alan Turing", "known": "Father of modern computing and WWII Enigma codebreaker" }],
+  "06-24": [{ "name": "Lionel Messi", "known": "Eight-time Ballon d'Or winner and FIFA World Cup champion" }],
+  "06-27": [{ "name": "Helen Keller", "known": "Author, disability rights advocate, and humanitarian" }],
+  "06-28": [{ "name": "Elon Musk", "known": "CEO of Tesla, founder of SpaceX, and tech pioneer" }],
+
+  "07-02": [{ "name": "Thurgood Marshall", "known": "Civil rights lawyer and first African American Supreme Court Justice" }],
+  "07-06": [{ "name": "Frida Kahlo", "known": "Celebrated Mexican painter renowned for surreal, raw self-portraits" }],
+  "07-10": [{ "name": "Nikola Tesla", "known": "Visionary engineer and inventor of alternating current (AC) electricity" }],
+  "07-12": [{ "name": "Malala Yousafzai", "known": "Pakistani education activist and youngest Nobel Peace Prize laureate" }],
+  "07-18": [{ "name": "Nelson Mandela", "known": "Anti-apartheid hero, Nobel laureate, and first Black President of South Africa" }],
+  "07-20": [{ "name": "Sir Edmund Hillary", "known": "Mountaineer and explorer who first reached the summit of Mount Everest" }],
+  "07-21": [{ "name": "Ernest Hemingway", "known": "Nobel Prize-winning American novelist and adventure writer" }],
+  "07-30": [{ "name": "Henry Ford", "known": "Industrialist who pioneered assembly line mass production" }],
+
+  "08-04": [{ "name": "Barack Obama", "known": "44th U.S. President and Nobel Peace Prize recipient" }],
+  "08-05": [{ "name": "Neil Armstrong", "known": "Naval aviator, astronaut, and first human to walk on the Moon" }],
+  "08-08": [{ "name": "Roger Federer", "known": "Tennis legend with twenty Grand Slam singles titles" }],
+  "08-09": [{ "name": "Whitney Houston", "known": "Legendary vocalist and one of the best-selling artists in history" }],
+  "08-21": [{ "name": "Usain Bolt", "known": "Eight-time Olympic gold medalist and fastest sprinter in history" }],
+  "08-26": [{ "name": "Mother Teresa", "known": "Missionary, humanitarian, and Nobel Peace Prize laureate" }],
+  "08-28": [{ "name": "Johann Wolfgang von Goethe", "known": "German literary giant, poet, and philosopher" }],
+  "08-29": [{ "name": "Michael Jackson", "known": "The King of Pop and record-setting global musical entertainer" }],
+
+  "09-02": [{ "name": "Keanu Reeves", "known": "Beloved film star of The Matrix, Speed, and John Wick" }],
+  "09-04": [{ "name": "Beyoncé", "known": "Thirty-two time Grammy Award-winning singer, dancer, and producer" }],
+  "09-05": [{ "name": "Freddie Mercury", "known": "Iconic, flamboyant frontman and lead singer of rock band Queen" }],
+  "09-12": [{ "name": "Jesse Owens", "known": "Track and field icon who won four gold medals at the 1936 Berlin Olympics" }],
+  "09-19": [{ "name": "Agatha Christie", "known": "Guinness World Record best-selling fiction author and mystery novelist" }],
+  "09-21": [{ "name": "Stephen King", "known": "Prolific master author of horror, suspense, and supernatural fiction" }],
+  "09-23": [{ "name": "Bruce Springsteen", "known": "Iconic rock songwriter and performer known as The Boss" }],
+  "09-28": [{ "name": "Confucius", "known": "Ancient philosopher whose ethical tenets shaped East Asian thought" }],
+
+  "10-02": [{ "name": "Mahatma Gandhi", "known": "Leader of Indian independence through nonviolent civil resistance" }],
+  "10-09": [{ "name": "John Lennon", "known": "Singer-songwriter, peace advocate, and co-founder of The Beatles" }],
+  "10-14": [{ "name": "Dwight D. Eisenhower", "known": "Supreme Allied Commander during WWII and 34th U.S. President" }],
+  "10-17": [{ "name": "Eminem", "known": "Groundbreaking hip-hop artist and multi-platinum lyricist" }],
+  "10-21": [{ "name": "Carrie Fisher", "known": "Actress acclaimed for portraying Princess Leia, and author" }],
+  "10-24": [{ "name": "Drake", "known": "Chart-topping rapper, singer, and Grammy-winning recording artist" }],
+  "10-27": [{ "name": "Theodore Roosevelt", "known": "26th U.S. President, conservationist, and Nobel Peace Prize winner" }],
+  "10-28": [
+    { "name": "Bill Gates", "known": "Co-founder of Microsoft and co-chair of the Gates Foundation" },
+    { "name": "Jonas Salk", "known": "Virologist who developed one of the first successful polio vaccines" }
+  ],
+
+  "11-04": [{ "name": "Matthew McConaughey", "known": "Academy Award-winning actor and bestselling memoirist" }],
+  "11-07": [{ "name": "Marie Curie", "known": "Pioneering physicist and chemist, first person to win two Nobel Prizes" }],
+  "11-09": [{ "name": "Carl Sagan", "known": "Astronomer, astrophysicist, and creator of Cosmos" }],
+  "11-12": [{ "name": "Sun Yat-sen", "known": "Statesman recognized as the founding father of modern China" }],
+  "11-19": [{ "name": "Indira Gandhi", "known": "First and only female Prime Minister of India" }],
+  "11-20": [{ "name": "Joe Biden", "known": "46th U.S. President and longest-serving senator from Delaware" }],
+  "11-27": [{ "name": "Jimi Hendrix", "known": "Celebrated electric guitarist widely considered the greatest in rock music" }],
+  "11-30": [{ "name": "Mark Twain", "known": "Humorist, lecturer, and father of American literature" }],
+
+  "12-05": [{ "name": "Walt Disney", "known": "Pioneer of animated film, producer, and theme park visionary" }],
+  "12-10": [{ "name": "Ada Lovelace", "known": "Mathematician considered the first computer programmer for the Analytical Engine" }],
+  "12-13": [{ "name": "Taylor Swift", "known": "Four-time Album of the Year Grammy winner and global pop icon" }],
+  "12-16": [{ "name": "Ludwig van Beethoven", "known": "Titan of classical and Romantic music, composer of the Ninth Symphony" }],
+  "12-18": [{ "name": "Steven Spielberg", "known": "Director of Jaws, E.T., Jurassic Park, and Schindler's List" }],
+  "12-25": [{ "name": "Sir Isaac Newton", "known": "Physicist who formulated the laws of motion and universal gravitation" }],
+  "12-28": [{ "name": "Stan Lee", "known": "Comic book writer and creative mastermind behind Marvel Comics" }],
+  "12-30": [{ "name": "LeBron James", "known": "All-time leading scorer in NBA history and four-time MVP" }]
+}

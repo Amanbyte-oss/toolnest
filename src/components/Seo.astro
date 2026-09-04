@@ -1,0 +1,158 @@
+---
+/**
+ * src/components/Seo.astro
+ * Advanced SEO metadata and Schema.org structured data generator.
+ */
+
+export interface BreadcrumbItem {
+  name: string;
+  item: string;
+}
+
+export interface Props {
+  title: string;
+  description: string;
+  canonicalPath?: string;
+  ogImage?: string;
+  type?: 'website' | 'article';
+  breadcrumbs?: BreadcrumbItem[];
+  extraSchemas?: Record<string, any>[];
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  canonicalPath = Astro.url.pathname,
+  ogImage = '/og/home.svg',
+  type = 'website',
+  breadcrumbs = [],
+  extraSchemas = [],
+  noindex = false,
+} = Astro.props;
+
+const siteUrl = Astro.site ? Astro.site.toString().replace(/\/$/, '') : 'https://toolnest.pages.dev';
+
+// Ensure canonical URL is absolute and cleanly formatted
+const cleanCanonicalPath = canonicalPath.startsWith('/') ? canonicalPath : `/${canonicalPath}`;
+const canonicalUrl = new URL(cleanCanonicalPath, siteUrl).toString();
+const absoluteOgImage = ogImage.startsWith('http') ? ogImage : new URL(ogImage, siteUrl).toString();
+
+// Target strict length limits (< 60 chars title, < 155 chars description)
+const siteName = 'ToolNest';
+const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
+const formattedTitle = fullTitle.length > 60 ? `${fullTitle.slice(0, 57)}...` : fullTitle;
+const formattedDescription = description.length > 155 ? `${description.slice(0, 152)}...` : description;
+
+const isHomePage = cleanCanonicalPath === '/' || cleanCanonicalPath === '';
+
+// Schema: Organization (Single source of truth)
+const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': `${siteUrl}/#organization`,
+  name: siteName,
+  url: siteUrl,
+  logo: {
+    '@type': 'ImageObject',
+    url: `${siteUrl}/favicon.svg`,
+  },
+  sameAs: [],
+};
+
+// Schema: WebSite with Sitelinks Searchbox (Emitted on homepage only)
+const websiteJsonLd = isHomePage
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      '@id': `${siteUrl}/#website`,
+      name: siteName,
+      url: siteUrl,
+      description: formattedDescription,
+      publisher: {
+        '@id': `${siteUrl}/#organization`,
+      },
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: {
+          '@type': 'EntryPoint',
+          urlTemplate: `${siteUrl}/name-meaning?q={search_term_string}`,
+        },
+        'query-input': 'required name=search_term_string',
+      },
+    }
+  : null;
+
+// Schema: Unified @graph for Homepage (Organization + WebSite with SearchAction)
+const homeGraphJsonLd = isHomePage
+  ? {
+      '@context': 'https://schema.org',
+      '@graph': [
+        organizationJsonLd,
+        websiteJsonLd,
+      ],
+    }
+  : null;
+
+// Schema: BreadcrumbList
+const breadcrumbsList = [
+  { name: 'Home', item: siteUrl },
+  ...breadcrumbs.map((b) => ({
+    name: b.name,
+    item: b.item.startsWith('http') ? b.item : new URL(b.item.startsWith('/') ? b.item : `/${b.item}`, siteUrl).toString(),
+  })),
+];
+
+const breadcrumbJsonLd =
+  breadcrumbs.length > 0
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: breadcrumbsList.map((crumb, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: crumb.name,
+          item: crumb.item,
+        })),
+      }
+    : null;
+---
+
+<!-- Primary Meta Tags -->
+<title>{formattedTitle}</title>
+<meta name="title" content={formattedTitle} />
+<meta name="description" content={formattedDescription} />
+<link rel="canonical" href={canonicalUrl} />
+{noindex ? (
+  <meta name="robots" content="noindex, nofollow" />
+) : (
+  <meta name="robots" content="index, follow" />
+)}
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:title" content={formattedTitle} />
+<meta property="og:description" content={formattedDescription} />
+<meta property="og:image" content={absoluteOgImage} />
+<meta property="og:site_name" content={siteName} />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonicalUrl} />
+<meta name="twitter:title" content={formattedTitle} />
+<meta name="twitter:description" content={formattedDescription} />
+<meta name="twitter:image" content={absoluteOgImage} />
+
+<!-- Structured Data (JSON-LD) -->
+{isHomePage && homeGraphJsonLd && (
+  <script type="application/ld+json" set:html={JSON.stringify(homeGraphJsonLd)} />
+)}
+
+{breadcrumbJsonLd && (
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
+)}
+
+{extraSchemas.map((schema) => (
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+))}

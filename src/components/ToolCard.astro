@@ -1,0 +1,116 @@
+---
+export interface Props {
+  title: string;
+  description: string;
+  href: string;
+  badge?: string;
+  icon?: string;
+  popular?: boolean;
+  anchor?: string;
+}
+
+const {
+  title,
+  description,
+  href,
+  badge,
+  icon = 'tool',
+  popular = false,
+  anchor,
+} = Astro.props;
+---
+
+<a
+  href={href}
+  class="group relative flex flex-col justify-between rounded-2xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark p-5 sm:p-6 shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-accent/40 dark:hover:border-accent/40 transition-all duration-150 active:scale-[0.98] min-h-[150px]"
+>
+  <div>
+    <!-- Card Header with Icon & Optional Badge -->
+    <div class="flex items-center justify-between gap-3 mb-3">
+      <div class="w-10 h-10 rounded-xl bg-bg-light dark:bg-bg-dark border border-border-light dark:border-border-dark flex items-center justify-center text-accent group-hover:scale-105 group-hover:bg-accent/10 dark:group-hover:bg-accent/15 transition-all duration-150">
+        {icon === 'calendar' && (
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
+            <line x1="16" x2="16" y1="2" y2="6"/>
+            <line x1="8" x2="8" y1="2" y2="6"/>
+            <line x1="3" x2="21" y1="10" y2="10"/>
+          </svg>
+        )}
+        {icon === 'cake' && (
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"/>
+            <path d="M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 1.5-1 2-1"/>
+            <path d="M2 21h20"/>
+            <line x1="12" x2="12" y1="7" y2="11"/>
+          </svg>
+        )}
+        {icon === 'wheel' && (
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="m4.93 4.93 14.14 14.14"/>
+            <path d="m19.07 4.93-14.14 14.14"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+        )}
+        {icon === 'dice' && (
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
+            <path d="M16 8h.01"/>
+            <path d="M8 8h.01"/>
+            <path d="M8 16h.01"/>
+            <path d="M16 16h.01"/>
+            <path d="M12 12h.01"/>
+          </svg>
+        )}
+        {icon === 'clock' && (
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+        )}
+        {icon === 'book' && (
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+            <path d="M6 6h10"/>
+            <path d="M6 10h10"/>
+          </svg>
+        )}
+        {icon === 'tool' && (
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+          </svg>
+        )}
+      </div>
+
+      <div class="flex items-center gap-1.5">
+        {popular && (
+          <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold bg-accent/10 text-accent dark:bg-accent/20">
+            Popular
+          </span>
+        )}
+        {badge && (
+          <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-bg-light dark:bg-bg-dark border border-border-light dark:border-border-dark text-secondary-light dark:text-secondary-dark">
+            {badge}
+          </span>
+        )}
+      </div>
+    </div>
+
+    <!-- Title & Description -->
+    <h3 class="text-base font-bold text-primary-light dark:text-primary-dark tracking-tight group-hover:text-accent dark:group-hover:text-accent transition-colors mb-1.5">
+      {title}
+    </h3>
+    <p class="text-sm text-secondary-light dark:text-secondary-dark leading-relaxed">
+      {description}
+    </p>
+  </div>
+
+  <!-- Bottom CTA Row -->
+  <div class="mt-4 pt-3 border-t border-border-light/60 dark:border-border-dark/60 flex items-center justify-between text-xs font-semibold text-secondary-light dark:text-secondary-dark group-hover:text-accent dark:group-hover:text-accent transition-colors">
+    <span class="truncate pr-2">{anchor || 'Open Tool'}</span>
+    <svg class="w-4 h-4 shrink-0 transform group-hover:translate-x-1 transition-transform duration-150" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="5" x2="19" y1="12" y2="12"></line>
+      <polyline points="12 5 19 12 12 19"></polyline>
+    </svg>
+  </div>
+</a>

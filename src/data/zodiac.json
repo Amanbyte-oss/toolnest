@@ -1,0 +1,110 @@
+[
+  {
+    "id": "aries",
+    "name": "Aries",
+    "symbol": "♈",
+    "element": "Fire",
+    "start": "03-21",
+    "end": "04-19",
+    "traits": ["Bold", "Energetic", "Courageous", "Passionate"]
+  },
+  {
+    "id": "taurus",
+    "name": "Taurus",
+    "symbol": "♉",
+    "element": "Earth",
+    "start": "04-20",
+    "end": "05-20",
+    "traits": ["Patient", "Reliable", "Grounded", "Devoted"]
+  },
+  {
+    "id": "gemini",
+    "name": "Gemini",
+    "symbol": "♊",
+    "element": "Air",
+    "start": "05-21",
+    "end": "06-20",
+    "traits": ["Curious", "Adaptable", "Witty", "Expressive"]
+  },
+  {
+    "id": "cancer",
+    "name": "Cancer",
+    "symbol": "♋",
+    "element": "Water",
+    "start": "06-21",
+    "end": "07-22",
+    "traits": ["Intuitive", "Compassionate", "Protective", "Sentimental"]
+  },
+  {
+    "id": "leo",
+    "name": "Leo",
+    "symbol": "♌",
+    "element": "Fire",
+    "start": "07-23",
+    "end": "08-22",
+    "traits": ["Charismatic", "Generous", "Warm-hearted", "Leader"]
+  },
+  {
+    "id": "virgo",
+    "name": "Virgo",
+    "symbol": "♍",
+    "element": "Earth",
+    "start": "08-23",
+    "end": "09-22",
+    "traits": ["Analytical", "Meticulous", "Practical", "Reliable"]
+  },
+  {
+    "id": "libra",
+    "name": "Libra",
+    "symbol": "♎",
+    "element": "Air",
+    "start": "09-23",
+    "end": "10-22",
+    "traits": ["Diplomatic", "Fair-minded", "Harmonious", "Charming"]
+  },
+  {
+    "id": "scorpio",
+    "name": "Scorpio",
+    "symbol": "♏",
+    "element": "Water",
+    "start": "10-23",
+    "end": "11-21",
+    "traits": ["Passionate", "Intuitive", "Resilient", "Strategic"]
+  },
+  {
+    "id": "sagittarius",
+    "name": "Sagittarius",
+    "symbol": "♐",
+    "element": "Fire",
+    "start": "11-22",
+    "end": "12-21",
+    "traits": ["Optimistic", "Adventurous", "Philosophical", "Generous"]
+  },
+  {
+    "id": "capricorn",
+    "name": "Capricorn",
+    "symbol": "♑",
+    "element": "Earth",
+    "start": "12-22",
+    "end": "01-19",
+    "traits": ["Disciplined", "Ambitious", "Pragmatic", "Persistent"]
+  },
+  {
+    "id": "aquarius",
+    "name": "Aquarius",
+    "symbol": "♒",
+    "element": "Air",
+    "start": "01-20",
+    "end": "02-18",
+    "traits": ["Innovative", "Independent", "Humanitarian", "Original"]
+  },
+  {
+    "id": "pisces",
+    "name": "Pisces",
+    "symbol": "♓",
+    "element": "Water",
+    "start": "02-19",
+    "end": "03-20",
+    "traits": ["Empathetic", "Imaginative", "Artistic", "Gentle"]
+  }
+]

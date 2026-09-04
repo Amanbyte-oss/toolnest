@@ -1,0 +1,140 @@
+---
+export const prerender = true;
+import Base from '../layouts/Base.astro';
+
+const lastUpdated = 'September 3, 2026';
+---
+
+<Base
+  title="Privacy Policy — Data Privacy & Trust | ToolNest"
+  description="Read ToolNest's comprehensive Privacy Policy. Learn about our client-side architecture, local storage usage, advertising cookies, and analytics policies."
+  canonicalPath="/privacy-policy"
+  ogImage="/og/about.svg"
+  breadcrumbs={[{ name: 'Tools', item: '/#tools' }, { name: 'Privacy Policy', item: '/privacy-policy' }]}
+>
+  <article class="space-y-8 max-w-2xl mx-auto">
+    <!-- Header -->
+    <header class="space-y-3 pb-4 border-b border-border-light dark:border-border-dark">
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-accent/10 text-accent dark:bg-accent/20">
+        <span>🔒</span>
+        <span>Data Governance & Transparency</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-primary-light dark:text-primary-dark">
+        Privacy Policy
+      </h1>
+      <p class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark">
+        Last Updated: <span class="font-semibold text-primary-light dark:text-primary-dark">{lastUpdated}</span>
+      </p>
+    </header>
+
+    <!-- 1. Introduction -->
+    <section class="space-y-3" aria-labelledby="intro-heading">
+      <h2 id="intro-heading" class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark">
+        1. Introduction
+      </h2>
+      <p class="text-sm text-secondary-light dark:text-secondary-dark leading-relaxed">
+        ToolNest ("we," "our," or "the site") operates as a decentralized, static web platform providing fast, browser-based utilities. We are committed to transparency and respecting the privacy of our visitors. This policy outlines how information is handled when you access and use our website.
+      </p>
+    </section>
+
+    <!-- 2. What Data We Collect -->
+    <section class="space-y-3" aria-labelledby="data-collection-heading">
+      <h2 id="data-collection-heading" class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark">
+        2. Information We Collect
+      </h2>
+      <div class="space-y-3 text-sm text-secondary-light dark:text-secondary-dark leading-relaxed">
+        <p>
+          <strong class="text-primary-light dark:text-primary-dark">Zero Server-Side Storage:</strong> Unlike conventional web services, ToolNest does not maintain user account systems, profile databases, or remote logging servers for your tool inputs. Calculations performed on the Age Calculator, Birthday Facts, Decision Wheel, Random Picker, and Countdown Creator execute entirely within your browser's local sandbox environment.
+        </p>
+        <p>
+          <strong class="text-primary-light dark:text-primary-dark">Client-Side Local Storage:</strong> We store your recent tool activity in your browser's local storage only — it never leaves your device and you can clear it anytime. We also use the browser's standard <code class="font-mono text-xs px-1.5 py-0.5 rounded bg-input-light dark:bg-input-dark">localStorage</code> API to remember your visual theme preference (<code class="font-mono text-xs px-1.5 py-0.5 rounded bg-input-light dark:bg-input-dark">light</code> or <code class="font-mono text-xs px-1.5 py-0.5 rounded bg-input-light dark:bg-input-dark">dark</code> mode) across browser sessions to prevent screen flicker upon page load. These tokens are stored strictly on your local device and are never transmitted to any external server.
+        </p>
+      </div>
+    </section>
+
+    <!-- 3. Cookies & Advertising (Google AdSense Requirements) -->
+    <section class="space-y-3" aria-labelledby="advertising-heading">
+      <h2 id="advertising-heading" class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark">
+        3. Cookies, Web Beacons & Third-Party Advertising
+      </h2>
+      <div class="space-y-3 text-sm text-secondary-light dark:text-secondary-dark leading-relaxed">
+        <p>
+          To sustain the ongoing development, hosting, and free availability of our utilities, ToolNest may display advertisements served by third-party ad networks, including <strong class="text-primary-light dark:text-primary-dark">Google AdSense</strong>.
+        </p>
+        <p>
+          Third-party vendors, including Google, use cookies to serve ads based on a user's prior visits to this website or other websites across the Internet:
+        </p>
+        <ul class="list-disc list-inside space-y-1 pl-2">
+          <li>Google's use of advertising cookies enables it and its partners to serve ads to users based on their visits to our site and/or other sites on the Internet.</li>
+          <li>Users may opt out of personalized advertising by visiting Google's <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">Ads Settings</a>.</li>
+          <li>Alternatively, you can opt out of third-party vendor cookies for personalized advertising by visiting <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">www.aboutads.info</a> or <a href="https://youronlinechoices.eu/" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">Your Online Choices</a> (for European users).</li>
+        </ul>
+        <p>
+          Cookies are small text files placed on your device by your browser. You may adjust your browser settings to decline all cookies or to alert you when cookies are being sent. Note that certain display preferences may not render optimally if cookies are disabled.
+        </p>
+      </div>
+    </section>
+
+    <!-- 4. Web Analytics -->
+    <section class="space-y-3" aria-labelledby="analytics-heading">
+      <h2 id="analytics-heading" class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark">
+        4. Web Analytics (Google Analytics 4)
+      </h2>
+      <p class="text-sm text-secondary-light dark:text-secondary-dark leading-relaxed">
+        We may utilize web analytics solutions such as Google Analytics 4 (GA4) or privacy-friendly edge metrics to evaluate aggregate traffic trends, page views, and user engagement (such as popular tools or device screen sizes). Analytics data is collected in anonymized, aggregated formats that do not identify individual users or link to personal records.
+      </p>
+    </section>
+
+    <!-- 5. URL Query Parameters & Shareable States -->
+    <section class="space-y-3" aria-labelledby="url-states-heading">
+      <h2 id="url-states-heading" class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark">
+        5. URL State Persistence
+      </h2>
+      <p class="text-sm text-secondary-light dark:text-secondary-dark leading-relaxed">
+        Certain tools, such as the Decision Wheel (<code class="font-mono text-xs px-1.5 py-0.5 rounded bg-input-light dark:bg-input-dark">?o=...</code>) and Countdown Creator (<code class="font-mono text-xs px-1.5 py-0.5 rounded bg-input-light dark:bg-input-dark">?c=...</code>), encode user-selected titles, dates, or options directly into the browser URL via URL-safe Base64. This allows you to bookmark or share your customized state without requiring any data to be saved to an external database. Anyone you share the link with will receive that encoded configuration.
+      </p>
+    </section>
+
+    <!-- 6. Children's Online Privacy Protection -->
+    <section class="space-y-3" aria-labelledby="coppa-heading">
+      <h2 id="coppa-heading" class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark">
+        6. Children's Privacy
+      </h2>
+      <p class="text-sm text-secondary-light dark:text-secondary-dark leading-relaxed">
+        ToolNest is not directed toward children under the age of 13. We do not knowingly collect personally identifiable information from children. If you believe that an individual under 13 has provided personal details through our contact channels, please contact us immediately so we can promptly delete the information.
+      </p>
+    </section>
+
+    <!-- 7. Policy Updates -->
+    <section class="space-y-3" aria-labelledby="updates-heading">
+      <h2 id="updates-heading" class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark">
+        7. Changes to This Policy
+      </h2>
+      <p class="text-sm text-secondary-light dark:text-secondary-dark leading-relaxed">
+        We reserve the right to modify or update this Privacy Policy at our discretion to reflect technical enhancements, architectural updates, or regulatory obligations. Any changes will be posted on this page with an updated revision date.
+      </p>
+    </section>
+
+    <!-- 8. Contact Us -->
+    <section class="space-y-3 pt-2" aria-labelledby="contact-heading">
+      <h2 id="contact-heading" class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark">
+        8. Contact Information
+      </h2>
+      <p class="text-sm text-secondary-light dark:text-secondary-dark leading-relaxed">
+        If you have questions, feedback, or concerns regarding our privacy practices, please contact us at:
+      </p>
+      <div class="pt-1">
+        <a
+          href="mailto:privacy@toolnest.pages.dev"
+          class="inline-flex items-center gap-2 text-sm font-bold text-accent hover:underline"
+        >
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect width="20" height="16" x="2" y="4" rx="2"/>
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+          </svg>
+          <span>privacy@toolnest.pages.dev</span>
+        </a>
+      </div>
+    </section>
+  </article>
+</Base>

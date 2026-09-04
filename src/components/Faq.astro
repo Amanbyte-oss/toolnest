@@ -1,0 +1,52 @@
+---
+export interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+export interface Props {
+  items: FaqItem[];
+  title?: string;
+  description?: string;
+}
+
+const {
+  items,
+  title = 'Frequently Asked Questions',
+  description = 'Everything you need to know about how this tool works.',
+} = Astro.props;
+---
+
+<section class="space-y-6" aria-labelledby="faq-heading">
+  <div class="space-y-1 text-left">
+    <h2 id="faq-heading" class="text-xl sm:text-2xl font-bold tracking-tight text-primary-light dark:text-primary-dark">
+      {title}
+    </h2>
+    {description && (
+      <p class="text-sm text-secondary-light dark:text-secondary-dark">
+        {description}
+      </p>
+    )}
+  </div>
+
+  <div class="space-y-3">
+    {items.map((item, index) => (
+      <details
+        class="group rounded-xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark transition-all duration-150 open:shadow-sm"
+        id={`faq-item-${index + 1}`}
+      >
+        <summary class="flex items-center justify-between gap-4 p-4 sm:p-5 font-medium text-base text-primary-light dark:text-primary-dark cursor-pointer select-none list-none rounded-xl focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none hover:text-accent dark:hover:text-accent transition-colors duration-150">
+          <span class="text-left font-semibold">{item.question}</span>
+          <span class="w-7 h-7 rounded-lg bg-bg-light dark:bg-bg-dark border border-border-light dark:border-border-dark flex items-center justify-center text-secondary-light dark:text-secondary-dark group-hover:text-accent transition-transform duration-200 shrink-0 group-open:rotate-180">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </span>
+        </summary>
+        <div class="px-4 pb-4 sm:px-5 sm:pb-5 pt-1 text-sm text-secondary-light dark:text-secondary-dark leading-relaxed border-t border-border-light/60 dark:border-border-dark/60 mt-1">
+          <p>{item.answer}</p>
+        </div>
+      </details>
+    ))}
+  </div>
+</section>

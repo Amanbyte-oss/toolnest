@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Silent Generation",
+    "shortName": "Silent",
+    "startYear": 1928,
+    "endYear": 1945,
+    "description": "Known for resilience, strong work ethic, and civic duty."
+  },
+  {
+    "name": "Baby Boomers",
+    "shortName": "Boomer",
+    "startYear": 1946,
+    "endYear": 1964,
+    "description": "Post-war generation defined by ambition, optimism, and social change."
+  },
+  {
+    "name": "Generation X",
+    "shortName": "Gen X",
+    "startYear": 1965,
+    "endYear": 1980,
+    "description": "Independent, resourceful, and bridge between analog and digital."
+  },
+  {
+    "name": "Millennials",
+    "shortName": "Millennial",
+    "startYear": 1981,
+    "endYear": 1996,
+    "description": "Digital pioneers, collaborative, and purpose-driven."
+  },
+  {
+    "name": "Generation Z",
+    "shortName": "Gen Z",
+    "startYear": 1997,
+    "endYear": 2012,
+    "description": "True digital natives, pragmatic, socially conscious, and creative."
+  },
+  {
+    "name": "Generation Alpha",
+    "shortName": "Gen Alpha",
+    "startYear": 2013,
+    "endYear": 2099,
+    "description": "Immersed in smart technology, global awareness, and modern innovation."
+  }
+]

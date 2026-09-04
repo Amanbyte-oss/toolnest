@@ -1,0 +1,162 @@
+{
+  "age-calculator": [
+    {
+      "name": "🎉 Birthday Facts",
+      "href": "/birthday-facts",
+      "desc": "Discover your western zodiac sign, birthstone, and famous birthdays.",
+      "anchor": "Explore your birthday facts and historical milestones"
+    },
+    {
+      "name": "⏳ Countdown Timer",
+      "href": "/countdown",
+      "desc": "Track days, hours, and minutes until your next birthday or milestone.",
+      "anchor": "Create a live countdown to your next birthday"
+    },
+    {
+      "name": "📖 Name Meanings",
+      "href": "/name-meaning",
+      "desc": "Look up the etymology, cultural history, and meaning behind your name.",
+      "anchor": "Look up your name meaning and cultural roots"
+    }
+  ],
+  "birthday-facts": [
+    {
+      "name": "🎂 Age Calculator",
+      "href": "/age-calculator",
+      "desc": "Calculate your exact age in years, months, days, and lived seconds.",
+      "anchor": "Calculate your exact age down to the second"
+    },
+    {
+      "name": "⏳ Countdown Timer",
+      "href": "/countdown",
+      "desc": "Start a live countdown clock for your upcoming birthday celebration.",
+      "anchor": "Start a live countdown to your birthday"
+    },
+    {
+      "name": "📖 Name Meanings",
+      "href": "/name-meaning",
+      "desc": "Discover baby name popularity rankings and origins.",
+      "anchor": "Explore name origins and personality archetypes"
+    }
+  ],
+  "decision-wheel": [
+    {
+      "name": "🎯 Random Picker",
+      "href": "/random-picker",
+      "desc": "Draw one or multiple winners fairly from any custom list of options.",
+      "anchor": "Draw giveaway winners with the random picker"
+    },
+    {
+      "name": "⏳ Countdown Timer",
+      "href": "/countdown",
+      "desc": "Set timed intervals, deadlines, or event countdowns in real time.",
+      "anchor": "Set an event countdown timer"
+    },
+    {
+      "name": "🎂 Age Calculator",
+      "href": "/age-calculator",
+      "desc": "Quickly determine chronological age and milestone dates.",
+      "anchor": "Check chronological age and birth milestones"
+    }
+  ],
+  "random-picker": [
+    {
+      "name": "🎡 Decision Wheel",
+      "href": "/decision-wheel",
+      "desc": "Spin the customizable physics wheel for quick daily choices.",
+      "anchor": "Spin the decision wheel for everyday choices"
+    },
+    {
+      "name": "⏳ Countdown Timer",
+      "href": "/countdown",
+      "desc": "Count down to raffle deadlines, live giveaways, and product drops.",
+      "anchor": "Count down to your next live giveaway or raffle"
+    },
+    {
+      "name": "🎉 Birthday Facts",
+      "href": "/birthday-facts",
+      "desc": "Discover zodiac traits, birthstones, and famous historical birthdays.",
+      "anchor": "Discover zodiac traits and famous birthdays"
+    }
+  ],
+  "countdown": [
+    {
+      "name": "🎂 Age Calculator",
+      "href": "/age-calculator",
+      "desc": "Calculate elapsed life time and see your exact chronological age.",
+      "anchor": "Calculate exact chronological age and life stats"
+    },
+    {
+      "name": "🎉 Birthday Facts",
+      "href": "/birthday-facts",
+      "desc": "Uncover the weekday you were born, zodiac sign, and generation.",
+      "anchor": "Uncover your birthday weekday and generation"
+    },
+    {
+      "name": "🎡 Decision Wheel",
+      "href": "/decision-wheel",
+      "desc": "Randomize options and make fast decisions with a spinning wheel.",
+      "anchor": "Spin the wheel to make fast team decisions"
+    }
+  ],
+  "name-meaning": [
+    {
+      "name": "📚 Baby Names A–Z",
+      "href": "/names",
+      "desc": "Browse our curated alphabetical index of 200+ popular baby names.",
+      "anchor": "Browse all 200+ curated baby names alphabetically"
+    },
+    {
+      "name": "🎉 Birthday Facts",
+      "href": "/birthday-facts",
+      "desc": "Check zodiac symbols, birthstones, and historical figures for any date.",
+      "anchor": "Check zodiac signs and birthday facts"
+    },
+    {
+      "name": "🎂 Age Calculator",
+      "href": "/age-calculator",
+      "desc": "Discover exact chronological age in years, months, and days.",
+      "anchor": "Calculate chronological age and birthday milestones"
+    }
+  ],
+  "names-directory": [
+    {
+      "name": "✨ AI Name Meaning Finder",
+      "href": "/name-meaning",
+      "desc": "Look up rare, unlisted, or modern names with AI personality insights.",
+      "anchor": "Analyze any rare name with AI insights"
+    },
+    {
+      "name": "🎉 Birthday Facts",
+      "href": "/birthday-facts",
+      "desc": "Discover zodiac signs, birthstones, and famous historical birthdays.",
+      "anchor": "Look up zodiac signs and famous namesakes"
+    },
+    {
+      "name": "🎂 Age Calculator",
+      "href": "/age-calculator",
+      "desc": "Calculate exact chronological age and upcoming birthday countdowns.",
+      "anchor": "Calculate exact age and upcoming birthdays"
+    }
+  ],
+  "names": [
+    {
+      "name": "✨ AI Name Meaning Finder",
+      "href": "/name-meaning",
+      "desc": "Look up rare, unlisted, or modern names with AI personality insights.",
+      "anchor": "Analyze any rare name with AI insights"
+    },
+    {
+      "name": "🎉 Birthday Facts",
+      "href": "/birthday-facts",
+      "desc": "Discover zodiac signs, birthstones, and famous historical birthdays.",
+      "anchor": "Look up zodiac signs and famous namesakes"
+    },
+    {
+      "name": "🎂 Age Calculator",
+      "href": "/age-calculator",
+      "desc": "Calculate exact chronological age and upcoming birthday countdowns.",
+      "anchor": "Calculate exact age and upcoming birthdays"
+    }
+  ]
+}

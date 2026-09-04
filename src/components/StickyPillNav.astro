@@ -1,0 +1,93 @@
+---
+interface Props {
+  sections?: Array<{ label: string; href: string }>;
+  items?: Array<{ label: string; href: string }>;
+}
+
+const { sections, items } = Astro.props;
+const navItems = sections || items || [];
+---
+
+<nav
+  id="sticky-pill-nav"
+  aria-label="Section navigation"
+  class="sticky top-16 z-30 mb-6 py-2 -mx-4 px-4 sm:mx-0 sm:px-0 flex items-center justify-start sm:justify-center overflow-x-auto no-scrollbar pointer-events-none"
+>
+  <div class="pointer-events-auto inline-flex items-center gap-1.5 p-1 rounded-full border border-border-light/80 dark:border-border-dark/80 bg-surface-light/85 dark:bg-surface-dark/85 backdrop-blur-md shadow-sm">
+    {navItems.map((sec, idx) => (
+      <a
+        href={sec.href}
+        data-pill-link
+        class={`px-3 py-1 text-xs font-semibold rounded-full transition-all duration-150 whitespace-nowrap ${
+          idx === 0
+            ? 'bg-accent text-white shadow-xs'
+            : 'text-secondary-light dark:text-secondary-dark hover:text-primary-light dark:hover:text-primary-dark hover:bg-black/5 dark:hover:bg-white/5'
+        }`}
+      >
+        {sec.label}
+      </a>
+    ))}
+  </div>
+</nav>
+
+<style>
+  /* Hide scrollbar for clean pill bar look */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+</style>
+
+<script>
+  function setupStickyPillNav() {
+    const nav = document.getElementById('sticky-pill-nav');
+    if (!nav) return;
+
+    const links = nav.querySelectorAll<HTMLAnchorElement>('[data-pill-link]');
+    if (!links.length) return;
+
+    const sectionElements: { el: HTMLElement; link: HTMLAnchorElement }[] = [];
+
+    links.forEach((link) => {
+      const targetId = link.getAttribute('href')?.replace('#', '');
+      if (targetId) {
+        const el = document.getElementById(targetId);
+        if (el) {
+          sectionElements.push({ el, link });
+        }
+      }
+    });
+
+    if (!sectionElements.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            links.forEach((l) => {
+              l.classList.remove('bg-accent', 'text-white', 'shadow-xs');
+              l.classList.add('text-secondary-light', 'dark:text-secondary-dark');
+            });
+            const activeMatch = sectionElements.find((item) => item.el === entry.target);
+            if (activeMatch) {
+              activeMatch.link.classList.remove('text-secondary-light', 'dark:text-secondary-dark');
+              activeMatch.link.classList.add('bg-accent', 'text-white', 'shadow-xs');
+            }
+          }
+        });
+      },
+      {
+        rootMargin: '-80px 0px -60% 0px',
+        threshold: 0.1
+      }
+    );
+
+    sectionElements.forEach((item) => observer.observe(item.el));
+  }
+
+  document.addEventListener('DOMContentLoaded', setupStickyPillNav);
+  setupStickyPillNav();
+</script>
