@@ -1,9 +1,13 @@
 ---
+import { getTranslations, type Lang } from '../i18n';
+
 interface Props {
   id?: string;
+  lang?: Lang;
 }
 
-const { id = 'countdown-share-card' } = Astro.props;
+const { id = 'countdown-share-card', lang = 'en' } = Astro.props;
+const t = getTranslations(lang);
 ---
 
 <!-- Hidden Offscreen Render Target for High-Resolution PNG Export (540x675 at 2x = 1080x1350) -->
@@ -23,7 +27,7 @@ const { id = 'countdown-share-card' } = Astro.props;
       <!-- Badge -->
       <div class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-widest bg-indigo-50 text-indigo-600 border border-indigo-200/70 shadow-sm">
         <span class="text-sm">⏳</span>
-        <span>Live Countdown</span>
+        <span>{t.countdown.liveCountdown || 'Live Countdown'}</span>
       </div>
 
       <!-- Emoji -->
@@ -67,7 +71,7 @@ const { id = 'countdown-share-card' } = Astro.props;
             00
           </span>
           <span class="text-[10px] uppercase tracking-wider font-bold text-slate-500 mt-2">
-            Days
+            {t.countdown.daysRemaining || 'Days'}
           </span>
         </div>
 
@@ -77,7 +81,7 @@ const { id = 'countdown-share-card' } = Astro.props;
             00
           </span>
           <span class="text-[10px] uppercase tracking-wider font-bold text-slate-500 mt-2">
-            Hours
+            {t.countdown.hoursRemaining || 'Hours'}
           </span>
         </div>
 
@@ -87,7 +91,7 @@ const { id = 'countdown-share-card' } = Astro.props;
             00
           </span>
           <span class="text-[10px] uppercase tracking-wider font-bold text-slate-500 mt-2">
-            Mins
+            {t.countdown.minutesRemaining || 'Mins'}
           </span>
         </div>
 
@@ -97,7 +101,7 @@ const { id = 'countdown-share-card' } = Astro.props;
             00
           </span>
           <span class="text-[10px] uppercase tracking-wider font-bold text-slate-500 mt-2">
-            Secs
+            {t.countdown.secondsRemaining || 'Secs'}
           </span>
         </div>
       </div>
@@ -109,10 +113,10 @@ const { id = 'countdown-share-card' } = Astro.props;
       >
         <div class="text-3xl sm:text-4xl leading-none">🎉</div>
         <h3 class="text-2xl font-black text-amber-600 tracking-tight">
-          It's here!
+          {t.countdown.eventPassed}
         </h3>
         <p data-card-elapsed-text class="text-xs sm:text-sm font-semibold text-slate-700 leading-snug">
-          The moment has arrived!
+          {t.countdown.eventPassed}
         </p>
       </div>
     </div>
@@ -121,7 +125,7 @@ const { id = 'countdown-share-card' } = Astro.props;
     <div class="pt-3 border-t border-slate-200 flex items-center justify-between text-xs font-semibold text-slate-500">
       <div class="flex items-center gap-1.5 text-slate-700 font-bold">
         <span>⏳</span>
-        <span>made with ToolNest</span>
+        <span>{t.countdown.watermark || 'made with ToolNest'}</span>
       </div>
       <div class="font-mono text-[11px] text-slate-500 font-medium tracking-tight">
         toolnest.pages.dev

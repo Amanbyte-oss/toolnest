@@ -1,0 +1,80 @@
+---
+import Base from '../layouts/Base.astro';
+import { getTranslations, getLocalizedPath, type Lang } from '../i18n';
+
+export interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'en' } = Astro.props;
+const t = getTranslations(lang);
+
+const tools = [
+  { name: `🎂 ${t.nav.ageCalculator}`, href: getLocalizedPath('/age-calculator', lang), desc: t.age.subtitle },
+  { name: `🎉 ${t.nav.birthdayFacts}`, href: getLocalizedPath('/birthday-facts', lang), desc: t.birthday.subtitle },
+  { name: `🎡 ${t.nav.decisionWheel}`, href: getLocalizedPath('/decision-wheel', lang), desc: t.wheel.subtitle },
+  { name: `🎲 ${t.nav.randomPicker}`, href: getLocalizedPath('/random-picker', lang), desc: t.picker.subtitle },
+  { name: `⏳ ${t.nav.countdown}`, href: getLocalizedPath('/countdown', lang), desc: t.countdown.subtitle },
+  { name: `🏷️ ${t.nav.nameMeaning}`, href: getLocalizedPath('/name-meaning', lang), desc: t.names.subtitle },
+];
+---
+
+<Base
+  title={t.notFound.title}
+  description={t.notFound.subtext}
+  canonicalPath={getLocalizedPath('/404', lang)}
+  noindex={true}
+  lang={lang}
+>
+  <div class="py-8 sm:py-16 text-center space-y-8 max-w-xl mx-auto">
+    <!-- Big 404 Badge & Visual -->
+    <div class="space-y-3">
+      <div class="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark text-3xl shadow-sm text-accent">
+        🧭
+      </div>
+      <div class="font-mono text-5xl sm:text-6xl font-black text-accent tracking-tight">
+        404
+      </div>
+      <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-primary-light dark:text-primary-dark">
+        {t.notFound.heading}
+      </h1>
+      <p class="text-sm sm:text-base text-secondary-light dark:text-secondary-dark max-w-md mx-auto leading-relaxed">
+        {t.notFound.subtext}
+      </p>
+    </div>
+
+    <!-- Home Action Button -->
+    <div>
+      <a href={getLocalizedPath('/', lang)} class="btn-primary inline-flex py-3 px-6 text-sm font-bold shadow-md shadow-accent/20">
+        <span class="rtl:rotate-180 inline-block">&larr;</span> {t.notFound.backHome}
+      </a>
+    </div>
+
+    <!-- Grid of Links to All Tools -->
+    <div class="pt-6 border-t border-border-light dark:border-border-dark space-y-4 text-left rtl:text-right">
+      <h2 class="text-sm font-bold uppercase tracking-wider text-secondary-light dark:text-secondary-dark text-center">
+        {t.notFound.exploreTitle}
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {tools.map((tool) => (
+          <a
+            href={tool.href}
+            class="group card p-3.5 hover:border-accent/60 transition-all flex items-center justify-between"
+          >
+            <div>
+              <span class="text-sm font-bold text-primary-light dark:text-primary-dark group-hover:text-accent transition-colors block">
+                {tool.name}
+              </span>
+              <span class="text-xs text-secondary-light dark:text-secondary-dark line-clamp-1">
+                {tool.desc}
+              </span>
+            </div>
+            <svg class="w-4 h-4 text-secondary-light dark:text-secondary-dark group-hover:text-accent group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 rtl:rotate-180 transition-all shrink-0 ms-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="m9 18 6-6-6-6"/>
+            </svg>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</Base>

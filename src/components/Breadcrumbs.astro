@@ -3,6 +3,7 @@
  * src/components/Breadcrumbs.astro
  * Accessible, semantic breadcrumb navigation matching Schema.org BreadcrumbList.
  */
+import { getTranslations, getLocalizedPath, type Lang } from '../i18n';
 
 export interface BreadcrumbItem {
   name: string;
@@ -11,16 +12,18 @@ export interface BreadcrumbItem {
 
 export interface Props {
   items?: BreadcrumbItem[];
+  lang?: Lang;
 }
 
-const { items = [] } = Astro.props;
+const { items = [], lang = 'en' } = Astro.props;
+const t = getTranslations(lang);
 
 if (!items || items.length === 0) {
   return null;
 }
 
 const allItems = [
-  { name: 'Home', item: '/' },
+  { name: t.nav.home, item: getLocalizedPath('/', lang) },
   ...items,
 ];
 ---
@@ -55,7 +58,7 @@ const allItems = [
                 <span itemprop="name">{crumb.name}</span>
               </a>
               <svg
-                class="w-3 h-3 text-secondary-light/60 dark:text-secondary-dark/60 shrink-0 select-none"
+                class="w-3 h-3 text-secondary-light/60 dark:text-secondary-dark/60 shrink-0 select-none rtl:rotate-180"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"

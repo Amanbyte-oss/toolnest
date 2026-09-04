@@ -1,0 +1,36 @@
+---
+export const prerender = true;
+import NameDetailView, { type NameEntry } from '../../../views/NameDetailView.astro';
+import namesData from '../../../data/names.json';
+import { NON_DEFAULT_LOCALES, type Lang } from '../../../i18n';
+
+export async function getStaticPaths() {
+  const sorted = [...namesData].sort((a, b) => a.name.localeCompare(b.name));
+  const paths = [];
+  for (const lang of NON_DEFAULT_LOCALES) {
+    for (let index = 0; index < sorted.length; index++) {
+      const item = sorted[index];
+      const prev = index > 0 ? sorted[index - 1] : sorted[sorted.length - 1];
+      const next = index < sorted.length - 1 ? sorted[index + 1] : sorted[0];
+      paths.push({
+        params: { lang, name: item.slug },
+        props: {
+          nameData: item,
+          prevName: { name: prev.name, slug: prev.slug },
+          nextName: { name: next.name, slug: next.slug },
+        },
+      });
+    }
+  }
+  return paths;
+}
+
+const { lang } = Astro.params as { lang: Lang };
+const { nameData, prevName, nextName } = Astro.props as {
+  nameData: NameEntry;
+  prevName: { name: string; slug: string };
+  nextName: { name: string; slug: string };
+};
+---
+
+<NameDetailView nameData={nameData} prevName={prevName} nextName={nextName} lang={lang} />

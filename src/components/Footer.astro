@@ -1,20 +1,28 @@
 ---
+import { getTranslations, getLocalizedPath, type Lang } from '../i18n';
+
+export interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'en' } = Astro.props;
+const t = getTranslations(lang);
 const currentYear = new Date().getFullYear();
 
 const toolLinks = [
-  { name: 'Age Calculator', href: '/age-calculator' },
-  { name: 'Birthday Facts', href: '/birthday-facts' },
-  { name: 'Decision Wheel', href: '/decision-wheel' },
-  { name: 'Random Picker', href: '/random-picker' },
-  { name: 'Countdown', href: '/countdown' },
-  { name: 'Name Meanings', href: '/name-meaning' },
-  { name: 'Names Directory', href: '/names' },
+  { name: t.nav.ageCalculator, href: getLocalizedPath('/age-calculator', lang) },
+  { name: t.nav.birthdayFacts, href: getLocalizedPath('/birthday-facts', lang) },
+  { name: t.nav.decisionWheel, href: getLocalizedPath('/decision-wheel', lang) },
+  { name: t.nav.randomPicker, href: getLocalizedPath('/random-picker', lang) },
+  { name: t.nav.countdown, href: getLocalizedPath('/countdown', lang) },
+  { name: t.nav.nameMeaning, href: getLocalizedPath('/name-meaning', lang) },
+  { name: t.names.title, href: getLocalizedPath('/names', lang) },
 ];
 
 const siteLinks = [
-  { name: 'About ToolNest', href: '/about' },
-  { name: 'Contact Us', href: '/contact' },
-  { name: 'Privacy Policy', href: '/privacy-policy' },
+  { name: t.nav.about, href: getLocalizedPath('/about', lang) },
+  { name: t.nav.contact, href: getLocalizedPath('/contact', lang) },
+  { name: t.nav.privacy, href: getLocalizedPath('/privacy-policy', lang) },
   { name: 'Sitemap', href: '/sitemap-index.xml' },
 ];
 ---
@@ -24,7 +32,7 @@ const siteLinks = [
     <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
       <!-- Col 1: Brand Description -->
       <div class="col-span-2 md:col-span-1 space-y-3">
-        <a href="/" class="inline-flex items-center gap-2 text-base font-bold text-primary-light dark:text-primary-dark">
+        <a href={getLocalizedPath('/', lang)} class="inline-flex items-center gap-2 text-base font-bold text-primary-light dark:text-primary-dark">
           <span class="w-7 h-7 rounded-lg bg-bg-light dark:bg-bg-dark border border-border-light dark:border-border-dark flex items-center justify-center text-accent">
             <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
@@ -33,14 +41,14 @@ const siteLinks = [
           <span>ToolNest</span>
         </a>
         <p class="text-sm text-secondary-light dark:text-secondary-dark leading-relaxed">
-          Fast, mobile-first, privacy-focused client-side utilities. No tracking, zero databases, 100% static.
+          {t.footerTagline}
         </p>
       </div>
 
-      <!-- Col 2: Tools (5 links) -->
+      <!-- Col 2: Tools -->
       <div class="space-y-3">
         <h3 class="text-xs font-bold uppercase tracking-wider text-primary-light dark:text-primary-dark">
-          Tools
+          {t.common.options}
         </h3>
         <ul class="space-y-2 text-sm">
           {toolLinks.map((tool) => (
@@ -56,48 +64,52 @@ const siteLinks = [
         </ul>
       </div>
 
-      <!-- Col 3: Site (About, Privacy, etc.) -->
+      <!-- Col 3: Site -->
       <div class="space-y-3">
         <h3 class="text-xs font-bold uppercase tracking-wider text-primary-light dark:text-primary-dark">
-          Site
+          {t.siteName}
         </h3>
         <ul class="space-y-2 text-sm">
-          {siteLinks.map((link) => (
+          {siteLinks.map((site) => (
             <li>
               <a
-                href={link.href}
+                href={site.href}
                 class="text-secondary-light dark:text-secondary-dark hover:text-accent dark:hover:text-accent transition-colors"
               >
-                {link.name}
+                {site.name}
               </a>
             </li>
           ))}
         </ul>
       </div>
 
-      <!-- Col 4: Platform & Privacy Note -->
+      <!-- Col 4: Privacy & Standards -->
       <div class="col-span-2 md:col-span-1 space-y-3">
         <h3 class="text-xs font-bold uppercase tracking-wider text-primary-light dark:text-primary-dark">
-          Architecture
+          {t.badgePrivacy}
         </h3>
-        <div class="p-3.5 rounded-xl bg-bg-light dark:bg-bg-dark border border-border-light dark:border-border-dark space-y-1.5 text-xs text-secondary-light dark:text-secondary-dark">
-          <div class="flex items-center gap-1.5 font-medium text-primary-light dark:text-primary-dark">
-            <span class="w-2 h-2 rounded-full bg-success"></span>
-            <span>Edge Ready</span>
-          </div>
-          <p>Built with Astro + Tailwind CSS. Deployed on Cloudflare Pages static edge network.</p>
+        <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
+          {t.description}
+        </p>
+        <div class="flex items-center gap-2 pt-1 text-xs text-secondary-light dark:text-secondary-dark">
+          <span class="inline-block w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span>100% Client-Side Privacy</span>
         </div>
       </div>
     </div>
 
-    <!-- Bottom Copyright & Disclaimer -->
-    <div class="pt-6 border-t border-border-light dark:border-border-dark flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-secondary-light dark:text-secondary-dark">
-      <p>&copy; {currentYear} ToolNest. All rights reserved.</p>
-      <p class="flex items-center gap-3">
-        <span>Static Web Applications</span>
-        <span>•</span>
-        <span>Client-Side Calculations</span>
-      </p>
+    <!-- Bottom Bar: Copyright -->
+    <div class="pt-8 border-t border-border-light dark:border-border-dark flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-secondary-light dark:text-secondary-dark">
+      <p>&copy; {currentYear} {t.footerCopyright}</p>
+      <div class="flex items-center gap-4">
+        <a href={getLocalizedPath('/privacy-policy', lang)} class="hover:text-accent transition-colors">
+          {t.nav.privacy}
+        </a>
+        <span>&bull;</span>
+        <a href={getLocalizedPath('/contact', lang)} class="hover:text-accent transition-colors">
+          {t.nav.contact}
+        </a>
+      </div>
     </div>
   </div>
 </footer>

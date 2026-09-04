@@ -1,0 +1,15 @@
+---
+export const prerender = true;
+import IndexView from '../../views/IndexView.astro';
+import { NON_DEFAULT_LOCALES, type Lang } from '../../i18n';
+
+export function getStaticPaths() {
+  return NON_DEFAULT_LOCALES.map((lang) => ({
+    params: { lang },
+  }));
+}
+
+const { lang } = Astro.params as { lang: Lang };
+---
+
+<IndexView lang={lang} />

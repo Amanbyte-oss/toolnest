@@ -1,0 +1,87 @@
+---
+import Base from '../layouts/Base.astro';
+import { getTranslations, getLocalizedPath, type Lang } from '../i18n';
+
+export interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'en' } = Astro.props;
+const t = getTranslations(lang);
+---
+
+<Base
+  title={t.privacy.title}
+  description={t.privacy.metaDesc}
+  canonicalPath={getLocalizedPath('/privacy-policy', lang)}
+  ogImage="/og/about.svg"
+  breadcrumbs={[{ name: t.nav.privacy, item: getLocalizedPath('/privacy-policy', lang) }]}
+  lang={lang}
+>
+  <article class="space-y-8 max-w-2xl mx-auto">
+    <!-- Header -->
+    <header class="space-y-3 pb-4 border-b border-border-light dark:border-border-dark">
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-accent/10 text-accent dark:bg-accent/20">
+        <span>🔒</span>
+        <span>{t.privacy.badge}</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-primary-light dark:text-primary-dark">
+        {t.privacy.heading}
+      </h1>
+      <p class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark">
+        {t.privacy.lastUpdated}: <span class="font-semibold text-primary-light dark:text-primary-dark">{t.privacy.dateStr}</span>
+      </p>
+    </header>
+
+    <!-- 1. Introduction -->
+    <section class="space-y-3" aria-labelledby="intro-heading">
+      <h2 id="intro-heading" class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark">
+        {t.privacy.introTitle}
+      </h2>
+      <p class="text-sm text-secondary-light dark:text-secondary-dark leading-relaxed">
+        {t.privacy.introP}
+      </p>
+    </section>
+
+    <!-- 2. What Data We Collect -->
+    <section class="space-y-3" aria-labelledby="data-collection-heading">
+      <h2 id="data-collection-heading" class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark">
+        {t.privacy.collectTitle}
+      </h2>
+      <div class="space-y-3 text-sm text-secondary-light dark:text-secondary-dark leading-relaxed">
+        <p>{t.privacy.collectP1}</p>
+        <p>{t.privacy.collectP2}</p>
+      </div>
+    </section>
+
+    <!-- 3. Cookies & Advertising -->
+    <section class="space-y-3" aria-labelledby="advertising-heading">
+      <h2 id="advertising-heading" class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark">
+        {t.privacy.cookiesTitle}
+      </h2>
+      <div class="space-y-3 text-sm text-secondary-light dark:text-secondary-dark leading-relaxed">
+        <p>{t.privacy.cookiesP1}</p>
+      </div>
+    </section>
+
+    <!-- 4. Web Analytics -->
+    <section class="space-y-3" aria-labelledby="analytics-heading">
+      <h2 id="analytics-heading" class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark">
+        {t.privacy.analyticsTitle}
+      </h2>
+      <p class="text-sm text-secondary-light dark:text-secondary-dark leading-relaxed">
+        {t.privacy.analyticsP}
+      </p>
+    </section>
+
+    <!-- 5. URL Query Parameters & Shareable States -->
+    <section class="space-y-3" aria-labelledby="url-states-heading">
+      <h2 id="url-states-heading" class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark">
+        {t.privacy.urlTitle}
+      </h2>
+      <p class="text-sm text-secondary-light dark:text-secondary-dark leading-relaxed">
+        {t.privacy.urlP}
+      </p>
+    </section>
+  </article>
+</Base>

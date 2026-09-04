@@ -1,0 +1,15 @@
+---
+export const prerender = true;
+import CountdownView from '../../views/CountdownView.astro';
+import { NON_DEFAULT_LOCALES, type Lang } from '../../i18n';
+
+export function getStaticPaths() {
+  return NON_DEFAULT_LOCALES.map((lang) => ({
+    params: { lang },
+  }));
+}
+
+const { lang } = Astro.params as { lang: Lang };
+---
+
+<CountdownView lang={lang} />

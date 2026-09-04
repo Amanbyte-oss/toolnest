@@ -103,13 +103,22 @@ function parseOptionsArray(rawText, expectedCount) {
 /**
  * Executes a call to Google Gemini REST API with header-based authentication and 25s timeout guard
  */
-async function callGeminiApi(apiKey, prompt, count, temperature = 1.0) {
+async function callGeminiApi(apiKey, prompt, count, temperature = 1.0, lang = 'en') {
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
 
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 25000);
 
-  const fullText = `Return a JSON array of ${count} short, distinct option strings (1-3 words each) for: "${prompt}".`;
+  let langInstruction = '';
+  if (lang === 'pt') {
+    langInstruction = ' Respond in Brazilian Portuguese.';
+  } else if (lang === 'id') {
+    langInstruction = ' Respond in Indonesian.';
+  } else if (lang === 'ar') {
+    langInstruction = ' Respond in Modern Standard Arabic.';
+  }
+
+  const fullText = `Return a JSON array of ${count} short, distinct option strings (1-3 words each) for: "${prompt}".${langInstruction}`;
 
   const payload = {
     contents: [
@@ -214,6 +223,7 @@ export const POST = async ({ request, locals }) => {
 
   const rawPrompt = typeof body?.prompt === 'string' ? body.prompt.trim() : '';
   const count = Math.max(4, Math.min(12, parseInt(body?.count, 10) || 6));
+  const lang = typeof body?.lang === 'string' ? body.lang.toLowerCase() : 'en';
 
   // Prompt validation: 3-120 chars
   if (!rawPrompt || rawPrompt.length < 3 || rawPrompt.length > 120) {
@@ -228,8 +238,8 @@ export const POST = async ({ request, locals }) => {
   }
 
   // Reject gibberish / repetitive characters (e.g. "aaa", ".....")
-  const isRepetitive = /^([a-zA-Z0-9])\1{2,}$/i.test(rawPrompt);
-  const hasNoLettersOrDigits = /^[^a-zA-Z0-9]+$/.test(rawPrompt);
+  const isRepetitive = /^([\p{L}\p{N}])\1{3,}$/iu.test(rawPrompt);
+  const hasNoLettersOrDigits = /^[^\p{L}\p{N}]+$/u.test(rawPrompt);
   if (isRepetitive || hasNoLettersOrDigits) {
     return new Response(
       JSON.stringify({
@@ -242,7 +252,7 @@ export const POST = async ({ request, locals }) => {
   }
 
   // 4. Call Gemini REST API directly (fast model, minimal prompt)
-  let result = await callGeminiApi(apiKey, rawPrompt, count, 1.0);
+  let result = await callGeminiApi(apiKey, rawPrompt, count, 1.0, lang);
 
   // If 404 model not found, log server-side (never leaking key) and return 502
   if (!result.ok && result.status === 404) {
@@ -261,7 +271,7 @@ export const POST = async ({ request, locals }) => {
 
   // Auto-retry once with lower temperature if output was invalid or unparseable
   if (!parsedOptions && result.status !== 404 && result.error?.name !== 'AbortError') {
-    result = await callGeminiApi(apiKey, rawPrompt, count, 0.5);
+    result = await callGeminiApi(apiKey, rawPrompt, count, 0.5, lang);
     parsedOptions = result.ok ? parseOptionsArray(result.text, count) : null;
   }
 

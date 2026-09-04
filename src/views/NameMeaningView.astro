@@ -1,0 +1,778 @@
+---
+import Base from '../layouts/Base.astro';
+import Faq from '../components/Faq.astro';
+import ToolCard from '../components/ToolCard.astro';
+import HistoryCard from '../components/HistoryCard.astro';
+import relatedLinksData from '../data/related-links.json';
+import namesData from '../data/names.json';
+import { getTranslations, getLocalizedPath, type Lang } from '../i18n';
+
+export interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'en' } = Astro.props;
+const t = getTranslations(lang);
+
+const lastUpdatedDate = new Date().toLocaleDateString(lang === 'ar' ? 'ar-EG' : lang === 'pt' ? 'pt-BR' : lang === 'id' ? 'id-ID' : 'en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+// Valid slugs map for fast lookups
+const validSlugMap = JSON.stringify(
+  Object.fromEntries(namesData.map((n) => [n.name.toLowerCase(), n.slug]))
+);
+
+const popularExamples = ['Emma', 'Liam', 'Amara', 'Zephyra', 'Kai', 'Soren', 'Nova'];
+
+// Comprehensive FAQ definitions (8 questions targeting core search clusters)
+const faqs = [
+  {
+    question: 'What does my name mean and how is its origin determined?',
+    answer:
+      'A name meaning reflects its etymological root word in ancient languages such as Hebrew, Latin, Greek, Old Norse, Celtic, or Arabic. ToolNest matches your query against historical linguistic dictionaries and onomastic records to determine its ancestral root and traditional definition.',
+  },
+  {
+    question: 'Can I look up any unique or rare name with the name origin finder?',
+    answer:
+      'Yes! In addition to our curated 200+ database of traditional and modern names, ToolNest features an AI-assisted analysis engine powered by Google Gemini. Enter any rare, international, or newly coined name to receive custom linguistic insights in seconds.',
+  },
+  {
+    question: 'Can I find names that mean specific virtues like light, love, or strength?',
+    answer:
+      'Yes! Many classical and modern names embody specific virtues. For example, names that mean light include Lucia, Elena, Aaron, and Zia; names meaning strength include Ethan, Audrey, Valerie, and Gabriel; and names meaning love include Amara, David, and Esme. You can explore these virtues in our A–Z directory.',
+  },
+  {
+    question: 'How accurate are the AI name meanings and personality insights?',
+    answer:
+      'Curated name dossiers are verified against historical lexical records and government birth statistics. AI-generated interpretations draw from global cultural motifs and phonetic rhythm analysis to provide inspirational storytelling and psychological archetypes.',
+  },
+  {
+    question: 'How does the search determine static vs. AI results?',
+    answer:
+      'When you submit a name, ToolNest instantly checks if it exists in our curated directory. If matched, you are routed directly to the full static dossier with popularity charts and historical namesakes. Otherwise, our AI engine generates instant insights on this page.',
+  },
+  {
+    question: 'Is my name search private and completely free?',
+    answer:
+      'Yes, 100% free with zero tracking cookies and zero user account requirements. Searches execute on-demand, and your recent search history is preserved solely in your local browser storage.',
+  },
+  {
+    question: 'What linguistic traditions are included in the name database?',
+    answer:
+      'Our curated database encompasses Latin, Germanic, Greek, Hebrew, Celtic, Old Norse, Slavic, Sanskrit, Japanese, and Yoruba traditions, showcasing the rich global diversity of human naming customs.',
+  },
+  {
+    question: 'Can I view most popular names filtered by letter or gender?',
+    answer:
+      'Yes! Visit our full Names Directory at /names/ to explore all 200+ profiles filtered alphabetically from A to Z, by gender (boy, girl, unisex), cultural origin, and popularity tiers.',
+  },
+];
+
+const relatedTools = relatedLinksData['name-meaning'];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: f.answer,
+    },
+  })),
+};
+
+const toolSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  '@id': 'https://toolnest.pages.dev/name-meaning#app',
+  name: 'Name Meaning Finder & Etymology Dossier',
+  applicationCategory: 'UtilitiesApplication',
+  operatingSystem: 'Any',
+  url: 'https://toolnest.pages.dev/name-meaning',
+  description: 'Look up the origin, meaning, personality traits, and history of any name instantly with curated etymology and AI insights.',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'ToolNest',
+    url: 'https://toolnest.pages.dev',
+  },
+  featureList: [
+    'Instant etymological origin lookup across 200+ curated baby names',
+    'AI-powered cultural analysis and personality archetypes via Google Gemini',
+    'Direct routing to static name dossiers with popularity trajectory charts',
+    'Stateless local search history stored only in browser memory',
+    'Phonetic rhythm and nickname suggestions for any first name',
+  ],
+};
+
+const howToSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'How to Find Any Name Meaning in 3 Steps',
+  description: 'A simple guide to discovering the linguistic roots, cultural history, and traits of any name.',
+  step: [
+    {
+      '@type': 'HowToStep',
+      position: 1,
+      name: 'Type any first name',
+      text: 'Enter a baby name, personal name, or rare cultural name into the search bar.',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 2,
+      name: 'Search our curated database or generate with AI',
+      text: 'Click Reveal Meaning to match against 200+ curated dossiers or run AI analysis.',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 3,
+      name: 'Explore origin, traits, and namesakes',
+      text: 'Read linguistic etymology, personality traits, and famous namesakes.',
+    },
+  ],
+};
+---
+
+<Base
+  title={`${t.names.metaTitle} | ${t.siteName}`}
+  description={t.names.metaDescription}
+  canonicalPath={getLocalizedPath('/name-meaning', lang)}
+  ogImage="/og/name-meaning.svg"
+  breadcrumbs={[{ name: t.nav.home, item: getLocalizedPath('/', lang) }, { name: t.names.title, item: getLocalizedPath('/name-meaning', lang) }]}
+  extraSchemas={[toolSchema, howToSchema, faqSchema]}
+  lang={lang}
+>
+  <div class="max-w-3xl mx-auto space-y-8" data-valid-slugs={validSlugMap} id="name-meaning-container">
+    <!-- HERO HEADER -->
+    <section class="text-center space-y-3 pt-2 sm:pt-4">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-accent/10 dark:bg-accent/15 text-accent border border-accent/25 shadow-xs">
+        <span>🏷️</span>
+        <span>Name Explorer & AI Analyzer</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-primary-light dark:text-primary-dark">
+        Name Meaning Finder — Origins & Etymology
+      </h1>
+      <p class="text-sm sm:text-base text-secondary-light dark:text-secondary-dark max-w-xl mx-auto leading-relaxed">
+        Discover the cultural origin, spiritual essence, and personality traits of any name. Search our curated directory or analyze any custom name with AI.
+      </p>
+    </section>
+
+    <!-- SEARCH INPUT CARD -->
+    <section class="card p-6 sm:p-8 space-y-5 border border-border-light dark:border-border-dark shadow-sm">
+      <form id="name-search-form" class="space-y-4" role="search">
+        <div>
+          <label for="name-input" class="block text-sm font-bold text-primary-light dark:text-primary-dark mb-1.5">
+            Enter any first name
+          </label>
+          <div class="flex flex-col sm:flex-row items-stretch gap-2.5">
+            <div class="relative flex-1">
+              <input
+                id="name-input"
+                name="q"
+                type="text"
+                maxlength="30"
+                placeholder="e.g. Liam, Maya, Zephyra, Kai..."
+                class="w-full px-4 py-3.5 rounded-xl border border-border-light dark:border-border-dark bg-input-light dark:bg-input-dark text-primary-light dark:text-primary-dark placeholder:text-secondary-light/60 dark:placeholder:text-secondary-dark/60 text-base focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all min-h-[48px]"
+                autocomplete="off"
+                required
+              />
+            </div>
+            <button
+              id="search-btn"
+              type="submit"
+              class="btn-primary px-7 py-3.5 text-sm sm:text-base font-bold shadow-md shadow-accent/20 flex items-center justify-center gap-2 shrink-0 min-h-[48px] cursor-pointer"
+            >
+              <span>✨ Reveal Meaning</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Inline error alert -->
+        <div
+          id="search-error"
+          class="hidden p-3.5 rounded-xl border border-red-500/30 bg-red-500/10 dark:bg-red-500/20 text-xs sm:text-sm text-red-600 dark:text-red-400 font-medium"
+          role="alert"
+        ></div>
+
+        <!-- Quick example chips -->
+        <div class="pt-1 flex items-center gap-2 flex-wrap text-xs text-secondary-light dark:text-secondary-dark">
+          <span class="font-medium">Try searching:</span>
+          {popularExamples.map((ex) => (
+            <button
+              type="button"
+              class="quick-example-chip px-2.5 py-1 rounded-lg bg-bg-light dark:bg-bg-dark border border-border-light dark:border-border-dark text-primary-light dark:text-primary-dark hover:border-accent hover:text-accent font-medium transition-colors cursor-pointer"
+              data-name={ex}
+            >
+              {ex}
+            </button>
+          ))}
+        </div>
+      </form>
+    </section>
+
+    <!-- LOADING SKELETON (When generating AI insights for custom name) -->
+    <div id="ai-loading" class="hidden card p-6 sm:p-7 space-y-4 border border-accent/25 animate-pulse">
+      <div class="flex items-center gap-2 text-xs font-semibold text-accent">
+        <svg class="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span id="ai-loading-text">Consulting the name experts...</span>
+      </div>
+      <div class="h-20 bg-input-light dark:bg-input-dark rounded-2xl"></div>
+      <div class="h-10 bg-input-light dark:bg-input-dark rounded-xl"></div>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+        <div class="h-9 bg-input-light dark:bg-input-dark rounded-xl"></div>
+        <div class="h-9 bg-input-light dark:bg-input-dark rounded-xl"></div>
+        <div class="h-9 bg-input-light dark:bg-input-dark rounded-xl"></div>
+        <div class="h-9 bg-input-light dark:bg-input-dark rounded-xl"></div>
+      </div>
+    </div>
+
+    <!-- AI RESULT CARD (Rendered on this page for custom / non-JSON names) -->
+    <section
+      id="ai-result-card"
+      class="hidden card p-6 sm:p-8 space-y-6 border border-accent/30 bg-gradient-to-b from-surface-light via-surface-light to-accent/5 dark:from-surface-dark dark:via-surface-dark dark:to-accent/5 shadow-md scroll-mt-20"
+      aria-live="polite"
+    >
+      <div class="flex items-center justify-between flex-wrap gap-2">
+        <!-- Subtle AI Generated Badge -->
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-accent/15 text-accent border border-accent/30">
+          <span>✨</span>
+          <span>AI Generated Interpretation</span>
+        </div>
+        <span class="text-[11px] text-secondary-light dark:text-secondary-dark font-medium">
+          Powered by Gemini
+        </span>
+      </div>
+
+      <div class="space-y-1">
+        <h2 id="ai-name-heading" class="text-2xl sm:text-3xl font-extrabold tracking-tight text-primary-light dark:text-primary-dark"></h2>
+        <p class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark">
+          Custom on-demand linguistic interpretation and personality archetype.
+        </p>
+      </div>
+
+      <!-- 💫 Essence Sentence -->
+      <div class="p-4 sm:p-5 rounded-2xl bg-accent/10 dark:bg-accent/15 border border-accent/30 space-y-1.5">
+        <div class="text-[11px] font-bold uppercase tracking-wider text-accent flex items-center gap-1.5">
+          <span>💫</span>
+          <span>Core Essence</span>
+        </div>
+        <p id="ai-essence" class="text-sm sm:text-base font-semibold text-primary-light dark:text-primary-dark leading-relaxed italic"></p>
+      </div>
+
+      <!-- 🧭 Origin & 🏷️ Style Badge -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div class="p-3.5 rounded-xl bg-bg-light dark:bg-bg-dark border border-border-light dark:border-border-dark flex items-center gap-2 text-xs sm:text-sm">
+          <span class="text-base">🧭</span>
+          <div>
+            <span class="text-[10px] uppercase font-bold text-secondary-light dark:text-secondary-dark block">Cultural Root</span>
+            <span id="ai-origin" class="font-bold text-primary-light dark:text-primary-dark"></span>
+          </div>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-bg-light dark:bg-bg-dark border border-border-light dark:border-border-dark flex items-center justify-between text-xs sm:text-sm">
+          <div class="flex items-center gap-2">
+            <span class="text-base">🏷️</span>
+            <span class="text-[10px] uppercase font-bold text-secondary-light dark:text-secondary-dark block">Style</span>
+          </div>
+          <span id="ai-style" class="px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-accent/15 text-accent border border-accent/30"></span>
+        </div>
+      </div>
+
+      <!-- 🎭 Personality Traits -->
+      <div class="space-y-2">
+        <div class="text-xs font-bold uppercase tracking-wider text-secondary-light dark:text-secondary-dark flex items-center gap-1.5">
+          <span>🎭</span>
+          <span>Personality Archetype</span>
+        </div>
+        <div id="ai-personality" class="flex flex-wrap gap-2"></div>
+      </div>
+
+      <!-- ⭐ Famous Namesakes -->
+      <div id="ai-famous-container" class="space-y-2">
+        <div class="text-xs font-bold uppercase tracking-wider text-secondary-light dark:text-secondary-dark flex items-center gap-1.5">
+          <span>⭐</span>
+          <span>Notable Namesakes</span>
+        </div>
+        <ul id="ai-famous" class="space-y-1.5 text-xs sm:text-sm"></ul>
+      </div>
+
+      <!-- 🎲 Fun Fact -->
+      <div class="p-4 rounded-xl border border-border-light dark:border-border-dark bg-bg-light dark:bg-bg-dark space-y-1.5">
+        <div class="text-xs font-bold text-secondary-light dark:text-secondary-dark flex items-center gap-1.5">
+          <span>🎲</span>
+          <span>Fascinating Trivia</span>
+        </div>
+        <p id="ai-funfact" class="text-xs sm:text-sm text-primary-light dark:text-primary-dark leading-relaxed"></p>
+      </div>
+
+      <!-- 🔗 Related Names -->
+      <div class="space-y-2">
+        <div class="text-xs font-bold uppercase tracking-wider text-secondary-light dark:text-secondary-dark flex items-center gap-1.5">
+          <span>🔗</span>
+          <span>Related Names</span>
+        </div>
+        <div id="ai-similar" class="flex flex-wrap gap-2"></div>
+      </div>
+    </section>
+
+    <!-- RECENT ACTIVITY HISTORY -->
+    <HistoryCard toolId="names" title="Recently Searched Names" icon="🏷️" />
+
+    <!-- KEY TAKEAWAYS / FEATURED SNIPPET SUMMARY BOX -->
+    <aside class="card p-4 sm:p-5 border-l-4 border-accent bg-accent/5 space-y-2" aria-label="Key Takeaways">
+      <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent">
+        <span>⚡</span>
+        <span>Quick Answer & Key Takeaways</span>
+      </div>
+      <ul class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark space-y-1.5 list-disc list-inside leading-relaxed">
+        <li><strong>Curated Etymologies:</strong> Instant access to 200+ verified names with historical root definitions and demographic rankings.</li>
+        <li><strong>AI On-Demand Analysis:</strong> Rare and international names analyzed instantly via Google Gemini for phonetic rhythm and traits.</li>
+        <li><strong>Private & Free:</strong> Zero account sign-ups, zero tracking cookies, and search history saved only in your local browser.</li>
+      </ul>
+    </aside>
+
+    <!-- BROWSE DIRECTORY BANNER -->
+    <section class="card p-6 sm:p-7 border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div class="space-y-1 max-w-lg">
+        <h2 class="text-base sm:text-lg font-bold text-primary-light dark:text-primary-dark">
+          Explore the Full 200+ Name Directory
+        </h2>
+        <p class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark">
+          Browse our curated list of 200+ baby names filtered by gender, popularity, and origin.
+        </p>
+      </div>
+      <a
+        href={getLocalizedPath('/names', lang)}
+        class="btn-secondary text-xs sm:text-sm px-4 py-2.5 font-bold shrink-0 inline-flex items-center gap-1.5"
+      >
+        <span>Browse Directory &rarr;</span>
+      </a>
+    </section>
+
+    <!-- SEO CONTENT & QUESTION-FORM HEADINGS -->
+    <section class="card p-6 sm:p-8 space-y-6 leading-relaxed text-secondary-light dark:text-secondary-dark text-xs sm:text-sm border border-border-light dark:border-border-dark">
+      <div class="space-y-2">
+        <h2 class="text-xl font-bold text-primary-light dark:text-primary-dark">
+          How the ToolNest Name Meaning Finder Works
+        </h2>
+        <p>
+          Every name carries an intricate tapestry of ancestral heritage, linguistic development, and cultural symbolism. ToolNest unites two complementary approaches to give you the most versatile name search experience available:
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="p-4 rounded-xl bg-bg-light dark:bg-bg-dark border border-border-light dark:border-border-dark space-y-2">
+          <span class="text-sm font-bold text-primary-light dark:text-primary-dark flex items-center gap-2">
+            <span>📚</span> Curated 200+ Database
+          </span>
+          <p class="text-xs">
+            For prominent global names like Emma, Liam, Noah, and Sophia, our database contains verified etymological origins, historical editorial paragraphs, and modern popularity metrics based on birth registrations.
+          </p>
+        </div>
+        <div class="p-4 rounded-xl bg-bg-light dark:bg-bg-dark border border-border-light dark:border-border-dark space-y-2">
+          <span class="text-sm font-bold text-primary-light dark:text-primary-dark flex items-center gap-2">
+            <span>✨</span> Gemini AI On-Demand Engine
+          </span>
+          <p class="text-xs">
+            For uncommon, international, or contemporary compound names not in our pre-indexed directory, our secure Gemini API proxy generates instant linguistic breakdowns, archetypal personality traits, and notable namesakes.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+        <div class="space-y-2">
+          <h3 class="text-sm font-bold text-primary-light dark:text-primary-dark flex items-center gap-1.5">
+            <span>📜</span>
+            <span>How Do Linguistic Roots Shape Name Meanings?</span>
+          </h3>
+          <p class="text-xs leading-relaxed">
+            Onomastics—the scholarly study of names—reveals how words migrate across civilizations. A single ancient Hebrew, Latin, or Germanic root can evolve through Old French, Middle English, and colonial migration into dozens of modern variants with shared spiritual meanings.
+          </p>
+        </div>
+
+        <div class="space-y-2">
+          <h3 class="text-sm font-bold text-primary-light dark:text-primary-dark flex items-center gap-1.5">
+            <span>⚖️</span>
+            <span>Curated Etymology vs. AI Insights</span>
+          </h3>
+          <p class="text-xs leading-relaxed">
+            Our curated profiles reflect authoritative lexical consensus and census data. Meanwhile, our AI engine synthesizes cross-cultural symbolism, phonetic cadences, and personality archetypes to spark creative inspiration for expecting parents and writers.
+          </p>
+        </div>
+      </div>
+
+      <!-- Methodology Note (E-E-A-T) -->
+      <div class="pt-2 border-t border-border-light dark:border-border-dark flex flex-wrap items-center justify-between gap-2 text-[11px]">
+        <span class="font-semibold text-primary-light dark:text-primary-dark">
+          Methodology: Primary onomastic sources & peer-verified lexical lexicons
+        </span>
+        <span>Last updated: {lastUpdatedDate}</span>
+      </div>
+    </section>
+
+    <!-- USE CASES SECTION -->
+    <section class="space-y-4" aria-labelledby="use-cases-heading">
+      <h2 id="use-cases-heading" class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark flex items-center gap-2">
+        <span>💡</span>
+        <span>Popular Use Cases for Name Meanings & Etymology</span>
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="card p-5 space-y-2">
+          <div class="text-2xl">👶</div>
+          <h3 class="text-base font-bold text-primary-light dark:text-primary-dark">Expecting Parents & Baby Naming</h3>
+          <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
+            Discover baby name ideas with deep ancestral roots, lyrical syllables, and gender flexibility. Browse our curated <a href="/names" class="text-accent hover:underline font-medium">baby names directory A–Z</a> to compare meanings across cultures.
+          </p>
+        </div>
+        <div class="card p-5 space-y-2">
+          <div class="text-2xl">✍️</div>
+          <h3 class="text-base font-bold text-primary-light dark:text-primary-dark">Writers & Screenwriters</h3>
+          <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
+            Name fictional protagonists, antagonists, and fantasy world leaders with symbolic etymology matching their literary arcs and character personalities.
+          </p>
+        </div>
+        <div class="card p-5 space-y-2">
+          <div class="text-2xl">🌳</div>
+          <h3 class="text-base font-bold text-primary-light dark:text-primary-dark">Genealogy & Ancestral Lore</h3>
+          <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
+            Trace family migration patterns and historical vocations through ancestral linguistic roots. Pair with birth dates on our <a href="/birthday-facts" class="text-accent hover:underline font-medium">birthday personality calculator</a>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- DID YOU KNOW? FACT STRIP -->
+    <section class="card p-5 sm:p-6 border-accent/20 bg-accent/5 space-y-3" aria-labelledby="trivia-strip-heading">
+      <div class="flex items-center gap-2">
+        <span class="text-lg">🧠</span>
+        <h2 id="trivia-strip-heading" class="text-sm font-bold uppercase tracking-wider text-accent">
+          Did You Know? Phonetics & Onomastics Trivia
+        </h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
+        <div class="space-y-1">
+          <span class="text-xs font-bold text-primary-light dark:text-primary-dark flex items-center gap-1.5">
+            <span>🗣️</span> The Bouba/Kiki Effect
+          </span>
+          <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
+            Linguistic experiments prove humans universally associate soft, rounded vowel sounds (like *Amara* or *Noah*) with gentleness, while sharp plosive consonants evoke dynamic vigor.
+          </p>
+        </div>
+        <div class="space-y-1">
+          <span class="text-xs font-bold text-primary-light dark:text-primary-dark flex items-center gap-1.5">
+            <span>⏳</span> The 100-Year Name Cycle
+          </span>
+          <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
+            Baby name fashions follow a predictable century-long cycle: names that feel dated to parents often feel classic and chic to grandchildren honoring their great-grandparents.
+          </p>
+        </div>
+        <div class="space-y-1">
+          <span class="text-xs font-bold text-primary-light dark:text-primary-dark flex items-center gap-1.5">
+            <span>🌟</span> 500 Ancestral Roots
+          </span>
+          <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
+            Over 80% of traditional European and Mediterranean given names originate from fewer than 500 ancient Proto-Indo-European root words signifying light, peace, nature, and courage.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMMON QUESTIONS QUICK-JUMP BAR & FAQ -->
+    <section class="space-y-4" id="faq-section">
+      <div class="card p-4 space-y-2.5 bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold uppercase tracking-wider text-secondary-light dark:text-secondary-dark">
+            Quick Navigation — Common Questions
+          </span>
+          <span class="text-xs text-accent font-medium">8 Answers</span>
+        </div>
+        <div class="flex flex-wrap gap-1.5">
+          {faqs.map((faq, idx) => (
+            <a
+              href={`#faq-item-${idx + 1}`}
+              class="text-xs px-2.5 py-1 rounded-lg bg-bg-light dark:bg-bg-dark border border-border-light dark:border-border-dark text-secondary-light dark:text-secondary-dark hover:text-accent hover:border-accent transition-colors"
+            >
+              {faq.question}
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <Faq items={faqs} />
+    </section>
+
+    <!-- RELATED TOOLS SECTION -->
+    <section class="pt-6 border-t border-border-light dark:border-border-dark space-y-4">
+      <div class="flex items-center justify-between">
+        <h2 class="text-lg sm:text-xl font-bold tracking-tight text-primary-light dark:text-primary-dark">
+          Related Free Tools
+        </h2>
+        <a href="/" class="text-xs font-semibold text-accent hover:underline">
+          View all tools &rarr;
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        {relatedTools.map((tool) => (
+          <ToolCard
+            title={tool.name}
+            description={tool.desc}
+            href={tool.href}
+            anchor={tool.anchor}
+            icon={tool.href.includes('birthday') ? 'cake' : tool.href.includes('picker') ? 'dice' : 'book'}
+          />
+        ))}
+      </div>
+    </section>
+  </div>
+</Base>
+
+<script>
+  import { saveHistory, getLastState, saveLastState, initHistoryCard } from '../scripts/history.js';
+
+  function initNameMeaningFinder() {
+    const container = document.getElementById('name-meaning-container');
+    if (!container) return;
+
+    const form = document.getElementById('name-search-form');
+    const input = document.getElementById('name-input');
+    const submitBtn = document.getElementById('search-btn');
+    const errorEl = document.getElementById('search-error');
+
+    const loadingEl = document.getElementById('ai-loading');
+    const loadingText = document.getElementById('ai-loading-text');
+    const resultCard = document.getElementById('ai-result-card');
+
+    const headingEl = document.getElementById('ai-name-heading');
+    const essenceEl = document.getElementById('ai-essence');
+    const originEl = document.getElementById('ai-origin');
+    const styleEl = document.getElementById('ai-style');
+    const personalityEl = document.getElementById('ai-personality');
+    const famousEl = document.getElementById('ai-famous');
+    const famousContainer = document.getElementById('ai-famous-container');
+    const funfactEl = document.getElementById('ai-funfact');
+    const similarEl = document.getElementById('ai-similar');
+
+    // Parse valid slugs map
+    let validSlugs = {};
+    try {
+      const rawSlugs = container.getAttribute('data-valid-slugs');
+      if (rawSlugs) validSlugs = JSON.parse(rawSlugs);
+    } catch (e) {
+      validSlugs = {};
+    }
+
+    function showError(msg) {
+      if (errorEl) {
+        errorEl.textContent = msg;
+        errorEl.classList.remove('hidden');
+      }
+    }
+
+    function clearError() {
+      if (errorEl) {
+        errorEl.textContent = '';
+        errorEl.classList.add('hidden');
+      }
+    }
+
+    function renderAiInsights(name, insights) {
+      if (!insights) return;
+
+      if (headingEl) headingEl.textContent = `Insights for "${name}"`;
+      if (essenceEl) essenceEl.textContent = `"${insights.meaning}"`;
+      if (originEl) originEl.textContent = insights.origin || 'International';
+      if (styleEl) styleEl.textContent = insights.style || 'timeless';
+
+      if (personalityEl) {
+        personalityEl.innerHTML = (insights.personality || [])
+          .map(
+            (trait) =>
+              `<span class="px-3 py-1 rounded-xl text-xs font-semibold bg-input-light dark:bg-input-dark border border-border-light dark:border-border-dark text-primary-light dark:text-primary-dark shadow-xs">${trait}</span>`
+          )
+          .join('');
+      }
+
+      if (famousEl && famousContainer) {
+        if (insights.famous && insights.famous.length > 0) {
+          famousContainer.classList.remove('hidden');
+          famousEl.innerHTML = insights.famous
+            .map(
+              (p) =>
+                `<li class="flex items-center gap-2.5 text-primary-light dark:text-primary-dark font-medium"><span class="w-1.5 h-1.5 rounded-full bg-accent shrink-0"></span><span>${p}</span></li>`
+            )
+            .join('');
+        } else {
+          famousContainer.classList.add('hidden');
+        }
+      }
+
+      if (funfactEl) funfactEl.textContent = insights.funFact || '';
+
+      if (similarEl) {
+        const curLang = document.documentElement.lang || 'en';
+        const langPrefix = curLang !== 'en' ? `/${curLang}` : '';
+        similarEl.innerHTML = (insights.similar || [])
+          .map((simName) => {
+            const clean = simName.trim();
+            const targetSlug = validSlugs[clean.toLowerCase()];
+            if (targetSlug) {
+              return `<a href="${langPrefix}/name/${targetSlug}" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold bg-bg-light dark:bg-bg-dark border border-border-light dark:border-border-dark text-accent hover:border-accent hover:bg-accent/10 transition-colors shadow-xs">${clean} &rarr;</a>`;
+            }
+            return `<span class="px-3 py-1.5 rounded-xl text-xs font-medium bg-input-light dark:bg-input-dark border border-border-light dark:border-border-dark text-secondary-light dark:text-secondary-dark">${clean}</span>`;
+          })
+          .join('');
+      }
+
+      if (loadingEl) loadingEl.classList.add('hidden');
+      if (resultCard) {
+        resultCard.classList.remove('hidden');
+        resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+
+    async function handleLookup(rawInput) {
+      clearError();
+      const trimmed = (rawInput || '').trim();
+
+      const nameRegex = /^[\p{L}\s'-]{2,30}$/u;
+      if (!trimmed || !nameRegex.test(trimmed)) {
+        showError('Please enter a valid name between 2 and 30 characters (letters, spaces, hyphens, or apostrophes only).');
+        return;
+      }
+
+      // Check if name matches our 200+ curated database
+      const cleanLower = trimmed.toLowerCase();
+      const matchedSlug = validSlugs[cleanLower];
+
+      if (matchedSlug) {
+        // Direct instant navigation to static SEO dossier
+        const curLang = document.documentElement.lang || 'en';
+        const langPrefix = curLang !== 'en' ? `/${curLang}` : '';
+        window.location.href = `${langPrefix}/name/${matchedSlug}`;
+        return;
+      }
+
+      // Name is not in 200+ database -> Generate AI insights on-demand on this page
+      const cacheKey = `toolnest_ai_insights_${cleanLower}`;
+      try {
+        const cached = sessionStorage.getItem(cacheKey);
+        if (cached) {
+          const parsed = JSON.parse(cached);
+          renderAiInsights(trimmed, parsed);
+          saveHistory('names', {
+            t: `Looked up: ${trimmed} (AI)`,
+            d: new Date().toISOString(),
+            x: { name: trimmed, url: `/name-meaning?q=${encodeURIComponent(trimmed)}` },
+          });
+          return;
+        }
+      } catch (e) {}
+
+      // Call API
+      if (resultCard) resultCard.classList.add('hidden');
+      if (loadingEl) {
+        loadingEl.classList.remove('hidden');
+        if (loadingText) loadingText.textContent = `Consulting the name experts for "${trimmed}"...`;
+      }
+      if (submitBtn) submitBtn.setAttribute('disabled', 'true');
+
+      try {
+        const curLang = document.documentElement.lang || 'en';
+        const res = await fetch('/api/name-insights', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: trimmed, lang: curLang }),
+        });
+
+        if (!res.ok) {
+          if (res.status === 429) {
+            throw new Error('Too many lookups — please wait a minute before analyzing more names.');
+          }
+          const errData = await res.json().catch(() => null);
+          throw new Error(errData?.error || 'Unable to generate insights at this time. Please try again.');
+        }
+
+        const data = await res.json();
+        if (!data?.insights) throw new Error('Invalid response from AI service.');
+
+        // Cache in session
+        try {
+          sessionStorage.setItem(cacheKey, JSON.stringify(data.insights));
+        } catch (e) {}
+
+        // Save in search history
+        saveHistory('names', {
+          t: `Looked up: ${trimmed} (AI)`,
+          d: new Date().toISOString(),
+          x: { name: trimmed, url: `/name-meaning?q=${encodeURIComponent(trimmed)}` },
+        });
+
+        saveLastState('names', { q: trimmed });
+
+        renderAiInsights(trimmed, data.insights);
+      } catch (err) {
+        if (loadingEl) loadingEl.classList.add('hidden');
+        showError(err.message || 'Something went wrong while retrieving insights.');
+      } finally {
+        if (submitBtn) submitBtn.removeAttribute('disabled');
+      }
+    }
+
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      handleLookup(input?.value);
+    });
+
+    // Quick chips click
+    document.querySelectorAll('.quick-example-chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const name = chip.getAttribute('data-name');
+        if (name && input) {
+          input.value = name;
+          handleLookup(name);
+        }
+      });
+    });
+
+    // Check URL query param e.g. ?q=Zephyra
+    const urlParams = new URLSearchParams(window.location.search);
+    const query = urlParams.get('q');
+    if (query && input) {
+      input.value = query;
+      handleLookup(query);
+    } else {
+      const last = getLastState('names');
+      if (last?.q && input && !input.value) {
+        input.value = last.q;
+      }
+    }
+
+    initHistoryCard({
+      toolId: 'names',
+      onRestore: (item) => {
+        if (item?.x?.url) {
+          window.location.href = item.x.url;
+        } else if (item?.x?.name) {
+          if (input) input.value = item.x.name;
+          handleLookup(item.x.name);
+        }
+      },
+    });
+  }
+
+  initNameMeaningFinder();
+  document.addEventListener('astro:after-swap', initNameMeaningFinder);
+</script>

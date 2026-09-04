@@ -1,10 +1,27 @@
 ---
 /**
  * Header.astro
- * Responsive header with desktop navigation and fully accessible,
- * animated mobile slide-in drawer menu.
- * Z-index hierarchy: Header (50), Backdrop (60), Drawer (70).
+ * Responsive header with desktop navigation, language switcher dropdown,
+ * theme toggle, and fully accessible mobile slide-in drawer menu.
  */
+import {
+  LANGUAGES,
+  type Lang,
+  getTranslations,
+  getLocalizedPath,
+  getLangFromPath,
+  LOCALES,
+} from '../i18n';
+
+export interface Props {
+  lang?: Lang;
+}
+
+const currentPath = Astro.url.pathname;
+const detectedLang = getLangFromPath(currentPath);
+const lang: Lang = Astro.props.lang || detectedLang;
+const t = getTranslations(lang);
+const currentLangMeta = LANGUAGES[lang] || LANGUAGES.en;
 
 interface ToolNavItem {
   name: string;
@@ -13,22 +30,23 @@ interface ToolNavItem {
 }
 
 const navTools: ToolNavItem[] = [
-  { name: 'Age Calculator', href: '/age-calculator', emoji: '🎂' },
-  { name: 'Birthday Facts', href: '/birthday-facts', emoji: '🎉' },
-  { name: 'Decision Wheel', href: '/decision-wheel', emoji: '🎡' },
-  { name: 'Random Picker', href: '/random-picker', emoji: '🎲' },
-  { name: 'Countdown', href: '/countdown', emoji: '⏳' },
-  { name: 'Name Meanings', href: '/name-meaning', emoji: '🏷️' },
+  { name: t.nav.ageCalculator, href: getLocalizedPath('/age-calculator', lang), emoji: '🎂' },
+  { name: t.nav.birthdayFacts, href: getLocalizedPath('/birthday-facts', lang), emoji: '🎉' },
+  { name: t.nav.decisionWheel, href: getLocalizedPath('/decision-wheel', lang), emoji: '🎡' },
+  { name: t.nav.randomPicker, href: getLocalizedPath('/random-picker', lang), emoji: '🎲' },
+  { name: t.nav.countdown, href: getLocalizedPath('/countdown', lang), emoji: '⏳' },
+  { name: t.nav.nameMeaning, href: getLocalizedPath('/name-meaning', lang), emoji: '🏷️' },
 ];
 
-const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+const homeHref = getLocalizedPath('/', lang);
+const currentNormalizedPath = currentPath.replace(/\/$/, '') || '/';
 ---
 
 <header class="sticky top-0 z-50 w-full border-b border-border-light dark:border-border-dark bg-bg-light/90 dark:bg-bg-dark/90 backdrop-blur-md transition-colors duration-150">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-2 sm:gap-4">
     <!-- Brand Logo -->
     <a 
-      href="/" 
+      href={homeHref} 
       class="group inline-flex items-center gap-2.5 text-lg font-bold tracking-tight text-primary-light dark:text-primary-dark hover:opacity-90 focus-visible:rounded-lg shrink-0"
       aria-label="ToolNest Home"
     >
@@ -40,10 +58,10 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
       <span>ToolNest</span>
     </a>
 
-    <!-- Desktop Navigation (>= md breakpoint, all 6 links, no wrapping) -->
+    <!-- Desktop Navigation (>= md breakpoint) -->
     <nav class="hidden md:flex items-center gap-0.5 lg:gap-1 flex-nowrap whitespace-nowrap overflow-x-auto" aria-label="Main Navigation">
       {navTools.map((tool) => {
-        const isActive = currentPath === tool.href;
+        const isActive = currentNormalizedPath === tool.href.replace(/\/$/, '');
         return (
           <a
             href={tool.href}
@@ -61,17 +79,76 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
       })}
     </nav>
 
-    <!-- Header Actions (Theme Toggle & Mobile Menu Trigger) -->
+    <!-- Header Actions (Language Switcher, Theme Toggle & Mobile Menu Trigger) -->
     <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
-      <!-- Dark / Light Mode Toggle Button (48x48px touch target) -->
+      <!-- Language Switcher Dropdown (Desktop >= sm) -->
+      <div class="relative hidden sm:block" id="lang-switcher-container">
+        <button
+          id="lang-dropdown-btn"
+          type="button"
+          class="h-10 px-3 rounded-xl flex items-center gap-2 text-xs font-semibold text-secondary-light dark:text-secondary-dark hover:text-primary-light dark:hover:text-primary-dark hover:bg-black/5 dark:hover:bg-white/5 border border-border-light dark:border-border-dark transition-all duration-150 active:scale-95 focus:outline-none focus:ring-2 focus:ring-accent"
+          aria-haspopup="true"
+          aria-expanded="false"
+          aria-label={t.nav.switchLanguage}
+          title={t.nav.switchLanguage}
+        >
+          <svg class="w-4 h-4 text-accent shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+          <span>{currentLangMeta.nativeName}</span>
+          <svg class="w-3.5 h-3.5 text-secondary-light dark:text-secondary-dark opacity-75" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="m6 9 6 6 6-6"></path>
+          </svg>
+        </button>
+
+        <!-- Dropdown Menu -->
+        <div
+          id="lang-dropdown-menu"
+          class="hidden absolute end-0 mt-1.5 w-44 rounded-xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark shadow-xl p-1.5 z-50 transition-all duration-150"
+          role="menu"
+          aria-orientation="vertical"
+        >
+          {LOCALES.map((localeCode) => {
+            const item = LANGUAGES[localeCode];
+            const isSelected = localeCode === lang;
+            const targetUrl = getLocalizedPath(currentPath, localeCode);
+            return (
+              <a
+                href={targetUrl}
+                data-lang={localeCode}
+                class:list={[
+                  'lang-option flex items-center justify-between w-full px-3 py-2 rounded-lg text-xs font-medium transition-colors',
+                  isSelected
+                    ? 'bg-accent/10 text-accent font-semibold'
+                    : 'text-primary-light dark:text-primary-dark hover:bg-black/5 dark:hover:bg-white/5',
+                ]}
+                role="menuitem"
+              >
+                <div class="flex items-center gap-2">
+                  <span class="text-sm">{item.flag}</span>
+                  <span>{item.nativeName}</span>
+                </div>
+                {isSelected && (
+                  <svg class="w-3.5 h-3.5 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                )}
+              </a>
+            );
+          })}
+        </div>
+      </div>
+
+      <!-- Dark / Light Mode Toggle Button -->
       <button
         id="theme-toggle"
         type="button"
-        class="w-12 h-12 rounded-xl flex items-center justify-center text-secondary-light dark:text-secondary-dark hover:text-primary-light dark:hover:text-primary-dark hover:bg-black/5 dark:hover:bg-white/5 border border-border-light dark:border-border-dark transition-all duration-150 active:scale-95 focus:outline-none focus:ring-2 focus:ring-accent relative overflow-hidden"
-        aria-label="Switch to dark mode"
-        title="Switch to dark mode"
+        class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center text-secondary-light dark:text-secondary-dark hover:text-primary-light dark:hover:text-primary-dark hover:bg-black/5 dark:hover:bg-white/5 border border-border-light dark:border-border-dark transition-all duration-150 active:scale-95 focus:outline-none focus:ring-2 focus:ring-accent relative overflow-hidden"
+        aria-label="Switch theme"
+        title="Switch theme"
       >
-        <!-- Sun Icon (crossfades & rotates in in dark mode) -->
         <svg
           id="theme-icon-sun"
           class="w-5 h-5 text-amber-400 absolute transition-all duration-150 transform scale-0 rotate-90 opacity-0 dark:scale-100 dark:rotate-0 dark:opacity-100 pointer-events-none"
@@ -92,7 +169,6 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
           <path d="m6.34 17.66-1.41 1.41"></path>
           <path d="m19.07 4.93-1.41 1.41"></path>
         </svg>
-        <!-- Moon Icon (crossfades & rotates out in dark mode) -->
         <svg
           id="theme-icon-moon"
           class="w-5 h-5 text-secondary-light dark:text-secondary-dark absolute transition-all duration-150 transform scale-100 rotate-0 opacity-100 dark:scale-0 dark:-rotate-90 dark:opacity-0 pointer-events-none"
@@ -107,11 +183,11 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
         </svg>
       </button>
 
-      <!-- Mobile Hamburger Button (48x48px tap target with animated hamburger ↔ X icon) -->
+      <!-- Mobile Hamburger Button -->
       <button
         id="mobile-menu-toggle"
         type="button"
-        class="md:hidden w-12 h-12 rounded-xl flex items-center justify-center text-secondary-light dark:text-secondary-dark hover:text-primary-light dark:hover:text-primary-dark hover:bg-black/5 dark:hover:bg-white/5 border border-border-light dark:border-border-dark transition-all duration-150 active:scale-95 focus:outline-none focus:ring-2 focus:ring-accent"
+        class="md:hidden w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center text-secondary-light dark:text-secondary-dark hover:text-primary-light dark:hover:text-primary-dark hover:bg-black/5 dark:hover:bg-white/5 border border-border-light dark:border-border-dark transition-all duration-150 active:scale-95 focus:outline-none focus:ring-2 focus:ring-accent"
         aria-label="Open menu"
         aria-expanded="false"
         aria-controls="mobile-drawer"
@@ -125,27 +201,26 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
     </div>
   </div>
 
-  <!-- Mobile Drawer Backdrop Overlay (z-index 60) -->
+  <!-- Mobile Drawer Backdrop Overlay -->
   <div
     id="mobile-backdrop"
     class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] opacity-0 pointer-events-none transition-opacity duration-250 ease-out md:hidden"
     aria-hidden="true"
   ></div>
 
-  <!-- Mobile Slide-In Navigation Drawer (z-index 70, slides in from right, width min(320px, 85vw)) -->
+  <!-- Mobile Slide-In Navigation Drawer -->
   <aside
     id="mobile-drawer"
-    class="fixed top-0 right-0 bottom-0 h-full w-[min(320px,85vw)] max-w-full bg-surface-light dark:bg-surface-dark border-l border-border-light dark:border-border-dark z-[70] shadow-2xl transform translate-x-full transition-transform duration-250 ease-out md:hidden flex flex-col overflow-hidden"
+    class="fixed top-0 end-0 bottom-0 h-full w-[min(320px,85vw)] max-w-full bg-surface-light dark:bg-surface-dark border-s border-border-light dark:border-border-dark z-[70] shadow-2xl transform translate-x-full rtl:-translate-x-full transition-transform duration-250 ease-out md:hidden flex flex-col overflow-hidden"
     role="dialog"
     aria-modal="true"
     aria-label="Navigation Menu"
     aria-hidden="true"
   >
-    <!-- Drawer Header: Site Logo & Close (X) Button -->
+    <!-- Drawer Header -->
     <div class="h-16 px-4 border-b border-border-light dark:border-border-dark flex items-center justify-between shrink-0 bg-surface-light dark:bg-surface-dark">
-      <!-- Site Logo in Drawer -->
       <a 
-        href="/" 
+        href={homeHref} 
         class="drawer-nav-link inline-flex items-center gap-2 text-base font-bold tracking-tight text-primary-light dark:text-primary-dark hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-accent rounded-lg"
         aria-label="ToolNest Home"
       >
@@ -157,146 +232,91 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
         <span>ToolNest</span>
       </a>
 
-      <!-- Close Drawer (X) Button (48x48px tap target) -->
+      <!-- Close Drawer Button -->
       <button
         id="mobile-menu-close"
         type="button"
-        class="w-12 h-12 -mr-2 rounded-xl flex items-center justify-center text-secondary-light dark:text-secondary-dark hover:text-primary-light dark:hover:text-primary-dark hover:bg-black/5 dark:hover:bg-white/5 transition-colors focus:outline-none focus:ring-2 focus:ring-accent"
+        class="w-10 h-10 rounded-xl flex items-center justify-center text-secondary-light dark:text-secondary-dark hover:text-primary-light dark:hover:text-primary-dark hover:bg-black/5 dark:hover:bg-white/5 border border-border-light dark:border-border-dark transition-colors focus:outline-none focus:ring-2 focus:ring-accent"
         aria-label="Close menu"
       >
-        <svg class="w-5 h-5 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 6 6 18M6 6l12 12"></path>
         </svg>
       </button>
     </div>
 
-    <!-- Drawer Navigation Content (Scrollable) -->
-    <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-4 overscroll-contain" aria-label="Mobile Navigation Links">
-      <!-- ALL Tool Links (min 56px height, full-width, emoji + name + chevron) -->
-      <div class="space-y-1">
-        <div class="px-3 pb-1 text-[11px] font-bold uppercase tracking-wider text-secondary-light dark:text-secondary-dark select-none">
-          Tools Collection
+    <!-- Drawer Navigation Links -->
+    <div class="flex-1 overflow-y-auto px-3 py-4 space-y-4">
+      <!-- Language Switcher in Mobile Drawer -->
+      <div class="space-y-1.5 pb-3 border-b border-border-light dark:border-border-dark">
+        <span class="text-[11px] font-bold uppercase tracking-wider text-secondary-light dark:text-secondary-dark px-2 block">
+          {t.nav.switchLanguage}
+        </span>
+        <div class="grid grid-cols-2 gap-1.5">
+          {LOCALES.map((localeCode) => {
+            const item = LANGUAGES[localeCode];
+            const isSelected = localeCode === lang;
+            const targetUrl = getLocalizedPath(currentPath, localeCode);
+            return (
+              <a
+                href={targetUrl}
+                data-lang={localeCode}
+                class:list={[
+                  'lang-option flex items-center gap-2 px-2.5 py-2 rounded-xl text-xs font-medium border transition-colors',
+                  isSelected
+                    ? 'border-accent bg-accent/10 text-accent font-semibold'
+                    : 'border-border-light dark:border-border-dark text-secondary-light dark:text-secondary-dark hover:border-accent hover:text-primary-light dark:hover:text-primary-dark',
+                ]}
+              >
+                <span>{item.flag}</span>
+                <span class="truncate">{item.nativeName}</span>
+              </a>
+            );
+          })}
         </div>
+      </div>
+
+      <!-- Tool Links -->
+      <nav class="space-y-1" aria-label="Mobile Navigation">
         {navTools.map((tool) => {
-          const isActive = currentPath === tool.href;
+          const isActive = currentNormalizedPath === tool.href.replace(/\/$/, '');
           return (
             <a
               href={tool.href}
               class:list={[
-                'drawer-nav-link group flex items-center justify-between w-full px-3.5 py-3 rounded-xl min-h-[56px] transition-colors focus:outline-none focus:ring-2 focus:ring-accent',
+                'drawer-nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors min-h-[44px]',
                 isActive
-                  ? 'text-accent bg-accent/10 dark:bg-accent/15 font-semibold'
-                  : 'text-primary-light dark:text-primary-dark hover:bg-black/5 dark:hover:bg-white/5 font-medium',
+                  ? 'bg-accent text-white font-semibold shadow-sm shadow-accent/20'
+                  : 'text-primary-light dark:text-primary-dark hover:bg-black/5 dark:hover:bg-white/5',
               ]}
               aria-current={isActive ? 'page' : undefined}
             >
-              <div class="flex items-center gap-3">
-                <span class="w-8 h-8 rounded-lg bg-bg-light dark:bg-bg-dark border border-border-light dark:border-border-dark flex items-center justify-center text-lg select-none shrink-0 shadow-sm group-hover:scale-105 transition-transform">
-                  {tool.emoji}
-                </span>
-                <span class="text-sm sm:text-base">{tool.name}</span>
-              </div>
-              <svg 
-                class:list={[
-                  'w-4 h-4 transition-transform group-hover:translate-x-0.5 shrink-0',
-                  isActive ? 'text-accent' : 'text-secondary-light dark:text-secondary-dark opacity-50'
-                ]} 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                stroke="currentColor" 
-                stroke-width="2.5" 
-                stroke-linecap="round" 
-                stroke-linejoin="round"
-              >
-                <polyline points="9 18 15 12 9 6" />
-              </svg>
+              <span class="text-base">{tool.emoji}</span>
+              <span>{tool.name}</span>
             </a>
           );
         })}
-      </div>
+      </nav>
 
-      <!-- Secondary Links (About & Privacy Policy) -->
-      <div class="pt-3 border-t border-border-light dark:border-border-dark space-y-1">
-        <div class="px-3 pb-1 text-[11px] font-bold uppercase tracking-wider text-secondary-light dark:text-secondary-dark select-none">
-          Information
+      <!-- Footer Info in Drawer -->
+      <div class="pt-4 border-t border-border-light dark:border-border-dark space-y-2 text-xs text-secondary-light dark:text-secondary-dark px-1">
+        <div class="flex items-center justify-between">
+          <a href={getLocalizedPath('/about', lang)} class="drawer-nav-link hover:text-accent transition-colors py-1">
+            {t.nav.about}
+          </a>
+          <a href={getLocalizedPath('/privacy-policy', lang)} class="drawer-nav-link hover:text-accent transition-colors py-1">
+            {t.nav.privacy}
+          </a>
+          <a href={getLocalizedPath('/contact', lang)} class="drawer-nav-link hover:text-accent transition-colors py-1">
+            {t.nav.contact}
+          </a>
         </div>
-        <a
-          href="/about"
-          class:list={[
-            'drawer-nav-link group flex items-center justify-between w-full px-3.5 py-2.5 rounded-xl min-h-[48px] text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-accent',
-            currentPath === '/about'
-              ? 'text-accent bg-accent/10 dark:bg-accent/15 font-semibold'
-              : 'text-secondary-light dark:text-secondary-dark hover:text-primary-light dark:hover:text-primary-dark hover:bg-black/5 dark:hover:bg-white/5 font-medium',
-          ]}
-          aria-current={currentPath === '/about' ? 'page' : undefined}
-        >
-          <div class="flex items-center gap-3">
-            <span class="text-base select-none">ℹ️</span>
-            <span>About ToolNest</span>
-          </div>
-          <svg class="w-3.5 h-3.5 opacity-50 transition-transform group-hover:translate-x-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="9 18 15 12 9 6" />
-          </svg>
-        </a>
-        <a
-          href="/privacy-policy"
-          class:list={[
-            'drawer-nav-link group flex items-center justify-between w-full px-3.5 py-2.5 rounded-xl min-h-[48px] text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-accent',
-            currentPath === '/privacy-policy'
-              ? 'text-accent bg-accent/10 dark:bg-accent/15 font-semibold'
-              : 'text-secondary-light dark:text-secondary-dark hover:text-primary-light dark:hover:text-primary-dark hover:bg-black/5 dark:hover:bg-white/5 font-medium',
-          ]}
-          aria-current={currentPath === '/privacy-policy' ? 'page' : undefined}
-        >
-          <div class="flex items-center gap-3">
-            <span class="text-base select-none">🔒</span>
-            <span>Privacy Policy</span>
-          </div>
-          <svg class="w-3.5 h-3.5 opacity-50 transition-transform group-hover:translate-x-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="9 18 15 12 9 6" />
-          </svg>
-        </a>
-      </div>
-    </nav>
-
-    <!-- Drawer Footer: Dark-Mode Toggle Row -->
-    <div class="p-4 border-t border-border-light dark:border-border-dark bg-bg-light/60 dark:bg-bg-dark/60 shrink-0">
-      <div class="flex items-center justify-between w-full">
-        <div class="flex items-center gap-2.5">
-          <span id="drawer-theme-icon" class="w-5 h-5 flex items-center justify-center text-secondary-light dark:text-amber-400 shrink-0 select-none">
-            <svg class="w-5 h-5 dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-            </svg>
-            <svg class="w-5 h-5 hidden dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="4"></circle>
-              <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
-            </svg>
-          </span>
-          <span id="drawer-theme-label" class="text-sm font-semibold text-primary-light dark:text-primary-dark">
-            Dark Mode
-          </span>
-        </div>
-        <button
-          id="drawer-theme-toggle"
-          type="button"
-          class="relative inline-flex h-7 w-12 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-accent bg-border-light dark:bg-accent"
-          role="switch"
-          aria-checked="false"
-          aria-label="Toggle dark mode"
-        >
-          <span
-            id="drawer-theme-switch-thumb"
-            class="pointer-events-none inline-block h-6 w-6 transform rounded-full bg-white shadow-md ring-0 transition duration-200 ease-in-out translate-x-0 dark:translate-x-5"
-          ></span>
-        </button>
       </div>
     </div>
   </aside>
 </header>
 
 <style>
-  /* Animated Hamburger to X transformation */
   button[aria-expanded="true"] .hamburger-line-top {
     transform: translateY(6px) rotate(45deg);
   }
@@ -315,10 +335,8 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
   let headerCleanup = null;
 
   function initHeader() {
-    // 1. Initialize centralized theme controller
     initThemeToggle();
 
-    // Clean up previous drawer event listeners if already initialized (guards against double-binding)
     if (typeof headerCleanup === 'function') {
       headerCleanup();
       headerCleanup = null;
@@ -327,20 +345,65 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
     const abortController = new AbortController();
     const { signal } = abortController;
 
-    // Drawer Elements
+    // Desktop Language Switcher
+    const langBtn = document.getElementById('lang-dropdown-btn');
+    const langMenu = document.getElementById('lang-dropdown-menu');
+
+    if (langBtn && langMenu) {
+      function toggleLangMenu(open) {
+        const shouldOpen = open !== undefined ? open : langMenu.classList.contains('hidden');
+        if (shouldOpen) {
+          langMenu.classList.remove('hidden');
+          langBtn.setAttribute('aria-expanded', 'true');
+        } else {
+          langMenu.classList.add('hidden');
+          langBtn.setAttribute('aria-expanded', 'false');
+        }
+      }
+
+      langBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleLangMenu();
+      }, { signal });
+
+      document.addEventListener('click', (e) => {
+        if (!langMenu.contains(e.target) && !langBtn.contains(e.target)) {
+          toggleLangMenu(false);
+        }
+      }, { signal });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !langMenu.classList.contains('hidden')) {
+          toggleLangMenu(false);
+          langBtn.focus();
+        }
+      }, { signal });
+    }
+
+    // Language option click handler: store preference in cookie + localStorage
+    document.querySelectorAll('.lang-option').forEach((opt) => {
+      opt.addEventListener('click', (e) => {
+        const targetLang = opt.getAttribute('data-lang');
+        if (targetLang) {
+          try {
+            localStorage.setItem('toolnest_lang', targetLang);
+            document.cookie = `toolnest_lang=${targetLang}; path=/; max-age=31536000; SameSite=Lax`;
+            document.cookie = `lang-hint=${targetLang}; path=/; max-age=31536000; SameSite=Lax`;
+          } catch (err) {}
+        }
+      }, { signal });
+    });
+
+    // Mobile Drawer Controller
     const menuToggleBtn = document.getElementById('mobile-menu-toggle');
     const menuCloseBtn = document.getElementById('mobile-menu-close');
     const drawer = document.getElementById('mobile-drawer');
     const backdrop = document.getElementById('mobile-backdrop');
 
-    // ==========================================
-    // MOBILE DRAWER CONTROLLER
-    // ==========================================
     if (!menuToggleBtn || !drawer || !backdrop) return;
 
     let isDrawerOpen = false;
 
-    // Scroll Lock with scrollbar width compensation
     function lockScroll() {
       const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
       document.documentElement.style.overflow = 'hidden';
@@ -354,153 +417,77 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
       document.documentElement.style.paddingRight = '';
     }
 
-    // Get all focusable elements inside drawer for keyboard trap
-    function getFocusableElements() {
-      return Array.from(
-        drawer.querySelectorAll(
-          'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
-        )
-      );
-    }
-
     function openDrawer() {
       if (isDrawerOpen) return;
       isDrawerOpen = true;
-
-      // Lock background scroll
       lockScroll();
 
-      // Make page content outside drawer inert
       document.querySelectorAll('main, footer').forEach((el) => {
         el.setAttribute('inert', '');
       });
 
-      // Update ARIA states
       menuToggleBtn.setAttribute('aria-expanded', 'true');
       menuToggleBtn.setAttribute('aria-label', 'Close menu');
       drawer.setAttribute('aria-hidden', 'false');
 
-      // Animate backdrop and drawer (transform & opacity only, 250ms)
       backdrop.classList.remove('opacity-0', 'pointer-events-none');
       backdrop.classList.add('opacity-100', 'pointer-events-auto');
 
-      drawer.classList.remove('translate-x-full');
+      drawer.classList.remove('translate-x-full', 'rtl:-translate-x-full');
       drawer.classList.add('translate-x-0');
 
-      // Move focus into the drawer
       requestAnimationFrame(() => {
-        if (menuCloseBtn) {
-          menuCloseBtn.focus();
-        } else {
-          const focusables = getFocusableElements();
-          if (focusables.length > 0) focusables[0].focus();
-        }
+        if (menuCloseBtn) menuCloseBtn.focus();
       });
     }
 
     function closeDrawer(restoreFocus = true) {
       if (!isDrawerOpen) return;
       isDrawerOpen = false;
-
-      // Unlock background scroll
       unlockScroll();
 
-      // Remove inert from page content
       document.querySelectorAll('main, footer').forEach((el) => {
         el.removeAttribute('inert');
       });
 
-      // Update ARIA states
       menuToggleBtn.setAttribute('aria-expanded', 'false');
       menuToggleBtn.setAttribute('aria-label', 'Open menu');
       drawer.setAttribute('aria-hidden', 'true');
 
-      // Animate backdrop and drawer out
       backdrop.classList.remove('opacity-100', 'pointer-events-auto');
       backdrop.classList.add('opacity-0', 'pointer-events-none');
 
       drawer.classList.remove('translate-x-0');
-      drawer.classList.add('translate-x-full');
+      drawer.classList.add('translate-x-full', 'rtl:-translate-x-full');
 
-      // Return focus to the hamburger toggle button
       if (restoreFocus && menuToggleBtn) {
         menuToggleBtn.focus();
       }
     }
 
-    // Toggle click on hamburger button
-    menuToggleBtn.addEventListener(
-      'click',
-      () => {
-        if (isDrawerOpen) {
-          closeDrawer();
-        } else {
-          openDrawer();
-        }
-      },
-      { signal }
-    );
+    menuToggleBtn.addEventListener('click', () => {
+      if (isDrawerOpen) closeDrawer();
+      else openDrawer();
+    }, { signal });
 
-    // Close button click
     if (menuCloseBtn) {
       menuCloseBtn.addEventListener('click', () => closeDrawer(), { signal });
     }
 
-    // Backdrop click
     backdrop.addEventListener('click', () => closeDrawer(), { signal });
 
-    // Link click: navigate normally, close drawer smoothly
     drawer.querySelectorAll('.drawer-nav-link').forEach((link) => {
-      link.addEventListener(
-        'click',
-        () => {
-          // Close drawer without snapping focus back to hamburger since user is navigating
-          closeDrawer(false);
-        },
-        { signal }
-      );
+      link.addEventListener('click', () => closeDrawer(false), { signal });
     });
 
-    // Keyboard Management: Escape to close, Tab focus trapping
-    document.addEventListener(
-      'keydown',
-      (e) => {
-        if (!isDrawerOpen) return;
+    document.addEventListener('keydown', (e) => {
+      if (!isDrawerOpen) return;
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        closeDrawer();
+      }
+    }, { signal });
 
-        // Escape Key
-        if (e.key === 'Escape') {
-          e.preventDefault();
-          closeDrawer();
-          return;
-        }
-
-        // Focus Trap (Tab & Shift+Tab cycling)
-        if (e.key === 'Tab') {
-          const focusables = getFocusableElements();
-          if (focusables.length === 0) return;
-
-          const firstElement = focusables[0];
-          const lastElement = focusables[focusables.length - 1];
-
-          if (e.shiftKey) {
-            // Shift + Tab
-            if (document.activeElement === firstElement) {
-              e.preventDefault();
-              lastElement.focus();
-            }
-          } else {
-            // Tab
-            if (document.activeElement === lastElement) {
-              e.preventDefault();
-              firstElement.focus();
-            }
-          }
-        }
-      },
-      { signal }
-    );
-
-    // Register cleanup function for next lifecycle run
     headerCleanup = () => {
       if (isDrawerOpen) {
         unlockScroll();
@@ -512,7 +499,6 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
     };
   }
 
-  // Initialize on load and on Astro view swaps
   initHeader();
   document.addEventListener('astro:after-swap', initHeader);
 </script>

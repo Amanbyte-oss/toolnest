@@ -91,7 +91,7 @@ function parseNameInsights(rawText, fallbackName) {
     // 6. Validate similar names (cap at 4, max 40 chars each)
     const similar = Array.isArray(parsed.similar)
       ? parsed.similar
-          .map((item) => String(item || '').trim().replace(/[^a-zA-Z\s'-]/g, ''))
+          .map((item) => String(item || '').trim().replace(/[^\p{L}\s'-]/gu, ''))
           .filter((item) => item.length > 0)
           .map((item) => item.slice(0, 40))
           .slice(0, 4)
@@ -124,11 +124,20 @@ function parseNameInsights(rawText, fallbackName) {
 /**
  * Calls Google Gemini REST API with header-based authentication and 10s timeout
  */
-async function callGeminiApi(apiKey, name, temperature = 1.0) {
+async function callGeminiApi(apiKey, name, temperature = 1.0, lang = 'en') {
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
 
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 15000);
+
+  let langInstruction = '';
+  if (lang === 'pt') {
+    langInstruction = ' All explanations, meaning, origin, traits, funFact must be written in Brazilian Portuguese.';
+  } else if (lang === 'id') {
+    langInstruction = ' All explanations, meaning, origin, traits, funFact must be written in Indonesian.';
+  } else if (lang === 'ar') {
+    langInstruction = ' All explanations, meaning, origin, traits, funFact must be written in Modern Standard Arabic.';
+  }
 
   const promptText = `You are a name expert. For the name "${name}", return ONLY JSON with this exact shape:
 {
@@ -141,7 +150,7 @@ async function callGeminiApi(apiKey, name, temperature = 1.0) {
   "style": "classic|modern|timeless|rare|trendy"
 }
 If the name is not a real known name, still return a friendly creative interpretation with origin 'unknown'.
-Be concise. Generate JSON immediately without long reasoning.`;
+Be concise. Generate JSON immediately without long reasoning.${langInstruction}`;
 
   const payload = {
     contents: [
@@ -239,9 +248,10 @@ export const POST = async ({ request, locals }) => {
   }
 
   const rawName = typeof body?.name === 'string' ? body.name.trim() : '';
+  const lang = typeof body?.lang === 'string' ? body.lang.toLowerCase() : 'en';
 
-  // Name validation: 2-30 chars, letters/spaces/hyphens/apostrophes only
-  const nameRegex = /^[a-zA-Z\s'-]{2,30}$/;
+  // Name validation: 2-30 chars, letters/spaces/hyphens/apostrophes only (Unicode-aware)
+  const nameRegex = /^[\p{L}\s'-]{2,30}$/u;
   if (!rawName || !nameRegex.test(rawName)) {
     return new Response(
       JSON.stringify({
@@ -252,7 +262,7 @@ export const POST = async ({ request, locals }) => {
   }
 
   // 4. Call Gemini REST API directly
-  let result = await callGeminiApi(apiKey, rawName, 1.0);
+  let result = await callGeminiApi(apiKey, rawName, 1.0, lang);
 
   // If 404 model not found, log server-side (never leaking key) and return 502
   if (!result.ok && result.status === 404) {
@@ -270,7 +280,7 @@ export const POST = async ({ request, locals }) => {
 
   // Auto-retry once with lower temperature if JSON parsing failed
   if (!insights && result.status !== 404 && result.error?.name !== 'AbortError') {
-    result = await callGeminiApi(apiKey, rawName, 0.7);
+    result = await callGeminiApi(apiKey, rawName, 0.7, lang);
     insights = result.ok ? parseNameInsights(result.text, rawName) : null;
   }
 

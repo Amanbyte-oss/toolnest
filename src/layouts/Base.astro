@@ -5,6 +5,7 @@ import Seo, { type BreadcrumbItem } from '../components/Seo.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import BackToTop from '../components/BackToTop.astro';
 import Toast from '../components/Toast.astro';
+import { getLangFromPath, isRtlLang, type Lang, getTranslations } from '../i18n';
 import '../styles/global.css';
 
 export interface Props {
@@ -16,11 +17,15 @@ export interface Props {
   extraSchemas?: Record<string, any>[];
   maxWidthClass?: string;
   noindex?: boolean;
+  lang?: Lang;
 }
 
+const currentPath = Astro.url.pathname;
+const detectedLang = getLangFromPath(currentPath);
 const {
-  title = 'ToolNest — Fast, Private, Mobile-First Utilities',
-  description = 'A curated collection of modern, fast, and privacy-focused client-side tools. Age calculator, decision wheel, countdown timers, and more.',
+  lang = detectedLang,
+  title,
+  description,
   canonicalPath,
   ogImage = '/favicon.svg',
   breadcrumbs = [],
@@ -28,10 +33,18 @@ const {
   maxWidthClass = 'max-w-3xl',
   noindex = false,
 } = Astro.props;
+
+const t = getTranslations(lang);
+const defaultTitle = `${t.siteName} — ${t.tagline}`;
+const defaultDescription = t.description;
+
+const pageTitle = title || defaultTitle;
+const pageDescription = description || defaultDescription;
+const isRtl = isRtlLang(lang);
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang={lang} dir={isRtl ? 'rtl' : 'ltr'} class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
@@ -45,7 +58,7 @@ const {
     <!-- Theme Color (light: #F4F5F7, dark: #111315) -->
     <meta name="theme-color" content="#F4F5F7" id="theme-color-meta" />
 
-    <!-- Anti-FOUC Inline Theme Initialization (Runs synchronously before first paint) -->
+    <!-- Anti-FOUC Inline Theme Initialization -->
     <script is:inline>
       (function () {
         document.documentElement.classList.add('no-transition');
@@ -62,11 +75,8 @@ const {
 
           var meta = document.getElementById('theme-color-meta');
           if (meta) meta.setAttribute('content', isDark ? '#111315' : '#F4F5F7');
-        } catch (e) {
-          // In case localStorage is blocked in private browsing
-        }
+        } catch (e) {}
 
-        // Remove no-transition class after initial paint
         requestAnimationFrame(function () {
           requestAnimationFrame(function () {
             document.documentElement.classList.remove('no-transition');
@@ -76,7 +86,6 @@ const {
     </script>
 
     <style is:global>
-      /* Suppress animations and layout jumps on first paint */
       .no-transition,
       .no-transition *,
       .no-transition *::before,
@@ -85,38 +94,39 @@ const {
       }
     </style>
 
-    <!-- SEO & Metadata -->
+    <!-- SEO, Hreflang & Structured Data -->
     <Seo
-      title={title}
-      description={description}
-      canonicalPath={canonicalPath}
+      title={pageTitle}
+      description={pageDescription}
+      canonicalPath={canonicalPath || currentPath}
       ogImage={ogImage}
       breadcrumbs={breadcrumbs}
       extraSchemas={extraSchemas}
       noindex={noindex}
+      lang={lang}
     />
   </head>
   <body class="min-h-screen flex flex-col bg-bg-light dark:bg-bg-dark text-primary-light dark:text-primary-dark antialiased transition-colors duration-150">
     <!-- Accessible Skip to Content Link -->
     <a
       href="#main-content"
-      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:px-4 focus:py-2.5 focus:bg-accent focus:text-white focus:font-semibold focus:rounded-xl focus:shadow-lg focus:outline-none"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:start-3 focus:z-50 focus:px-4 focus:py-2.5 focus:bg-accent focus:text-white focus:font-semibold focus:rounded-xl focus:shadow-lg focus:outline-none"
     >
       Skip to main content
     </a>
 
-    <Header />
+    <Header lang={lang} />
 
     <main
       id="main-content"
       tabindex="-1"
       class:list={['flex-1 w-full mx-auto px-4 py-6 sm:py-10 focus:outline-none', maxWidthClass]}
     >
-      {breadcrumbs.length > 0 && <Breadcrumbs items={breadcrumbs} />}
+      {breadcrumbs.length > 0 && <Breadcrumbs items={breadcrumbs} lang={lang} />}
       <slot />
     </main>
 
-    <Footer />
+    <Footer lang={lang} />
     <BackToTop />
     <Toast />
   </body>
