@@ -365,7 +365,7 @@ const faqSchema = {
     <div id="ai-skeleton-loader" class="hidden animate-pulse pt-2 space-y-2">
       <div class="text-xs text-secondary-light dark:text-secondary-dark font-medium flex items-center gap-1.5">
         <span class="w-2 h-2 rounded-full bg-accent animate-ping"></span>
-        <span>Gemini is curating slices...</span>
+        <span id="ai-loader-text">Generating… can take up to 20 seconds on first try</span>
       </div>
       <div class="flex flex-wrap gap-2">
         <div class="h-8 w-24 rounded-xl bg-black/10 dark:bg-white/10"></div>
@@ -1227,6 +1227,7 @@ const faqSchema = {
     const aiBtnSpinner = document.getElementById('ai-btn-spinner');
     const aiBtnText = document.getElementById('ai-btn-text');
     const aiSkeleton = document.getElementById('ai-skeleton-loader');
+    const aiLoaderText = document.getElementById('ai-loader-text');
     const aiConfirmCard = document.getElementById('ai-confirm-card');
     const aiConfirmReplaceBtn = document.getElementById('ai-confirm-replace-btn');
     const aiCancelReplaceBtn = document.getElementById('ai-cancel-replace-btn');
@@ -1279,13 +1280,19 @@ const faqSchema = {
       });
     });
 
-    function setAiLoading(isLoading) {
+    function setAiLoading(isLoading, statusText) {
       if (!aiGenerateBtn) return;
       if (isLoading) {
         aiGenerateBtn.setAttribute('disabled', 'true');
         aiGenerateBtn.classList.add('opacity-75', 'cursor-not-allowed');
         if (aiBtnSpinner) aiBtnSpinner.classList.remove('hidden');
-        if (aiBtnText) aiBtnText.textContent = 'Thinking...';
+        if (aiBtnText) aiBtnText.textContent = statusText || 'Generating…';
+        if (aiLoaderText) {
+          aiLoaderText.textContent =
+            statusText === 'Retrying…'
+              ? 'Retrying… hang tight, first request took a bit longer'
+              : 'Generating… can take up to 20 seconds on first try';
+        }
         if (aiSkeleton) aiSkeleton.classList.remove('hidden');
       } else {
         aiGenerateBtn.removeAttribute('disabled');
@@ -1309,6 +1316,79 @@ const faqSchema = {
       syncUrl();
 
       showToast(`Generated ${options.length} options!`);
+    }
+
+    async function requestAiOptions(prompt, count, isRetry = false) {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000);
+
+      try {
+        const response = await fetch('/api/generate-options', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            prompt,
+            count,
+          }),
+          signal: controller.signal,
+        });
+
+        clearTimeout(timeoutId);
+        const data = await response.json().catch(() => null);
+
+        if (!response.ok) {
+          // Automatic retry once on timeout
+          if ((response.status === 504 || data?.reason === 'timeout') && !isRetry) {
+            setAiLoading(true, 'Retrying…');
+            return await requestAiOptions(prompt, count, true);
+          }
+
+          let errMessage = data?.error;
+          if (!errMessage) {
+            if (response.status === 429) {
+              errMessage = 'Rate limit reached. Please wait a minute before generating more options.';
+            } else if (response.status === 504) {
+              errMessage = 'Generation timed out after 30 seconds. Please try again with a simpler topic.';
+            } else if (response.status === 503) {
+              errMessage = 'Gemini AI service is temporarily unavailable. Please try again shortly.';
+            } else {
+              errMessage = 'Generation failed. Please try again or enter options manually.';
+            }
+          }
+          return { ok: false, error: errMessage, reason: data?.reason || 'server_error' };
+        }
+
+        if (!data?.options || !Array.isArray(data.options) || data.options.length < 2) {
+          return {
+            ok: false,
+            error: 'Could not parse valid options. Please try a different topic.',
+            reason: 'parse_error',
+          };
+        }
+
+        return { ok: true, options: data.options };
+      } catch (err) {
+        clearTimeout(timeoutId);
+        if (err.name === 'AbortError') {
+          // Automatic retry once on client timeout
+          if (!isRetry) {
+            setAiLoading(true, 'Retrying…');
+            return await requestAiOptions(prompt, count, true);
+          }
+          return {
+            ok: false,
+            error: 'Generation timed out after 30 seconds. The AI service may be experiencing high latency — please try again.',
+            reason: 'timeout',
+          };
+        }
+        return {
+          ok: false,
+          error: 'Network error connecting to AI generator. Please check your connection and try again.',
+          reason: 'network_error',
+        };
+      }
     }
 
     async function handleAiGenerate() {
@@ -1341,33 +1421,18 @@ const faqSchema = {
       setAiLoading(true);
 
       try {
-        const response = await fetch('/api/generate-options', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            prompt,
-            count: aiCount,
-          }),
-        });
+        const result = await requestAiOptions(prompt, aiCount, false);
 
-        const data = await response.json().catch(() => null);
-
-        if (!response.ok) {
-          const errMessage = data?.error || 'Generation failed. Please try again or enter options manually.';
-          showAiError(errMessage);
+        if (!result.ok) {
+          showAiError(result.error);
           return;
         }
 
-        if (!data?.options || !Array.isArray(data.options) || data.options.length < 2) {
-          showAiError('Could not parse valid options. Please try a different topic.');
-          return;
-        }
+        const newOptions = result.options;
 
         // Cache valid options in sessionStorage
         try {
-          sessionStorage.setItem(cacheKey, JSON.stringify(data.options));
+          sessionStorage.setItem(cacheKey, JSON.stringify(newOptions));
         } catch (e) {}
 
         // Check if current options are custom (different from presets)
@@ -1377,16 +1442,16 @@ const faqSchema = {
           JSON.stringify(options) === JSON.stringify(PRESETS.yesno);
 
         if (!isPreset && options.length >= 2) {
-          pendingAiOptions = data.options;
+          pendingAiOptions = newOptions;
           if (aiConfirmCard) {
             aiConfirmCard.classList.remove('hidden');
             aiConfirmCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
           }
         } else {
-          applyAiOptions(data.options);
+          applyAiOptions(newOptions);
         }
       } catch (err) {
-        showAiError('Network error connecting to AI generator. Please check your connection and try again.');
+        showAiError('An unexpected error occurred. Please try again.');
       } finally {
         setAiLoading(false);
       }

@@ -6,8 +6,8 @@
 
 export const prerender = false;
 
-// Configurable model constant at top of file
-const GEMINI_MODEL = 'gemini-3-flash-preview';
+// Configurable model constant at top of file (fastest production flash model)
+const GEMINI_MODEL = 'gemini-flash-latest';
 
 // In-memory rate limiting map: ip -> array of request timestamps (5 req / min / IP)
 const rateLimitMap = new Map();
@@ -101,16 +101,15 @@ function parseOptionsArray(rawText, expectedCount) {
 }
 
 /**
- * Executes a call to Google Gemini REST API with header-based authentication and 10s timeout
+ * Executes a call to Google Gemini REST API with header-based authentication and 25s timeout guard
  */
-async function callGeminiApi(apiKey, prompt, count, temperature = 1.2) {
+async function callGeminiApi(apiKey, prompt, count, temperature = 1.0) {
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
 
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 10000);
+  const timeoutId = setTimeout(() => controller.abort(), 25000);
 
-  const instruction = `You generate options for a decision wheel. Return exactly ${count} short option strings (1-3 words each, fun and specific to the user's request). No numbering, no extra text`;
-  const fullText = `${instruction}: ${prompt}`;
+  const fullText = `Return a JSON array of ${count} short, distinct option strings (1-3 words each) for: "${prompt}".`;
 
   const payload = {
     contents: [
@@ -121,7 +120,7 @@ async function callGeminiApi(apiKey, prompt, count, temperature = 1.2) {
     generationConfig: {
       responseMimeType: 'application/json',
       temperature,
-      maxOutputTokens: 1024,
+      maxOutputTokens: 200,
     },
   };
 
@@ -178,13 +177,14 @@ export const POST = async ({ request, locals }) => {
       JSON.stringify({
         error:
           'Too many requests. Please wait a minute before generating more options.',
+        reason: 'rate_limit',
       }),
       { status: 429, headers }
     );
   }
 
   // 2. Validate environment variable:
-  // On Cloudflare Pages: locals.runtime.env.GEMINI_API_KEY
+  // On Cloudflare Workers: locals.runtime.env.GEMINI_API_KEY
   // In local dev: import.meta.env.GEMINI_API_KEY or process.env.GEMINI_API_KEY
   const apiKey =
     locals?.runtime?.env?.GEMINI_API_KEY ||
@@ -194,7 +194,8 @@ export const POST = async ({ request, locals }) => {
   if (!apiKey) {
     return new Response(
       JSON.stringify({
-        error: 'Server is not configured with an API key',
+        error: 'Server is not configured with an API key. Please check GEMINI_API_KEY in Cloudflare settings.',
+        reason: 'server_config',
       }),
       { status: 500, headers }
     );
@@ -206,7 +207,7 @@ export const POST = async ({ request, locals }) => {
     body = await request.json();
   } catch (e) {
     return new Response(
-      JSON.stringify({ error: 'Invalid JSON payload provided.' }),
+      JSON.stringify({ error: 'Invalid JSON payload provided.', reason: 'invalid_request' }),
       { status: 400, headers }
     );
   }
@@ -220,6 +221,7 @@ export const POST = async ({ request, locals }) => {
       JSON.stringify({
         error:
           'Please enter a topic description between 3 and 120 characters (e.g. "what to eat for dinner").',
+        reason: 'invalid_prompt',
       }),
       { status: 400, headers }
     );
@@ -233,13 +235,14 @@ export const POST = async ({ request, locals }) => {
       JSON.stringify({
         error:
           'Please enter a descriptive prompt with recognizable words (e.g. "board games", "healthy snacks").',
+        reason: 'invalid_prompt',
       }),
       { status: 400, headers }
     );
   }
 
-  // 4. Call Gemini REST API directly
-  let result = await callGeminiApi(apiKey, rawPrompt, count, 1.2);
+  // 4. Call Gemini REST API directly (fast model, minimal prompt)
+  let result = await callGeminiApi(apiKey, rawPrompt, count, 1.0);
 
   // If 404 model not found, log server-side (never leaking key) and return 502
   if (!result.ok && result.status === 404) {
@@ -247,7 +250,8 @@ export const POST = async ({ request, locals }) => {
     console.error(`[Gemini API Error] Status 404: ${errorMsg} (Model: ${GEMINI_MODEL})`);
     return new Response(
       JSON.stringify({
-        error: 'Model not found — check GEMINI_MODEL',
+        error: 'AI model configuration error — please check GEMINI_MODEL.',
+        reason: 'model_not_found',
       }),
       { status: 502, headers }
     );
@@ -255,9 +259,9 @@ export const POST = async ({ request, locals }) => {
 
   let parsedOptions = result.ok ? parseOptionsArray(result.text, count) : null;
 
-  // Auto-retry once if output was invalid or unparseable
+  // Auto-retry once with lower temperature if output was invalid or unparseable
   if (!parsedOptions && result.status !== 404 && result.error?.name !== 'AbortError') {
-    result = await callGeminiApi(apiKey, rawPrompt, count, 0.7);
+    result = await callGeminiApi(apiKey, rawPrompt, count, 0.5);
     parsedOptions = result.ok ? parseOptionsArray(result.text, count) : null;
   }
 
@@ -266,7 +270,8 @@ export const POST = async ({ request, locals }) => {
     if (result.error?.name === 'AbortError') {
       return new Response(
         JSON.stringify({
-          error: 'Generation timed out after 10 seconds. Please try again with a simpler topic.',
+          error: 'Generation timed out after 25 seconds. Please try again with a simpler topic.',
+          reason: 'timeout',
         }),
         { status: 504, headers }
       );
@@ -275,12 +280,33 @@ export const POST = async ({ request, locals }) => {
     if (!result.ok) {
       const errorMsg = result.errorBody?.error?.message || 'Service failure';
       console.error(`[Gemini API Error] Status ${result.status}: ${errorMsg}`);
+
+      if (result.status === 429) {
+        return new Response(
+          JSON.stringify({
+            error: 'Gemini AI rate limit reached. Please wait a moment and try again.',
+            reason: 'rate_limit',
+          }),
+          { status: 429, headers }
+        );
+      }
+
+      if (result.status >= 500) {
+        return new Response(
+          JSON.stringify({
+            error: 'Gemini AI service is temporarily experiencing high load. Please try again in a few moments.',
+            reason: 'upstream_unavailable',
+          }),
+          { status: 503, headers }
+        );
+      }
     }
 
     return new Response(
       JSON.stringify({
         error:
           'Unable to generate options from AI service at this time. Please try again or enter options manually.',
+        reason: 'server_error',
       }),
       { status: 502, headers }
     );
