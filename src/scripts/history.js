@@ -251,8 +251,12 @@ export function formatRelativeTime(dateInput) {
  * @param {string} config.toolId - The unique tool identifier
  * @param {function} [config.onRestore] - Callback invoked when a user clicks a row to restore
  */
-export function initHistoryCard({ toolId, onRestore }) {
-  if (typeof document === 'undefined') return;
+export function initHistoryCard(config) {
+  if (typeof document === 'undefined' || !config) return;
+
+  const options = typeof config === 'string' ? { toolId: config } : config;
+  const { toolId, onRestore } = options;
+  if (!toolId) return;
 
   const card = document.getElementById(`history-card-${toolId}`);
   const toggleBtn = document.getElementById(`history-toggle-${toolId}`);

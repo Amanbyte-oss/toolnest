@@ -69,9 +69,9 @@
 }
 
 @layer components {
-  /* Reusable Card with subtle elevation and border */
+  /* Reusable Card with subtle elevation and border (p-5 mobile, p-8 desktop) */
   .card {
-    @apply rounded-2xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark shadow-sm p-5 sm:p-6 transition-all duration-150;
+    @apply rounded-2xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark shadow-sm p-5 sm:p-8 transition-all duration-150;
   }
 
   /* Primary Button with hover lift, shadow, active press and focus ring */

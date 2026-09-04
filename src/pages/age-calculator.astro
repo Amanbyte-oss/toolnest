@@ -4,7 +4,6 @@ import Base from '../layouts/Base.astro';
 import Faq from '../components/Faq.astro';
 import ToolCard from '../components/ToolCard.astro';
 import HistoryCard from '../components/HistoryCard.astro';
-import StickyPillNav from '../components/StickyPillNav.astro';
 import relatedLinksData from '../data/related-links.json';
 import { MONTH_NAMES } from '../scripts/age-calculator.js';
 
@@ -304,44 +303,8 @@ const faqSchema = {
     </div>
   </section>
 
-  <!-- Sticky Pill Nav (Sticky on mobile for fast jumping) -->
-  <StickyPillNav
-    items={[
-      { label: 'Calculator', href: '#calculator-tool' },
-      { label: 'Milestones', href: '#results-container' },
-      { label: 'How It Works', href: '#how-math-works-heading' },
-      { label: 'FAQ', href: '#faq-section' },
-      { label: 'Related', href: '#related-tools' },
-    ]}
-  />
-
-  <!-- Recent Activity History Card -->
-  <div class="mt-6">
-    <HistoryCard toolId="age" title="Recent Calculations" />
-  </div>
-
-  <!-- Empty State Placeholder (Visible until calculation runs) -->
-  <div id="calculator-empty-state" class="mt-8 card p-6 sm:p-8 text-center space-y-3 border-dashed border-border-light dark:border-border-dark">
-    <div class="w-12 h-12 mx-auto rounded-2xl bg-accent/10 dark:bg-accent/15 flex items-center justify-center text-accent">
-      <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
-        <line x1="16" x2="16" y1="2" y2="6"/>
-        <line x1="8" x2="8" y1="2" y2="6"/>
-        <line x1="3" x2="21" y1="10" y2="10"/>
-      </svg>
-    </div>
-    <div class="space-y-1">
-      <h3 class="text-base sm:text-lg font-bold text-primary-light dark:text-primary-dark">
-        Ready to calculate your exact age
-      </h3>
-      <p class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark max-w-md mx-auto leading-relaxed">
-        Select your birth date above and click Calculate to reveal your exact chronological breakdown, live seconds ticker, and upcoming birthday countdown.
-      </p>
-    </div>
-  </div>
-
-  <!-- RESULTS CONTAINER (Revealed on calculate) -->
-  <div id="results-container" class="hidden mt-8 space-y-6 scroll-mt-20">
+  <!-- RESULTS CONTAINER (Revealed on calculate with staggered fade-up) -->
+  <div id="results-container" class="hidden mt-8 space-y-8 scroll-mt-24">
     <!-- Hero Result Card -->
     <section class="card bg-gradient-to-br from-surface-light via-surface-light to-accent/5 dark:from-surface-dark dark:via-surface-dark dark:to-accent/10 border-accent/30 shadow-md text-center py-7 sm:py-9 space-y-4">
       <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-accent/10 text-accent dark:bg-accent/20">
@@ -543,6 +506,11 @@ const faqSchema = {
         </div>
       </div>
     </section>
+  </div>
+
+  <!-- Recent Activity History Card (Positioned right after results) -->
+  <div class="mt-8">
+    <HistoryCard toolId="age" title="Recent Calculations" />
   </div>
 
   <!-- KEY TAKEAWAYS / FEATURED SNIPPET SUMMARY BOX -->
@@ -792,18 +760,7 @@ const faqSchema = {
     </div>
   </section>
 
-  <!-- Toast Notification Notification Box -->
-  <div
-    id="toast"
-    class="fixed bottom-6 right-6 z-50 transform translate-y-12 opacity-0 pointer-events-none transition-all duration-200 flex items-center gap-2.5 px-4 py-3 rounded-xl bg-primary-light dark:bg-surface-dark border border-border-light dark:border-border-dark text-white dark:text-primary-dark shadow-xl text-sm font-medium"
-    role="status"
-    aria-live="polite"
-  >
-    <svg class="w-4 h-4 text-emerald-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-      <polyline points="20 6 9 17 4 12"/>
-    </svg>
-    <span id="toast-message">Copied to clipboard!</span>
-  </div>
+  <!-- Toast notification handled globally via src/components/Toast.astro and src/scripts/toast.js -->
 </Base>
 
 <script>
@@ -814,6 +771,7 @@ const faqSchema = {
     getLastState,
     initHistoryCard,
   } from '../scripts/history.js';
+  import { showToast } from '../scripts/toast.js';
 
   let tickerInterval = null;
   let currentComputedResult = null;
@@ -829,25 +787,10 @@ const faqSchema = {
     const errorContainer = document.getElementById('date-error');
     const errorText = document.getElementById('date-error-text');
     const resultsContainer = document.getElementById('results-container');
-    const toast = document.getElementById('toast');
-    const toastMsg = document.getElementById('toast-message');
     const copyBtn = document.getElementById('copy-results-btn');
     const shareBtn = document.getElementById('share-results-btn');
 
     if (!monthSelect || !daySelect || !yearSelect || !calcBtn) return;
-
-    // Toast helper
-    function showToast(message) {
-      if (!toast || !toastMsg) return;
-      toastMsg.textContent = message;
-      toast.classList.remove('translate-y-12', 'opacity-0', 'pointer-events-none');
-      toast.classList.add('translate-y-0', 'opacity-100', 'pointer-events-auto');
-
-      setTimeout(() => {
-        toast.classList.add('translate-y-12', 'opacity-0', 'pointer-events-none');
-        toast.classList.remove('translate-y-0', 'opacity-100', 'pointer-events-auto');
-      }, 2500);
-    }
 
     // Synchronize native date input with dropdowns
     if (nativeDateInput) {
@@ -984,16 +927,27 @@ const faqSchema = {
         targetDate: targetDateInput?.value || '',
       });
 
-      // Hide empty state & Reveal results section
-      const emptyState = document.getElementById('calculator-empty-state');
-      if (emptyState) emptyState.classList.add('hidden');
-
+      // Reveal results section with staggered fade-up & smooth scroll
       if (resultsContainer) {
         resultsContainer.classList.remove('hidden');
-        resultsContainer.classList.remove('animate-slide-up');
-        void resultsContainer.offsetWidth; // trigger reflow for smooth animation
-        resultsContainer.classList.add('animate-slide-up');
-        resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        const animSections = resultsContainer.querySelectorAll('section');
+        animSections.forEach((sec, idx) => {
+          sec.classList.remove('animate-fade-slide-up');
+          void sec.offsetWidth;
+          sec.style.animationDelay = `${idx * 50}ms`;
+          sec.classList.add('animate-fade-slide-up');
+        });
+
+        const headerOffset = 80;
+        const rect = resultsContainer.getBoundingClientRect();
+        const targetScrollY = rect.top + window.pageYOffset - headerOffset;
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        window.scrollTo({
+          top: Math.max(0, targetScrollY),
+          behavior: prefersReduced ? 'auto' : 'smooth',
+        });
       }
 
       // Animate Hero Result Numbers

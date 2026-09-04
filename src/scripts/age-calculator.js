@@ -85,7 +85,7 @@ export function validateDate(year, month, day, targetDate) {
     targetUtc = Date.UTC(targetDate.year, targetDate.month - 1, targetDate.day);
   } else {
     const now = new Date();
-    targetUtc = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+    targetUtc = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
   }
 
   if (birthUtc > targetUtc) {

@@ -4,17 +4,7 @@ import Base from '../layouts/Base.astro';
 import Faq from '../components/Faq.astro';
 import ToolCard from '../components/ToolCard.astro';
 import HistoryCard from '../components/HistoryCard.astro';
-import StickyPillNav from '../components/StickyPillNav.astro';
 import relatedLinksData from '../data/related-links.json';
-
-const navSections = [
-  { id: 'picker-input-heading', label: 'Roster & Setup' },
-  { id: 'results-section', label: 'Winners' },
-  { id: 'how-to-use-heading', label: 'How to Use' },
-  { id: 'use-cases-heading', label: 'Use Cases' },
-  { id: 'faq-section', label: 'FAQ' },
-  { id: 'related-tools', label: 'Related Tools' },
-];
 
 const lastUpdatedDate = new Date().toLocaleDateString('en-US', {
   year: 'numeric',
@@ -431,6 +421,69 @@ Fiona</textarea>
     <HistoryCard toolId="picker" title="Recent Draws" icon="🎲" />
   </div>
 
+  <!-- WINNER REVEAL MODAL DIALOG -->
+  <div
+    id="winner-modal"
+    class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-200"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-winner-title"
+  >
+    <div
+      class="w-full max-w-sm rounded-3xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark p-6 sm:p-8 text-center space-y-5 shadow-2xl transform scale-95 transition-transform duration-200"
+      id="modal-card"
+    >
+      <div class="w-14 h-14 mx-auto rounded-2xl bg-accent/10 text-accent flex items-center justify-center animate-bounce shadow-sm">
+        <span class="text-3xl">🎉</span>
+      </div>
+
+      <div class="space-y-1.5">
+        <span id="modal-winner-title" class="text-xs uppercase tracking-wider font-semibold text-secondary-light dark:text-secondary-dark block">
+          Winner Selected!
+        </span>
+        <div id="modal-winner-list" class="space-y-2 pt-1 max-h-48 overflow-y-auto custom-scrollbar">
+          <!-- Injected via JavaScript -->
+        </div>
+      </div>
+
+      <!-- Action buttons -->
+      <div class="flex flex-col gap-2 pt-2">
+        <button
+          id="modal-pick-again-btn"
+          type="button"
+          class="btn-primary w-full py-3 text-sm font-bold shadow-md shadow-accent/20 cursor-pointer"
+        >
+          Pick Again 🎯
+        </button>
+
+        <div class="flex gap-2">
+          <button
+            id="modal-copy-btn"
+            type="button"
+            class="btn-secondary flex-1 py-2.5 text-xs font-semibold cursor-pointer"
+          >
+            Copy
+          </button>
+          <button
+            id="modal-share-btn"
+            type="button"
+            class="btn-secondary flex-1 py-2.5 text-xs font-semibold cursor-pointer"
+          >
+            Share
+          </button>
+        </div>
+
+        <button
+          id="modal-close-btn"
+          type="button"
+          class="text-xs text-secondary-light dark:text-secondary-dark hover:text-primary-light dark:hover:text-primary-dark pt-1 cursor-pointer"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- SEO CONTENT & QUESTION-FORM HEADINGS -->
   <section class="mt-14 pt-10 border-t border-border-light dark:border-border-dark space-y-10">
     <!-- How to use -->
@@ -639,18 +692,7 @@ Fiona</textarea>
     </div>
   </section>
 
-  <!-- Toast Notification Box -->
-  <div
-    id="picker-toast"
-    class="fixed bottom-6 right-6 z-50 transform translate-y-12 opacity-0 pointer-events-none transition-all duration-200 flex items-center gap-2.5 px-4 py-3 rounded-xl bg-primary-light dark:bg-surface-dark border border-border-light dark:border-border-dark text-white dark:text-primary-dark shadow-xl text-sm font-medium"
-    role="status"
-    aria-live="polite"
-  >
-    <svg class="w-4 h-4 text-emerald-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-      <polyline points="20 6 9 17 4 12"/>
-    </svg>
-    <span id="picker-toast-msg">Notification</span>
-  </div>
+  <!-- Toast notification handled globally via src/components/Toast.astro and src/scripts/toast.js -->
 </Base>
 
 <script>
@@ -667,6 +709,7 @@ Fiona</textarea>
     getLastState,
     initHistoryCard,
   } from '../scripts/history.js';
+  import { showToast } from '../scripts/toast.js';
 
   function initRandomPicker() {
     const textarea = document.getElementById('items-textarea');
@@ -695,33 +738,16 @@ Fiona</textarea>
     const pickAgainBtn = document.getElementById('pick-again-btn');
     const remainingCountNotice = document.getElementById('remaining-count-notice');
 
-    // History Elements
-    const historyList = document.getElementById('history-list');
-    const emptyHistoryText = document.getElementById('empty-history-text');
-    const clearHistoryBtn = document.getElementById('clear-history-btn');
-
-    // Toast Elements
-    const toast = document.getElementById('picker-toast');
-    const toastMsg = document.getElementById('picker-toast-msg');
+    // Modal Elements
+    const winnerModal = document.getElementById('winner-modal');
+    const modalCard = document.getElementById('modal-card');
+    const modalWinnerList = document.getElementById('modal-winner-list');
+    const modalPickAgainBtn = document.getElementById('modal-pick-again-btn');
+    const modalCopyBtn = document.getElementById('modal-copy-btn');
+    const modalShareBtn = document.getElementById('modal-share-btn');
+    const modalCloseBtn = document.getElementById('modal-close-btn');
 
     if (!textarea || !pickBtn) return;
-
-    let winnersCount = 1;
-    let currentWinners = [];
-    let pickHistory = [];
-    let isPicking = false;
-
-    function showToast(message) {
-      if (!toast || !toastMsg) return;
-      toastMsg.textContent = message;
-      toast.classList.remove('translate-y-12', 'opacity-0', 'pointer-events-none');
-      toast.classList.add('translate-y-0', 'opacity-100', 'pointer-events-auto');
-
-      setTimeout(() => {
-        toast.classList.add('translate-y-12', 'opacity-0', 'pointer-events-none');
-        toast.classList.remove('translate-y-0', 'opacity-100', 'pointer-events-auto');
-      }, 2500);
-    }
 
     function updateCounts() {
       const rawText = textarea.value;
@@ -904,19 +930,38 @@ Fiona</textarea>
           .join('');
       }
 
+      // Populate & Open Winner Celebration Modal
+      if (modalWinnerList && winnerModal && modalCard) {
+        modalWinnerList.innerHTML = winners
+          .map((w, idx) => {
+            const prefix = winners.length > 1 ? `#${idx + 1} ` : '';
+            return `<div class="p-3 rounded-2xl bg-accent/10 dark:bg-accent/15 border border-accent/30 font-black text-base sm:text-lg text-accent break-all">${prefix}${w}</div>`;
+          })
+          .join('');
+
+        winnerModal.classList.remove('opacity-0', 'pointer-events-none');
+        winnerModal.classList.add('opacity-100', 'pointer-events-auto');
+        modalCard.classList.remove('scale-95');
+        modalCard.classList.add('scale-100');
+        if (modalPickAgainBtn) modalPickAgainBtn.focus();
+      }
+
+      // Safe capped input for storage (limit to first 5000 characters)
+      const safeRaw = textarea.value.length > 5000 ? textarea.value.slice(0, 5000) : textarea.value;
+
       // Save to recent activity history and last state
       saveHistory('picker', {
         t: `Picked ${winners.length} from ${analysis.uniqueCount} items`,
         d: new Date().toISOString(),
         x: {
-          rawInput: textarea.value,
+          rawInput: safeRaw,
           winnerCount: winnersCount,
           removeWinners: toggleRemoveWinners ? toggleRemoveWinners.checked : false,
           caseInsensitive: toggleCaseInsensitive ? toggleCaseInsensitive.checked : true,
         },
       });
       saveLastState('picker', {
-        rawInput: textarea.value,
+        rawInput: safeRaw,
         winnerCount: winnersCount,
         removeWinners: toggleRemoveWinners ? toggleRemoveWinners.checked : false,
         caseInsensitive: toggleCaseInsensitive ? toggleCaseInsensitive.checked : true,
@@ -998,6 +1043,71 @@ Fiona</textarea>
       });
     }
 
+    // Modal Close Function
+    function closeModal() {
+      if (!winnerModal || !modalCard) return;
+      winnerModal.classList.remove('opacity-100', 'pointer-events-auto');
+      winnerModal.classList.add('opacity-0', 'pointer-events-none');
+      modalCard.classList.remove('scale-100');
+      modalCard.classList.add('scale-95');
+    }
+
+    modalCloseBtn?.addEventListener('click', closeModal);
+    winnerModal?.addEventListener('click', (e) => {
+      if (e.target === winnerModal) closeModal();
+    });
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && winnerModal && !winnerModal.classList.contains('pointer-events-none')) {
+        closeModal();
+      }
+    });
+
+    modalPickAgainBtn?.addEventListener('click', () => {
+      closeModal();
+      handlePick(true);
+    });
+
+    modalCopyBtn?.addEventListener('click', async () => {
+      if (currentWinners.length === 0) return;
+      try {
+        await navigator.clipboard.writeText(currentWinners.join('\n'));
+        showToast('Winner(s) copied to clipboard!');
+      } catch (e) {
+        showToast('Unable to copy to clipboard.');
+      }
+    });
+
+    modalShareBtn?.addEventListener('click', async () => {
+      if (currentWinners.length === 0) return;
+      const shareData = {
+        title: 'Random Winner Selection',
+        text: `🎉 Selected winner${currentWinners.length === 1 ? '' : 's'}:\n${currentWinners.join('\n')}\n\nFairly drawn with ToolNest Random Picker:`,
+        url: window.location.href,
+      };
+      if (navigator.share) {
+        try {
+          await navigator.share(shareData);
+        } catch (e) {}
+      } else {
+        try {
+          await navigator.clipboard.writeText(`${shareData.text} ${shareData.url}`);
+          showToast('Result copied to clipboard!');
+        } catch (e) {
+          showToast('Unable to share.');
+        }
+      }
+    });
+
+    // Immediate persistence of checkbox toggles
+    toggleRemoveWinners?.addEventListener('change', () => {
+      const last = getLastState('picker') || {};
+      saveLastState('picker', { ...last, removeWinners: toggleRemoveWinners.checked });
+    });
+    toggleCaseInsensitive?.addEventListener('change', () => {
+      const last = getLastState('picker') || {};
+      saveLastState('picker', { ...last, caseInsensitive: toggleCaseInsensitive.checked });
+    });
+
     // Restore from history
     function restorePicker(data) {
       if (!data) return;
@@ -1020,8 +1130,10 @@ Fiona</textarea>
 
     // Prefill from last state if available ("welcome back" effect)
     const lastPicker = getLastState('picker');
-    if (lastPicker && typeof lastPicker.rawInput === 'string' && lastPicker.rawInput.trim()) {
-      textarea.value = lastPicker.rawInput;
+    if (lastPicker) {
+      if (typeof lastPicker.rawInput === 'string' && lastPicker.rawInput.trim()) {
+        textarea.value = lastPicker.rawInput;
+      }
       if (lastPicker.winnerCount) {
         winnersCount = lastPicker.winnerCount;
         if (winnersCountDisplay) winnersCountDisplay.textContent = String(winnersCount);

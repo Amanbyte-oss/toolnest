@@ -13,6 +13,9 @@ export default defineConfig({
   adapter: cloudflare({
     imageService: 'passthrough',
   }),
+  session: {
+    driver: 'memory',
+  },
   integrations: [
     tailwind({
       applyBaseStyles: false,

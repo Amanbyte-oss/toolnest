@@ -157,19 +157,6 @@ const faqSchema = {
     </p>
   </header>
 
-  <!-- KEY TAKEAWAYS / FEATURED SNIPPET SUMMARY BOX -->
-  <aside class="card mt-4 p-4 sm:p-5 border-l-4 border-accent bg-accent/5 space-y-2" aria-label="Key Takeaways">
-    <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent">
-      <span>⚡</span>
-      <span>Quick Answer & Key Takeaways</span>
-    </div>
-    <ul class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark space-y-1.5 list-disc list-inside leading-relaxed">
-      <li><strong>Stateless Sharing:</strong> Every timer is encoded into the URL parameters so links never expire and require zero server databases.</li>
-      <li><strong>Auto Timezone Sync:</strong> Uses ISO-8601 UTC timestamps, automatically converting the target date to every viewer's local time zone.</li>
-      <li><strong>Celebration Finale:</strong> Automatically triggers confetti celebrations and elapsed time tracking the moment the counter hits zero.</li>
-    </ul>
-  </aside>
-
   <!-- QUICK TEMPLATES & COUNTDOWN IDEAS -->
   <section class="mt-6 space-y-2" aria-labelledby="templates-heading">
     <div class="flex items-center justify-between">
@@ -443,11 +430,6 @@ const faqSchema = {
     </div>
   </section>
 
-  <!-- Recent Activity History Card -->
-  <div class="mt-8">
-    <HistoryCard toolId="countdown" title="Recent Countdowns" icon="⏳" />
-  </div>
-
   <!-- GENERATED LINK MODAL / OUTPUT CARD -->
   <section
     id="created-link-section"
@@ -554,6 +536,24 @@ const faqSchema = {
       </button>
     </div>
   </section>
+
+  <!-- Recent Activity History Card -->
+  <div class="mt-8">
+    <HistoryCard toolId="countdown" title="Recent Countdowns" icon="⏳" />
+  </div>
+
+  <!-- KEY TAKEAWAYS / FEATURED SNIPPET SUMMARY BOX -->
+  <aside class="card mt-8 p-4 sm:p-5 border-l-4 border-accent bg-accent/5 space-y-2" aria-label="Key Takeaways">
+    <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent">
+      <span>⚡</span>
+      <span>Quick Answer & Key Takeaways</span>
+    </div>
+    <ul class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark space-y-1.5 list-disc list-inside leading-relaxed">
+      <li><strong>Stateless Sharing:</strong> Every timer is encoded into the URL parameters so links never expire and require zero server databases.</li>
+      <li><strong>Auto Timezone Sync:</strong> Uses ISO-8601 UTC timestamps, automatically converting the target date to every viewer's local time zone.</li>
+      <li><strong>Celebration Finale:</strong> Automatically triggers confetti celebrations and elapsed time tracking the moment the counter hits zero.</li>
+    </ul>
+  </aside>
 
   <!-- SEO CONTENT & QUESTION-FORM HEADINGS -->
   <section class="mt-14 pt-10 border-t border-border-light dark:border-border-dark space-y-10">
@@ -763,18 +763,6 @@ const faqSchema = {
     </div>
   </section>
 
-  <!-- Toast Notification Box -->
-  <div
-    id="countdown-toast"
-    class="fixed bottom-6 right-6 z-50 transform translate-y-12 opacity-0 pointer-events-none transition-all duration-200 flex items-center gap-2.5 px-4 py-3 rounded-xl bg-primary-light dark:bg-surface-dark border border-border-light dark:border-border-dark text-white dark:text-primary-dark shadow-xl text-sm font-medium"
-    role="status"
-    aria-live="polite"
-  >
-    <svg class="w-4 h-4 text-emerald-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-      <polyline points="20 6 9 17 4 12"/>
-    </svg>
-    <span id="countdown-toast-msg">Notification</span>
-  </div>
 </Base>
 
 <script>
@@ -794,6 +782,7 @@ const faqSchema = {
     handleDownloadImage,
     handleShareImage,
   } from '../scripts/countdown-share.js';
+  import { showToast } from '../scripts/toast.js';
 
   function initCountdownCreator() {
     const titleInput = document.getElementById('event-title-input');
@@ -819,10 +808,6 @@ const faqSchema = {
     const openViewerLink = document.getElementById('open-viewer-link');
     const shareGeneratedBtn = document.getElementById('share-generated-btn');
 
-    // Toast elements
-    const toast = document.getElementById('countdown-toast');
-    const toastMsg = document.getElementById('countdown-toast-msg');
-
     if (!titleInput || !datetimeInput || !createBtn) return;
 
     let selectedEmoji = '🎉';
@@ -846,18 +831,6 @@ const faqSchema = {
         createdAt: currentCreatedIso,
         timestamp: targetDate.getTime(),
       };
-    }
-
-    function showToast(message) {
-      if (!toast || !toastMsg) return;
-      toastMsg.textContent = message;
-      toast.classList.remove('translate-y-12', 'opacity-0', 'pointer-events-none');
-      toast.classList.add('translate-y-0', 'opacity-100', 'pointer-events-auto');
-
-      setTimeout(() => {
-        toast.classList.add('translate-y-12', 'opacity-0', 'pointer-events-none');
-        toast.classList.remove('translate-y-0', 'opacity-100', 'pointer-events-auto');
-      }, 2500);
     }
 
     // Default target date: 7 days from now at 12:00 PM

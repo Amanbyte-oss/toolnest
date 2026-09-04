@@ -428,8 +428,15 @@ const webAppSchema = {
     }
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
+  function setupNamesPage() {
     initNamesDirectory();
-    initHistoryCard('names');
-  });
+    initHistoryCard({ toolId: 'names' });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupNamesPage);
+  } else {
+    setupNamesPage();
+  }
+  document.addEventListener('astro:after-swap', setupNamesPage);
 </script>

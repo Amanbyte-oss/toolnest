@@ -4,7 +4,6 @@ import Base from '../layouts/Base.astro';
 import Faq from '../components/Faq.astro';
 import ToolCard from '../components/ToolCard.astro';
 import HistoryCard from '../components/HistoryCard.astro';
-import StickyPillNav from '../components/StickyPillNav.astro';
 import relatedLinksData from '../data/related-links.json';
 
 const lastUpdatedDate = new Date().toLocaleDateString('en-US', {
@@ -162,7 +161,7 @@ const faqSchema = {
     <h2 id="wheel-heading" class="sr-only">Interactive Decision Wheel</h2>
 
     <!-- Wheel Wrapper with Fixed Top Pointer & Center Spin Hub -->
-    <div class="relative flex items-center justify-center w-full max-w-[420px] aspect-square select-none">
+    <div class="relative flex items-center justify-center w-full max-w-[420px] aspect-square select-none p-1.5 sm:p-2.5 rounded-full bg-surface-light/40 dark:bg-surface-dark/70 border border-border-light/60 dark:border-border-dark/80 shadow-inner">
       <!-- Fixed Pointer at 12 o'clock pointing down -->
       <div class="absolute -top-3 z-20 flex flex-col items-center pointer-events-none drop-shadow-md">
         <svg class="w-8 h-8 text-primary-light dark:text-primary-dark filter drop-shadow" viewBox="0 0 24 24" fill="currentColor">
@@ -243,19 +242,6 @@ const faqSchema = {
       </button>
     </div>
   </section>
-
-  <!-- Sticky Pill Nav (Sticky on mobile for fast jumping) -->
-  <StickyPillNav
-    items={[
-      { label: 'Wheel', href: '#wheel-tool' },
-      { label: 'AI Generator', href: '#ai-generator-heading' },
-      { label: 'Options', href: '#options-heading' },
-      { label: 'How to Use', href: '#how-to-use-heading' },
-      { label: 'Use Cases', href: '#use-cases-heading' },
-      { label: 'FAQ', href: '#faq-section' },
-      { label: 'Related', href: '#related-tools' },
-    ]}
-  />
 
   <!-- AI PRESET GENERATOR CARD -->
   <section class="card mt-6 space-y-5 border border-accent/40 bg-gradient-to-b from-accent/5 via-surface-light to-surface-light dark:from-accent/10 dark:via-surface-dark dark:to-surface-dark shadow-sm" aria-labelledby="ai-generator-heading">
@@ -874,18 +860,7 @@ const faqSchema = {
     </div>
   </section>
 
-  <!-- Toast Notification Box -->
-  <div
-    id="wheel-toast"
-    class="fixed bottom-6 right-6 z-50 transform translate-y-12 opacity-0 pointer-events-none transition-all duration-200 flex items-center gap-2.5 px-4 py-3 rounded-xl bg-primary-light dark:bg-surface-dark border border-border-light dark:border-border-dark text-white dark:text-primary-dark shadow-xl text-sm font-medium"
-    role="status"
-    aria-live="polite"
-  >
-    <svg class="w-4 h-4 text-emerald-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-      <polyline points="20 6 9 17 4 12"/>
-    </svg>
-    <span id="wheel-toast-msg">Notification</span>
-  </div>
+  <!-- Toast notification handled globally via src/components/Toast.astro and src/scripts/toast.js -->
 </Base>
 
 <script>
@@ -902,6 +877,7 @@ const faqSchema = {
     getLastState,
     initHistoryCard,
   } from '../scripts/history.js';
+  import { showToast } from '../scripts/toast.js';
 
   function initDecisionWheel() {
     const canvas = document.getElementById('wheel-canvas');
@@ -927,23 +903,7 @@ const faqSchema = {
     const modalRemoveWinnerBtn = document.getElementById('modal-remove-winner-btn');
     const modalCloseBtn = document.getElementById('modal-close-btn');
 
-    // Toast Elements
-    const toast = document.getElementById('wheel-toast');
-    const toastMsg = document.getElementById('wheel-toast-msg');
-
     if (!canvas || !centerSpinBtn) return;
-
-    function showToast(message) {
-      if (!toast || !toastMsg) return;
-      toastMsg.textContent = message;
-      toast.classList.remove('translate-y-12', 'opacity-0', 'pointer-events-none');
-      toast.classList.add('translate-y-0', 'opacity-100', 'pointer-events-auto');
-
-      setTimeout(() => {
-        toast.classList.add('translate-y-12', 'opacity-0', 'pointer-events-none');
-        toast.classList.remove('translate-y-0', 'opacity-100', 'pointer-events-auto');
-      }, 2500);
-    }
 
     // Initial options: read from URL, then last state, then default to 'eat'
     const urlParams = new URLSearchParams(window.location.search);
@@ -1090,6 +1050,10 @@ const faqSchema = {
     window.addEventListener('themechange', () => {
       if (wheel) wheel.draw();
     });
+    const themeObserver = new MutationObserver(() => {
+      if (wheel) wheel.draw();
+    });
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
     // Trigger Spin handler
     function triggerSpin() {
@@ -1344,15 +1308,6 @@ const faqSchema = {
       renderChips();
       syncUrl();
 
-      // Confetti micro-burst
-      if (typeof window.confetti === 'function') {
-        window.confetti({
-          particleCount: 50,
-          spread: 60,
-          origin: { y: 0.65 },
-        });
-      }
-
       showToast(`Generated ${options.length} options!`);
     }
 
@@ -1368,6 +1323,19 @@ const faqSchema = {
         aiPromptInput?.focus();
         return;
       }
+
+      // Check sessionStorage cache
+      const cacheKey = `toolnest_ai_wheel_${prompt.toLowerCase()}_${aiCount}`;
+      try {
+        const cached = sessionStorage.getItem(cacheKey);
+        if (cached) {
+          const parsed = JSON.parse(cached);
+          if (Array.isArray(parsed) && parsed.length >= 2) {
+            applyAiOptions(parsed);
+            return;
+          }
+        }
+      } catch (e) {}
 
       lastAiPrompt = prompt;
       setAiLoading(true);
@@ -1396,6 +1364,11 @@ const faqSchema = {
           showAiError('Could not parse valid options. Please try a different topic.');
           return;
         }
+
+        // Cache valid options in sessionStorage
+        try {
+          sessionStorage.setItem(cacheKey, JSON.stringify(data.options));
+        } catch (e) {}
 
         // Check if current options are custom (different from presets)
         const isPreset =

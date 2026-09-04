@@ -158,19 +158,6 @@ const howToSchema = {
       </p>
     </section>
 
-    <!-- KEY TAKEAWAYS / FEATURED SNIPPET SUMMARY BOX -->
-    <aside class="card p-4 sm:p-5 border-l-4 border-accent bg-accent/5 space-y-2" aria-label="Key Takeaways">
-      <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent">
-        <span>⚡</span>
-        <span>Quick Answer & Key Takeaways</span>
-      </div>
-      <ul class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark space-y-1.5 list-disc list-inside leading-relaxed">
-        <li><strong>Curated Etymologies:</strong> Instant access to 200+ verified names with historical root definitions and demographic rankings.</li>
-        <li><strong>AI On-Demand Analysis:</strong> Rare and international names analyzed instantly via Google Gemini for phonetic rhythm and traits.</li>
-        <li><strong>Private & Free:</strong> Zero account sign-ups, zero tracking cookies, and search history saved only in your local browser.</li>
-      </ul>
-    </aside>
-
     <!-- SEARCH INPUT CARD -->
     <section class="card p-6 sm:p-8 space-y-5 border border-border-light dark:border-border-dark shadow-sm">
       <form id="name-search-form" class="space-y-4" role="search">
@@ -334,6 +321,19 @@ const howToSchema = {
 
     <!-- RECENT ACTIVITY HISTORY -->
     <HistoryCard toolId="names" title="Recently Searched Names" icon="🏷️" />
+
+    <!-- KEY TAKEAWAYS / FEATURED SNIPPET SUMMARY BOX -->
+    <aside class="card p-4 sm:p-5 border-l-4 border-accent bg-accent/5 space-y-2" aria-label="Key Takeaways">
+      <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent">
+        <span>⚡</span>
+        <span>Quick Answer & Key Takeaways</span>
+      </div>
+      <ul class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark space-y-1.5 list-disc list-inside leading-relaxed">
+        <li><strong>Curated Etymologies:</strong> Instant access to 200+ verified names with historical root definitions and demographic rankings.</li>
+        <li><strong>AI On-Demand Analysis:</strong> Rare and international names analyzed instantly via Google Gemini for phonetic rhythm and traits.</li>
+        <li><strong>Private & Free:</strong> Zero account sign-ups, zero tracking cookies, and search history saved only in your local browser.</li>
+      </ul>
+    </aside>
 
     <!-- BROWSE DIRECTORY BANNER -->
     <section class="card p-6 sm:p-7 border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -532,7 +532,7 @@ const howToSchema = {
 </Base>
 
 <script>
-  import { saveHistory, getLastState, saveLastState } from '../scripts/history.js';
+  import { saveHistory, getLastState, saveLastState, initHistoryCard } from '../scripts/history.js';
 
   function initNameMeaningFinder() {
     const container = document.getElementById('name-meaning-container');
@@ -740,7 +740,24 @@ const howToSchema = {
     if (query && input) {
       input.value = query;
       handleLookup(query);
+    } else {
+      const last = getLastState('names');
+      if (last?.q && input && !input.value) {
+        input.value = last.q;
+      }
     }
+
+    initHistoryCard({
+      toolId: 'names',
+      onRestore: (item) => {
+        if (item?.x?.url) {
+          window.location.href = item.x.url;
+        } else if (item?.x?.name) {
+          if (input) input.value = item.x.name;
+          handleLookup(item.x.name);
+        }
+      },
+    });
   }
 
   initNameMeaningFinder();

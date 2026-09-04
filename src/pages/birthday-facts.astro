@@ -998,18 +998,7 @@ const faqSchema = {
     </div>
   </section>
 
-  <!-- Toast Notification Box -->
-  <div
-    id="facts-toast"
-    class="fixed bottom-6 right-6 z-50 transform translate-y-12 opacity-0 pointer-events-none transition-all duration-200 flex items-center gap-2.5 px-4 py-3 rounded-xl bg-primary-light dark:bg-surface-dark border border-border-light dark:border-border-dark text-white dark:text-primary-dark shadow-xl text-sm font-medium"
-    role="status"
-    aria-live="polite"
-  >
-    <svg class="w-4 h-4 text-emerald-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-      <polyline points="20 6 9 17 4 12"/>
-    </svg>
-    <span id="facts-toast-message">Copied to clipboard!</span>
-  </div>
+  <!-- Toast notification handled globally via src/components/Toast.astro and src/scripts/toast.js -->
 </Base>
 
 <script>
@@ -1020,6 +1009,7 @@ const faqSchema = {
     getLastState,
     initHistoryCard,
   } from '../scripts/history.js';
+  import { showToast } from '../scripts/toast.js';
 
   let currentFacts = null;
 
@@ -1033,25 +1023,11 @@ const faqSchema = {
     const errorContainer = document.getElementById('facts-date-error');
     const errorText = document.getElementById('facts-date-error-text');
     const resultsContainer = document.getElementById('facts-results-container');
-    const toast = document.getElementById('facts-toast');
-    const toastMsg = document.getElementById('facts-toast-message');
     const downloadBtn = document.getElementById('download-card-btn');
     const shareBtn = document.getElementById('share-facts-btn');
     const resetBtn = document.getElementById('reset-facts-btn');
 
     if (!monthSelect || !daySelect || !yearSelect || !revealBtn) return;
-
-    function showToast(message) {
-      if (!toast || !toastMsg) return;
-      toastMsg.textContent = message;
-      toast.classList.remove('translate-y-12', 'opacity-0', 'pointer-events-none');
-      toast.classList.add('translate-y-0', 'opacity-100', 'pointer-events-auto');
-
-      setTimeout(() => {
-        toast.classList.add('translate-y-12', 'opacity-0', 'pointer-events-none');
-        toast.classList.remove('translate-y-0', 'opacity-100', 'pointer-events-auto');
-      }, 2500);
-    }
 
     // Sync native calendar picker
     if (nativeDateInput) {
