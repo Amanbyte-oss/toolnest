@@ -11,6 +11,7 @@ import '../styles/global.css';
 export interface Props {
   title?: string;
   description?: string;
+  metaKey?: string;
   canonicalPath?: string;
   ogImage?: string;
   breadcrumbs?: BreadcrumbItem[];
@@ -26,6 +27,7 @@ const {
   lang = detectedLang,
   title,
   description,
+  metaKey,
   canonicalPath,
   ogImage = '/favicon.svg',
   breadcrumbs = [],
@@ -35,8 +37,8 @@ const {
 } = Astro.props;
 
 const t = getTranslations(lang);
-const defaultTitle = `${t.siteName} — ${t.tagline}`;
-const defaultDescription = t.description;
+const defaultTitle = `${t.common?.siteName || t.siteName} — ${t.common?.tagline || t.tagline}`;
+const defaultDescription = t.common?.description || t.description;
 
 const pageTitle = title || defaultTitle;
 const pageDescription = description || defaultDescription;
@@ -104,6 +106,7 @@ const isRtl = isRtlLang(lang);
       extraSchemas={extraSchemas}
       noindex={noindex}
       lang={lang}
+      metaKey={metaKey}
     />
   </head>
   <body class="min-h-screen flex flex-col bg-bg-light dark:bg-bg-dark text-primary-light dark:text-primary-dark antialiased transition-colors duration-150">

@@ -1,0 +1,219 @@
+---
+/**
+ * src/components/LocalizedHead.astro
+ * Auto-generates complete SEO metadata, reciprocal hreflang links, canonical URLs,
+ * Open Graph / Twitter tags, and Schema.org JSON-LD across all 4 languages.
+ */
+import {
+  getLocalizedPath,
+  type Lang,
+  DEFAULT_LANG,
+  LOCALES,
+  t,
+  getTranslations,
+} from '../i18n';
+
+export interface BreadcrumbItem {
+  name: string;
+  item: string;
+}
+
+export interface Props {
+  lang?: Lang;
+  metaKey?: string;
+  title?: string;
+  description?: string;
+  canonicalPath?: string;
+  ogImage?: string;
+  type?: 'website' | 'article';
+  breadcrumbs?: BreadcrumbItem[];
+  extraSchemas?: Record<string, any>[];
+  noindex?: boolean;
+}
+
+const {
+  lang = 'en',
+  metaKey,
+  title: propTitle,
+  description: propDescription,
+  canonicalPath = Astro.url.pathname,
+  ogImage = '/favicon.svg',
+  type = 'website',
+  breadcrumbs = [],
+  extraSchemas = [],
+  noindex = false,
+} = Astro.props;
+
+const siteUrl = Astro.site
+  ? Astro.site.toString().replace(/\/$/, '')
+  : 'https://toolnest.pages.dev';
+
+// Resolve title and description from 'meta' namespace if metaKey provided
+const resolvedTitle =
+  propTitle ||
+  (metaKey ? (t(lang, 'meta', metaKey as any) as any)?.title : '') ||
+  t(lang, 'meta', 'home').title;
+
+const resolvedDescription =
+  propDescription ||
+  (metaKey ? (t(lang, 'meta', metaKey as any) as any)?.description : '') ||
+  t(lang, 'meta', 'home').description;
+
+// Ensure clean canonical URL:
+// For English pages (whether visited at /... or /en/...), canonical MUST be the bare URL
+const cleanPath = canonicalPath.startsWith('/') ? canonicalPath : `/${canonicalPath}`;
+const bareEnglishPath = getLocalizedPath(cleanPath, DEFAULT_LANG, true);
+
+let canonicalRelativePath = cleanPath;
+if (lang === DEFAULT_LANG || cleanPath.startsWith('/en/') || cleanPath === '/en') {
+  canonicalRelativePath = bareEnglishPath;
+} else {
+  canonicalRelativePath = getLocalizedPath(cleanPath, lang, true);
+}
+
+const canonicalUrl = new URL(canonicalRelativePath, siteUrl).toString();
+const absoluteOgImage = ogImage.startsWith('http')
+  ? ogImage
+  : new URL(ogImage, siteUrl).toString();
+
+// Target strict length limits (< 60 chars title, < 155 chars description)
+const siteName = 'ToolNest';
+const formattedTitle =
+  resolvedTitle.length > 60
+    ? `${resolvedTitle.slice(0, 57)}...`
+    : resolvedTitle;
+
+const formattedDescription =
+  resolvedDescription.length > 155
+    ? `${resolvedDescription.slice(0, 152)}...`
+    : resolvedDescription;
+
+const isHomePage =
+  canonicalRelativePath === '/' ||
+  canonicalRelativePath === '' ||
+  canonicalRelativePath === '/pt/' ||
+  canonicalRelativePath === '/id/' ||
+  canonicalRelativePath === '/ar/';
+
+const ogLocaleMap: Record<Lang, string> = {
+  en: 'en_US',
+  pt: 'pt_BR',
+  id: 'id_ID',
+  ar: 'ar_EG',
+};
+const ogLocale = ogLocaleMap[lang] || 'en_US';
+
+// Schema: Organization
+const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': `${siteUrl}/#organization`,
+  name: siteName,
+  url: siteUrl,
+  logo: {
+    '@type': 'ImageObject',
+    url: `${siteUrl}/favicon.svg`,
+  },
+  sameAs: [],
+};
+
+// Schema: WebSite
+const websiteJsonLd = isHomePage
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      '@id': `${siteUrl}/#website`,
+      name: siteName,
+      url: siteUrl,
+      description: formattedDescription,
+      inLanguage: lang,
+      publisher: {
+        '@id': `${siteUrl}/#organization`,
+      },
+    }
+  : null;
+
+// Schema: Unified @graph for Homepage
+const homeGraphJsonLd = isHomePage
+  ? {
+      '@context': 'https://schema.org',
+      '@graph': [organizationJsonLd, websiteJsonLd],
+    }
+  : null;
+
+// Schema: BreadcrumbList
+const breadcrumbsList = [
+  {
+    name: lang === 'en' ? 'Home' : getTranslations(lang).nav.home,
+    item: `${siteUrl}${getLocalizedPath('/', lang)}`,
+  },
+  ...breadcrumbs.map((b) => ({
+    name: b.name,
+    item: b.item.startsWith('http')
+      ? b.item
+      : new URL(b.item.startsWith('/') ? b.item : `/${b.item}`, siteUrl).toString(),
+  })),
+];
+
+const breadcrumbJsonLd =
+  breadcrumbs.length > 0
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: breadcrumbsList.map((crumb, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: crumb.name,
+          item: crumb.item,
+        })),
+      }
+    : null;
+---
+
+<!-- Primary Meta Tags -->
+<title>{formattedTitle}</title>
+<meta name="title" content={formattedTitle} />
+<meta name="description" content={formattedDescription} />
+<link rel="canonical" href={canonicalUrl} />
+{noindex ? (
+  <meta name="robots" content="noindex, nofollow" />
+) : (
+  <meta name="robots" content="index, follow" />
+)}
+
+<!-- Reciprocal Hreflang Alternates (SEO Critical) -->
+<!-- English always points to bare URL -->
+<link rel="alternate" hreflang="en" href={`${siteUrl}${getLocalizedPath(cleanPath, 'en', true)}`} />
+<link rel="alternate" hreflang="pt" href={`${siteUrl}${getLocalizedPath(cleanPath, 'pt', true)}`} />
+<link rel="alternate" hreflang="id" href={`${siteUrl}${getLocalizedPath(cleanPath, 'id', true)}`} />
+<link rel="alternate" hreflang="ar" href={`${siteUrl}${getLocalizedPath(cleanPath, 'ar', true)}`} />
+<link rel="alternate" hreflang="x-default" href={`${siteUrl}${getLocalizedPath(cleanPath, 'en', true)}`} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:title" content={formattedTitle} />
+<meta property="og:description" content={formattedDescription} />
+<meta property="og:image" content={absoluteOgImage} />
+<meta property="og:site_name" content={siteName} />
+<meta property="og:locale" content={ogLocale} />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonicalUrl} />
+<meta name="twitter:title" content={formattedTitle} />
+<meta name="twitter:description" content={formattedDescription} />
+<meta name="twitter:image" content={absoluteOgImage} />
+
+<!-- Structured Data (JSON-LD) -->
+{isHomePage && homeGraphJsonLd && (
+  <script type="application/ld+json" set:html={JSON.stringify(homeGraphJsonLd)} />
+)}
+
+{breadcrumbJsonLd && (
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
+)}
+
+{extraSchemas.map((schema) => (
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+))}

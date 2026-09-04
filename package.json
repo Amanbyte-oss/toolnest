@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build && node scripts/write-assetsignore.mjs",
+    "build": "node scripts/translate-check.mjs && astro build && node scripts/write-assetsignore.mjs",
+    "test:i18n": "node scripts/translate-check.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },

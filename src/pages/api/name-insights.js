@@ -130,14 +130,14 @@ async function callGeminiApi(apiKey, name, temperature = 1.0, lang = 'en') {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 15000);
 
-  let langInstruction = '';
-  if (lang === 'pt') {
-    langInstruction = ' All explanations, meaning, origin, traits, funFact must be written in Brazilian Portuguese.';
-  } else if (lang === 'id') {
-    langInstruction = ' All explanations, meaning, origin, traits, funFact must be written in Indonesian.';
-  } else if (lang === 'ar') {
-    langInstruction = ' All explanations, meaning, origin, traits, funFact must be written in Modern Standard Arabic.';
-  }
+  const langNames = {
+    en: 'English',
+    pt: 'Brazilian Portuguese',
+    id: 'Indonesian',
+    ar: 'Modern Standard Arabic',
+  };
+  const targetLanguage = langNames[lang] || 'English';
+  const langInstruction = ` Respond ONLY in ${targetLanguage}. All explanations, meaning, origin, traits, funFact must be written strictly in ${targetLanguage}.`;
 
   const promptText = `You are a name expert. For the name "${name}", return ONLY JSON with this exact shape:
 {
@@ -248,7 +248,9 @@ export const POST = async ({ request, locals }) => {
   }
 
   const rawName = typeof body?.name === 'string' ? body.name.trim() : '';
-  const lang = typeof body?.lang === 'string' ? body.lang.toLowerCase() : 'en';
+  const rawLang = typeof body?.lang === 'string' ? body.lang.toLowerCase().trim() : 'en';
+  const VALID_LANGS = ['en', 'pt', 'id', 'ar'];
+  const lang = VALID_LANGS.includes(rawLang) ? rawLang : 'en';
 
   // Name validation: 2-30 chars, letters/spaces/hyphens/apostrophes only (Unicode-aware)
   const nameRegex = /^[\p{L}\s'-]{2,30}$/u;

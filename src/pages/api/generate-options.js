@@ -109,14 +109,14 @@ async function callGeminiApi(apiKey, prompt, count, temperature = 1.0, lang = 'e
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 25000);
 
-  let langInstruction = '';
-  if (lang === 'pt') {
-    langInstruction = ' Respond in Brazilian Portuguese.';
-  } else if (lang === 'id') {
-    langInstruction = ' Respond in Indonesian.';
-  } else if (lang === 'ar') {
-    langInstruction = ' Respond in Modern Standard Arabic.';
-  }
+  const langNames = {
+    en: 'English',
+    pt: 'Brazilian Portuguese',
+    id: 'Indonesian',
+    ar: 'Modern Standard Arabic',
+  };
+  const targetLanguage = langNames[lang] || 'English';
+  const langInstruction = ` Respond ONLY in ${targetLanguage}.`;
 
   const fullText = `Return a JSON array of ${count} short, distinct option strings (1-3 words each) for: "${prompt}".${langInstruction}`;
 
@@ -222,8 +222,9 @@ export const POST = async ({ request, locals }) => {
   }
 
   const rawPrompt = typeof body?.prompt === 'string' ? body.prompt.trim() : '';
-  const count = Math.max(4, Math.min(12, parseInt(body?.count, 10) || 6));
-  const lang = typeof body?.lang === 'string' ? body.lang.toLowerCase() : 'en';
+  const rawLang = typeof body?.lang === 'string' ? body.lang.toLowerCase().trim() : 'en';
+  const VALID_LANGS = ['en', 'pt', 'id', 'ar'];
+  const lang = VALID_LANGS.includes(rawLang) ? rawLang : 'en';
 
   // Prompt validation: 3-120 chars
   if (!rawPrompt || rawPrompt.length < 3 || rawPrompt.length > 120) {

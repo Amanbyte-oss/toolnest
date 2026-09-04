@@ -48,15 +48,30 @@
   }
 
   html[dir="rtl"] body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, 'Inter', system-ui, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, 'Noto Sans Arabic', 'Inter', system-ui, sans-serif;
+    letter-spacing: normal;
   }
 
   [dir="rtl"] .text-left {
-    text-align: right;
+    text-align: start;
   }
 
   [dir="rtl"] .text-right {
-    text-align: left;
+    text-align: end;
+  }
+
+  [dir="rtl"] input,
+  [dir="rtl"] textarea,
+  [dir="rtl"] select {
+    text-align: start;
+  }
+
+  /* Directional icons and chevrons automatically flip in RTL */
+  [dir="rtl"] .icon-flip,
+  [dir="rtl"] .arrow-flip,
+  [dir="rtl"] .chevron-flip,
+  [dir="rtl"] .rtl-flip {
+    transform: scaleX(-1);
   }
 
   /* Prevent text zoom on iOS Safari while maintaining tap ergonomics */
