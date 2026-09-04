@@ -1,143 +1,112 @@
-# ToolNest — Mobile-First Multi-Tool Platform
+# ToolNest
 
-A fast, privacy-friendly, mobile-first multi-tool website built with **Astro** (static output) and **Tailwind CSS** using a custom **Slate Grey** design system.
+> Free online micro-tools that just work — no signup, no ads-blocking your screen, nothing leaves your browser.
 
-- **Zero Backend / Zero Database**: Fully static architecture with client-side vanilla JavaScript.
-- **Edge Deployment**: Optimized for zero-configuration deployment on **Cloudflare Pages**.
-- **Mobile-First Responsive Design**: Engineered for 375px+ screens with touch targets exceeding 48x48px and anti-zoom inputs.
-- **Slate Grey Theme**: Modern SaaS aesthetic with class-based light/dark mode and zero flash of unstyled content (anti-FOUC).
+🌐 **Live Website**: [https://toolnest.pages.dev](https://toolnest.pages.dev)  
+[![100% Free](https://img.shields.io/badge/Cost-100%25_Free-emerald?style=flat-square)](https://toolnest.pages.dev) [![No Sign-up](https://img.shields.io/badge/Sign--up-None_Required-blue?style=flat-square)](https://toolnest.pages.dev) [![Privacy-first](https://img.shields.io/badge/Privacy-100%25_Local-indigo?style=flat-square)](https://toolnest.pages.dev/privacy-policy)
 
 ---
 
-## Project Structure
+## What is ToolNest?
 
-```
-├── public/
-│   ├── favicon.svg          # Custom SVG favicon
-│   └── robots.txt           # Crawler instructions & sitemap link
-├── src/
-│   ├── components/
-│   │   ├── Footer.astro     # Responsive multi-column footer
-│   │   ├── Header.astro     # Sticky blurred header, theme toggle, mobile drawer
-│   │   ├── Seo.astro        # Meta tags, OpenGraph, Twitter, and JSON-LD schema
-│   │   └── ToolCard.astro   # Interactive tool card component
-│   ├── data/                # Data directory for future JSON resources
-│   ├── layouts/
-│   │   └── Base.astro       # HTML5 shell, anti-FOUC script, SEO, and container
-│   ├── pages/
-│   │   └── index.astro      # Main tools index and sandbox
-│   └── styles/
-│       └── global.css       # Design tokens, Tailwind layers, component utilities
-├── astro.config.mjs         # Astro configuration with static output & integrations
-├── package.json             # Scripts & dependencies
-├── tailwind.config.mjs      # Custom Slate Grey theme tokens & dark mode
-└── tsconfig.json            # TypeScript path aliases and strict configuration
-```
+ToolNest is a friendly suite of everyday micro-tools designed to get out of your way. Whether you are settling where to eat dinner, picking a giveaway winner, or looking up what day of the week you were born, ToolNest gives you instant, beautiful answers without logins, trackers, or paywalls.
 
 ---
 
-## Getting Started
+## The Tools
 
-### 1. Install Dependencies
+### 🎂 Birthday Facts
+Discover fascinating astrological details, life milestones, and fun trivia about any birthday.
+- Look up your zodiac sign, element, birthstone, and native birth flower
+- Find out the exact day of the week you arrived and your lifetime statistics
+- Generate a beautiful, downloadable birthday card to share with friends
+
+### ⚖️ Age Calculator
+Calculate your exact chronological age with down-to-the-second live accuracy.
+- Break down age into total years, months, weeks, days, hours, and seconds
+- See a live countdown to your next birthday and key milestone ages
+- Easily calculate exact date differences between any two calendar events
+
+### 🎡 Decision Wheel
+Can't decide? Put your choices on an interactive wheel and let fate take a spin.
+- Smooth spinning physics with satisfying sound effects and confetti celebrations
+- Generate instant idea presets using the built-in AI helper (*"Movie night"*, *"Dinner ideas"*)
+- Share customized wheels directly with friends and coworkers via link
+
+### 🎲 Random Picker
+Draw transparent, fair results for contests, classrooms, and game nights.
+- Pick random winners with or without repetition from any custom list
+- Select students fairly or decide the order of turns in study groups
+- Split names automatically into balanced, randomized teams
+
+### ⏳ Countdown
+Create a real-time countdown clock for birthdays, holidays, product drops, or events.
+- Live ticking display of days, hours, minutes, and seconds remaining
+- Share your countdown via link so others can watch the clock tick together
+- Export a high-resolution portrait card image formatted for social sharing
+
+### 🏷️ Name Meanings
+Explore the origins, history, and deeper meanings behind names from all around the world.
+- Browse 200+ curated names with phonetic pronunciations and cultural origins
+- Generate tailored AI insights on popularity trends, companion names, and personality vibes
+- Search and filter by gender, letter, and heritage to find the perfect name
+
+---
+
+## Why ToolNest?
+
+- **Everything runs in YOUR browser**: Inputs, names, and lists never leave your device or touch a database.
+- **Fast on slow phones**: Lightweight pages load instantly without heavy bloated frameworks or tracking scripts.
+- **Dark mode, mobile-first, free forever**: Built to look stunning on any screen with responsive touch controls.
+- **AI features run server-side**: Optional AI idea generation runs via stateless functions; your data is never stored.
+
+---
+
+## Frequently Asked Questions
+
+**Is it really free?**  
+Yes, 100% free. No subscriptions, paywalls, or hidden catches.
+
+**Do you store my data?**  
+Never. Your inputs stay strictly inside your browser. We don't have user accounts or tracking cookies.
+
+**Can I use the wheel/picker for my classroom or giveaway?**  
+Absolutely! Teachers, streamers, and organizers use ToolNest daily for unbiased random selections.
+
+**How do I share my countdown?**  
+Click "Share" to copy a direct link, or click "Share as Image" to download a crisp card for WhatsApp or Instagram.
+
+---
+
+## Links
+
+- **Website**: [toolnest.pages.dev](https://toolnest.pages.dev) | **Privacy Policy**: [toolnest.pages.dev/privacy-policy](https://toolnest.pages.dev/privacy-policy) | **Contact / Issues**: [GitHub Issues](https://github.com/Amanbyte-oss/toolnest/issues)
+
+---
+
+<details>
+<summary><strong>🛠️ For Developers (Tech Stack & Setup)</strong></summary>
+
+### Tech Stack
+Built with **Astro** (SSG + SSR adapter), **Tailwind CSS** (Slate Grey design system), **Cloudflare Workers** (`wrangler.jsonc`), and **Google Gemini API** for optional AI features.
+
+### Local Development
 ```bash
+git clone https://github.com/Amanbyte-oss/toolnest.git && cd toolnest
 npm install
+cp .env.example .env          # Optional: add your GEMINI_API_KEY from Google AI Studio
+npm run dev                   # Starts dev server on http://localhost:4321
+npm run build                 # Builds static site & Worker bundle to dist/
+npx wrangler deploy --dry-run # Validates Cloudflare deployment configuration
 ```
 
-### 2. Start the Local Development Server
-```bash
-npm run dev
-```
-Open [http://localhost:4321](http://localhost:4321) in your browser.
+### Environment Variables
+| Variable | Required | Description |
+| :--- | :--- | :--- |
+| `GEMINI_API_KEY` | Optional | Powers AI option generator & name insights ([Google AI Studio](https://aistudio.google.com/)). Never commit this key! |
 
-### 3. Build for Production
-```bash
-npm run build
-```
-This outputs a fully static build into the `dist/` directory, including an automatically generated `sitemap-index.xml` and `sitemap-0.xml`.
+*For production on Cloudflare, add `GEMINI_API_KEY` as an encrypted Secret in Workers & Pages → Settings → Variables & Secrets.*
 
-### 4. Preview the Production Build Locally
-```bash
-npm run preview
-```
-
----
-
-## Cloudflare Pages Deployment
-
-### Option A: Git Integration (Recommended)
-1. Push this repository to GitHub or GitLab.
-2. In the **Cloudflare Dashboard**, navigate to **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
-3. Select your repository and configure the build settings:
-   - **Framework preset**: `Astro`
-   - **Build command**: `npm run build`
-   - **Build output directory**: `dist`
-   - **Node.js Version**: `18.x` or higher (Set environment variable `NODE_VERSION = 20` if prompted)
-4. Click **Save and Deploy**.
-
-### Option B: Cloudflare Wrangler CLI (Direct Upload)
-```bash
-npm run build
-npx wrangler pages deploy dist --project-name=toolnest
-```
-
----
-
-## AI Preset Generator & Native Astro API Route
-
-ToolNest includes an AI-powered preset generator for the **Decision Wheel** powered by Google's **Gemini 3.7 Flash** model via a native Astro API route (`src/pages/api/generate-options.js`) using `@astrojs/cloudflare`.
-
-All content pages remain 100% prerendered and static, while `/api/generate-options` runs dynamically in both local dev and on Cloudflare Pages.
-
-### 1. Local Development (`npm run dev`)
-Create a `.env` file in the project root:
-```bash
-GEMINI_API_KEY=your_gemini_api_key_here
-```
-Run the Astro dev server:
-```bash
-npm run dev
-```
-The API route is automatically served at `http://localhost:4321/api/generate-options` and reads `import.meta.env.GEMINI_API_KEY`.
-
-### 2. Cloudflare Pages Deployment (Production)
-1. Go to **Cloudflare Dashboard** > **Workers & Pages** > Select your **ToolNest** project.
-2. Navigate to **Settings** > **Environment variables**.
-3. Click **Add variable**:
-   - **Variable name**: `GEMINI_API_KEY`
-   - **Value**: Your Gemini API key from [Google AI Studio](https://aistudio.google.com/)
-   - **Environment**: Production (and Preview if desired)
-4. Click **Save and Deploy**. The key is securely passed via `locals.runtime.env.GEMINI_API_KEY` and is **never** bundled into client code.
-
-### 3. Testing Simulated Cloudflare Runtime Locally
-To test the built Cloudflare worker bundle with environment variables locally:
-```bash
-# 1. Build the production assets
-npm run build
-
-# 2. Run Wrangler Pages local dev server
-npx wrangler pages dev dist
-```
-
----
-
-## Design System: "Slate Grey" Tokens
-
-| Token | Light Mode | Dark Mode | Description |
-| :--- | :--- | :--- | :--- |
-| **Page Background** | `#F4F5F7` | `#111315` | Soft grey (never pure white), deep graphite |
-| **Surface** | `#FFFFFF` | `#1B1E21` | Card and drawer surface |
-| **Border** | `#E5E7EB` | `#2A2E33` | Subtle perimeter borders |
-| **Primary Accent** | `#6366F1` | `#6366F1` | Muted indigo (used for <10% of page) |
-| **Text Primary** | `#1F2937` | `#F9FAFB` | Headings & primary body copy |
-| **Text Secondary** | `#6B7280` | `#9CA3AF` | Captions, muted text, descriptions |
-| **Input Background** | `#F9FAFB` | `#26292D` | Form fields (16px minimum font size) |
-| **Success / Warning / Error** | `#10B981` / `#F59E0B` / `#EF4444` | State indicators |
-
----
-
-## Mobile-First & Performance Standards
-- **375px+ baseline**: Verified on 320px minimum without horizontal overflow.
-- **Accessible Tap Targets**: 48x48px touch targets on buttons and mobile drawers.
-- **Zero FOUC Theme Switching**: Instant detection via inline script in `<head>`.
-- **Vanilla JavaScript**: Zero heavy client frameworks (no React / Vue).
-# toolnest
+### Structure & License
+Modular repository (`src/pages`, `src/components`, `src/scripts`, `src/styles`). Distributed under the [MIT License](LICENSE).
+</details>
