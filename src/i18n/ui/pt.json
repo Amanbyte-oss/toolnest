@@ -153,8 +153,8 @@
       "description": "A página solicitada não foi encontrada no ToolNest."
     },
     "imageCompressor": {
-      "title": "Compressor de Imagens Grátis — Reduzir JPG, PNG, WebP Online",
-      "description": "Comprima imagens JPG, PNG, WebP e AVIF diretamente no navegador. 100% privado, no dispositivo, sem upload para servidores."
+      "title": "Compressor de Imagens Grátis — Comprimir e Converter para JPG, PNG, WebP",
+      "description": "Comprima e converta imagens JPG, PNG e WebP direto no navegador. 100% privado, no lado do cliente, com controle de qualidade e tamanho alvo sem uploads."
     },
     "imageConverter": {
       "title": "Conversor de Imagens Grátis — JPG, PNG, WebP, AVIF Online (Sem Upload)",
@@ -1086,6 +1086,10 @@
       {
         "q": "Quanto de redução de tamanho posso esperar sem perder qualidade visível?",
         "a": "A grande maioria das fotos alcança entre 60% e 80% de redução com os modos Inteligente e Equilibrado, permanecendo praticamente idênticas ao olho humano."
+      },
+      {
+        "q": "Posso converter o formato enquanto comprimo?",
+        "a": "Sim! Você pode escolher entre WebP, JPG ou PNG antes de baixar. O WebP é selecionado por padrão para compressão máxima, mas você também pode exportar para JPG (com fundo branco para transparência) ou PNG sem perdas."
       }
     ],
     "converter": [
@@ -1485,12 +1489,15 @@
       "quality": "Qualidade",
       "targetPlaceholder": "Tamanho alvo, ex: 100 KB",
       "targetLabel": "Tamanho alvo (opcional)",
-      "downloadBtn": "Baixar WebP Comprimido",
+      "downloadBtn": "Baixar {format}",
       "saved": "Economia de",
       "biggerWarning": "Maior ⚠️ tente uma qualidade menor ou use o tamanho alvo",
       "closestPossible": "Menor possível: {size} (alvo {target} KB)",
       "compressing": "Comprimindo...",
-      "convertCrossLink": "Mudar formato →"
+      "convertCrossLink": "Mudar formato →",
+      "formatLabel": "Formato",
+      "pngLosslessNote": "PNG é sem perdas — o tamanho depende da imagem",
+      "biggerWarningTryWebp": "Maior ⚠️ tente WebP"
     },
     "preview": {
       "remove": "Remover imagem e recomeçar"

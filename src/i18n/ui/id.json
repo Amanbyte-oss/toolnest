@@ -153,8 +153,8 @@
       "description": "Halaman yang Anda tuju tidak dapat ditemukan di ToolNest."
     },
     "imageCompressor": {
-      "title": "Kompres Foto Gratis — Kecilkan Ukuran JPG, PNG, WebP Online",
-      "description": "Kompres gambar JPG, PNG, WebP, dan AVIF langsung di browser. 100% privat di perangkat Anda tanpa upload ke server."
+      "title": "Kompresor Gambar Gratis — Kompres & Ubah ke JPG, PNG, WebP (Tanpa Upload)",
+      "description": "Kompres dan konversi gambar JPG, PNG, dan WebP langsung di browser Anda. 100% privat, kompresi sisi klien dengan penggeser kualitas dan ukuran target tanpa upload."
     },
     "imageConverter": {
       "title": "Konversi Gambar Online Gratis — Ubah Format JPG, PNG, WebP, AVIF",
@@ -1086,6 +1086,10 @@
       {
         "q": "Berapa persen ukuran foto yang bisa dihemat tanpa merusak kualitas?",
         "a": "Sebagian besar foto berhasil dikurangi ukurannya antara 60% hingga 80% dengan preset Pintar atau Seimbang tanpa perbedaan yang kentara oleh mata manusia."
+      },
+      {
+        "q": "Bisakah saya mengubah format saat mengompres?",
+        "a": "Ya! Anda dapat memilih antara WebP, JPG, atau PNG sebelum mengunduh. WebP dipilih secara default untuk kompresi terbaik, tetapi Anda juga dapat mengekspor ke JPG (dengan perataan transparansi latar putih) atau PNG lossless."
       }
     ],
     "converter": [
@@ -1485,12 +1489,15 @@
       "quality": "Kualitas",
       "targetPlaceholder": "Target ukuran, misal 100 KB",
       "targetLabel": "Target ukuran (opsional)",
-      "downloadBtn": "Unduh WebP Hasil Kompres",
+      "downloadBtn": "Unduh {format}",
       "saved": "Hemat",
       "biggerWarning": "Lebih besar ⚠️ coba turunkan kualitas atau gunakan target ukuran",
       "closestPossible": "Paling mendekati: {size} (target {target} KB)",
       "compressing": "Mengompres...",
-      "convertCrossLink": "Ubah format →"
+      "convertCrossLink": "Ubah format →",
+      "formatLabel": "Format",
+      "pngLosslessNote": "PNG bersifat lossless — ukuran tergantung gambar",
+      "biggerWarningTryWebp": "Lebih besar ⚠️ coba WebP"
     },
     "preview": {
       "remove": "Hapus foto dan mulai ulang"

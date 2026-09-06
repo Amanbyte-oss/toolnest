@@ -193,6 +193,34 @@ const faqSchema = {
 
       <!-- CONTROLS & DOWNLOAD SECTION (VISIBLE WHEN IMAGE LOADED) -->
       <div id="controls-section" class="card p-5 sm:p-6 space-y-5 hidden">
+        <!-- COMPACT OUTPUT FORMAT PICKER -->
+        <div class="flex items-center justify-between gap-2 flex-wrap pb-1">
+          <span class="text-xs font-semibold text-secondary-light dark:text-secondary-dark">{t.compressor.controls?.formatLabel || 'Format'}:</span>
+          <div id="format-picker" class="inline-flex p-1 rounded-xl bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark text-xs font-semibold" role="group" aria-label={t.compressor.controls?.formatLabel || 'Format'}>
+            <button
+              type="button"
+              data-format="webp"
+              class="format-btn px-3 py-1.5 rounded-lg transition-all duration-150 cursor-pointer bg-accent text-white shadow-xs font-bold"
+            >
+              WebP
+            </button>
+            <button
+              type="button"
+              data-format="jpg"
+              class="format-btn px-3 py-1.5 rounded-lg transition-all duration-150 cursor-pointer text-secondary-light dark:text-secondary-dark hover:text-primary-light dark:hover:text-primary-dark"
+            >
+              JPG
+            </button>
+            <button
+              type="button"
+              data-format="png"
+              class="format-btn px-3 py-1.5 rounded-lg transition-all duration-150 cursor-pointer text-secondary-light dark:text-secondary-dark hover:text-primary-light dark:hover:text-primary-dark"
+            >
+              PNG
+            </button>
+          </div>
+        </div>
+
         <!-- CONTROL 1 — QUALITY SLIDER -->
         <div id="quality-control" class="space-y-2 transition-opacity duration-200">
           <div class="flex items-center justify-between text-xs sm:text-sm">
@@ -208,6 +236,10 @@ const faqSchema = {
             value="75"
             class="w-full h-2 bg-border-light dark:bg-border-dark rounded-lg appearance-none cursor-pointer accent-accent"
           />
+          <!-- PNG LOSSLESS NOTE (Only shown when PNG selected) -->
+          <p id="png-note" class="text-[11px] sm:text-xs text-secondary-light dark:text-secondary-dark hidden">
+            ✨ {t.compressor.controls?.pngLosslessNote || 'PNG is lossless — size depends on image'}
+          </p>
         </div>
 
         <!-- CONTROL 2 — TARGET SIZE TEXT BOX -->
@@ -254,7 +286,7 @@ const faqSchema = {
               <polyline points="7 10 12 15 17 10"></polyline>
               <line x1="12" y1="15" x2="12" y2="3"></line>
             </svg>
-            <span>{t.compressor.controls.downloadBtn}</span>
+            <span id="download-text">{t.compressor.controls?.downloadBtn?.replace('{format}', 'WebP') || 'Download WebP'}</span>
           </button>
         </div>
 
@@ -316,19 +348,23 @@ const faqSchema = {
     const originalSizeEl = document.getElementById('original-size');
     const removeBtn = document.getElementById('remove-btn');
     const controlsSection = document.getElementById('controls-section');
+    const formatBtns = document.querySelectorAll('.format-btn');
     const qualityControl = document.getElementById('quality-control');
     const qualitySlider = document.getElementById('quality-slider') as HTMLInputElement | null;
     const qualityVal = document.getElementById('quality-val');
+    const pngNote = document.getElementById('png-note');
     const targetSizeInput = document.getElementById('target-size-input') as HTMLInputElement | null;
     const resultText = document.getElementById('result-text');
     const compressSpinner = document.getElementById('compress-spinner');
     const downloadBtn = document.getElementById('download-btn');
+    const downloadText = document.getElementById('download-text');
     const errorBanner = document.getElementById('error-banner');
     const errorMessage = document.getElementById('error-message');
     const dismissError = document.getElementById('dismiss-error');
 
     // App State
     let currentFile: File | null = null;
+    let currentFormat: 'webp' | 'jpg' | 'png' = 'webp';
     let previewUrl: string | null = null;
     let loadedImage: {
       drawable: CanvasImageSource;
@@ -366,6 +402,67 @@ const faqSchema = {
 
     dismissError?.addEventListener('click', clearError);
 
+    // Update download button text based on active format
+    function updateDownloadButtonText() {
+      const formatUpper = currentFormat === 'jpg' ? 'JPG' : currentFormat === 'png' ? 'PNG' : 'WebP';
+      const template = i18n.controls?.downloadBtn || 'Download {format}';
+      if (downloadText) {
+        downloadText.textContent = template.replace('{format}', formatUpper);
+      }
+    }
+
+    // Update quality slider enabled/dimmed state
+    function updateQualitySliderVisibility() {
+      const targetVal = targetSizeInput?.value.trim();
+      const targetNum = targetVal ? parseFloat(targetVal) : 0;
+      const isTargetMode = targetVal !== '' && !isNaN(targetNum) && targetNum > 0;
+
+      if (currentFormat === 'png') {
+        // PNG is lossless: quality slider does not apply
+        pngNote?.classList.remove('hidden');
+        qualityControl?.classList.add('opacity-40', 'pointer-events-none');
+        if (qualitySlider) qualitySlider.disabled = true;
+      } else {
+        pngNote?.classList.add('hidden');
+        if (qualitySlider) qualitySlider.disabled = false;
+        if (isTargetMode) {
+          qualityControl?.classList.add('opacity-40', 'pointer-events-none');
+        } else {
+          qualityControl?.classList.remove('opacity-40', 'pointer-events-none');
+        }
+      }
+    }
+
+    // Set active output format
+    function setOutputFormat(format: 'webp' | 'jpg' | 'png', triggerCompression = true) {
+      currentFormat = format;
+      formatBtns.forEach((btn) => {
+        const btnFormat = btn.getAttribute('data-format');
+        if (btnFormat === format) {
+          btn.className = 'format-btn px-3 py-1.5 rounded-lg transition-all duration-150 cursor-pointer bg-accent text-white shadow-xs font-bold';
+        } else {
+          btn.className = 'format-btn px-3 py-1.5 rounded-lg transition-all duration-150 cursor-pointer text-secondary-light dark:text-secondary-dark hover:text-primary-light dark:hover:text-primary-dark';
+        }
+      });
+
+      updateDownloadButtonText();
+      updateQualitySliderVisibility();
+      if (triggerCompression && loadedImage) {
+        if (debounceTimer) clearTimeout(debounceTimer);
+        runCompression();
+      }
+    }
+
+    // Format selection buttons
+    formatBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const fmt = btn.getAttribute('data-format') as 'webp' | 'jpg' | 'png' | null;
+        if (fmt && fmt !== currentFormat) {
+          setOutputFormat(fmt);
+        }
+      });
+    });
+
     // Clean up memory
     function cleanupState() {
       if (previewUrl) {
@@ -388,15 +485,17 @@ const faqSchema = {
     // Reset UI to initial empty state
     function resetUI() {
       cleanupState();
+      setOutputFormat('webp', false);
       if (fileInput) fileInput.value = '';
       if (targetSizeInput) targetSizeInput.value = '';
       if (qualitySlider) qualitySlider.value = '75';
       if (qualityVal) qualityVal.textContent = '75%';
-      qualityControl?.classList.remove('opacity-40', 'pointer-events-none');
+      updateQualitySliderVisibility();
 
       previewCard?.classList.add('hidden');
       controlsSection?.classList.add('hidden');
       dropzone?.classList.remove('hidden');
+      if (resultText) resultText.textContent = '';
       clearError();
     }
 
@@ -447,26 +546,50 @@ const faqSchema = {
       });
     }
 
-    // Convert canvas to WebP blob
-    function canvasToWebPBlob(canvas: HTMLCanvasElement, quality: number): Promise<Blob> {
+    // Draw image onto canvas, handling white background flattening for JPG
+    function drawImageToCanvas(
+      ctx: CanvasRenderingContext2D,
+      drawable: CanvasImageSource,
+      w: number,
+      h: number,
+      format: 'webp' | 'jpg' | 'png'
+    ) {
+      if (format === 'jpg') {
+        // Flatten transparency onto WHITE background to prevent black-box JPEGs
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(0, 0, w, h);
+      } else {
+        ctx.clearRect(0, 0, w, h);
+      }
+      ctx.drawImage(drawable, 0, 0, w, h);
+    }
+
+    // Convert canvas to Blob based on format
+    function canvasToBlob(
+      canvas: HTMLCanvasElement,
+      format: 'webp' | 'jpg' | 'png',
+      quality: number
+    ): Promise<Blob> {
+      const mime = format === 'jpg' ? 'image/jpeg' : format === 'png' ? 'image/png' : 'image/webp';
       return new Promise((resolve, reject) => {
         canvas.toBlob(
           (blob) => {
             if (blob) resolve(blob);
             else reject(new Error('Canvas toBlob failed'));
           },
-          'image/webp',
-          quality
+          mime,
+          format === 'png' ? undefined : quality
         );
       });
     }
 
-    // Perform binary search on quality + dimensions to hit <= targetBytes
+    // Perform target size compression
     async function compressToTarget(
       drawable: CanvasImageSource,
       origW: number,
       origH: number,
       targetBytes: number,
+      format: 'webp' | 'jpg' | 'png',
       taskToken: number
     ): Promise<{ blob: Blob; reached: boolean }> {
       const canvas = document.createElement('canvas');
@@ -477,6 +600,40 @@ const faqSchema = {
       let smallestBlob: Blob | null = null;
       let bestBlob: Blob | null = null;
 
+      if (format === 'png') {
+        // PNG is lossless — quality is ignored by browser.
+        // Size reduction is achieved by downscaling dimensions.
+        while (scale >= 0.05) {
+          if (taskToken !== currentTaskToken) throw new Error('aborted');
+
+          const currentW = Math.max(16, Math.round(origW * scale));
+          const currentH = Math.max(16, Math.round(origH * scale));
+          canvas.width = currentW;
+          canvas.height = currentH;
+          drawImageToCanvas(ctx, drawable, currentW, currentH, 'png');
+
+          const blob = await canvasToBlob(canvas, 'png', 1.0);
+          if (!smallestBlob || blob.size < smallestBlob.size) {
+            smallestBlob = blob;
+          }
+
+          if (blob.size <= targetBytes) {
+            bestBlob = blob;
+            break;
+          }
+
+          const estimatedRatio = Math.sqrt(targetBytes / blob.size) * 0.92;
+          scale = Math.min(scale * 0.8, scale * estimatedRatio);
+          await new Promise((r) => setTimeout(r, 0));
+        }
+
+        if (bestBlob && bestBlob.size <= targetBytes) {
+          return { blob: bestBlob, reached: true };
+        }
+        return { blob: smallestBlob || minBlobFallback(), reached: false };
+      }
+
+      // WebP and JPG: Binary search quality and adjust scale
       while (scale >= 0.05) {
         if (taskToken !== currentTaskToken) throw new Error('aborted');
 
@@ -484,17 +641,15 @@ const faqSchema = {
         const currentH = Math.max(16, Math.round(origH * scale));
         canvas.width = currentW;
         canvas.height = currentH;
-        ctx.clearRect(0, 0, currentW, currentH);
-        ctx.drawImage(drawable, 0, 0, currentW, currentH);
+        drawImageToCanvas(ctx, drawable, currentW, currentH, format);
 
-        // Test lowest quality (0.05) to check if resolution can fit under target
-        const minBlob = await canvasToWebPBlob(canvas, 0.05);
+        // Test lowest quality (0.05) to check if resolution fits under target
+        const minBlob = await canvasToBlob(canvas, format, 0.05);
         if (!smallestBlob || minBlob.size < smallestBlob.size) {
           smallestBlob = minBlob;
         }
 
         if (minBlob.size > targetBytes) {
-          // Downscale further
           const estimatedRatio = Math.sqrt(targetBytes / minBlob.size) * 0.92;
           scale = Math.min(scale * 0.75, scale * estimatedRatio);
           await new Promise((r) => setTimeout(r, 0));
@@ -502,7 +657,7 @@ const faqSchema = {
         }
 
         // Test high quality (0.95)
-        const maxBlob = await canvasToWebPBlob(canvas, 0.95);
+        const maxBlob = await canvasToBlob(canvas, format, 0.95);
         if (maxBlob.size <= targetBytes) {
           bestBlob = maxBlob;
           break;
@@ -516,7 +671,7 @@ const faqSchema = {
         for (let i = 0; i < 7; i++) {
           if (taskToken !== currentTaskToken) throw new Error('aborted');
           const midQ = (lowQ + highQ) / 2;
-          const midBlob = await canvasToWebPBlob(canvas, midQ);
+          const midBlob = await canvasToBlob(canvas, format, midQ);
 
           if (midBlob.size <= targetBytes) {
             bestBlob = midBlob;
@@ -533,18 +688,19 @@ const faqSchema = {
       if (bestBlob && bestBlob.size <= targetBytes) {
         return { blob: bestBlob, reached: true };
       }
-      return { blob: smallestBlob || minBlobFallback(origW, origH), reached: false };
+      return { blob: smallestBlob || minBlobFallback(), reached: false };
 
-      function minBlobFallback(w: number, h: number): Blob {
-        return smallestBlob || new Blob([], { type: 'image/webp' });
+      function minBlobFallback(): Blob {
+        return smallestBlob || new Blob([], { type: format === 'jpg' ? 'image/jpeg' : format === 'png' ? 'image/png' : 'image/webp' });
       }
     }
 
-    // Core re-compression pipeline
+    // Core compression pipeline
     async function runCompression() {
       if (!loadedImage || !currentFile) return;
 
       const taskToken = ++currentTaskToken;
+      const format = currentFormat;
       if (compressSpinner) compressSpinner.classList.remove('hidden');
       if (resultText) resultText.textContent = i18n.controls?.compressing || 'Compressing...';
 
@@ -568,20 +724,21 @@ const faqSchema = {
             loadedImage.width,
             loadedImage.height,
             targetBytes,
+            format,
             taskToken
           );
           finalBlob = res.blob;
           targetReached = res.reached;
         } else {
-          // Quality Slider Mode
+          // Quality Slider Mode (or lossless PNG)
           const quality = qualitySlider ? Math.max(1, Math.min(100, parseInt(qualitySlider.value, 10))) / 100 : 0.75;
           const canvas = document.createElement('canvas');
           canvas.width = loadedImage.width;
           canvas.height = loadedImage.height;
           const ctx = canvas.getContext('2d');
           if (!ctx) throw new Error('Canvas 2D context unavailable');
-          ctx.drawImage(loadedImage.drawable, 0, 0, loadedImage.width, loadedImage.height);
-          finalBlob = await canvasToWebPBlob(canvas, quality);
+          drawImageToCanvas(ctx, loadedImage.drawable, loadedImage.width, loadedImage.height, format);
+          finalBlob = await canvasToBlob(canvas, format, quality);
         }
 
         if (taskToken !== currentTaskToken) return;
@@ -592,25 +749,28 @@ const faqSchema = {
         }
         compressedUrl = URL.createObjectURL(finalBlob);
 
-        // Update result text
+        // Update result text with active format
         const origStr = formatBytes(origSize);
         const compStr = formatBytes(finalBlob.size);
+        const formatUpper = format === 'jpg' ? 'JPG' : format === 'png' ? 'PNG' : 'WebP';
 
         if (isTargetMode && !targetReached) {
           const closestTpl = i18n.controls?.closestPossible || 'Closest possible: {size} (target {target} KB)';
           if (resultText) {
-            resultText.textContent = closestTpl.replace('{size}', compStr).replace('{target}', String(targetNum));
+            resultText.textContent = `${closestTpl.replace('{size}', compStr).replace('{target}', String(targetNum))} (${formatUpper})`;
           }
         } else if (finalBlob.size < origSize) {
           const savedPct = Math.round((1 - finalBlob.size / origSize) * 100);
           const savedLabel = i18n.controls?.saved || 'Saved';
           if (resultText) {
-            resultText.textContent = `${origStr} → ${compStr} · ${savedLabel} ${savedPct}% ✅`;
+            resultText.textContent = `${origStr} → ${compStr} ${formatUpper} · ${savedLabel} ${savedPct}% ✅`;
           }
         } else {
-          const biggerMsg = i18n.controls?.biggerWarning || 'Bigger ⚠️ try a lower quality or use target size';
+          const biggerMsg = format !== 'webp'
+            ? (i18n.controls?.biggerWarningTryWebp || 'Bigger ⚠️ try WebP instead')
+            : (i18n.controls?.biggerWarning || 'Bigger ⚠️ try a lower quality or use target size');
           if (resultText) {
-            resultText.textContent = `${origStr} → ${compStr} · ${biggerMsg}`;
+            resultText.textContent = `${origStr} → ${compStr} ${formatUpper} · ${biggerMsg}`;
           }
         }
       } catch (err: any) {
@@ -662,6 +822,9 @@ const faqSchema = {
         dropzone?.classList.add('hidden');
         previewCard?.classList.remove('hidden');
         controlsSection?.classList.remove('hidden');
+
+        // Initial format is WebP
+        setOutputFormat('webp', false);
 
         // Trigger initial compression
         runCompression();
@@ -745,15 +908,7 @@ const faqSchema = {
 
     // CONTROL 2: Target size input
     targetSizeInput?.addEventListener('input', () => {
-      const val = targetSizeInput.value.trim();
-      const num = parseFloat(val);
-
-      if (val !== '' && !isNaN(num) && num > 0) {
-        qualityControl?.classList.add('opacity-40', 'pointer-events-none');
-      } else {
-        qualityControl?.classList.remove('opacity-40', 'pointer-events-none');
-      }
-
+      updateQualitySliderVisibility();
       scheduleCompression();
     });
 
@@ -762,7 +917,8 @@ const faqSchema = {
       if (!compressedBlob || !currentFile) return;
 
       const origBaseName = currentFile.name.replace(/\.[^/.]+$/, '');
-      const downloadName = `${origBaseName}-compressed.webp`;
+      const ext = currentFormat === 'jpg' ? 'jpg' : currentFormat === 'png' ? 'png' : 'webp';
+      const downloadName = `${origBaseName}-compressed.${ext}`;
 
       const link = document.createElement('a');
       const url = URL.createObjectURL(compressedBlob);

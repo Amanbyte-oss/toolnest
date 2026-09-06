@@ -153,8 +153,8 @@
       "description": "The page you requested could not be found on ToolNest."
     },
     "imageCompressor": {
-      "title": "Free Image Compressor — Compress JPG, PNG, WebP Online (No Upload)",
-      "description": "Compress JPG, PNG, WebP, and AVIF images directly in your browser. 100% private, client-side compression with quality control, batch resize, and no file uploads."
+      "title": "Free Image Compressor — Compress & Convert to JPG, PNG, WebP (No Upload)",
+      "description": "Compress and convert JPG, PNG, and WebP images directly in your browser. 100% private, client-side compression with quality slider, target size, and zero file uploads."
     },
     "imageConverter": {
       "title": "Free Image Converter — JPG, PNG, WebP, AVIF Online (No Upload)",
@@ -1086,6 +1086,10 @@
       {
         "q": "How much file size reduction can I expect without noticeable quality loss?",
         "a": "Most photographs achieve between 60% and 80% file size reduction with our Balanced and Smart Compress presets while remaining visually indistinguishable from the original to the human eye."
+      },
+      {
+        "q": "Can I convert format while compressing?",
+        "a": "Yes! You can choose between WebP, JPG, or PNG before downloading. WebP is selected by default for maximum compression, but you can also output to JPG (with white background transparency flattening) or lossless PNG."
       }
     ],
     "converter": [
@@ -1485,12 +1489,15 @@
       "quality": "Quality",
       "targetPlaceholder": "Target size, e.g. 100 KB",
       "targetLabel": "Target size (optional)",
-      "downloadBtn": "Download Compressed WebP",
+      "downloadBtn": "Download {format}",
       "saved": "Saved",
       "biggerWarning": "Bigger ⚠️ try a lower quality or use target size",
       "closestPossible": "Closest possible: {size} (target {target} KB)",
       "compressing": "Compressing...",
-      "convertCrossLink": "Convert format →"
+      "convertCrossLink": "Convert format →",
+      "formatLabel": "Format",
+      "pngLosslessNote": "PNG is lossless — size depends on image",
+      "biggerWarningTryWebp": "Bigger ⚠️ try WebP instead"
     },
     "preview": {
       "remove": "Remove image and start over"
