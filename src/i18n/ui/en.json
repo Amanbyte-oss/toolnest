@@ -2,7 +2,7 @@
   "common": {
     "siteName": "ToolNest",
     "tagline": "Free online micro-tools that just work — no signup, no ads blocking your screen, nothing leaves your browser.",
-    "description": "A curated collection of modern, fast, and privacy-focused client-side micro-tools. Decision wheel, random picker, age calculator, birthday facts, countdown timers, and name meanings.",
+    "description": "A curated collection of modern, fast, and privacy-focused client-side micro-tools. Image compressor, image converter, random picker, age calculator, birthday facts, and countdown timers.",
     "badgeFree": "100% Free",
     "badgeNoSignup": "No Sign-up",
     "badgePrivacy": "Privacy-First",
@@ -12,10 +12,8 @@
       "home": "Home",
       "ageCalculator": "Age Calculator",
       "birthdayFacts": "Birthday Facts",
-      "decisionWheel": "Decision Wheel",
       "randomPicker": "Random Picker",
       "countdown": "Countdown",
-      "nameMeaning": "Name Meanings",
       "about": "About",
       "privacy": "Privacy Policy",
       "contact": "Contact",
@@ -102,11 +100,7 @@
   "meta": {
     "home": {
       "title": "ToolNest — Free Online Micro-Tools That Just Work",
-      "description": "Fast, private, mobile-friendly micro-tools. Decision wheel, random picker, age calculator, birthday facts, countdown timers, and name meanings."
-    },
-    "wheel": {
-      "title": "Decision Wheel — Free Custom Spin Wheel with AI Presets",
-      "description": "Spin the wheel to make quick, unbiased decisions. Settle dinners, pick games, or generate instant slices with our built-in AI assistant."
+      "description": "Fast, private, mobile-friendly micro-tools. Image compressor, image converter, random picker, age calculator, birthday facts, and countdown timers."
     },
     "picker": {
       "title": "Random Picker — Free Contest Winner & Classroom Picker",
@@ -127,14 +121,6 @@
     "countdownView": {
       "title": "Live Countdown Viewer | ToolNest",
       "description": "Watch your event countdown live in real time. Shareable, mobile-optimized, and free."
-    },
-    "names": {
-      "title": "Name Meanings & Origins — 200+ Baby Names with AI Insights",
-      "description": "Browse curated name meanings, phonetic pronunciations, cultural heritages, and generate tailored AI name insights and sibling pairings."
-    },
-    "nameMeaning": {
-      "title": "Name Meaning Search & Analysis | ToolNest",
-      "description": "Look up comprehensive etymological roots, personality associations, historical popularity, and phonetic variations for any name."
     },
     "about": {
       "title": "About ToolNest — Fast, Private Web Utilities",
@@ -159,99 +145,6 @@
     "imageConverter": {
       "title": "Free Image Converter — JPG, PNG, WebP, AVIF Online (No Upload)",
       "description": "Convert JPG, PNG, WebP, AVIF, GIF, and BMP images 100% on your device. Fast, private, lossless PNG and high quality WebP/JPG conversion with zero server uploads."
-    }
-  },
-  "wheel": {
-    "title": "Decision Wheel",
-    "subtitle": "Can’t decide? Put your choices on an interactive wheel and give it a spin.",
-    "spinButton": "SPIN THE WHEEL",
-    "spinning": "Spinning...",
-    "optionsHeading": "Wheel Options",
-    "addPlaceholder": "Add option...",
-    "quickIdeasHeading": "Quick Ideas",
-    "ideas": {
-      "whatToEat": "What to eat",
-      "workout": "Workout today",
-      "movie": "Movie night",
-      "travel": "Travel destinations"
-    },
-    "aiGeneratorTitle": "AI Preset Generator",
-    "aiGeneratorSubtitle": "Curate custom slices in seconds",
-    "aiPromptLabel": "Describe what you need to decide",
-    "aiPromptPlaceholder": "Describe what you need to decide (e.g. what to eat for dinner, movie genres, chores)...",
-    "aiGenerateBtn": "Generate with AI",
-    "aiCountLabel": "Count:",
-    "aiGeneratingText": "Generating… can take up to 20 seconds on first try",
-    "aiRetryingText": "Retrying… hang tight, first request took a bit longer",
-    "replaceConfirmTitle": "Replace current wheel options?",
-    "replaceConfirmDesc": "Your wheel currently has custom slices. Would you like to replace them with the new AI-generated options?",
-    "replaceConfirmBtn": "Replace Options",
-    "replaceCancelBtn": "Keep Current Options",
-    "winnerAnnounce": "Selected Choice:",
-    "presetEat": "What to Eat",
-    "presetWatch": "What to Watch",
-    "presetYesNo": "Yes or No",
-    "toasts": {
-      "generatedCount": "Generated {count} options!",
-      "keptOptions": "Kept current wheel options.",
-      "loadedHistory": "Loaded wheel options.",
-      "removedWinner": "Removed winning slice.",
-      "requiresTwo": "Please add at least 2 options to spin.",
-      "alreadyExists": "That option is already on the wheel.",
-      "maxOptions": "Maximum 12 options reached.",
-      "shuffled": "Options shuffled.",
-      "cannotRemoveWinner": "Cannot remove winner: minimum 2 options required.",
-      "historyCleared": "Spin history cleared."
-    },
-    "howTo": {
-      "title": "How to Use the Decision Wheel in 3 Steps",
-      "subtitle": "Break analysis paralysis with smooth physics in seconds.",
-      "s1Title": "Enter Choices or Use AI",
-      "s1Desc": "Type up to 12 custom options, choose from quick presets, or let Gemini AI generate personalized slices.",
-      "s2Title": "Spin the Wheel",
-      "s2Desc": "Tap the center SPIN hub, press Spacebar, or flick the canvas on mobile to launch the physics deceleration.",
-      "s3Title": "Celebrate & Eliminate",
-      "s3Desc": "Celebrate the chosen slice with confetti, copy your share URL, or eliminate the winner for another round."
-    },
-    "methodology": {
-      "m1Title": "How Does the Physics-Based Wheel Deceleration Work?",
-      "m1Desc": "Unlike static randomizers that snap to a pre-chosen value, ToolNest simulates realistic angular momentum. The wheel launches with random initial rotational velocity and smoothly slows down using a continuous quadratic drag formula computed at 60 FPS via requestAnimationFrame. The winning slice is read from the physical resting angle beneath the top pointer.",
-      "m2Title": "Is the Online Wheel Spinner Mathematically Fair?",
-      "m2Desc": "Every slice on the wheel occupies an equal angular segment (360° / N). Because the spin force, deceleration duration, and stopping angle are generated without weighting or bias, each outcome has an identical mathematical probability of being selected.",
-      "noteTitle": "Methodology & Deceleration Physics",
-      "noteDesc": "Calculations run entirely client-side using native HTML5 Canvas and mathematical requestAnimationFrame loops with zero server bias."
-    },
-    "useCases": {
-      "title": "Popular Use Cases for the Random Wheel Generator",
-      "u1Title": "What to Eat for Dinner Decider",
-      "u1Desc": "Eliminate evening mealtime debates between partners and families by spinning a custom food wheel with your top takeout spots and home-cooked recipes.",
-      "u2Title": "Classroom Wheel for Teachers",
-      "u2Desc": "Call on students fairly, choose reading turns, assign classroom chores, or run spelling bee challenges without any perception of teacher favoritism.",
-      "u3Title": "Prize Wheel Online & Raffles",
-      "u3Desc": "Host live Twitch giveaways, Discord community raffles, party icebreaker challenges, and trivia contests with engaging physics deceleration."
-    },
-    "trivia": {
-      "title": "Did You Know? Decision-Making & Wheel Trivia",
-      "t1Title": "Analysis Paralysis",
-      "t1Desc": "Psychological research indicates humans make roughly 35,000 decisions daily. Delegating low-stakes choices preserves mental willpower.",
-      "t2Title": "Roman Wheel of Fortune",
-      "t2Desc": "The concept of spinning a wheel dates back to the Roman goddess Fortuna (Rota Fortunae), representing life mutability and fate.",
-      "t3Title": "Visual Randomness Effect",
-      "t3Desc": "Watching a wheel decelerate triggers anticipation dopamine surges, making group choices markedly more engaging than flat lists."
-    },
-    "ui": {
-      "physicsRandomizer": "Physics & AI Randomizer",
-      "wheelAria": "Interactive decision wheel",
-      "spinButton": "SPIN",
-      "orSpace": "or Space",
-      "optionsListHeading": "Wheel Options",
-      "winnerModalTitle": "We Have a Winner!",
-      "removeWinner": "Remove Winner",
-      "spinAgain": "Spin Again",
-      "keyTakeawaysTitle": "Quick Answer & Key Takeaways",
-      "kt1": "Cryptographic Fairness: Employs realistic canvas deceleration physics with zero predetermined landing sectors.",
-      "kt2": "AI Dilemma Solver: Generate tailored options with Gemini AI or paste your own custom list of 2 to 12 choices.",
-      "kt3": "Stateless URL Sharing: Encode your custom wheel parameters directly into the link for instant sharing."
     }
   },
   "picker": {
@@ -633,63 +526,6 @@
       "kt3": "Down-to-the-Second Precision: High-performance browser ticking with instant celebration transitions at zero."
     }
   },
-  "names": {
-    "title": "Name Meanings & Origins",
-    "subtitle": "Explore the origins, history, and deeper meanings behind names from all around the world.",
-    "searchPlaceholder": "Search names or meanings...",
-    "allGenders": "All Genders",
-    "boyNames": "Boy Names",
-    "girlNames": "Girl Names",
-    "unisexNames": "Unisex",
-    "allOrigins": "All Origins",
-    "meaningLabel": "Meaning",
-    "originLabel": "Origin",
-    "pronounceLabel": "Pronunciation",
-    "aiInsightsHeading": "AI Name Insights",
-    "siblingHeading": "Recommended Sibling Names",
-    "popularLabel": "Popular",
-    "trendingLabel": "Trending",
-    "toasts": {
-      "copiedName": "Name copied to clipboard!",
-      "copiedMeaning": "Name details copied to clipboard!"
-    },
-    "methodology": {
-      "title": "Directory Methodology & Onomastic Research",
-      "desc": "Each name entry is verified against primary historical lexicons and demographic registries. Popularity scores are mapped to statistical birth percentiles, ensuring reliable cultural and etymological documentation."
-    },
-    "emptyState": {
-      "title": "No names match your search",
-      "desc": "Try adjusting your keywords, checking your spelling, or clearing your active gender filter."
-    },
-    "counter": {
-      "showingOf": "Showing {count} of {total} names",
-      "clearFilters": "Clear filters",
-      "recentlyViewed": "Recently Viewed Names"
-    },
-    "ui": {
-      "directoryAtoZ": "Alphabetical Index (A–Z)",
-      "curatedProfiles": "Curated Names",
-      "aiPrompt": "Looking for a rare or custom name not listed below?",
-      "aiPromptBtn": "Try AI Name Meaning Finder →",
-      "searchPlaceholder": "Search by name, origin (e.g. Latin, Greek), or meaning...",
-      "allGenders": "All",
-      "female": "Female",
-      "male": "Male",
-      "unisex": "Unisex",
-      "showingCount": "Showing {shown} of {total} names",
-      "clearFilters": "Clear filters",
-      "meaningLabel": "Meaning",
-      "noNamesFound": "No names match your search",
-      "noNamesFoundDesc": "Try adjusting your keywords, checking your spelling, or clearing your active gender filter.",
-      "recentlyViewed": "Recently Viewed Names",
-      "methodologyTitle": "Directory Methodology & Onomastic Research",
-      "methodologyDesc": "Each name entry is verified against primary historical lexicons and demographic registries. Popularity scores are mapped to statistical birth percentiles, ensuring reliable cultural and etymological documentation.",
-      "keyTakeawaysTitle": "Quick Answer & Key Takeaways",
-      "kt1": "200+ Curated Profiles: Comprehensive dossiers detailing historical definitions, phonetic roots, and rankings.",
-      "kt2": "A–Z Quick Navigation: Jump instantly between letters or filter dynamically by gender, cultural origin, and popularity.",
-      "kt3": "Private Onomastic Tool: Instant search running 100% in your browser without tracking or mandatory user logins."
-    }
-  },
   "home": {
     "heroTitle": "Everyday Tools That Just Work",
     "heroSubtitle": "Free, lightning-fast micro-tools engineered for your phone and computer. No accounts, no subscriptions, and zero tracking.",
@@ -712,9 +548,7 @@
     "philosophyP1": "Too many simple web utilities today are weighed down by tracking scripts, invasive advertising cookies, slow server roundtrips, and mandatory email registrations. ToolNest was founded to prove that everyday digital tools should be instant, reliable, and completely private.",
     "philosophyP2": "Every calculation, spin, shuffle, and countdown runs entirely inside your browser sandbox using modern client-side JavaScript. We do not operate user databases, nor do we collect, store, or sell personal inputs on remote servers.",
     "methodologyTitle": "Methodology & Calculation Standards",
-    "methodologyP1": "Our calculations utilize standardized, verified algorithms: UTC-standardized Gregorian calendars for exact age calculations, Web Cryptography API with Fisher-Yates shuffle for truly unbiased random picking, and quadratic bezier deceleration curves for realistic wheel physics.",
-    "editorialTitle": "Editorial Standards & Name Research",
-    "editorialP1": "Our Name Meaning database covers curated names representing diverse linguistic traditions. Meanings and etymological roots are cross-verified against primary historical onomastic records, classical dictionaries, and demographic naming registries.",
+    "methodologyP1": "Our calculations utilize standardized, verified algorithms: UTC-standardized Gregorian calendars for exact age calculations, Web Cryptography API with Fisher-Yates shuffle for truly unbiased random picking, and client-side HTML5 Canvas processing for privacy-focused image transformations.",
     "toolsTitle": "Included Utilities",
     "launchTool": "Launch tool →",
     "techTitle": "Technical Architecture & Edge Delivery",
@@ -796,10 +630,8 @@
     "party": "Party",
     "age": "Age",
     "facts": "Facts",
-    "wheel": "Wheel",
     "picker": "Picker",
     "countdown": "Countdown",
-    "names": "Names",
     "astrology": "Astrology",
     "numerology": "Numerology"
   },
@@ -812,7 +644,6 @@
     "countdownTrackText": "Track this live countdown with me: \"{title}\"",
     "birthdayShareTitle": "My Birthday Facts on ToolNest",
     "ageShareTitle": "My Exact Age on ToolNest",
-    "wheelShareTitle": "Decision Wheel on ToolNest",
     "pickerShareTitle": "Winners Picked on ToolNest",
     "watermark": "made with ToolNest • toolnest.pages.dev",
     "stickerShared": "Countdown sticker shared!",
@@ -850,40 +681,6 @@
     "description": "Everything you need to know about how this tool works.",
     "answersCount": "8 Answers",
     "quickNav": "Quick Navigation — Common Questions",
-    "wheel": [
-      {
-        "q": "Is the wheel spinner truly random and mathematically fair?",
-        "a": "Yes. The wheel uses cryptographically secure browser randomness to generate the initial spin velocity and duration. Each slice has an equal geometric angle and mathematical probability of winning."
-      },
-      {
-        "q": "Can AI automatically generate custom options for the wheel?",
-        "a": "Yes! ToolNest features an AI preset generator powered by Google Gemini. Simply describe your dilemma (like \"dinner ideas\" or \"party games\"), and the AI will generate balanced options in seconds."
-      },
-      {
-        "q": "Can I use this as a Wheel of Names alternative or prize wheel online?",
-        "a": "Absolutely. ToolNest serves as a clean, ad-free Wheel of Names alternative and interactive prize wheel for classrooms, online giveaways, team standups, and game nights."
-      },
-      {
-        "q": "How do I set up a yes or no wheel or dinner decider?",
-        "a": "You can quickly set up a yes or no wheel by entering two options: \"Yes\" and \"No\". For a dinner decider, use our preset or paste your favorite local restaurants."
-      },
-      {
-        "q": "How does the wheel physics deceleration simulation work?",
-        "a": "The wheel runs a custom canvas physics engine using quadratic bezier drag deceleration curves rendered at 60 FPS, mimicking the natural friction of a mechanical carnival wheel."
-      },
-      {
-        "q": "Can I share my custom decision wheel configuration with a link?",
-        "a": "Yes! Your options are encoded directly into the URL parameters in real time. Tapping \"Share Wheel\" copies a unique link that friends or coworkers can open to spin the exact same choices."
-      },
-      {
-        "q": "How many options can I put on the wheel generator?",
-        "a": "You can configure between 2 and 12 options. Setting a 12-item maximum ensures high slice readability, sharp canvas rendering, and distinct color contrast on mobile screens."
-      },
-      {
-        "q": "Can I remove the winning choice after each spin?",
-        "a": "Yes. When the victory celebration modal pops up, you can click \"Remove Winner\". The chosen slice is removed and the wheel instantly recalculates remaining angles."
-      }
-    ],
     "picker": [
       {
         "q": "Is this random name picker truly fair and cryptographically unbiased?",
@@ -1020,48 +817,6 @@
         "a": "Yes! The shareable event viewer at /countdown/view provides a clean, responsive interface optimized for desktop presentation, OBS overlays, and browser window capture."
       }
     ],
-    "nameMeaning": [
-      {
-        "q": "What does my name mean and how is its origin determined?",
-        "a": "A name meaning reflects its etymological root word in ancient languages such as Hebrew, Latin, Greek, Old Norse, Celtic, or Arabic. ToolNest matches your query against historical linguistic dictionaries."
-      },
-      {
-        "q": "Can I look up any unique or rare name with the name origin finder?",
-        "a": "Yes! In addition to our curated 200+ database of traditional and modern names, ToolNest features an AI-assisted analysis engine powered by Google Gemini to analyze any rare or international name."
-      },
-      {
-        "q": "Can I find names that mean specific virtues like light, love, or strength?",
-        "a": "Yes! Many classical and modern names embody specific virtues. For example, names meaning light include Lucia, Elena, and Aaron; names meaning strength include Ethan and Audrey; and names meaning love include Amara and David."
-      },
-      {
-        "q": "How accurate are the AI name meanings and personality insights?",
-        "a": "Curated name dossiers are verified against historical lexical records and government birth statistics. AI-generated interpretations draw from global cultural motifs and phonetic rhythm analysis."
-      },
-      {
-        "q": "How does the search determine static vs. AI results?",
-        "a": "When you submit a name, ToolNest instantly checks if it exists in our curated directory. If matched, you are routed directly to the full static dossier. Otherwise, our AI engine generates instant insights on the page."
-      },
-      {
-        "q": "Is my name search private and completely free?",
-        "a": "Yes, 100% free with zero tracking cookies and zero user account requirements. Searches execute on-demand, and your recent search history is preserved solely in your local browser storage."
-      },
-      {
-        "q": "What linguistic traditions are included in the name database?",
-        "a": "Our curated database encompasses Latin, Germanic, Greek, Hebrew, Celtic, Old Norse, Slavic, Sanskrit, Japanese, and Yoruba traditions, showcasing global naming customs."
-      },
-      {
-        "q": "Can I view most popular names filtered by letter or gender?",
-        "a": "Yes! Visit our full Names Directory at /names/ to explore all 200+ profiles filtered alphabetically from A to Z, by gender (boy, girl, unisex), cultural origin, and popularity tiers."
-      }
-    ],
-    "nameDetail": {
-      "q1": "What does the name {name} mean?",
-      "a1": "The name {name} is of {origin} origin and traditionally signifies \"{meaning}\".",
-      "q2": "How popular is the name {name} today?",
-      "a2": "{name} currently holds a {popularity} popularity rating among contemporary baby names worldwide.",
-      "q3": "Want deeper insights? Unlock AI analysis of any name",
-      "a3": "You can click the \"Unlock AI Insights\" button on this page to generate rich, personalized interpretations—including personality traits, psychological archetypes, style classification, and unique historical fun facts powered by Google Gemini."
-    },
     "compressor": [
       {
         "q": "Are my images uploaded to any server or cloud storage?",
@@ -1114,38 +869,6 @@
         "a": "AVIF (AV1 Image File Format) is an open, royalty-free next-generation image format offering superior compression compared to WebP and JPEG. It is supported by modern browsers and ideal for high-efficiency web delivery."
       }
     ]
-  },
-  "nameMeaning": {
-    "useCases": {
-      "title": "Popular Use Cases for Name Meaning & Etymology Searches",
-      "u1Title": "Baby Name Decision-Making",
-      "u1Desc": "Discover baby name ideas with deep ancestral roots, lyrical syllables, and gender flexibility. Browse our curated baby names directory A–Z to compare meanings across cultures.",
-      "u2Title": "Writers & Screenwriters",
-      "u2Desc": "Name fictional protagonists, antagonists, and fantasy world leaders with symbolic etymology matching their literary arcs and character personalities.",
-      "u3Title": "Genealogy & Ancestral Lore",
-      "u3Desc": "Trace family migration patterns and historical vocations through ancestral linguistic roots. Pair with birth dates on our birthday personality calculator."
-    },
-    "trivia": {
-      "title": "Did You Know? Phonetics & Onomastics Trivia",
-      "t1Title": "The Bouba/Kiki Effect",
-      "t1Desc": "Linguistic experiments prove humans universally associate soft, rounded vowel sounds (like Amara or Noah) with gentleness, while sharp plosive consonants evoke dynamic vigor.",
-      "t2Title": "The 100-Year Name Cycle",
-      "t2Desc": "Baby name fashions follow a predictable century-long cycle: names that feel dated to parents often feel classic and chic to grandchildren honoring their great-grandparents.",
-      "t3Title": "500 Ancestral Roots",
-      "t3Desc": "Over 80% of traditional European and Mediterranean given names originate from fewer than 500 ancient Proto-Indo-European root words signifying light, peace, nature, and courage."
-    },
-    "ui": {
-      "aiPoweredFinder": "AI & Curated Name Dossier",
-      "enterNameLabel": "Enter Any Name",
-      "searchBtn": "Find Meaning",
-      "curatedBadge": "Curated Dossier Available",
-      "aiBadge": "AI Linguistic Analysis",
-      "viewFullDossier": "View Full Dossier →",
-      "keyTakeawaysTitle": "Quick Answer & Key Takeaways",
-      "kt1": "Global Onomastic Database: Cross-references thousands of cultural roots and classical language dictionaries.",
-      "kt2": "Instant AI Insights: Unlocks psychological archetypes, phonetic rhythm, and origin lore for any unique name.",
-      "kt3": "100% Client-Side Privacy: Queries and search history remain confidential in local storage."
-    }
   },
   "data": {
     "birthstones": {

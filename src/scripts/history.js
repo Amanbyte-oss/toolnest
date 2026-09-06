@@ -9,21 +9,21 @@ export const LAST_STATE_PREFIX = 'toolnest_last_';
 export const MAX_ENTRIES = 10;
 
 export const TOOL_ICONS = {
+  compressor: '🗜️',
+  converter: '🔄',
   age: '🎂',
   facts: '🎉',
-  wheel: '🎡',
   picker: '🎲',
   countdown: '⏳',
-  names: '🏷️',
 };
 
 export const TOOL_METADATA = {
+  compressor: { name: 'Image Compressor', href: '/image-compressor', badge: 'Compress' },
+  converter: { name: 'Image Converter', href: '/image-converter', badge: 'Convert' },
   age: { name: 'Age Calculator', href: '/age-calculator', badge: 'Age' },
   facts: { name: 'Birthday Facts', href: '/birthday-facts', badge: 'Facts' },
-  wheel: { name: 'Decision Wheel', href: '/decision-wheel', badge: 'Wheel' },
   picker: { name: 'Random Picker', href: '/random-picker', badge: 'Picker' },
   countdown: { name: 'Countdown', href: '/countdown', badge: 'Timer' },
-  names: { name: 'Baby Names', href: '/names', badge: 'Names' },
 };
 
 /**

@@ -119,7 +119,7 @@ export function getTranslations(lang?: string | null): any {
 }
 
 /**
- * Determine language from URL or pathname (e.g. /pt/decision-wheel -> 'pt', /en/decision-wheel -> 'en', /decision-wheel -> 'en')
+ * Determine language from URL or pathname (e.g. /pt/image-compressor -> 'pt', /en/image-compressor -> 'en', /image-compressor -> 'en')
  */
 export function getLangFromUrl(url: URL | string): Lang {
   const pathname = typeof url === 'string' ? url : url.pathname;
@@ -138,7 +138,7 @@ export const getLangFromPath = getLangFromUrl;
 
 /**
  * Map any URL/path to the equivalent path in targetLang.
- * NOTE: English URLs always return the bare URL (e.g. /decision-wheel) so English users never see /en/ in links.
+ * NOTE: English URLs always return the bare URL (e.g. /image-compressor) so English users never see /en/ in links.
  */
 export function getLocalizedPath(pathname: string, targetLang: Lang): string {
   // Strip any existing language prefix: /en, /pt, /id, /ar

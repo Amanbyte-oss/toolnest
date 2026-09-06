@@ -9,12 +9,12 @@ export interface Props {
 const { lang = 'en' } = Astro.props;
 const common = getNamespace(lang, 'common');
 const about = getNamespace(lang, 'about');
+const compressor = getNamespace(lang, 'compressor');
+const converter = getNamespace(lang, 'converter');
 const age = getNamespace(lang, 'age');
 const birthday = getNamespace(lang, 'birthday');
-const wheel = getNamespace(lang, 'wheel');
 const picker = getNamespace(lang, 'picker');
 const countdown = getNamespace(lang, 'countdown');
-const names = getNamespace(lang, 'names');
 
 const t = {
   about,
@@ -24,6 +24,16 @@ const t = {
 };
 
 const tools = [
+  {
+    name: `🗜️ ${common.nav?.imageCompressor || 'Image Compressor'}`,
+    description: compressor.subtitle,
+    href: getLocalizedPath('/image-compressor', lang),
+  },
+  {
+    name: `🔄 ${common.nav?.imageConverter || 'Image Converter'}`,
+    description: converter.subtitle,
+    href: getLocalizedPath('/image-converter', lang),
+  },
   {
     name: `🎂 ${common.nav?.ageCalculator || 'Age Calculator'}`,
     description: age.subtitle,
@@ -35,11 +45,6 @@ const tools = [
     href: getLocalizedPath('/birthday-facts', lang),
   },
   {
-    name: `🎡 ${common.nav?.decisionWheel || 'Decision Wheel'}`,
-    description: wheel.subtitle,
-    href: getLocalizedPath('/decision-wheel', lang),
-  },
-  {
     name: `🎲 ${common.nav?.randomPicker || 'Random Picker'}`,
     description: picker.subtitle,
     href: getLocalizedPath('/random-picker', lang),
@@ -48,11 +53,6 @@ const tools = [
     name: `⏳ ${common.nav?.countdown || 'Countdown Timer'}`,
     description: countdown.subtitle,
     href: getLocalizedPath('/countdown', lang),
-  },
-  {
-    name: `🏷️ ${common.nav?.nameMeaning || 'Name Meaning'}`,
-    description: names.subtitle,
-    href: getLocalizedPath('/name-meaning', lang),
   },
 ];
 
@@ -116,16 +116,6 @@ const aboutSchema = {
       </h2>
       <div class="space-y-3 text-sm sm:text-base text-secondary-light dark:text-secondary-dark leading-relaxed">
         <p>{t.about.methodologyP1}</p>
-      </div>
-    </section>
-
-    <!-- Editorial Standards -->
-    <section class="card p-6 sm:p-8 space-y-4" aria-labelledby="editorial-heading">
-      <h2 id="editorial-heading" class="text-xl font-bold text-primary-light dark:text-primary-dark">
-        {t.about.editorialTitle}
-      </h2>
-      <div class="space-y-3 text-sm sm:text-base text-secondary-light dark:text-secondary-dark leading-relaxed">
-        <p>{t.about.editorialP1}</p>
       </div>
     </section>
 

@@ -7,7 +7,6 @@ export interface Props {
 
 const { lang = 'en' } = Astro.props;
 const common = getNamespace(lang, 'common');
-const namesNs = getNamespace(lang, 'names');
 const currentYear = new Date().getFullYear();
 
 const toolLinks = [
@@ -15,11 +14,8 @@ const toolLinks = [
   { name: common.nav.imageConverter, href: getLocalizedPath('/image-converter', lang) },
   { name: common.nav.ageCalculator, href: getLocalizedPath('/age-calculator', lang) },
   { name: common.nav.birthdayFacts, href: getLocalizedPath('/birthday-facts', lang) },
-  { name: common.nav.decisionWheel, href: getLocalizedPath('/decision-wheel', lang) },
   { name: common.nav.randomPicker, href: getLocalizedPath('/random-picker', lang) },
   { name: common.nav.countdown, href: getLocalizedPath('/countdown', lang) },
-  { name: common.nav.nameMeaning, href: getLocalizedPath('/name-meaning', lang) },
-  { name: namesNs.title, href: getLocalizedPath('/names', lang) },
 ];
 
 const siteLinks = [

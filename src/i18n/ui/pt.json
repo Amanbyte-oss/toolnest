@@ -2,7 +2,7 @@
   "common": {
     "siteName": "ToolNest",
     "tagline": "Ferramentas online gratuitas que funcionam de verdade — sem cadastro, sem anúncios bloqueando sua tela, nada sai do seu navegador.",
-    "description": "Uma seleção de microferramentas modernas, rápidas e com privacidade total. Roleta de decisões, sorteador de nomes, calculadora de idade, fatos de aniversário, contagem regressiva e significado de nomes.",
+    "description": "Uma seleção de microferramentas modernas, rápidas e com privacidade total. Compressor de imagens, conversor de formatos, sorteador de nomes, calculadora de idade, fatos de aniversário e contagem regressiva.",
     "badgeFree": "100% Grátis",
     "badgeNoSignup": "Sem Cadastro",
     "badgePrivacy": "Privacidade Total",
@@ -12,10 +12,8 @@
       "home": "Início",
       "ageCalculator": "Calculadora de Idade",
       "birthdayFacts": "Fatos de Aniversário",
-      "decisionWheel": "Roleta de Decisões",
       "randomPicker": "Sorteador",
       "countdown": "Contagem Regressiva",
-      "nameMeaning": "Significado dos Nomes",
       "about": "Sobre",
       "privacy": "Privacidade",
       "contact": "Contato",
@@ -102,11 +100,7 @@
   "meta": {
     "home": {
       "title": "ToolNest — Ferramentas Online Gratuitas Que Funcionam de Verdade",
-      "description": "Ferramentas rápidas, privadas e feitas para celular. Roleta de decisões, sorteador, calculadora de idade, fatos de aniversário e contagem regressiva."
-    },
-    "wheel": {
-      "title": "Roleta de Decisões — Roleta Personalizada com IA Grátis",
-      "description": "Gire a roleta interativa para tomar decisões rápidas e justas. Escolha onde comer, sorteie jogos ou crie opções instantâneas com IA."
+      "description": "Ferramentas rápidas, privadas e feitas para celular. Compressor de imagens, conversor de formatos, sorteador, calculadora de idade, fatos de aniversário e contagem regressiva."
     },
     "picker": {
       "title": "Sorteador de Nomes e Números — Sorteios e Times Grátis",
@@ -127,14 +121,6 @@
     "countdownView": {
       "title": "Visualizador de Contagem Regressiva | ToolNest",
       "description": "Acompanhe sua contagem regressiva ao vivo em tempo real. Compartilhável, gratuito e otimizado para celular."
-    },
-    "names": {
-      "title": "Significado dos Nomes e Origens — Mais de 200 Nomes com IA",
-      "description": "Explore significados, pronúncias fonéticas, origens culturais e receba insights personalizados com inteligência artificial."
-    },
-    "nameMeaning": {
-      "title": "Pesquisa e Análise de Significado de Nomes | ToolNest",
-      "description": "Consulte origens etimológicas completas, traços de personalidade, popularidade histórica e variações fonéticas de nomes."
     },
     "about": {
       "title": "Sobre o ToolNest — Utilitários Web Rápidos e Privados",
@@ -159,99 +145,6 @@
     "imageConverter": {
       "title": "Conversor de Imagens Grátis — JPG, PNG, WebP, AVIF Online (Sem Upload)",
       "description": "Converta imagens JPG, PNG, WebP, AVIF, GIF e BMP 100% no seu dispositivo. Rápido, privado, PNG sem perdas e conversão WebP/JPG sem envio para servidores."
-    }
-  },
-  "wheel": {
-    "title": "Roleta de Decisões",
-    "subtitle": "Indeciso? Coloque suas opções em uma roleta interativa e deixe a sorte decidir.",
-    "spinButton": "GIRAR A ROLETA",
-    "spinning": "Girando...",
-    "optionsHeading": "Opções da Roleta",
-    "addPlaceholder": "Adicionar opção...",
-    "quickIdeasHeading": "Ideias Rápidas",
-    "ideas": {
-      "whatToEat": "Onde comer",
-      "workout": "Treino de hoje",
-      "movie": "Noite de filme",
-      "travel": "Destino de viagem"
-    },
-    "aiGeneratorTitle": "Gerador de Opções com IA",
-    "aiGeneratorSubtitle": "Crie opções personalizadas em segundos",
-    "aiPromptLabel": "Descreva o que você precisa decidir",
-    "aiPromptPlaceholder": "Descreva o que você precisa decidir (ex: o que jantar hoje, filmes para assistir, tarefas de casa)...",
-    "aiGenerateBtn": "Gerar com IA",
-    "aiCountLabel": "Quantidade:",
-    "aiGeneratingText": "Gerando… pode levar até 20 segundos na primeira tentativa",
-    "aiRetryingText": "Tentando de novo… a primeira requisição demorou um pouco mais",
-    "replaceConfirmTitle": "Substituir as opções atuais da roleta?",
-    "replaceConfirmDesc": "Sua roleta já possui opções personalizadas. Deseja substituí-las pelas novas opções geradas por IA?",
-    "replaceConfirmBtn": "Substituir Opções",
-    "replaceCancelBtn": "Manter Opções Atuais",
-    "winnerAnnounce": "Opção Sorteada:",
-    "presetEat": "O que Comer",
-    "presetWatch": "O que Assistir",
-    "presetYesNo": "Sim ou Não",
-    "toasts": {
-      "generatedCount": "Geradas {count} opções!",
-      "keptOptions": "Opções atuais mantidas.",
-      "loadedHistory": "Opções da roleta carregadas.",
-      "removedWinner": "Opção vencedora removida.",
-      "requiresTwo": "Adicione pelo menos 2 opções para girar.",
-      "alreadyExists": "Essa opção já está na roleta.",
-      "maxOptions": "Máximo de 12 opções atingido.",
-      "shuffled": "Opções embaralhadas.",
-      "cannotRemoveWinner": "Não é possível remover o vencedor: mínimo de 2 opções necessárias.",
-      "historyCleared": "Histórico de giros limpo."
-    },
-    "howTo": {
-      "title": "Como Usar a Roleta de Decisões em 3 Passos",
-      "subtitle": "Livre-se da indecisão com física suave em poucos segundos.",
-      "s1Title": "Digite as Opções ou Use IA",
-      "s1Desc": "Digite até 12 opções personalizadas, escolha predefinições rápidas ou deixe a IA do Gemini sugerir fatias para você.",
-      "s2Title": "Gire a Roleta",
-      "s2Desc": "Toque no botão central GIRAR, pressione a barra de espaço ou deslize o dedo na tela do celular para girar.",
-      "s3Title": "Comemore e Elimine",
-      "s3Desc": "Comemore a fatia sorteada com confetes, copie o link para compartilhar ou remova o vencedor para uma nova rodada."
-    },
-    "methodology": {
-      "m1Title": "Como Funciona a Desaceleração Física da Roleta?",
-      "m1Desc": "Diferente de sorteadores estáticos que apenas saltam para um valor pré-definido, o ToolNest simula o momento angular real. A roleta começa com uma velocidade angular aleatória e desacelera suavemente por meio de arrasto quadrático calculado a 60 FPS via requestAnimationFrame. A fatia vencedora é determinada pelo ângulo exato sob o ponteiro superior.",
-      "m2Title": "A Roleta Online é Matematicamente Justa?",
-      "m2Desc": "Cada fatia na roleta ocupa um segmento angular exatamente igual (360° / N). Como a força de giro, o tempo de desaceleração e o ângulo de parada são gerados sem pesos ou distorções, cada opção possui probabilidade matemática idêntica de vitória.",
-      "noteTitle": "Metodologia e Física de Desaceleração",
-      "noteDesc": "Os cálculos rodam 100% no seu navegador usando HTML5 Canvas nativo e ciclos do requestAnimationFrame sem nenhum viés de servidor."
-    },
-    "useCases": {
-      "title": "Casos de Uso Populares para a Roleta de Decisões",
-      "u1Title": "Decidir o que Comer no Jantar",
-      "u1Desc": "Acabe com a indecisão na hora do jantar entre amigos e família girando uma roleta personalizada com seus pratos favoritos e restaurantes de entrega.",
-      "u2Title": "Roleta de Sala de Aula para Professores",
-      "u2Desc": "Chame alunos para responder perguntas, defina turnos de leitura e atribua tarefas de classe de maneira 100% justa e transparente.",
-      "u3Title": "Roleta de Prêmios e Sorteios",
-      "u3Desc": "Faça sorteios em lives da Twitch, comunidades do Discord, gincanas de festas e jogos com uma experiência visual envolvente."
-    },
-    "trivia": {
-      "title": "Você Sabia? Curiosidades sobre Decisões e Roletas",
-      "t1Title": "Paralisia por Análise",
-      "t1Desc": "Estudos da psicologia mostram que tomamos cerca de 35.000 decisões por dia. Terceirizar escolhas simples economiza foco e energia mental.",
-      "t2Title": "A Roda da Fortuna Romana",
-      "t2Desc": "A ideia de girar uma roda remonta à deusa romana Fortuna (Rota Fortunae), simbolizando as reviravoltas do destino e da vida.",
-      "t3Title": "O Efeito da Aleatoriedade Visual",
-      "t3Desc": "Acompanhar a roleta desacelerando ativa picos de dopamina e expectativa, tornando escolhas em grupo muito mais divertidas."
-    },
-    "ui": {
-      "physicsRandomizer": "Sorteador com Física e IA",
-      "wheelAria": "Roleta de decisão interativa",
-      "spinButton": "GIRAR",
-      "orSpace": "ou Espaço",
-      "optionsListHeading": "Opções da Roleta",
-      "winnerModalTitle": "Temos um Vencedor!",
-      "removeWinner": "Remover Vencedor",
-      "spinAgain": "Girar Novamente",
-      "keyTakeawaysTitle": "Resposta Rápida e Principais Destaques",
-      "kt1": "Justiça Criptográfica: Utiliza física realista de desaceleração sem paradas pré-determinadas.",
-      "kt2": "Gerador com IA: Gere opções sob medida com a IA Gemini ou cole sua própria lista de 2 a 12 itens.",
-      "kt3": "Compartilhamento por Link: Codifica as opções diretamente na URL para compartilhar sem precisar de cadastro."
     }
   },
   "picker": {
@@ -633,63 +526,6 @@
       "kt3": "Precisão ao Segundo: Transição instantânea com comemoração e confetes no momento zero."
     }
   },
-  "names": {
-    "title": "Significado dos Nomes e Origens",
-    "subtitle": "Explore a história, etimologia e significados profundos por trás de nomes de todo o mundo.",
-    "searchPlaceholder": "Buscar nomes ou significados...",
-    "allGenders": "Todos os Gêneros",
-    "boyNames": "Nomes Masculinos",
-    "girlNames": "Nomes Femininos",
-    "unisexNames": "Unissex",
-    "allOrigins": "Todas as Origens",
-    "meaningLabel": "Significado",
-    "originLabel": "Origem",
-    "pronounceLabel": "Pronúncia",
-    "aiInsightsHeading": "Insights de Nomes com IA",
-    "siblingHeading": "Nomes de Irmãos Recomendados",
-    "popularLabel": "Popular",
-    "trendingLabel": "Em Alta",
-    "toasts": {
-      "copiedName": "Nome copiado!",
-      "copiedMeaning": "Detalhes do nome copiados!"
-    },
-    "methodology": {
-      "title": "Metodologia do Diretório e Pesquisa Onomástica",
-      "desc": "Cada nome é verificado em léxicos históricos e registros demográficos oficiais. As notas de popularidade refletem percentis estatísticos reais de nascimentos."
-    },
-    "emptyState": {
-      "title": "Nenhum nome corresponde à sua busca",
-      "desc": "Tente usar outros termos, verificar a ortografia ou limpar o filtro de gênero."
-    },
-    "counter": {
-      "showingOf": "Mostrando {count} de {total} nomes",
-      "clearFilters": "Limpar filtros",
-      "recentlyViewed": "Nomes Vistos Recentemente"
-    },
-    "ui": {
-      "directoryAtoZ": "Índice Alfabético (A–Z)",
-      "curatedProfiles": "Nomes Selecionados",
-      "aiPrompt": "Procurando um nome raro ou personalizado que não está listado abaixo?",
-      "aiPromptBtn": "Buscar Significado com IA →",
-      "searchPlaceholder": "Pesquisar por nome, origem (ex: Latim, Grego) ou significado...",
-      "allGenders": "Todos",
-      "female": "Feminino",
-      "male": "Masculino",
-      "unisex": "Unissex",
-      "showingCount": "Exibindo {shown} de {total} nomes",
-      "clearFilters": "Limpar filtros",
-      "meaningLabel": "Significado",
-      "noNamesFound": "Nenhum nome encontrado para sua busca",
-      "noNamesFoundDesc": "Tente ajustar suas palavras-chave, verificar a ortografia ou limpar os filtros de gênero.",
-      "recentlyViewed": "Nomes Vistos Recentemente",
-      "methodologyTitle": "Metodologia do Diretório e Pesquisa Onomástica",
-      "methodologyDesc": "Cada nome é verificado em fontes históricas e registros demográficos oficiais. As classificações de popularidade refletem dados estatísticos reais, garantindo precisão etimológica e cultural.",
-      "keyTakeawaysTitle": "Resposta Rápida e Principais Destaques",
-      "kt1": "Mais de 200 Perfis Selecionados: Dossiês completos detalhando origens históricas, pronúncias e popularidade.",
-      "kt2": "Navegação Rápida A–Z: Navegue facilmente pelas letras ou filtre por gênero, origem cultural e popularidade.",
-      "kt3": "Busca 100% Privada: Pesquise instantaneamente no navegador sem rastreamento ou necessidade de login."
-    }
-  },
   "home": {
     "heroTitle": "Ferramentas do Dia a Dia Que Funcionam",
     "heroSubtitle": "Microferramentas gratuitas e ultrarrápidas feitas para celular e computador. Sem contas, sem assinaturas e com privacidade absoluta.",
@@ -712,9 +548,7 @@
     "philosophyP1": "Muitas ferramentas simples hoje estão sobrecarregadas com rastreadores, anúncios invasivos, respostas lentas de servidores e cadastros forçados por e-mail. O ToolNest foi criado para provar que utilitários digitais devem ser instantâneos, confiáveis e totalmente privados.",
     "philosophyP2": "Cada cálculo, giro de roleta, sorteio e contagem regressiva roda exclusivamente dentro do seu navegador usando JavaScript moderno. Não mantemos bancos de dados de usuários nem coletamos seus dados em servidores remotos.",
     "methodologyTitle": "Metodologia e Padrões de Cálculo",
-    "methodologyP1": "Nossos cálculos utilizam algoritmos padronizados e auditados: calendário gregoriano padronizado em UTC para idade exata, Web Cryptography API com Fisher-Yates para sorteios 100% justos e curvas físicas reais para a roleta.",
-    "editorialTitle": "Padrões Editoriais e Pesquisa de Nomes",
-    "editorialP1": "Nosso banco de dados de significado de nomes abrange nomes curados de diversas tradições linguísticas. Os significados e raízes etimológicas são conferidos em registros históricos primários e dicionários clássicos.",
+    "methodologyP1": "Nossos cálculos utilizam algoritmos padronizados e auditados: calendário gregoriano padronizado em UTC para idade exata, Web Cryptography API com Fisher-Yates para sorteios 100% justos e processamento em Canvas HTML5 no dispositivo para compressão e conversão de imagens.",
     "toolsTitle": "Utilitários Disponíveis",
     "launchTool": "Abrir ferramenta →",
     "techTitle": "Arquitetura Técnica e Entrega Global",
@@ -796,10 +630,8 @@
     "party": "Festa",
     "age": "Idade",
     "facts": "Fatos",
-    "wheel": "Roleta",
     "picker": "Sorteio",
     "countdown": "Contagem",
-    "names": "Nomes",
     "astrology": "Astrologia",
     "numerology": "Numerologia"
   },
@@ -812,7 +644,6 @@
     "countdownTrackText": "Vem acompanhar essa contagem regressiva comigo: \"{title}\"",
     "birthdayShareTitle": "Meus Fatos de Aniversário no ToolNest",
     "ageShareTitle": "Minha Idade Exata no ToolNest",
-    "wheelShareTitle": "Roleta de Decisões no ToolNest",
     "pickerShareTitle": "Ganhadores Sorteados no ToolNest",
     "watermark": "feito com ToolNest • toolnest.pages.dev",
     "stickerShared": "Cartão de contagem compartilhado!",
@@ -850,40 +681,6 @@
     "description": "Tudo o que você precisa saber sobre o funcionamento desta ferramenta.",
     "answersCount": "8 Respostas",
     "quickNav": "Navegação Rápida — Perguntas Frequentes",
-    "wheel": [
-      {
-        "q": "A roleta de decisões é realmente aleatória e matematicamente justa?",
-        "a": "Sim. A roleta utiliza a API de criptografia do navegador para gerar a velocidade inicial do giro e a duração. Cada fatia possui ângulo geométrico idêntico e probabilidade matemática igual de ser sorteada."
-      },
-      {
-        "q": "A inteligência artificial pode sugerir opções personalizadas para a roleta?",
-        "a": "Sim! O ToolNest conta com um gerador inteligente com Google Gemini. Basta descrever seu dilema (como \"onde jantar\" ou \"brincadeiras para festa\") e a IA cria opções equilibradas em instantes."
-      },
-      {
-        "q": "Posso usar esta roleta como alternativa ao Wheel of Names ou para sorteios?",
-        "a": "Com certeza. O ToolNest é uma alternativa leve, moderna e sem anúncios intrusivos ao Wheel of Names, perfeita para salas de aula, sorteios online, dinâmicas de equipe e noites de jogos."
-      },
-      {
-        "q": "Como criar uma roleta de Sim ou Não ou escolher o que comer?",
-        "a": "Basta inserir duas opções simples: \"Sim\" e \"Não\". Para decidir o jantar, você pode carregar nosso modelo pronto de restaurantes ou digitar seus pratos favoritos."
-      },
-      {
-        "q": "Como funciona a física de desaceleração da roleta?",
-        "a": "A roleta roda um motor gráfico próprio em Canvas a 60 FPS com curvas de amortecimento Bezier, simulando a inércia e o atrito real de uma roleta mecânica de parque de diversões."
-      },
-      {
-        "q": "Posso compartilhar minha roleta personalizada através de um link?",
-        "a": "Sim! Suas opções são salvas diretamente nos parâmetros do link em tempo real. Ao clicar em \"Compartilhar Roleta\", você gera um link para seus amigos abrirem exatamente a mesma configuração."
-      },
-      {
-        "q": "Quantas opções posso colocar na roleta?",
-        "a": "Você pode adicionar de 2 a 12 opções. O limite de 12 itens garante máxima legibilidade do texto, renderização nítida e contraste de cores perfeito em telas de celulares."
-      },
-      {
-        "q": "Posso eliminar a opção vencedora após cada giro?",
-        "a": "Sim. Quando o aviso de vitória surgir na tela, basta clicar em \"Remover Vencedor\". A fatia sorteada é retirada e a roleta recalcula os ângulos restantes na hora."
-      }
-    ],
     "picker": [
       {
         "q": "Este sorteador de nomes é realmente justo e livre de viés?",
@@ -1020,48 +817,6 @@
         "a": "Sim! A página de visualização em /countdown/view oferece uma interface limpa e elegante, perfeita para janelas de transmissão no OBS, telões e apresentações."
       }
     ],
-    "nameMeaning": [
-      {
-        "q": "O que significa meu nome e como a origem dele é determinada?",
-        "a": "O significado de um nome reflete sua raiz etimológica em idiomas ancestrais como hebraico, latim, grego, nórdico antigo, celta ou árabe, comparado a dicionários onomásticos históricos."
-      },
-      {
-        "q": "Posso consultar nomes raros ou internacionais no localizador de origens?",
-        "a": "Sim! Além do nosso catálogo com mais de 200 nomes consagrados, o ToolNest conta com inteligência artificial via Google Gemini para analisar qualquer nome raro ou personalizado."
-      },
-      {
-        "q": "É possível encontrar nomes que significam virtudes como luz, amor ou força?",
-        "a": "Sim! Muitos nomes clássicos trazem virtudes: nomes que significam luz incluem Lúcia, Helena e Aaron; nomes associados a força incluem Gabriel e Valéria; e nomes que remetem a amor incluem Amara e Davi."
-      },
-      {
-        "q": "Qual o nível de precisão dos significados e traços de personalidade da IA?",
-        "a": "Os nomes do catálogo fixo são verificados com base em registros históricos e etimológicos. As interpretações da IA combinam simbolismos culturais globais e cadência fonética."
-      },
-      {
-        "q": "Como a busca decide entre exibir o dossiê fixo ou gerar com IA?",
-        "a": "Ao digitar um nome, o sistema verifica se ele já existe em nosso diretório curado. Em caso positivo, direciona para o dossiê completo. Caso contrário, a IA gera a análise na própria página."
-      },
-      {
-        "q": "Minha pesquisa de nomes é privada e 100% gratuita?",
-        "a": "Sim, totalmente gratuita, sem cookies invasivos e sem necessidade de criar conta. As buscas acontecem sob demanda e seu histórico recente fica apenas no seu navegador."
-      },
-      {
-        "q": "Quais tradições linguísticas estão contempladas no acervo de nomes?",
-        "a": "Nosso banco de dados reúne origens do latim, germânico, grego, hebraico, celta, nórdico, eslavo, sânscrito, iorubá e japonês, refletindo a rica diversidade cultural dos nomes."
-      },
-      {
-        "q": "Posso ver os nomes mais populares filtrados por letra ou gênero?",
-        "a": "Sim! Acesse nosso Diretório de Nomes em /names/ para navegar por mais de 200 perfis ordenados de A a Z, filtrando por gênero (menino, menina, unissex) e popularidade."
-      }
-    ],
-    "nameDetail": {
-      "q1": "Qual é o significado do nome {name}?",
-      "a1": "O nome {name} possui origem no idioma {origin} e tradicionalmente simboliza \"{meaning}\".",
-      "q2": "Qual é a popularidade do nome {name} nos dias de hoje?",
-      "a2": "O nome {name} apresenta atualmente um nível de popularidade {popularity} entre os nomes de bebês no Brasil e no mundo.",
-      "q3": "Quer saber mais? Descubra análises de IA para qualquer nome",
-      "a3": "Você pode clicar no botão \"Liberar Análise com IA\" nesta página para gerar interpretações personalizadas — incluindo traços de personalidade, estilo e curiosidades históricas com Google Gemini."
-    },
     "compressor": [
       {
         "q": "Minhas imagens são enviadas para algum servidor ou nuvem?",
@@ -1114,38 +869,6 @@
         "a": "O AVIF é um formato moderno de altíssima eficiência baseado no codec AV1. Ele oferece arquivos muito leves mantendo detalhes finos em navegadores compatíveis."
       }
     ]
-  },
-  "nameMeaning": {
-    "useCases": {
-      "title": "Casos de Uso Populares para Busca de Significados de Nomes",
-      "u1Title": "Escolha do Nome do Bebê",
-      "u1Desc": "Encontre ideias de nomes de bebê com ricas raízes culturais, sonoridade agradável e equilíbrio. Compare significados em diferentes tradições.",
-      "u2Title": "Escritores e Roteiristas",
-      "u2Desc": "Batize protagonistas, vilões e líderes de mundos fictícios com etimologias simbólicas alinhadas à personalidade de cada personagem.",
-      "u3Title": "Genealogia e Tradição Familiar",
-      "u3Desc": "Rastreie origens familiares, migrações e antigas profissões através das raízes linguísticas herdadas dos seus antepassados."
-    },
-    "trivia": {
-      "title": "Você Sabia? Curiosidades sobre Fonética e Onomástica",
-      "t1Title": "O Efeito Bouba/Kiki",
-      "t1Desc": "Experimentos linguísticos provam que associamos sons vocálicos suaves (como Amara ou Noah) à ternura, enquanto consoantes oclusivas transmitem energia marcante.",
-      "t2Title": "O Ciclo dos 100 Anos nos Nomes",
-      "t2Desc": "A moda dos nomes de bebês segue um ciclo previsível de um século: nomes que pareciam antigos aos pais costumam soar clássicos e charmosos aos netos.",
-      "t3Title": "500 Raízes Ancestrais",
-      "t3Desc": "Mais de 80% dos nomes tradicionais europeus e mediterrâneos derivam de menos de 500 raízes ancestrais que significavam luz, paz, natureza e bravura."
-    },
-    "ui": {
-      "aiPoweredFinder": "Dossiê com IA e Nomes Selecionados",
-      "enterNameLabel": "Digite Qualquer Nome",
-      "searchBtn": "Descobrir Significado",
-      "curatedBadge": "Dossiê Verificado Disponível",
-      "aiBadge": "Análise Linguística por IA",
-      "viewFullDossier": "Ver Dossiê Completo →",
-      "keyTakeawaysTitle": "Resposta Rápida e Principais Destaques",
-      "kt1": "Banco Global de Nomes: Cruza milhares de raízes culturais e dicionários de línguas clássicas.",
-      "kt2": "Percepções Instantâneas por IA: Revela arquétipos psicológicos, ritmo fonético e folclore de qualquer nome.",
-      "kt3": "Privacidade 100% no Dispositivo: Buscas e histórico permanecem confidenciais no armazenamento local."
-    }
   },
   "data": {
     "birthstones": {

@@ -21,7 +21,7 @@ export default defineConfig({
       applyBaseStyles: false,
     }),
     sitemap({
-      filter: (page) => !page.includes('/countdown/view') && !page.endsWith('/name') && !page.includes('/404'),
+      filter: (page) => !page.includes('/countdown/view') && !page.includes('/404'),
       serialize(item) {
         item.lastmod = new Date();
         return item;

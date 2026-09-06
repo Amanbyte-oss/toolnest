@@ -2,7 +2,7 @@
   "common": {
     "siteName": "ToolNest",
     "tagline": "Alat mikro online gratis yang andal — tanpa daftar akun, tanpa iklan mengganggu, data tetap aman di peramban Anda.",
-    "description": "Koleksi pilihan alat mikro berbasis peramban yang modern, cepat, dan mengutamakan privasi. Roda keputusan, pengacak nama, kalkulator umur, fakta tanggal lahir, hitung mundur, dan arti nama.",
+    "description": "Koleksi pilihan alat mikro berbasis peramban yang modern, cepat, dan mengutamakan privasi. Kompresor gambar, konverter format, pengacak nama, kalkulator umur, fakta tanggal lahir, dan hitung mundur acara.",
     "badgeFree": "100% Gratis",
     "badgeNoSignup": "Tanpa Daftar",
     "badgePrivacy": "Privasi Terjaga",
@@ -12,10 +12,8 @@
       "home": "Beranda",
       "ageCalculator": "Kalkulator Umur",
       "birthdayFacts": "Fakta Tanggal Lahir",
-      "decisionWheel": "Roda Keputusan",
       "randomPicker": "Pengacak Acak",
       "countdown": "Hitung Mundur",
-      "nameMeaning": "Arti Nama",
       "about": "Tentang",
       "privacy": "Privasi",
       "contact": "Kontak",
@@ -102,11 +100,7 @@
   "meta": {
     "home": {
       "title": "ToolNest — Alat Mikro Online Gratis yang Cepat & Andal",
-      "description": "Alat mikro cepat, aman, dan ramah ponsel. Roda keputusan, pengacak nama, kalkulator umur, fakta tanggal lahir, dan hitung mundur acara."
-    },
-    "wheel": {
-      "title": "Roda Keputusan — Putar Roda Pilihan dengan Bantuan AI",
-      "description": "Putar roda interaktif untuk mengambil keputusan secara cepat dan adil. Pilih menu makan, undian acak, atau buat opsi instan dengan AI."
+      "description": "Alat mikro cepat, aman, dan ramah ponsel. Kompresor gambar, konverter format, pengacak nama, kalkulator umur, fakta tanggal lahir, dan hitung mundur acara."
     },
     "picker": {
       "title": "Pengacak Nama & Nomor — Undian dan Pembagi Tim Acak",
@@ -127,14 +121,6 @@
     "countdownView": {
       "title": "Tampilan Hitung Mundur Langsung | ToolNest",
       "description": "Pantau hitung mundur acara Anda secara langsung dalam waktu nyata. Mudah dibagikan, gratis, dan optimal untuk layar ponsel."
-    },
-    "names": {
-      "title": "Arti & Asal Nama — Koleksi Lebih dari 200 Nama dengan AI",
-      "description": "Cari arti nama, pelafalan fonetis, latar belakang budaya, serta dapatkan rekomendasi nama saudara dengan bantuan kecerdasan buatan."
-    },
-    "nameMeaning": {
-      "title": "Pencarian & Analisis Arti Nama | ToolNest",
-      "description": "Telusuri asal-usul etimologi lengkap, karakter kepribadian, popularitas sejarah, dan variasi fonetik untuk setiap nama pilihan Anda."
     },
     "about": {
       "title": "Tentang ToolNest — Utilitas Web Cepat & Menjaga Privasi",
@@ -159,99 +145,6 @@
     "imageConverter": {
       "title": "Konversi Gambar Online Gratis — Ubah Format JPG, PNG, WebP, AVIF",
       "description": "Ubah format foto JPG, PNG, WebP, AVIF, GIF, dan BMP 100% di perangkat Anda. Cepat, privat, tanpa upload ke server."
-    }
-  },
-  "wheel": {
-    "title": "Roda Keputusan",
-    "subtitle": "Bingung menentukan pilihan? Masukkan opsi Anda ke roda interaktif dan putar sekarang.",
-    "spinButton": "PUTAR RODA",
-    "spinning": "Memutar...",
-    "optionsHeading": "Pilihan Roda",
-    "addPlaceholder": "Tambah pilihan...",
-    "quickIdeasHeading": "Ide Cepat",
-    "ideas": {
-      "whatToEat": "Makan apa hari ini",
-      "workout": "Olahraga hari ini",
-      "movie": "Nonton film apa",
-      "travel": "Destinasi liburan"
-    },
-    "aiGeneratorTitle": "Pembuat Pilihan Otomatis dengan AI",
-    "aiGeneratorSubtitle": "Susun daftar pilihan khusus hanya dalam hitungan detik",
-    "aiPromptLabel": "Jelaskan keputusan yang ingin Anda buat",
-    "aiPromptPlaceholder": "Jelaskan keputusan yang ingin Anda buat (contoh: menu makan malam, genre film, tugas rumah)...",
-    "aiGenerateBtn": "Buat dengan AI",
-    "aiCountLabel": "Jumlah:",
-    "aiGeneratingText": "Sedang memproses… bisa butuh waktu hingga 20 detik pada percobaan pertama",
-    "aiRetryingText": "Mencoba kembali… permintaan pertama membutuhkan waktu sedikit lebih lama",
-    "replaceConfirmTitle": "Ganti pilihan roda saat ini?",
-    "replaceConfirmDesc": "Roda Anda sudah memiliki pilihan sendiri. Apakah Anda ingin menggantinya dengan pilihan baru yang dibuat oleh AI?",
-    "replaceConfirmBtn": "Ganti Pilihan",
-    "replaceCancelBtn": "Pertahankan Pilihan Saat Ini",
-    "winnerAnnounce": "Pilihan Terpilih:",
-    "presetEat": "Makan Apa",
-    "presetWatch": "Tonton Apa",
-    "presetYesNo": "Ya atau Tidak",
-    "toasts": {
-      "generatedCount": "Berhasil membuat {count} pilihan!",
-      "keptOptions": "Pilihan roda saat ini dipertahankan.",
-      "loadedHistory": "Pilihan roda berhasil dimuat.",
-      "removedWinner": "Pilihan pemenang telah dihapus.",
-      "requiresTwo": "Harap tambahkan setidaknya 2 opsi untuk memutar.",
-      "alreadyExists": "Opsi tersebut sudah ada di roda.",
-      "maxOptions": "Maksimal 12 opsi tercapai.",
-      "shuffled": "Opsi diacak.",
-      "cannotRemoveWinner": "Tidak dapat menghapus pemenang: minimal 2 opsi diperlukan.",
-      "historyCleared": "Riwayat putaran dibersihkan."
-    },
-    "howTo": {
-      "title": "Cara Menggunakan Roda Keputusan dalam 3 Langkah",
-      "subtitle": "Atasi keraguan dengan animasi fisika halus dalam hitungan detik.",
-      "s1Title": "Masukkan Pilihan atau Gunakan AI",
-      "s1Desc": "Ketik hingga 12 opsi kustom, pilih dari preset cepat, atau biarkan AI Gemini membuat pilihan untuk Anda.",
-      "s2Title": "Putar Rodanya",
-      "s2Desc": "Ketuk tombol PUTAR di tengah, tekan Spasi, atau usap layar ponsel untuk meluncurkan putaran fisika.",
-      "s3Title": "Rayakan & Eliminasi",
-      "s3Desc": "Rayakan opsi terpilih dengan konfeti, salin tautan berbagi, atau eliminasi pemenang untuk putaran berikutnya."
-    },
-    "methodology": {
-      "m1Title": "Bagaimana Cara Kerja Perlambatan Fisika pada Roda?",
-      "m1Desc": "Berbeda dari pengacak statis yang langsung melompat ke nilai terpilih, ToolNest menyimulasikan momentum sudut nyata. Roda berputar dengan kecepatan awal acak lalu melambat secara halus menggunakan rumus gesekan kuadratis pada 60 FPS via requestAnimationFrame. Pemenang dibaca dari posisi fisik tepat di bawah jarum penunjuk atas.",
-      "m2Title": "Apakah Roda Putar Online Ini Adil Secara Matematis?",
-      "m2Desc": "Setiap potongan pada roda memiliki sudut juring yang sama persis (360° / N). Karena gaya putar, durasi deselerasi, dan sudut henti dihitung tanpa bobot atau manipulasi, setiap pilihan memiliki peluang probabilitas matematis yang seimbang.",
-      "noteTitle": "Metodologi & Fisika Perlambatan",
-      "noteDesc": "Perhitungan berjalan sepenuhnya di sisi klien menggunakan HTML5 Canvas asli dan loop requestAnimationFrame tanpa bias server."
-    },
-    "useCases": {
-      "title": "Kegunaan Populer untuk Generator Roda Keputusan",
-      "u1Title": "Menentukan Menu Makan Malam",
-      "u1Desc": "Akhiri perdebatan memilih menu makan bersama teman atau keluarga dengan memutar roda berisi daftar tempat makan favorit Anda.",
-      "u2Title": "Roda Kelas untuk Guru & Pengajar",
-      "u2Desc": "Panggil murid secara adil untuk membaca, menjawab pertanyaan, atau membagi tugas piket kelas tanpa kesan pilih kasih.",
-      "u3Title": "Roda Berhadiah Online & Undian",
-      "u3Desc": "Gelar giveaway siaran langsung, undian komunitas Discord, atau permainan pesta dengan sensasi putaran yang seru."
-    },
-    "trivia": {
-      "title": "Tahukah Anda? Fakta Menarik Seputar Pengambilan Keputusan",
-      "t1Title": "Paralisis Analisis",
-      "t1Desc": "Penelitian psikologi membuktikan manusia membuat sekitar 35.000 keputusan tiap hari. Menyerahkan pilihan kecil pada roda menghemat energi mental.",
-      "t2Title": "Roda Keberuntungan Romawi Kuno",
-      "t2Desc": "Gagasan memutar roda telah ada sejak masa dewi Romawi Fortuna (Rota Fortunae), melambangkan takdir dan perputaran nasib manusia.",
-      "t3Title": "Efek Acak Visual",
-      "t3Desc": "Melihat roda yang perlahan melambat memicu dopamin antisipasi, membuat keputusan kelompok terasa jauh lebih seru."
-    },
-    "ui": {
-      "physicsRandomizer": "Pengacak Fisika & AI",
-      "wheelAria": "Roda interaktif pengambil keputusan",
-      "spinButton": "PUTAR",
-      "orSpace": "atau Spasi",
-      "optionsListHeading": "Pilihan Roda",
-      "winnerModalTitle": "Pemenang Terpilih!",
-      "removeWinner": "Hapus Pemenang",
-      "spinAgain": "Putar Lagi",
-      "keyTakeawaysTitle": "Jawaban Singkat & Poin Penting",
-      "kt1": "Keadilan Kriptografis: Menggunakan fisika perlambatan kanvas yang realistis tanpa hasil yang telah ditentukan sebelumnya.",
-      "kt2": "Solusi Dilema AI: Buat pilihan instan dengan Gemini AI atau masukkan daftar 2 hingga 12 pilihan Anda sendiri.",
-      "kt3": "Berbagi Tautan Bebas Server: Enkode parameter roda kustom langsung ke dalam tautan untuk dibagikan tanpa akun."
     }
   },
   "picker": {
@@ -633,63 +526,6 @@
       "kt3": "Presisi Hingga Detik: Detik waktu yang akurat dengan perayaan kembang api saat waktu habis."
     }
   },
-  "names": {
-    "title": "Arti & Asal Usul Nama",
-    "subtitle": "Jelajahi sejarah, akar bahasa, dan makna mendalam di balik nama-nama dari seluruh penjuru dunia.",
-    "searchPlaceholder": "Cari nama atau artinya...",
-    "allGenders": "Semua Gender",
-    "boyNames": "Laki-laki",
-    "girlNames": "Perempuan",
-    "unisexNames": "Uniseks",
-    "allOrigins": "Semua Asal Bahasa",
-    "meaningLabel": "Arti",
-    "originLabel": "Asal Usul",
-    "pronounceLabel": "Pelafalan",
-    "aiInsightsHeading": "Wawasan Nama Berbasis AI",
-    "siblingHeading": "Rekomendasi Nama Saudara",
-    "popularLabel": "Populer",
-    "trendingLabel": "Tren",
-    "toasts": {
-      "copiedName": "Nama disalin ke papan klip!",
-      "copiedMeaning": "Detail nama disalin ke papan klip!"
-    },
-    "methodology": {
-      "title": "Metodologi Direktori & Riset Onomastika",
-      "desc": "Setiap nama diverifikasi melalui kamus sejarah utama dan catatan demografi resmi. Skor kepopuleran dipetakan dari persentil kelahiran nyata."
-    },
-    "emptyState": {
-      "title": "Tidak ada nama yang cocok dengan pencarian Anda",
-      "desc": "Coba sesuaikan kata kunci, periksa ejaan, atau bersihkan filter gender yang aktif."
-    },
-    "counter": {
-      "showingOf": "Menampilkan {count} dari {total} nama",
-      "clearFilters": "Hapus filter",
-      "recentlyViewed": "Nama yang Baru Dilihat"
-    },
-    "ui": {
-      "directoryAtoZ": "Indeks Alfabetis (A–Z)",
-      "curatedProfiles": "Nama Terpilih",
-      "aiPrompt": "Mencari nama langka atau unik yang tidak tercantum di bawah ini?",
-      "aiPromptBtn": "Cari Arti Nama dengan AI →",
-      "searchPlaceholder": "Cari berdasarkan nama, asal usul (cth: Latin, Yunani), atau arti...",
-      "allGenders": "Semua",
-      "female": "Perempuan",
-      "male": "Laki-laki",
-      "unisex": "Uniseks",
-      "showingCount": "Menampilkan {shown} dari {total} nama",
-      "clearFilters": "Reset filter",
-      "meaningLabel": "Arti",
-      "noNamesFound": "Tidak ada nama yang cocok dengan pencarian Anda",
-      "noNamesFoundDesc": "Coba sesuaikan kata kunci, periksa ejaan, atau hapus filter jenis kelamin yang aktif.",
-      "recentlyViewed": "Nama yang Baru Saja Dilihat",
-      "methodologyTitle": "Metodologi Direktori & Riset Onomastik",
-      "methodologyDesc": "Setiap entri nama diverifikasi berdasarkan leksikon historis dan data kependudukan resmi. Skor popularitas dipetakan ke persentil kelahiran nyata untuk dokumentasi budaya yang andal.",
-      "keyTakeawaysTitle": "Jawaban Singkat & Poin Penting",
-      "kt1": "200+ Profil Terpilih: Berkas komprehensif yang merinci arti historis, akar fonetik, dan peringkat popularitas.",
-      "kt2": "Navigasi Cepat A–Z: Jelajahi huruf dengan mudah atau filter berdasarkan jenis kelamin, asal budaya, dan popularitas.",
-      "kt3": "Alat Pencarian Pribadi: Pencarian instan yang berjalan 100% di peramban Anda tanpa pelacakan atau login."
-    }
-  },
   "home": {
     "heroTitle": "Alat Sehari-hari yang Praktis dan Andal",
     "heroSubtitle": "Alat mikro gratis dan sangat cepat yang dirancang untuk kenyamanan di ponsel dan komputer Anda. Tanpa akun, tanpa biaya berlangganan, dan tanpa pelacak.",
@@ -712,9 +548,7 @@
     "philosophyP1": "Banyak alat sederhana saat ini dipenuhi pelacak data, iklan pop-up yang mengganggu, respons server yang lambat, dan kewajiban mendaftarkan email. ToolNest hadir untuk membuktikan bahwa alat digital sehari-hari seharusnya instan, dapat diandalkan, dan sepenuhnya privat.",
     "philosophyP2": "Setiap perhitungan, putaran roda, pengacakan, dan hitung mundur berjalan seutuhnya di dalam peramban Anda menggunakan JavaScript modern. Kami tidak mengoperasikan basis data akun dan tidak mengumpulkan informasi pribadi Anda.",
     "methodologyTitle": "Metodologi & Standar Perhitungan",
-    "methodologyP1": "Semua fungsi kami menggunakan algoritma yang teruji dan terstandar: kalender Gregorian berbasis UTC untuk perhitungan umur, Web Cryptography API dengan algoritma Fisher-Yates untuk undian adil, dan rumus deselerasi fisik nyata untuk roda keputusan.",
-    "editorialTitle": "Standar Kurasi & Riset Arti Nama",
-    "editorialP1": "Basis data arti nama kami mencakup nama pilihan dari berbagai tradisi bahasa dunia. Setiap arti dan akar etimologi dikonfirmasi silang dengan catatan onomastik sejarah dan kamus bahasa rujukan tepercaya.",
+    "methodologyP1": "Semua fungsi kami menggunakan algoritma yang teruji dan terstandar: kalender Gregorian berbasis UTC untuk perhitungan umur, Web Cryptography API dengan algoritma Fisher-Yates untuk undian adil, dan pemrosesan Canvas HTML5 di perangkat untuk kompresi serta konversi gambar privat.",
     "toolsTitle": "Alat yang Tersedia",
     "launchTool": "Buka alat →",
     "techTitle": "Arsitektur Teknis & Akses Global",
@@ -796,10 +630,8 @@
     "party": "Pesta",
     "age": "Usia",
     "facts": "Fakta",
-    "wheel": "Roda",
     "picker": "Pengundi",
     "countdown": "Hitung Mundur",
-    "names": "Nama",
     "astrology": "Astrologi",
     "numerology": "Numerologi"
   },
@@ -812,7 +644,6 @@
     "countdownTrackText": "Yuk pantau hitung mundur ini bareng aku: \"{title}\"",
     "birthdayShareTitle": "Fakta Hari Lahir Saya di ToolNest",
     "ageShareTitle": "Usia Tepat Saya di ToolNest",
-    "wheelShareTitle": "Roda Keputusan di ToolNest",
     "pickerShareTitle": "Pemenang Terpilih di ToolNest",
     "watermark": "dibuat dengan ToolNest • toolnest.pages.dev",
     "stickerShared": "Stiker hitung mundur berhasil dibagikan!",
@@ -850,40 +681,6 @@
     "description": "Semua yang perlu kamu ketahui tentang cara kerja alat ini.",
     "answersCount": "8 Jawaban",
     "quickNav": "Navigasi Cepat — Pertanyaan Umum",
-    "wheel": [
-      {
-        "q": "Apakah putaran roda ini benar-benar acak dan adil secara matematis?",
-        "a": "Ya. Roda menggunakan API kriptografi bawaan peramban untuk menentukan kecepatan awal dan durasi putaran. Setiap juring memiliki sudut dan peluang menang yang sama besar."
-      },
-      {
-        "q": "Bisakah AI membuatkan pilihan khusus untuk roda secara otomatis?",
-        "a": "Bisa! ToolNest dilengkapi generator AI berbasis Google Gemini. Cukup ceritakan dilemamu (seperti \"menu makan siang\" atau \"ide game seru\"), dan AI akan menyusun opsi pilihan dalam sekejap."
-      },
-      {
-        "q": "Bisakah ini digunakan sebagai alternatif Wheel of Names atau roda hadiah?",
-        "a": "Tentu saja. ToolNest adalah alternatif Wheel of Names yang bersih, modern, dan bebas iklan mengganggu untuk guru di kelas, undian giveaway online, atau rapat tim."
-      },
-      {
-        "q": "Bagaimana cara membuat roda Ya atau Tidak atau penentu makan malam?",
-        "a": "Cukup masukkan dua pilihan: \"Ya\" dan \"Tidak\". Untuk memilih makan malam, kamu bisa memilih template siap pakai kami atau mengetik restoran favoritmu."
-      },
-      {
-        "q": "Bagaimana cara kerja simulasi fisika perlambatan roda?",
-        "a": "Roda dijalankan dengan mesin grafis Canvas 60 FPS menggunakan kurva gesekan Bezier kuadratik, meniru putaran dan deselerasi alami roda karnaval mekanis."
-      },
-      {
-        "q": "Bisakah saya membagikan setelan roda keputusan saya lewat tautan?",
-        "a": "Ya! Semua pilihan tersimpan langsung di parameter URL secara real-time. Klik \"Bagikan Roda\" untuk menyalin tautan sehingga temanmu dapat memutar pilihan yang sama persis."
-      },
-      {
-        "q": "Berapa banyak pilihan yang bisa dimasukkan ke dalam roda?",
-        "a": "Kamu dapat memasukkan antara 2 hingga 12 opsi. Batas 12 pilihan menjaga teks tetap mudah dibaca dan warna tetap tajam di layar ponsel."
-      },
-      {
-        "q": "Bisakah saya menghapus opsi yang menang setelah diputar?",
-        "a": "Bisa. Saat jendela perayaan kemenangan muncul, klik \"Hapus Pemenang\". Opsi yang terpilih akan langsung dihapus dan roda mengatur ulang sudut bagian lainnya."
-      }
-    ],
     "picker": [
       {
         "q": "Apakah pengacak nama ini benar-benar adil dan tanpa rekayasa?",
@@ -1020,48 +817,6 @@
         "a": "Bisa! Halaman penampil di /countdown/view memiliki tampilan bersih dan responsif, sangat cocok untuk tangkapan layar OBS, proyektor, dan tayangan langsung."
       }
     ],
-    "nameMeaning": [
-      {
-        "q": "Apa arti nama saya dan bagaimana asal-usulnya ditentukan?",
-        "a": "Arti nama mencerminkan akar etimologi dari bahasa kuno seperti Ibrani, Latin, Yunani, Nordik Kuno, Keltik, atau Arab yang dicocokkan dengan kamus onomastik sejarah."
-      },
-      {
-        "q": "Bisakah saya mencari nama unik atau langka dengan alat ini?",
-        "a": "Bisa! Selain 200+ koleksi nama pilihan kami, ToolNest memiliki fitur analisis AI dengan Google Gemini untuk menelusuri nama langka dan internasional apa pun."
-      },
-      {
-        "q": "Bisakah saya mencari nama yang bermakna kebajikan seperti cahaya atau kekuatan?",
-        "a": "Bisa! Banyak nama indah melambangkan kebaikan: nama bermakna cahaya seperti Lucia dan Aaron; nama bermakna kekuatan seperti Ethan dan Audrey; serta nama bermakna cinta seperti Amara dan David."
-      },
-      {
-        "q": "Seberapa akurat arti nama dan ulasan kepribadian dari AI?",
-        "a": "Koleksi nama utama diverifikasi dari catatan sejarah dan sensus resmi. Analisis AI menyatukan simbolisme budaya dunia serta irama fonetik untuk inspirasi kreatif."
-      },
-      {
-        "q": "Bagaimana sistem menentukan hasil dari database atau analisis AI?",
-        "a": "Saat kamu memasukkan nama, ToolNest memeriksa apakah nama tersebut ada di direktori utama. Jika ada, kamu diarahkan ke profil lengkap. Jika belum, AI akan menganalisisnya langsung di halaman ini."
-      },
-      {
-        "q": "Apakah pencarian nama ini aman dan sepenuhnya gratis?",
-        "a": "Ya, 100% gratis tanpa cookie pelacak dan tanpa perlu daftar akun. Riwayat pencarianmu hanya tersimpan di peramban lokal perangkatmu."
-      },
-      {
-        "q": "Tradisi bahasa apa saja yang tercakup dalam database nama ini?",
-        "a": "Database kami mencakup tradisi Latin, Jermanik, Yunani, Ibrani, Keltik, Nordik, Slavia, Sanskerta, Jepang, hingga Yoruba dari berbagai belahan dunia."
-      },
-      {
-        "q": "Bisakah saya melihat nama populer yang disaring berdasarkan abjad atau gender?",
-        "a": "Bisa! Kunjungi Direktori Nama lengkap kami di /names/ untuk menjelajahi 200+ profil nama yang diurutkan dari A sampai Z dan disaring menurut gender dan popularitas."
-      }
-    ],
-    "nameDetail": {
-      "q1": "Apa arti dari nama {name}?",
-      "a1": "Nama {name} berakar dari bahasa {origin} dan secara tradisional memiliki arti \"{meaning}\".",
-      "q2": "Seberapa populer nama {name} saat ini?",
-      "a2": "Nama {name} saat ini memiliki tingkat kepopuleran {popularity} di antara nama-nama bayi di berbagai penjuru dunia.",
-      "q3": "Ingin wawasan lebih mendalam? Buka analisis AI untuk nama apa saja",
-      "a3": "Kamu bisa menekan tombol \"Buka Analisis AI\" di halaman ini untuk menghasilkan interpretasi kaya dan personal—termasuk sifat kepribadian, gaya nama, dan fakta sejarah menarik berbasis Google Gemini."
-    },
     "compressor": [
       {
         "q": "Apakah foto saya diunggah ke server atau penyimpanan cloud?",
@@ -1114,38 +869,6 @@
         "a": "AVIF adalah format gambar generasi terbaru berbasis codec AV1 yang menghasilkan ukuran file sangat hemat dengan kualitas prima."
       }
     ]
-  },
-  "nameMeaning": {
-    "useCases": {
-      "title": "Kegunaan Populer Pencarian Arti Nama & Asal-usul",
-      "u1Title": "Pemilihan Nama Bayi & Calon Buah Hati",
-      "u1Desc": "Temukan ide nama bayi dengan makna mendalam, pelafalan indah, dan harmoni budaya untuk mempersiapkan kelahiran sang buah hati.",
-      "u2Title": "Penulis, Novelis & Pembuat Skenario",
-      "u2Desc": "Beri nama tokoh utama, antagonis, dan karakter dunia fantasi dengan asal-usul kata yang pas dengan jalan cerita dan watak mereka.",
-      "u3Title": "Silsilah Keluarga & Warisan Leluhur",
-      "u3Desc": "Telusuri jejak migrasi keluarga dan profesi bersejarah melalui akar bahasa nama leluhur yang diwariskan turun-temurun."
-    },
-    "trivia": {
-      "title": "Tahukah Anda? Fakta Unik tentang Fonetik & Ilmu Nama",
-      "t1Title": "Efek Bouba/Kiki",
-      "t1Desc": "Eksperimen linguistik membuktikan manusia secara alami mengaitkan bunyi vokal bulat yang lembut dengan kehangatan, dan konsonan tajam dengan ketegasan.",
-      "t2Title": "Siklus Nama 100 Tahun",
-      "t2Desc": "Tren nama bayi mengikuti siklus 100 tahun: nama yang terasa kuno bagi orang tua kerap dirasa klasik dan anggun bagi generasi cucu saat mengenang kakek-nenek buyut.",
-      "t3Title": "500 Akar Kata Purba",
-      "t3Desc": "Lebih dari 80% nama tradisional Eropa dan Mediterania berakar dari kurang dari 500 kata purba yang memiliki makna cahaya, kedamaian, alam, dan keberanian."
-    },
-    "ui": {
-      "aiPoweredFinder": "Berkas Nama Berbasis AI & Pilihan",
-      "enterNameLabel": "Masukkan Nama Apa Saja",
-      "searchBtn": "Cari Arti Nama",
-      "curatedBadge": "Berkas Terverifikasi Tersedia",
-      "aiBadge": "Analisis Linguistik AI",
-      "viewFullDossier": "Lihat Berkas Lengkap →",
-      "keyTakeawaysTitle": "Jawaban Singkat & Poin Penting",
-      "kt1": "Database Onomastik Global: Menghubungkan ribuan akar budaya dan kamus bahasa klasik.",
-      "kt2": "Wawasan AI Instan: Membuka arketipe psikologis, ritme fonetik, dan kisah asal-usul nama unik apa pun.",
-      "kt3": "Privasi 100% di Sisi Klien: Riwayat pencarian tetap rahasia di penyimpanan lokal peramban Anda."
-    }
   },
   "data": {
     "birthstones": {

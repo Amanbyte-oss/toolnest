@@ -12,10 +12,8 @@ const common = getNamespace(lang, 'common');
 const home = getNamespace(lang, 'home');
 const age = getNamespace(lang, 'age');
 const birthday = getNamespace(lang, 'birthday');
-const wheel = getNamespace(lang, 'wheel');
 const picker = getNamespace(lang, 'picker');
 const countdown = getNamespace(lang, 'countdown');
-const names = getNamespace(lang, 'names');
 const compressor = getNamespace(lang, 'compressor');
 const converter = getNamespace(lang, 'converter');
 
@@ -53,14 +51,6 @@ const tools = [
     popular: false,
   },
   {
-    title: common.nav.decisionWheel,
-    description: wheel.subtitle,
-    href: getLocalizedPath('/decision-wheel', lang),
-    badge: lang === 'ar' ? 'عشوائي' : lang === 'pt' ? 'Sorteador' : lang === 'id' ? 'Pengacak' : 'Randomizer',
-    icon: 'wheel' as const,
-    popular: false,
-  },
-  {
     title: common.nav.randomPicker,
     description: picker.subtitle,
     href: getLocalizedPath('/random-picker', lang),
@@ -74,14 +64,6 @@ const tools = [
     href: getLocalizedPath('/countdown', lang),
     badge: lang === 'ar' ? 'الوقت' : lang === 'pt' ? 'Tempo' : lang === 'id' ? 'Waktu' : 'Time',
     icon: 'clock' as const,
-    popular: false,
-  },
-  {
-    title: common.nav.nameMeaning,
-    description: names.subtitle,
-    href: getLocalizedPath('/name-meaning', lang),
-    badge: lang === 'ar' ? 'ذكاء اصطناعي + قاعدة بيانات' : lang === 'pt' ? 'IA + Dados' : lang === 'id' ? 'AI + Database' : 'AI + Database',
-    icon: 'book' as const,
     popular: false,
   },
 ];

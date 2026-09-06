@@ -4,4 +4,3 @@
  */
 export * from './utils';
 export * from './relatedLinks';
-export * from './nameEditorial';

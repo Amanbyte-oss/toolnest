@@ -13,10 +13,10 @@
       "anchor": "Create a live countdown to your next birthday"
     },
     {
-      "name": "📖 Name Meanings",
-      "href": "/name-meaning",
-      "desc": "Look up the etymology, cultural history, and meaning behind your name.",
-      "anchor": "Look up your name meaning and cultural roots"
+      "name": "🎯 Random Picker",
+      "href": "/random-picker",
+      "desc": "Draw one or multiple winners fairly from any custom list of options.",
+      "anchor": "Draw giveaway winners with the random picker"
     }
   ],
   "birthday-facts": [
@@ -33,44 +33,24 @@
       "anchor": "Start a live countdown to your birthday"
     },
     {
-      "name": "📖 Name Meanings",
-      "href": "/name-meaning",
-      "desc": "Discover baby name popularity rankings and origins.",
-      "anchor": "Explore name origins and personality archetypes"
-    }
-  ],
-  "decision-wheel": [
-    {
       "name": "🎯 Random Picker",
       "href": "/random-picker",
       "desc": "Draw one or multiple winners fairly from any custom list of options.",
       "anchor": "Draw giveaway winners with the random picker"
-    },
-    {
-      "name": "⏳ Countdown Timer",
-      "href": "/countdown",
-      "desc": "Set timed intervals, deadlines, or event countdowns in real time.",
-      "anchor": "Set an event countdown timer"
-    },
-    {
-      "name": "🎂 Age Calculator",
-      "href": "/age-calculator",
-      "desc": "Quickly determine chronological age and milestone dates.",
-      "anchor": "Check chronological age and birth milestones"
     }
   ],
   "random-picker": [
-    {
-      "name": "🎡 Decision Wheel",
-      "href": "/decision-wheel",
-      "desc": "Spin the customizable physics wheel for quick daily choices.",
-      "anchor": "Spin the decision wheel for everyday choices"
-    },
     {
       "name": "⏳ Countdown Timer",
       "href": "/countdown",
       "desc": "Count down to raffle deadlines, live giveaways, and product drops.",
       "anchor": "Count down to your next live giveaway or raffle"
+    },
+    {
+      "name": "🗜️ Image Compressor",
+      "href": "/image-compressor",
+      "desc": "Compress JPG, PNG, and WebP images client-side with zero uploads.",
+      "anchor": "Compress images securely in your browser"
     },
     {
       "name": "🎉 Birthday Facts",
@@ -93,70 +73,50 @@
       "anchor": "Uncover your birthday weekday and generation"
     },
     {
-      "name": "🎡 Decision Wheel",
-      "href": "/decision-wheel",
-      "desc": "Randomize options and make fast decisions with a spinning wheel.",
-      "anchor": "Spin the wheel to make fast team decisions"
+      "name": "🗜️ Image Compressor",
+      "href": "/image-compressor",
+      "desc": "Compress images securely in browser with zero server uploads.",
+      "anchor": "Compress images securely in your browser"
     }
   ],
-  "name-meaning": [
+  "image-compressor": [
     {
-      "name": "📚 Baby Names A–Z",
-      "href": "/names",
-      "desc": "Browse our curated alphabetical index of 200+ popular baby names.",
-      "anchor": "Browse all 200+ curated baby names alphabetically"
+      "name": "🔄 Image Converter",
+      "href": "/image-converter",
+      "desc": "Convert images between WebP, JPG, and PNG formats client-side.",
+      "anchor": "Convert image formats instantly in browser"
     },
     {
-      "name": "🎉 Birthday Facts",
-      "href": "/birthday-facts",
-      "desc": "Check zodiac symbols, birthstones, and historical figures for any date.",
-      "anchor": "Check zodiac signs and birthday facts"
+      "name": "⏳ Countdown Timer",
+      "href": "/countdown",
+      "desc": "Track deadlines, product launches, or special events in real time.",
+      "anchor": "Set a live countdown clock for your events"
     },
     {
-      "name": "🎂 Age Calculator",
-      "href": "/age-calculator",
-      "desc": "Discover exact chronological age in years, months, and days.",
-      "anchor": "Calculate chronological age and birthday milestones"
+      "name": "🎯 Random Picker",
+      "href": "/random-picker",
+      "desc": "Draw winners fairly from lists with cryptographic randomness.",
+      "anchor": "Pick giveaway winners with fair random algorithm"
     }
   ],
-  "names-directory": [
+  "image-converter": [
     {
-      "name": "✨ AI Name Meaning Finder",
-      "href": "/name-meaning",
-      "desc": "Look up rare, unlisted, or modern names with AI personality insights.",
-      "anchor": "Analyze any rare name with AI insights"
+      "name": "🗜️ Image Compressor",
+      "href": "/image-compressor",
+      "desc": "Compress images to target file sizes or reduce footprint up to 90%.",
+      "anchor": "Compress your converted images for smaller sizes"
     },
     {
-      "name": "🎉 Birthday Facts",
-      "href": "/birthday-facts",
-      "desc": "Discover zodiac signs, birthstones, and famous historical birthdays.",
-      "anchor": "Look up zodiac signs and famous namesakes"
+      "name": "⏳ Countdown Timer",
+      "href": "/countdown",
+      "desc": "Track deadlines, product launches, or special events in real time.",
+      "anchor": "Set a live countdown clock for your events"
     },
     {
-      "name": "🎂 Age Calculator",
-      "href": "/age-calculator",
-      "desc": "Calculate exact chronological age and upcoming birthday countdowns.",
-      "anchor": "Calculate exact age and upcoming birthdays"
-    }
-  ],
-  "names": [
-    {
-      "name": "✨ AI Name Meaning Finder",
-      "href": "/name-meaning",
-      "desc": "Look up rare, unlisted, or modern names with AI personality insights.",
-      "anchor": "Analyze any rare name with AI insights"
-    },
-    {
-      "name": "🎉 Birthday Facts",
-      "href": "/birthday-facts",
-      "desc": "Discover zodiac signs, birthstones, and famous historical birthdays.",
-      "anchor": "Look up zodiac signs and famous namesakes"
-    },
-    {
-      "name": "🎂 Age Calculator",
-      "href": "/age-calculator",
-      "desc": "Calculate exact chronological age and upcoming birthday countdowns.",
-      "anchor": "Calculate exact age and upcoming birthdays"
+      "name": "🎯 Random Picker",
+      "href": "/random-picker",
+      "desc": "Draw winners fairly from lists with cryptographic randomness.",
+      "anchor": "Pick giveaway winners with fair random algorithm"
     }
   ]
 }

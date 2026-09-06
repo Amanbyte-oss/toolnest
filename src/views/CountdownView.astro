@@ -721,7 +721,7 @@ const faqSchema = {
           description={tool.desc}
           href={tool.href}
           anchor={tool.anchor}
-          icon={tool.href.includes('age') ? 'calendar' : tool.href.includes('birthday') ? 'cake' : 'wheel'}
+          icon={tool.href.includes('age') ? 'calendar' : tool.href.includes('birthday') ? 'cake' : tool.href.includes('picker') ? 'dice' : 'image'}
           lang={lang}
         />
       ))}

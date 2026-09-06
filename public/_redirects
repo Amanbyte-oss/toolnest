@@ -1,2 +1,39 @@
-# Cloudflare Pages Redirects
-/name /names/ 301
+# Cloudflare Pages Redirects (301 Permanent)
+
+# Decision Wheel -> Random Picker
+/decision-wheel /random-picker 301
+/decision-wheel/* /random-picker 301
+/pt/decision-wheel /pt/random-picker 301
+/pt/decision-wheel/* /pt/random-picker 301
+/id/decision-wheel /id/random-picker 301
+/id/decision-wheel/* /id/random-picker 301
+/ar/decision-wheel /ar/random-picker 301
+/ar/decision-wheel/* /ar/random-picker 301
+
+# Name Meaning & Directory -> Home
+/name-meaning / 301
+/name-meaning/* / 301
+/pt/name-meaning /pt/ 301
+/pt/name-meaning/* /pt/ 301
+/id/name-meaning /id/ 301
+/id/name-meaning/* /id/ 301
+/ar/name-meaning /ar/ 301
+/ar/name-meaning/* /ar/ 301
+
+/names / 301
+/names/* / 301
+/pt/names /pt/ 301
+/pt/names/* /pt/ 301
+/id/names /id/ 301
+/id/names/* /id/ 301
+/ar/names /ar/ 301
+/ar/names/* /ar/ 301
+
+/name / 301
+/name/* / 301
+/pt/name /pt/ 301
+/pt/name/* /pt/ 301
+/id/name /id/ 301
+/id/name/* /id/ 301
+/ar/name /ar/ 301
+/ar/name/* /ar/ 301

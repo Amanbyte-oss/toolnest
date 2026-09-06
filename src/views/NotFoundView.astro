@@ -9,12 +9,12 @@ export interface Props {
 const { lang = 'en' } = Astro.props;
 const common = getNamespace(lang, 'common');
 const notFound = getNamespace(lang, 'notFound');
+const compressor = getNamespace(lang, 'compressor');
+const converter = getNamespace(lang, 'converter');
 const age = getNamespace(lang, 'age');
 const birthday = getNamespace(lang, 'birthday');
-const wheel = getNamespace(lang, 'wheel');
 const picker = getNamespace(lang, 'picker');
 const countdown = getNamespace(lang, 'countdown');
-const names = getNamespace(lang, 'names');
 
 const t = {
   notFound,
@@ -24,12 +24,12 @@ const t = {
 };
 
 const tools = [
+  { name: `🗜️ ${common.nav?.imageCompressor || 'Image Compressor'}`, href: getLocalizedPath('/image-compressor', lang), desc: compressor.subtitle },
+  { name: `🔄 ${common.nav?.imageConverter || 'Image Converter'}`, href: getLocalizedPath('/image-converter', lang), desc: converter.subtitle },
   { name: `🎂 ${common.nav?.ageCalculator || 'Age Calculator'}`, href: getLocalizedPath('/age-calculator', lang), desc: age.subtitle },
   { name: `🎉 ${common.nav?.birthdayFacts || 'Birthday Facts'}`, href: getLocalizedPath('/birthday-facts', lang), desc: birthday.subtitle },
-  { name: `🎡 ${common.nav?.decisionWheel || 'Decision Wheel'}`, href: getLocalizedPath('/decision-wheel', lang), desc: wheel.subtitle },
   { name: `🎲 ${common.nav?.randomPicker || 'Random Picker'}`, href: getLocalizedPath('/random-picker', lang), desc: picker.subtitle },
   { name: `⏳ ${common.nav?.countdown || 'Countdown Timer'}`, href: getLocalizedPath('/countdown', lang), desc: countdown.subtitle },
-  { name: `🏷️ ${common.nav?.nameMeaning || 'Name Meaning'}`, href: getLocalizedPath('/name-meaning', lang), desc: names.subtitle },
 ];
 ---
 

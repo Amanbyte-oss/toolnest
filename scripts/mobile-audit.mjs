@@ -21,18 +21,14 @@ const TEST_ROUTES = [
   { path: '/ar/age-calculator', distPath: '/ar/age-calculator/index.html', lang: 'ar', dir: 'rtl', name: 'Age Calculator (AR)' },
   { path: '/birthday-facts', distPath: '/en/birthday-facts/index.html', lang: 'en', dir: 'ltr', name: 'Birthday Facts (EN)' },
   { path: '/ar/birthday-facts', distPath: '/ar/birthday-facts/index.html', lang: 'ar', dir: 'rtl', name: 'Birthday Facts (AR)' },
-  { path: '/decision-wheel', distPath: '/en/decision-wheel/index.html', lang: 'en', dir: 'ltr', name: 'Decision Wheel (EN)' },
-  { path: '/ar/decision-wheel', distPath: '/ar/decision-wheel/index.html', lang: 'ar', dir: 'rtl', name: 'Decision Wheel (AR)' },
+  { path: '/image-compressor', distPath: '/image-compressor/index.html', lang: 'en', dir: 'ltr', name: 'Image Compressor (EN)' },
+  { path: '/ar/image-compressor', distPath: '/ar/image-compressor/index.html', lang: 'ar', dir: 'rtl', name: 'Image Compressor (AR)' },
+  { path: '/image-converter', distPath: '/image-converter/index.html', lang: 'en', dir: 'ltr', name: 'Image Converter (EN)' },
+  { path: '/ar/image-converter', distPath: '/ar/image-converter/index.html', lang: 'ar', dir: 'rtl', name: 'Image Converter (AR)' },
   { path: '/random-picker', distPath: '/en/random-picker/index.html', lang: 'en', dir: 'ltr', name: 'Random Picker (EN)' },
   { path: '/ar/random-picker', distPath: '/ar/random-picker/index.html', lang: 'ar', dir: 'rtl', name: 'Random Picker (AR)' },
   { path: '/countdown', distPath: '/en/countdown/index.html', lang: 'en', dir: 'ltr', name: 'Countdown (EN)' },
   { path: '/ar/countdown', distPath: '/ar/countdown/index.html', lang: 'ar', dir: 'rtl', name: 'Countdown (AR)' },
-  { path: '/names', distPath: '/en/names/index.html', lang: 'en', dir: 'ltr', name: 'Names Directory (EN)' },
-  { path: '/ar/names', distPath: '/ar/names/index.html', lang: 'ar', dir: 'rtl', name: 'Names Directory (AR)' },
-  { path: '/name/noah', distPath: '/en/name/noah/index.html', lang: 'en', dir: 'ltr', name: 'Name Detail Noah (EN)' },
-  { path: '/ar/name/noah', distPath: '/ar/name/noah/index.html', lang: 'ar', dir: 'rtl', name: 'Name Detail Noah (AR)' },
-  { path: '/name/adam', distPath: '/en/name/adam/index.html', lang: 'en', dir: 'ltr', name: 'Name Detail Adam (EN)' },
-  { path: '/ar/name/adam', distPath: '/ar/name/adam/index.html', lang: 'ar', dir: 'rtl', name: 'Name Detail Adam (AR)' },
   { path: '/404.html', distPath: '/404.html', lang: 'en', dir: 'ltr', name: '404 Page' }
 ];
 
@@ -120,7 +116,7 @@ for (const route of TEST_ROUTES) {
   assert(drawerSub.includes('min-h-[44px]'), `${route.name}: Drawer language items have 44px+ touch targets`);
 
   // Tool Links in Drawer
-  assert(drawerSub.includes('/age-calculator') && drawerSub.includes('/birthday-facts') && drawerSub.includes('/decision-wheel'), `${route.name}: Nav tool links present in drawer`);
+  assert(drawerSub.includes('/age-calculator') && drawerSub.includes('/birthday-facts') && drawerSub.includes('/image-compressor'), `${route.name}: Nav tool links present in drawer`);
   assert(drawerSub.includes('min-h-[48px]'), `${route.name}: Nav tool links have 48px touch targets`);
 
   // Footer Links in Drawer
@@ -145,13 +141,7 @@ for (const route of TEST_ROUTES) {
     assert(html.includes('overflow-x-auto') || html.includes('table-container'), `${route.name}: Table has horizontal scroll wrapper`);
   }
 
-  // 4. Check that Prev/Next navigation on Name Detail has min-w-0 and truncate
-  if (route.path.includes('/name/')) {
-    assert(html.includes('min-w-0 max-w-[48%]'), `${route.name}: Name nav has min-w-0 max-w-[48%]`);
-    assert(html.includes('rtl:rotate-180'), `${route.name}: Name nav arrows rotate in RTL`);
-  }
-
-  // 5. Check Birthday Facts milestones have overflow protection
+  // 4. Check Birthday Facts milestones have overflow protection
   if (route.path.includes('/birthday-facts')) {
     assert(html.includes('max-w-[280px]'), `${route.name}: Birthday Facts cards fit within 320px screen`);
   }
