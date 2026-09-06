@@ -20,7 +20,8 @@
       "privacy": "Privacidade",
       "contact": "Contato",
       "switchLanguage": "Idioma",
-      "imageCompressor": "Compressor de Imagens"
+      "imageCompressor": "Compressor de Imagens",
+      "imageConverter": "Conversor de Imagens"
     },
     "buttons": {
       "calculate": "Calcular",
@@ -154,6 +155,10 @@
     "imageCompressor": {
       "title": "Compressor de Imagens Grátis — Reduzir JPG, PNG, WebP Online",
       "description": "Comprima imagens JPG, PNG, WebP e AVIF diretamente no navegador. 100% privado, no dispositivo, sem upload para servidores."
+    },
+    "imageConverter": {
+      "title": "Conversor de Imagens Grátis — JPG, PNG, WebP, AVIF Online (Sem Upload)",
+      "description": "Converta imagens JPG, PNG, WebP, AVIF, GIF e BMP 100% no seu dispositivo. Rápido, privado, PNG sem perdas e conversão WebP/JPG sem envio para servidores."
     }
   },
   "wheel": {
@@ -1082,6 +1087,28 @@
         "q": "Quanto de redução de tamanho posso esperar sem perder qualidade visível?",
         "a": "A grande maioria das fotos alcança entre 60% e 80% de redução com os modos Inteligente e Equilibrado, permanecendo praticamente idênticas ao olho humano."
       }
+    ],
+    "converter": [
+      {
+        "q": "Qual formato devo escolher para usar na web?",
+        "a": "O WebP é a melhor escolha para sites modernos. Ele gera arquivos 25–35% menores que o JPEG, mantendo transparência e alta nitidez visual. O AVIF oferece compressão ainda maior, mas o WebP tem compatibilidade mais ampla."
+      },
+      {
+        "q": "Vou perder qualidade durante a conversão?",
+        "a": "Converter para PNG é 100% sem perdas (lossless). Converter para WebP, JPG ou AVIF usa compressão onde você pode ajustar a qualidade (padrão 85%) para manter a imagem idêntica ao original com tamanho reduzido."
+      },
+      {
+        "q": "O que acontece com a transparência ao converter PNG para JPG?",
+        "a": "O formato JPEG não suporta transparência. Nosso conversor preenche automaticamente qualquer fundo transparente com branco sólido para evitar caixas pretas indesejadas."
+      },
+      {
+        "q": "Minhas imagens são enviadas para algum servidor?",
+        "a": "Nunca. Toda a decodificação e conversão acontecem no seu próprio navegador via Canvas API. Nenhum byte sai do seu computador ou celular."
+      },
+      {
+        "q": "O que é AVIF e quando devo usá-lo?",
+        "a": "O AVIF é um formato moderno de altíssima eficiência baseado no codec AV1. Ele oferece arquivos muito leves mantendo detalhes finos em navegadores compatíveis."
+      }
     ]
   },
   "nameMeaning": {
@@ -1462,7 +1489,8 @@
       "saved": "Economia de",
       "biggerWarning": "Maior ⚠️ tente uma qualidade menor ou use o tamanho alvo",
       "closestPossible": "Menor possível: {size} (alvo {target} KB)",
-      "compressing": "Comprimindo..."
+      "compressing": "Comprimindo...",
+      "convertCrossLink": "Mudar formato →"
     },
     "preview": {
       "remove": "Remover imagem e recomeçar"
@@ -1470,6 +1498,34 @@
     "errors": {
       "invalidType": "Selecione uma imagem JPG, PNG, WebP ou AVIF válida.",
       "corruptFile": "Não foi possível ler o arquivo de imagem. Pode estar corrompido."
+    }
+  },
+  "converter": {
+    "title": "Conversor de Imagens Grátis",
+    "subtitle": "Converta JPG, PNG, WebP, AVIF, GIF e BMP direto no navegador. 100% privado, instantâneo e sem uploads.",
+    "privacyBadge": "100% no seu dispositivo • Nada é enviado à nuvem",
+    "dropzone": {
+      "tapOrDrop": "Toque ou solte a imagem aqui",
+      "clickOrPaste": "Clique para escolher ou cole com Ctrl+V"
+    },
+    "preview": {
+      "remove": "Remover imagem e recomeçar"
+    },
+    "controls": {
+      "outputFormat": "Formato de Saída",
+      "quality": "Qualidade",
+      "pngLosslessNote": "PNG não tem perdas — controle de qualidade desnecessário",
+      "downloadBtn": "Baixar {format}",
+      "smaller": "menor",
+      "biggerWarning": "Maior ⚠️ experimente WebP",
+      "biggerWebpWarning": "Maior ⚠️ tente uma qualidade menor",
+      "converting": "Convertendo...",
+      "compressCrossLink": "Comprimir esta imagem →"
+    },
+    "errors": {
+      "invalidType": "Selecione um arquivo de imagem válido (JPG, PNG, WebP, AVIF, GIF, BMP).",
+      "corruptFile": "Não foi possível ler o arquivo de imagem. Pode estar corrompido.",
+      "avifUnsupported": "A exportação AVIF não é suportada neste navegador. Escolha WebP, JPG ou PNG."
     }
   }
 }

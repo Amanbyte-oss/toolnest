@@ -1,8 +1,8 @@
 ---
 /**
- * src/views/ImageCompressorView.astro
- * Minimal, high-performance, 100% client-side Image Compressor.
- * EXACTLY TWO CONTROLS: Quality Slider & Target Size.
+ * src/views/ImageConverterView.astro
+ * 100% Client-Side Image Format Converter.
+ * Minimal architecture with EXACTLY TWO CONTROLS: Output Format & Quality Slider.
  * Privacy-first: Canvas API, zero network requests.
  */
 import Base from '../layouts/Base.astro';
@@ -17,28 +17,28 @@ export interface Props {
 
 const { lang = 'en' } = Astro.props;
 const common = getNamespace(lang, 'common');
-const compressor = getNamespace(lang, 'compressor');
+const converter = getNamespace(lang, 'converter');
 const faqNs = getNamespace(lang, 'faq');
-const t = { compressor, common, nav: common.nav, siteName: common.siteName };
+const t = { converter, common, nav: common.nav, siteName: common.siteName };
 
 const isRtl = isRtlLang(lang);
-const canonicalPath = getLocalizedPath('/image-compressor', lang);
+const canonicalPath = getLocalizedPath('/image-converter', lang);
 
 // Localized FAQs
-const faqs = (faqNs.compressor || []).map((f: any) => ({
+const faqs = (faqNs.converter || []).map((f: any) => ({
   question: f.question || f.q,
   answer: f.answer || f.a,
 }));
 
-const relatedTools = getLocalizedRelatedLinks(lang, 'image-compressor');
+const relatedTools = getLocalizedRelatedLinks(lang, 'image-converter');
 
 const webAppSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
   '@id': `https://toolnest.pages.dev${canonicalPath}#app`,
-  name: t.compressor.title,
+  name: t.converter.title,
   url: `https://toolnest.pages.dev${canonicalPath}`,
-  description: t.compressor.subtitle,
+  description: t.converter.subtitle,
   applicationCategory: 'MultimediaApplication',
   operatingSystem: 'Any',
   browserRequirements: 'Requires HTML5 Canvas and JavaScript support. Works 100% client-side without internet uploads.',
@@ -69,12 +69,12 @@ const faqSchema = {
 ---
 
 <Base
-  metaKey="imageCompressor"
+  metaKey="imageConverter"
   canonicalPath={canonicalPath}
-  ogImage="/og/image-compressor.svg"
+  ogImage="/og/image-converter.svg"
   breadcrumbs={[
     { name: common.nav.home, item: getLocalizedPath('/', lang) },
-    { name: common.nav.imageCompressor, item: canonicalPath },
+    { name: common.nav.imageConverter, item: canonicalPath },
   ]}
   extraSchemas={[webAppSchema, faqSchema]}
   lang={lang}
@@ -92,20 +92,20 @@ const faqSchema = {
             <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
             <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
           </svg>
-          {t.compressor.privacyBadge}
+          {t.converter.privacyBadge}
         </span>
       </div>
 
       <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-primary-light dark:text-primary-dark">
-        {t.compressor.title}
+        {t.converter.title}
       </h1>
       <p class="text-xs sm:text-base text-secondary-light dark:text-secondary-dark max-w-xl mx-auto leading-relaxed">
-        {t.compressor.subtitle}
+        {t.converter.subtitle}
       </p>
     </header>
 
-    <!-- COMPRESSOR APP CONTAINER -->
-    <div id="compressor-app" class="space-y-4" data-i18n={JSON.stringify(t.compressor)}>
+    <!-- CONVERTER APP CONTAINER -->
+    <div id="converter-app" class="space-y-4" data-i18n={JSON.stringify(t.converter)}>
       <!-- ERROR BANNER -->
       <div id="error-banner" class="hidden p-3.5 rounded-xl bg-red-500/10 border border-red-500/30 text-red-700 dark:text-red-300 text-xs sm:text-sm flex items-start justify-between gap-2.5" role="alert">
         <div class="flex items-start gap-2 min-w-0">
@@ -125,7 +125,7 @@ const faqSchema = {
       <input
         type="file"
         id="file-input"
-        accept="image/jpeg,image/png,image/webp,image/avif,image/*"
+        accept="image/jpeg,image/png,image/webp,image/avif,image/gif,image/bmp,image/*"
         class="sr-only"
         aria-hidden="true"
         tabindex="-1"
@@ -136,22 +136,23 @@ const faqSchema = {
         id="dropzone"
         role="button"
         tabindex="0"
-        aria-label={t.compressor.dropzone.tapOrDrop}
+        aria-label={t.converter.dropzone.tapOrDrop}
         class="card relative p-8 sm:p-12 border-2 border-dashed border-border-light dark:border-border-dark hover:border-accent dark:hover:border-accent transition-all duration-200 text-center space-y-3 cursor-pointer select-none group focus:outline-none focus:ring-2 focus:ring-accent"
       >
         <div class="w-16 h-16 mx-auto rounded-2xl bg-accent/10 dark:bg-accent/20 flex items-center justify-center text-accent group-hover:scale-110 transition-transform duration-200">
           <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="17 8 12 3 7 8"></polyline>
-            <line x1="12" y1="3" x2="12" y2="15"></line>
+            <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+            <path d="M3 3v5h5"></path>
+            <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"></path>
+            <path d="M16 16h5v5"></path>
           </svg>
         </div>
         <div class="space-y-1">
           <p class="text-base sm:text-lg font-bold text-primary-light dark:text-primary-dark">
-            {t.compressor.dropzone.tapOrDrop}
+            {t.converter.dropzone.tapOrDrop}
           </p>
           <p class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark">
-            {t.compressor.dropzone.clickOrPaste}
+            {t.converter.dropzone.clickOrPaste}
           </p>
         </div>
       </div>
@@ -161,9 +162,9 @@ const faqSchema = {
         <div class="flex items-center justify-between gap-3 pb-3 border-b border-border-light dark:border-border-dark">
           <div class="min-w-0 flex-1">
             <div class="flex items-center gap-2 flex-wrap">
-              <span id="file-name" class="font-medium text-xs sm:text-sm text-primary-light dark:text-primary-dark truncate max-w-[200px] sm:max-w-[320px]"></span>
+              <span id="file-name" class="font-medium text-xs sm:text-sm text-primary-light dark:text-primary-dark truncate max-w-[180px] sm:max-w-[280px]"></span>
               <span class="text-xs text-secondary-light dark:text-secondary-dark shrink-0">—</span>
-              <span id="original-size" class="text-xs sm:text-sm font-semibold text-secondary-light dark:text-secondary-dark shrink-0"></span>
+              <span id="format-size" class="text-xs sm:text-sm font-semibold text-secondary-light dark:text-secondary-dark shrink-0"></span>
             </div>
           </div>
           <!-- ✕ BUTTON TO REMOVE AND START OVER -->
@@ -171,8 +172,8 @@ const faqSchema = {
             type="button"
             id="remove-btn"
             class="w-8 h-8 rounded-lg flex items-center justify-center text-secondary-light dark:text-secondary-dark hover:text-red-500 hover:bg-red-500/10 transition-colors shrink-0 cursor-pointer"
-            title={t.compressor.preview.remove}
-            aria-label={t.compressor.preview.remove}
+            title={t.converter.preview.remove}
+            aria-label={t.converter.preview.remove}
           >
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -193,11 +194,56 @@ const faqSchema = {
 
       <!-- CONTROLS & DOWNLOAD SECTION (VISIBLE WHEN IMAGE LOADED) -->
       <div id="controls-section" class="card p-5 sm:p-6 space-y-5 hidden">
-        <!-- CONTROL 1 — QUALITY SLIDER -->
+        <!-- CONTROL 1 — OUTPUT FORMAT PICKER (SEGMENTED BUTTONS) -->
+        <div class="space-y-2">
+          <label class="block text-xs sm:text-sm font-semibold text-primary-light dark:text-primary-dark">
+            {t.converter.controls.outputFormat}
+          </label>
+          <div class="grid grid-cols-4 gap-2" role="radiogroup" aria-label={t.converter.controls.outputFormat}>
+            <button
+              type="button"
+              data-format="webp"
+              class="format-btn active px-3 py-2.5 rounded-xl border text-xs sm:text-sm font-bold flex items-center justify-center transition-all cursor-pointer bg-accent text-white border-accent shadow-xs"
+              role="radio"
+              aria-checked="true"
+            >
+              WebP
+            </button>
+            <button
+              type="button"
+              data-format="jpg"
+              class="format-btn px-3 py-2.5 rounded-xl border text-xs sm:text-sm font-bold flex items-center justify-center transition-all cursor-pointer border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark text-secondary-light dark:text-secondary-dark hover:border-accent/60"
+              role="radio"
+              aria-checked="false"
+            >
+              JPG
+            </button>
+            <button
+              type="button"
+              data-format="png"
+              class="format-btn px-3 py-2.5 rounded-xl border text-xs sm:text-sm font-bold flex items-center justify-center transition-all cursor-pointer border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark text-secondary-light dark:text-secondary-dark hover:border-accent/60"
+              role="radio"
+              aria-checked="false"
+            >
+              PNG
+            </button>
+            <button
+              type="button"
+              data-format="avif"
+              class="format-btn px-3 py-2.5 rounded-xl border text-xs sm:text-sm font-bold flex items-center justify-center transition-all cursor-pointer border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark text-secondary-light dark:text-secondary-dark hover:border-accent/60"
+              role="radio"
+              aria-checked="false"
+            >
+              AVIF
+            </button>
+          </div>
+        </div>
+
+        <!-- CONTROL 2 — QUALITY SLIDER (HIDDEN FOR PNG) -->
         <div id="quality-control" class="space-y-2 transition-opacity duration-200">
           <div class="flex items-center justify-between text-xs sm:text-sm">
             <label for="quality-slider" class="font-semibold text-primary-light dark:text-primary-dark cursor-pointer">
-              {t.compressor.controls.quality}: <span id="quality-val" class="text-accent font-bold">75%</span>
+              {t.converter.controls.quality}: <span id="quality-val" class="text-accent font-bold">85%</span>
             </label>
           </div>
           <input
@@ -205,36 +251,21 @@ const faqSchema = {
             id="quality-slider"
             min="1"
             max="100"
-            value="75"
+            value="85"
             class="w-full h-2 bg-border-light dark:bg-border-dark rounded-lg appearance-none cursor-pointer accent-accent"
           />
         </div>
 
-        <!-- CONTROL 2 — TARGET SIZE TEXT BOX -->
-        <div id="target-control" class="space-y-1.5">
-          <label for="target-size-input" class="block text-xs sm:text-sm font-semibold text-primary-light dark:text-primary-dark">
-            {t.compressor.controls.targetLabel}
-          </label>
-          <div class="relative">
-            <input
-              type="number"
-              id="target-size-input"
-              min="1"
-              step="any"
-              inputmode="numeric"
-              placeholder={t.compressor.controls.targetPlaceholder}
-              class="w-full px-3.5 py-2.5 pe-12 rounded-xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark text-primary-light dark:text-primary-dark placeholder:text-secondary-light/60 dark:placeholder:text-secondary-dark/60 focus:ring-2 focus:ring-accent focus:border-accent outline-none text-xs sm:text-sm transition-all"
-            />
-            <span class="absolute end-3.5 top-1/2 -translate-y-1/2 text-xs font-semibold text-secondary-light dark:text-secondary-dark pointer-events-none">
-              KB
-            </span>
-          </div>
+        <!-- PNG LOSSLESS NOTE (SHOWN WHEN PNG IS SELECTED) -->
+        <div id="png-note" class="hidden p-3 rounded-xl bg-accent/5 border border-accent/15 text-xs text-secondary-light dark:text-secondary-dark flex items-center gap-2">
+          <span>✨</span>
+          <span>{t.converter.controls.pngLosslessNote}</span>
         </div>
 
         <!-- RESULT LINE WITH SPINNER -->
         <div class="p-3.5 rounded-xl bg-accent/5 border border-accent/15 flex items-center min-h-[46px]">
           <div class="flex items-center gap-2 text-xs sm:text-sm font-medium text-primary-light dark:text-primary-dark min-w-0">
-            <svg id="compress-spinner" class="hidden animate-spin w-4 h-4 text-accent shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <svg id="convert-spinner" class="hidden animate-spin w-4 h-4 text-accent shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
               <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
               <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
@@ -254,17 +285,17 @@ const faqSchema = {
               <polyline points="7 10 12 15 17 10"></polyline>
               <line x1="12" y1="15" x2="12" y2="3"></line>
             </svg>
-            <span>{t.compressor.controls.downloadBtn}</span>
+            <span id="download-btn-text">Download WebP</span>
           </button>
         </div>
 
-        <!-- Cross-link Funnel to Image Converter -->
+        <!-- CROSS-LINK FUNNEL TO COMPRESSOR -->
         <div class="pt-1 text-center">
           <a
-            href={getLocalizedPath('/image-converter', lang)}
+            href={getLocalizedPath('/image-compressor', lang)}
             class="inline-flex items-center gap-1.5 text-xs font-semibold text-accent hover:underline cursor-pointer"
           >
-            <span>{t.compressor.controls?.convertCrossLink || 'Convert format →'}</span>
+            <span>{t.converter.controls.compressCrossLink}</span>
           </a>
         </div>
       </div>
@@ -295,8 +326,8 @@ const faqSchema = {
 </Base>
 
 <script>
-  function initImageCompressor() {
-    const app = document.getElementById('compressor-app');
+  function initImageConverter() {
+    const app = document.getElementById('converter-app');
     if (!app) return;
 
     // Load i18n dictionary
@@ -313,21 +344,32 @@ const faqSchema = {
     const previewCard = document.getElementById('preview-card');
     const previewImg = document.getElementById('preview-img') as HTMLImageElement | null;
     const fileNameEl = document.getElementById('file-name');
-    const originalSizeEl = document.getElementById('original-size');
+    const formatSizeEl = document.getElementById('format-size');
     const removeBtn = document.getElementById('remove-btn');
     const controlsSection = document.getElementById('controls-section');
+    const formatButtons = document.querySelectorAll('.format-btn');
     const qualityControl = document.getElementById('quality-control');
     const qualitySlider = document.getElementById('quality-slider') as HTMLInputElement | null;
     const qualityVal = document.getElementById('quality-val');
-    const targetSizeInput = document.getElementById('target-size-input') as HTMLInputElement | null;
+    const pngNote = document.getElementById('png-note');
     const resultText = document.getElementById('result-text');
-    const compressSpinner = document.getElementById('compress-spinner');
+    const convertSpinner = document.getElementById('convert-spinner');
     const downloadBtn = document.getElementById('download-btn');
+    const downloadBtnText = document.getElementById('download-btn-text');
     const errorBanner = document.getElementById('error-banner');
     const errorMessage = document.getElementById('error-message');
     const dismissError = document.getElementById('dismiss-error');
 
+    // Supported Formats Configuration
+    const FORMAT_INFO: Record<string, { mime: string; ext: string; name: string; isLossless: boolean }> = {
+      webp: { mime: 'image/webp', ext: 'webp', name: 'WebP', isLossless: false },
+      jpg: { mime: 'image/jpeg', ext: 'jpg', name: 'JPG', isLossless: false },
+      png: { mime: 'image/png', ext: 'png', name: 'PNG', isLossless: true },
+      avif: { mime: 'image/avif', ext: 'avif', name: 'AVIF', isLossless: false },
+    };
+
     // App State
+    let currentFormatKey = 'webp';
     let currentFile: File | null = null;
     let previewUrl: string | null = null;
     let loadedImage: {
@@ -336,8 +378,8 @@ const faqSchema = {
       height: number;
       close: () => void;
     } | null = null;
-    let compressedBlob: Blob | null = null;
-    let compressedUrl: string | null = null;
+    let convertedBlob: Blob | null = null;
+    let convertedUrl: string | null = null;
     let debounceTimer: any = null;
     let currentTaskToken = 0;
 
@@ -350,6 +392,19 @@ const faqSchema = {
       }
       const mb = bytes / (1024 * 1024);
       return (mb >= 10 ? Math.round(mb) : mb.toFixed(1)) + ' MB';
+    }
+
+    function getOriginalFormatLabel(file: File): string {
+      const type = file.type.toLowerCase();
+      if (type === 'image/jpeg') return 'JPG';
+      if (type === 'image/png') return 'PNG';
+      if (type === 'image/webp') return 'WebP';
+      if (type === 'image/avif') return 'AVIF';
+      if (type === 'image/gif') return 'GIF';
+      if (type === 'image/bmp') return 'BMP';
+      const ext = file.name.split('.').pop()?.toUpperCase();
+      if (ext === 'JPEG') return 'JPG';
+      return ext || 'IMG';
     }
 
     function showError(msg: string) {
@@ -366,33 +421,39 @@ const faqSchema = {
 
     dismissError?.addEventListener('click', clearError);
 
-    // Clean up memory
     function cleanupState() {
       if (previewUrl) {
         URL.revokeObjectURL(previewUrl);
         previewUrl = null;
       }
-      if (compressedUrl) {
-        URL.revokeObjectURL(compressedUrl);
-        compressedUrl = null;
+      if (convertedUrl) {
+        URL.revokeObjectURL(convertedUrl);
+        convertedUrl = null;
       }
       if (loadedImage) {
         loadedImage.close();
         loadedImage = null;
       }
       currentFile = null;
-      compressedBlob = null;
+      convertedBlob = null;
       if (debounceTimer) clearTimeout(debounceTimer);
     }
 
-    // Reset UI to initial empty state
+    function updateDownloadButtonText() {
+      if (!downloadBtnText) return;
+      const targetName = FORMAT_INFO[currentFormatKey]?.name || 'WebP';
+      const tpl = i18n.controls?.downloadBtn || 'Download {format}';
+      downloadBtnText.textContent = tpl.replace('{format}', targetName);
+    }
+
     function resetUI() {
       cleanupState();
       if (fileInput) fileInput.value = '';
-      if (targetSizeInput) targetSizeInput.value = '';
-      if (qualitySlider) qualitySlider.value = '75';
-      if (qualityVal) qualityVal.textContent = '75%';
-      qualityControl?.classList.remove('opacity-40', 'pointer-events-none');
+      if (qualitySlider) qualitySlider.value = '85';
+      if (qualityVal) qualityVal.textContent = '85%';
+      
+      // Reset format to WebP default
+      selectFormat('webp');
 
       previewCard?.classList.add('hidden');
       controlsSection?.classList.add('hidden');
@@ -405,7 +466,45 @@ const faqSchema = {
       resetUI();
     });
 
-    // Universal client-side image decoder
+    // Format selection handler
+    function selectFormat(key: string) {
+      currentFormatKey = key;
+      const info = FORMAT_INFO[key] || FORMAT_INFO.webp;
+
+      formatButtons.forEach((btn) => {
+        const btnFormat = btn.getAttribute('data-format');
+        const isActive = btnFormat === key;
+        btn.setAttribute('aria-checked', isActive ? 'true' : 'false');
+        if (isActive) {
+          btn.classList.remove('border-border-light', 'dark:border-border-dark', 'bg-surface-light', 'dark:bg-surface-dark', 'text-secondary-light', 'dark:text-secondary-dark');
+          btn.classList.add('active', 'bg-accent', 'text-white', 'border-accent', 'shadow-xs');
+        } else {
+          btn.classList.remove('active', 'bg-accent', 'text-white', 'border-accent', 'shadow-xs');
+          btn.classList.add('border-border-light', 'dark:border-border-dark', 'bg-surface-light', 'dark:bg-surface-dark', 'text-secondary-light', 'dark:text-secondary-dark');
+        }
+      });
+
+      // Control 2: Quality slider vs PNG lossless note
+      if (info.isLossless) {
+        qualityControl?.classList.add('hidden');
+        pngNote?.classList.remove('hidden');
+      } else {
+        qualityControl?.classList.remove('hidden');
+        pngNote?.classList.add('hidden');
+      }
+
+      updateDownloadButtonText();
+    }
+
+    formatButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const key = btn.getAttribute('data-format') || 'webp';
+        selectFormat(key);
+        scheduleConversion();
+      });
+    });
+
+    // Image decoder supporting all formats
     async function decodeImage(file: File) {
       if ('createImageBitmap' in window) {
         const bitmap = await createImageBitmap(file);
@@ -447,201 +546,124 @@ const faqSchema = {
       });
     }
 
-    // Convert canvas to WebP blob
-    function canvasToWebPBlob(canvas: HTMLCanvasElement, quality: number): Promise<Blob> {
+    function canvasToBlob(canvas: HTMLCanvasElement, mime: string, quality?: number): Promise<Blob> {
       return new Promise((resolve, reject) => {
         canvas.toBlob(
           (blob) => {
-            if (blob) resolve(blob);
-            else reject(new Error('Canvas toBlob failed'));
+            if (blob) {
+              if (mime === 'image/avif' && blob.type !== 'image/avif') {
+                reject(new Error('AVIF_UNSUPPORTED'));
+              } else {
+                resolve(blob);
+              }
+            } else {
+              reject(new Error('Canvas toBlob failed'));
+            }
           },
-          'image/webp',
+          mime,
           quality
         );
       });
     }
 
-    // Perform binary search on quality + dimensions to hit <= targetBytes
-    async function compressToTarget(
-      drawable: CanvasImageSource,
-      origW: number,
-      origH: number,
-      targetBytes: number,
-      taskToken: number
-    ): Promise<{ blob: Blob; reached: boolean }> {
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-      if (!ctx) throw new Error('2D context unavailable');
-
-      let scale = 1.0;
-      let smallestBlob: Blob | null = null;
-      let bestBlob: Blob | null = null;
-
-      while (scale >= 0.05) {
-        if (taskToken !== currentTaskToken) throw new Error('aborted');
-
-        const currentW = Math.max(16, Math.round(origW * scale));
-        const currentH = Math.max(16, Math.round(origH * scale));
-        canvas.width = currentW;
-        canvas.height = currentH;
-        ctx.clearRect(0, 0, currentW, currentH);
-        ctx.drawImage(drawable, 0, 0, currentW, currentH);
-
-        // Test lowest quality (0.05) to check if resolution can fit under target
-        const minBlob = await canvasToWebPBlob(canvas, 0.05);
-        if (!smallestBlob || minBlob.size < smallestBlob.size) {
-          smallestBlob = minBlob;
-        }
-
-        if (minBlob.size > targetBytes) {
-          // Downscale further
-          const estimatedRatio = Math.sqrt(targetBytes / minBlob.size) * 0.92;
-          scale = Math.min(scale * 0.75, scale * estimatedRatio);
-          await new Promise((r) => setTimeout(r, 0));
-          continue;
-        }
-
-        // Test high quality (0.95)
-        const maxBlob = await canvasToWebPBlob(canvas, 0.95);
-        if (maxBlob.size <= targetBytes) {
-          bestBlob = maxBlob;
-          break;
-        }
-
-        // Binary search quality between 0.05 and 0.95
-        let lowQ = 0.05;
-        let highQ = 0.95;
-        bestBlob = minBlob;
-
-        for (let i = 0; i < 7; i++) {
-          if (taskToken !== currentTaskToken) throw new Error('aborted');
-          const midQ = (lowQ + highQ) / 2;
-          const midBlob = await canvasToWebPBlob(canvas, midQ);
-
-          if (midBlob.size <= targetBytes) {
-            bestBlob = midBlob;
-            lowQ = midQ;
-          } else {
-            highQ = midQ;
-          }
-          await new Promise((r) => setTimeout(r, 0));
-        }
-
-        break;
-      }
-
-      if (bestBlob && bestBlob.size <= targetBytes) {
-        return { blob: bestBlob, reached: true };
-      }
-      return { blob: smallestBlob || minBlobFallback(origW, origH), reached: false };
-
-      function minBlobFallback(w: number, h: number): Blob {
-        return smallestBlob || new Blob([], { type: 'image/webp' });
-      }
-    }
-
-    // Core re-compression pipeline
-    async function runCompression() {
+    // Core conversion pipeline
+    async function runConversion() {
       if (!loadedImage || !currentFile) return;
 
       const taskToken = ++currentTaskToken;
-      if (compressSpinner) compressSpinner.classList.remove('hidden');
-      if (resultText) resultText.textContent = i18n.controls?.compressing || 'Compressing...';
+      if (convertSpinner) convertSpinner.classList.remove('hidden');
+      if (resultText) resultText.textContent = i18n.controls?.converting || 'Converting...';
 
       // Yield frame so spinner paints smoothly
       await new Promise((r) => requestAnimationFrame(() => setTimeout(r, 10)));
 
       try {
         const origSize = currentFile.size;
-        const targetVal = targetSizeInput?.value.trim();
-        const targetNum = targetVal ? parseFloat(targetVal) : 0;
+        const origFormat = getOriginalFormatLabel(currentFile);
+        const targetInfo = FORMAT_INFO[currentFormatKey] || FORMAT_INFO.webp;
 
-        let finalBlob: Blob;
-        let targetReached = true;
-        let isTargetMode = false;
+        const canvas = document.createElement('canvas');
+        canvas.width = loadedImage.width;
+        canvas.height = loadedImage.height;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) throw new Error('Canvas 2D context unavailable');
 
-        if (targetNum > 0) {
-          isTargetMode = true;
-          const targetBytes = targetNum * 1024;
-          const res = await compressToTarget(
-            loadedImage.drawable,
-            loadedImage.width,
-            loadedImage.height,
-            targetBytes,
-            taskToken
-          );
-          finalBlob = res.blob;
-          targetReached = res.reached;
+        // SPECIAL RULE: For JPEG, flatten transparency onto solid white background
+        if (targetInfo.mime === 'image/jpeg') {
+          ctx.fillStyle = '#FFFFFF';
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
         } else {
-          // Quality Slider Mode
-          const quality = qualitySlider ? Math.max(1, Math.min(100, parseInt(qualitySlider.value, 10))) / 100 : 0.75;
-          const canvas = document.createElement('canvas');
-          canvas.width = loadedImage.width;
-          canvas.height = loadedImage.height;
-          const ctx = canvas.getContext('2d');
-          if (!ctx) throw new Error('Canvas 2D context unavailable');
-          ctx.drawImage(loadedImage.drawable, 0, 0, loadedImage.width, loadedImage.height);
-          finalBlob = await canvasToWebPBlob(canvas, quality);
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
         }
+
+        // Draw source image at original dimensions (no resizing)
+        ctx.drawImage(loadedImage.drawable, 0, 0, canvas.width, canvas.height);
+
+        // Quality parameter (only for lossy formats)
+        const qualityValNum = qualitySlider ? Math.max(1, Math.min(100, parseInt(qualitySlider.value, 10))) / 100 : 0.85;
+        const qualityParam = targetInfo.isLossless ? undefined : qualityValNum;
+
+        const blob = await canvasToBlob(canvas, targetInfo.mime, qualityParam);
 
         if (taskToken !== currentTaskToken) return;
 
-        compressedBlob = finalBlob;
-        if (compressedUrl) {
-          URL.revokeObjectURL(compressedUrl);
+        convertedBlob = blob;
+        if (convertedUrl) {
+          URL.revokeObjectURL(convertedUrl);
         }
-        compressedUrl = URL.createObjectURL(finalBlob);
+        convertedUrl = URL.createObjectURL(blob);
 
-        // Update result text
+        // Calculate size comparison and display result
         const origStr = formatBytes(origSize);
-        const compStr = formatBytes(finalBlob.size);
+        const compStr = formatBytes(blob.size);
 
-        if (isTargetMode && !targetReached) {
-          const closestTpl = i18n.controls?.closestPossible || 'Closest possible: {size} (target {target} KB)';
+        if (blob.size < origSize) {
+          const savedPct = Math.round((1 - blob.size / origSize) * 100);
+          const smallerLabel = i18n.controls?.smaller || 'smaller';
           if (resultText) {
-            resultText.textContent = closestTpl.replace('{size}', compStr).replace('{target}', String(targetNum));
-          }
-        } else if (finalBlob.size < origSize) {
-          const savedPct = Math.round((1 - finalBlob.size / origSize) * 100);
-          const savedLabel = i18n.controls?.saved || 'Saved';
-          if (resultText) {
-            resultText.textContent = `${origStr} → ${compStr} · ${savedLabel} ${savedPct}% ✅`;
+            resultText.textContent = `${origStr} ${origFormat} → ${compStr} ${targetInfo.name} · ${savedPct}% ${smallerLabel} ✅`;
           }
         } else {
-          const biggerMsg = i18n.controls?.biggerWarning || 'Bigger ⚠️ try a lower quality or use target size';
+          let biggerMsg = i18n.controls?.biggerWarning || 'Bigger ⚠️ try WebP instead';
+          if (targetInfo.name === 'WebP') {
+            biggerMsg = i18n.controls?.biggerWebpWarning || 'Bigger ⚠️ try lower quality';
+          }
           if (resultText) {
-            resultText.textContent = `${origStr} → ${compStr} · ${biggerMsg}`;
+            resultText.textContent = `${origStr} ${origFormat} → ${compStr} ${targetInfo.name} · ${biggerMsg}`;
           }
         }
       } catch (err: any) {
-        if (err?.message === 'aborted') return;
-        console.error('Compression error:', err);
-        showError(i18n.errors?.corruptFile || 'Could not compress this image.');
+        if (taskToken !== currentTaskToken) return;
+        console.error('Conversion error:', err);
+        if (err?.message === 'AVIF_UNSUPPORTED') {
+          showError(i18n.errors?.avifUnsupported || 'AVIF export is not supported in this browser. Please select WebP, JPG, or PNG.');
+        } else {
+          showError(i18n.errors?.corruptFile || 'Could not convert this image.');
+        }
       } finally {
-        if (taskToken === currentTaskToken && compressSpinner) {
-          compressSpinner.classList.add('hidden');
+        if (taskToken === currentTaskToken && convertSpinner) {
+          convertSpinner.classList.add('hidden');
         }
       }
     }
 
-    function scheduleCompression() {
+    function scheduleConversion() {
       if (debounceTimer) clearTimeout(debounceTimer);
       debounceTimer = setTimeout(() => {
-        runCompression();
+        runConversion();
       }, 300);
     }
 
-    // Handle incoming file selection
+    // Handle file input
     async function handleFile(file: File) {
       clearError();
 
-      // Validate format
       const isValidImage =
         file.type.startsWith('image/') ||
         /\.(jpe?g|png|webp|avif|gif|bmp|tiff|svg)$/i.test(file.name);
 
       if (!isValidImage) {
-        showError(i18n.errors?.invalidType || 'Please select a valid JPG, PNG, WebP, or AVIF image.');
+        showError(i18n.errors?.invalidType || 'Please select a valid image file (JPG, PNG, WebP, AVIF, GIF, BMP).');
         return;
       }
 
@@ -656,15 +678,21 @@ const faqSchema = {
         previewUrl = URL.createObjectURL(file);
         if (previewImg) previewImg.src = previewUrl;
         if (fileNameEl) fileNameEl.textContent = file.name;
-        if (originalSizeEl) originalSizeEl.textContent = formatBytes(file.size);
+
+        const origFormat = getOriginalFormatLabel(file);
+        if (formatSizeEl) {
+          formatSizeEl.textContent = `${origFormat} · ${formatBytes(file.size)}`;
+        }
 
         // Replace dropzone with preview
         dropzone?.classList.add('hidden');
         previewCard?.classList.remove('hidden');
         controlsSection?.classList.remove('hidden');
 
-        // Trigger initial compression
-        runCompression();
+        updateDownloadButtonText();
+
+        // Trigger initial conversion
+        runConversion();
       } catch (err) {
         console.error('Image decode error:', err);
         cleanupState();
@@ -695,7 +723,7 @@ const faqSchema = {
       if (fileInput) fileInput.value = '';
     });
 
-    // Drag & Drop
+    // Drag & drop
     ['dragenter', 'dragover'].forEach((ev) => {
       dropzone?.addEventListener(ev, (e) => {
         e.preventDefault();
@@ -735,37 +763,24 @@ const faqSchema = {
     }
     window.addEventListener('paste', onPaste);
 
-    // CONTROL 1: Quality slider input
+    // Quality slider input
     qualitySlider?.addEventListener('input', () => {
       if (qualityVal && qualitySlider) {
         qualityVal.textContent = `${qualitySlider.value}%`;
       }
-      scheduleCompression();
+      scheduleConversion();
     });
 
-    // CONTROL 2: Target size input
-    targetSizeInput?.addEventListener('input', () => {
-      const val = targetSizeInput.value.trim();
-      const num = parseFloat(val);
-
-      if (val !== '' && !isNaN(num) && num > 0) {
-        qualityControl?.classList.add('opacity-40', 'pointer-events-none');
-      } else {
-        qualityControl?.classList.remove('opacity-40', 'pointer-events-none');
-      }
-
-      scheduleCompression();
-    });
-
-    // DOWNLOAD BUTTON
+    // Download button
     downloadBtn?.addEventListener('click', () => {
-      if (!compressedBlob || !currentFile) return;
+      if (!convertedBlob || !currentFile) return;
 
       const origBaseName = currentFile.name.replace(/\.[^/.]+$/, '');
-      const downloadName = `${origBaseName}-compressed.webp`;
+      const targetExt = FORMAT_INFO[currentFormatKey]?.ext || 'webp';
+      const downloadName = `${origBaseName}.${targetExt}`;
 
       const link = document.createElement('a');
-      const url = URL.createObjectURL(compressedBlob);
+      const url = URL.createObjectURL(convertedBlob);
       link.href = url;
       link.download = downloadName;
       document.body.appendChild(link);
@@ -780,9 +795,9 @@ const faqSchema = {
 
   // Initialize on document ready & Astro view transitions
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initImageCompressor);
+    document.addEventListener('DOMContentLoaded', initImageConverter);
   } else {
-    initImageCompressor();
+    initImageConverter();
   }
-  document.addEventListener('astro:after-swap', initImageCompressor);
+  document.addEventListener('astro:after-swap', initImageConverter);
 </script>

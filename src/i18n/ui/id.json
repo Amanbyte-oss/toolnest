@@ -20,7 +20,8 @@
       "privacy": "Privasi",
       "contact": "Kontak",
       "switchLanguage": "Bahasa",
-      "imageCompressor": "Kompres Foto"
+      "imageCompressor": "Kompres Foto",
+      "imageConverter": "Konversi Gambar"
     },
     "buttons": {
       "calculate": "Hitung",
@@ -154,6 +155,10 @@
     "imageCompressor": {
       "title": "Kompres Foto Gratis — Kecilkan Ukuran JPG, PNG, WebP Online",
       "description": "Kompres gambar JPG, PNG, WebP, dan AVIF langsung di browser. 100% privat di perangkat Anda tanpa upload ke server."
+    },
+    "imageConverter": {
+      "title": "Konversi Gambar Online Gratis — Ubah Format JPG, PNG, WebP, AVIF",
+      "description": "Ubah format foto JPG, PNG, WebP, AVIF, GIF, dan BMP 100% di perangkat Anda. Cepat, privat, tanpa upload ke server."
     }
   },
   "wheel": {
@@ -1082,6 +1087,28 @@
         "q": "Berapa persen ukuran foto yang bisa dihemat tanpa merusak kualitas?",
         "a": "Sebagian besar foto berhasil dikurangi ukurannya antara 60% hingga 80% dengan preset Pintar atau Seimbang tanpa perbedaan yang kentara oleh mata manusia."
       }
+    ],
+    "converter": [
+      {
+        "q": "Format apa yang paling bagus untuk web?",
+        "a": "WebP adalah format terbaik untuk situs web modern. Ukurannya 25–35% lebih kecil dibanding JPEG serta mendukung transparansi penuh. AVIF memberi kompresi lebih tinggi, namun WebP memiliki dukungan peramban yang lebih luas."
+      },
+      {
+        "q": "Apakah kualitas gambar berkurang saat konversi?",
+        "a": "Konversi ke PNG bersifat 100% lossless tanpa penurunan mutu. Konversi ke WebP, JPG, atau AVIF dapat diatur kualitasnya (standar 85%) agar ukuran kecil namun tetap tajam."
+      },
+      {
+        "q": "Bagaimana dengan transparansi saat mengubah PNG ke JPG?",
+        "a": "Format JPEG tidak mendukung transparansi. Alat kami otomatis memberi latar belakang putih bersih pada area transparan agar tidak muncul kotak hitam."
+      },
+      {
+        "q": "Apakah gambar saya diunggah ke server?",
+        "a": "Tidak pernah. Seluruh pemrosesan dilakukan 100% di browser Anda menggunakan Canvas API. Tidak ada data yang dikirim ke server."
+      },
+      {
+        "q": "Apa itu format AVIF?",
+        "a": "AVIF adalah format gambar generasi terbaru berbasis codec AV1 yang menghasilkan ukuran file sangat hemat dengan kualitas prima."
+      }
     ]
   },
   "nameMeaning": {
@@ -1462,7 +1489,8 @@
       "saved": "Hemat",
       "biggerWarning": "Lebih besar ⚠️ coba turunkan kualitas atau gunakan target ukuran",
       "closestPossible": "Paling mendekati: {size} (target {target} KB)",
-      "compressing": "Mengompres..."
+      "compressing": "Mengompres...",
+      "convertCrossLink": "Ubah format →"
     },
     "preview": {
       "remove": "Hapus foto dan mulai ulang"
@@ -1470,6 +1498,34 @@
     "errors": {
       "invalidType": "Harap pilih berkas gambar JPG, PNG, WebP, atau AVIF yang valid.",
       "corruptFile": "Berkas gambar tidak dapat dibaca atau rusak."
+    }
+  },
+  "converter": {
+    "title": "Konversi Format Gambar Gratis",
+    "subtitle": "Ubah format foto JPG, PNG, WebP, AVIF, GIF, dan BMP langsung di browser. 100% privat, cepat, tanpa upload.",
+    "privacyBadge": "100% di Perangkat Anda • Tidak Ada yang Diunggah",
+    "dropzone": {
+      "tapOrDrop": "Ketuk atau letakkan foto di sini",
+      "clickOrPaste": "Klik untuk memilih atau tempel dengan Ctrl+V"
+    },
+    "preview": {
+      "remove": "Hapus foto dan mulai ulang"
+    },
+    "controls": {
+      "outputFormat": "Format Tujuan",
+      "quality": "Kualitas",
+      "pngLosslessNote": "PNG bersifat lossless — slider kualitas tidak diperlukan",
+      "downloadBtn": "Unduh {format}",
+      "smaller": "lebih kecil",
+      "biggerWarning": "Lebih besar ⚠️ coba pilih WebP",
+      "biggerWebpWarning": "Lebih besar ⚠️ coba turunkan kualitas",
+      "converting": "Mengonversi...",
+      "compressCrossLink": "Kompres foto ini →"
+    },
+    "errors": {
+      "invalidType": "Harap pilih berkas gambar yang valid (JPG, PNG, WebP, AVIF, GIF, BMP).",
+      "corruptFile": "Berkas gambar tidak dapat dibaca atau rusak.",
+      "avifUnsupported": "Ekspor format AVIF tidak didukung di browser ini. Harap pilih WebP, JPG, atau PNG."
     }
   }
 }

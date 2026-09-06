@@ -501,6 +501,11 @@ const LOCALIZED_LINKS: Record<string, Record<Lang, { name: string; desc: string;
   'image-compressor': {
     en: [
       {
+        name: '🔄 Image Converter',
+        desc: 'Convert JPG, PNG, WebP, AVIF, GIF, and BMP directly in your browser.',
+        anchor: 'Convert image formats with 100% privacy',
+      },
+      {
         name: '🎡 Decision Wheel',
         desc: 'Spin the wheel to make quick, unbiased choices or randomize ideas.',
         anchor: 'Make quick decisions with the interactive decision wheel',
@@ -510,13 +515,13 @@ const LOCALIZED_LINKS: Record<string, Record<Lang, { name: string; desc: string;
         desc: 'Pick contest winners, classroom students, or names without duplicates.',
         anchor: 'Draw random winners or split teams fairly',
       },
-      {
-        name: '⏳ Countdown Timer',
-        desc: 'Track live event deadlines, project milestones, and special dates.',
-        anchor: 'Create a live shareable event countdown',
-      },
     ],
     pt: [
+      {
+        name: '🔄 Conversor de Imagens',
+        desc: 'Converta JPG, PNG, WebP, AVIF, GIF e BMP direto no navegador.',
+        anchor: 'Converta formatos de imagem com 100% de privacidade',
+      },
       {
         name: '🎡 Roleta de Decisões',
         desc: 'Gire a roleta para tomar decisões rápidas e justas ou sortear ideias.',
@@ -527,13 +532,13 @@ const LOCALIZED_LINKS: Record<string, Record<Lang, { name: string; desc: string;
         desc: 'Sorteie ganhadores, equipes ou itens da lista sem repetições.',
         anchor: 'Sorteie nomes ou divida grupos de forma justa',
       },
-      {
-        name: '⏳ Contagem Regressiva',
-        desc: 'Acompanhe prazos, metas de projetos e datas comemorativas em tempo real.',
-        anchor: 'Crie uma contagem regressiva ao vivo e compartilhável',
-      },
     ],
     id: [
+      {
+        name: '🔄 Konversi Gambar',
+        desc: 'Ubah format foto JPG, PNG, WebP, AVIF, GIF, dan BMP langsung di browser.',
+        anchor: 'Ubah format gambar dengan privasi 100%',
+      },
       {
         name: '🎡 Roda Keputusan',
         desc: 'Putar roda untuk menentukan pilihan acak secara adil dan cepat.',
@@ -544,13 +549,13 @@ const LOCALIZED_LINKS: Record<string, Record<Lang, { name: string; desc: string;
         desc: 'Pilih pemenang lomba, siswa kelas, atau daftar tanpa duplikat.',
         anchor: 'Pilih pemenang acak atau bagi tim secara adil',
       },
-      {
-        name: '⏳ Hitung Mundur',
-        desc: 'Pantau tenggat waktu acara, target proyek, dan momen spesial.',
-        anchor: 'Buat jam hitung mundur langsung yang dapat dibagikan',
-      },
     ],
     ar: [
+      {
+        name: '🔄 محول الصور',
+        desc: 'حول صور JPG و PNG و WebP و AVIF و GIF و BMP مباشرة في متصفحك.',
+        anchor: 'حول صيغ الصور بخصوصية وأمان 100%',
+      },
       {
         name: '🎡 عجلة القرارات',
         desc: 'قم بتدوير العجلة لاتخاذ قرارات سريعة وعادلة بين الخيارات والأنشطة.',
@@ -561,10 +566,75 @@ const LOCALIZED_LINKS: Record<string, Record<Lang, { name: string; desc: string;
         desc: 'اختر الفائزين في المسابقات أو قسّم الفرق دون أي تكرار.',
         anchor: 'اختر فائزين عشوائيين أو قسّم المجموعات بعدالة',
       },
+    ],
+  },
+  'image-converter': {
+    en: [
       {
-        name: '⏳ العداد التنازلي',
-        desc: 'تابع المواعيد النهائية للمشاريع والمناسبات الخاصة في الوقت الفعلي.',
-        anchor: 'أنشئ عداداً تنازلياً مباشراً وقابلاً للمشاركة',
+        name: '🗜️ Image Compressor',
+        desc: 'Compress JPG, PNG, and WebP images up to 80% with zero server uploads.',
+        anchor: 'Compress your converted images for smaller file sizes',
+      },
+      {
+        name: '🎡 Decision Wheel',
+        desc: 'Spin the wheel to make quick, unbiased choices or randomize ideas.',
+        anchor: 'Make quick decisions with the interactive decision wheel',
+      },
+      {
+        name: '🎲 Random Picker',
+        desc: 'Pick contest winners, classroom students, or names without duplicates.',
+        anchor: 'Draw random winners or split teams fairly',
+      },
+    ],
+    pt: [
+      {
+        name: '🗜️ Compressor de Imagens',
+        desc: 'Comprima imagens JPG, PNG e WebP em até 80% sem envio para servidores.',
+        anchor: 'Comprima suas imagens convertidas para tamanhos menores',
+      },
+      {
+        name: '🎡 Roleta de Decisões',
+        desc: 'Gire a roleta para tomar decisões rápidas e justas ou sortear ideias.',
+        anchor: 'Tome decisões rápidas com a roleta interativa',
+      },
+      {
+        name: '🎲 Sorteador Aleatório',
+        desc: 'Sorteie ganhadores, equipes ou itens da lista sem repetições.',
+        anchor: 'Sorteie nomes ou divida grupos de forma justa',
+      },
+    ],
+    id: [
+      {
+        name: '🗜️ Kompres Foto',
+        desc: 'Kecilkan ukuran foto JPG, PNG, dan WebP hingga 80% tanpa upload ke server.',
+        anchor: 'Kompres foto hasil konversi agar hemat ukuran',
+      },
+      {
+        name: '🎡 Roda Keputusan',
+        desc: 'Putar roda untuk menentukan pilihan acak secara adil dan cepat.',
+        anchor: 'Ambil keputusan cepat dengan roda putar interaktif',
+      },
+      {
+        name: '🎲 Pengacak Nama',
+        desc: 'Pilih pemenang lomba, siswa kelas, atau daftar tanpa duplikat.',
+        anchor: 'Pilih pemenang acak atau bagi tim secara adil',
+      },
+    ],
+    ar: [
+      {
+        name: '🗜️ ضغط الصور',
+        desc: 'اضغط صور JPG و PNG و WebP بنسبة تصل إلى 80% بدون رفع أي ملف.',
+        anchor: 'اضغط صورك المحولة للحصول على حجم ملف أصغر',
+      },
+      {
+        name: '🎡 عجلة القرارات',
+        desc: 'قم بتدوير العجلة لاتخاذ قرارات سريعة وعادلة بين الخيارات والأنشطة.',
+        anchor: 'اتخذ قرارات سريعة باستخدام عجلة الحظ التفاعلية',
+      },
+      {
+        name: '🎲 السحب العشوائي',
+        desc: 'اختر الفائزين في المسابقات أو قسّم الفرق دون أي تكرار.',
+        anchor: 'اختر فائزين عشوائيين أو قسّم المجموعات بعدالة',
       },
     ],
   },
@@ -574,7 +644,8 @@ const LOCALIZED_LINKS: Record<string, Record<Lang, { name: string; desc: string;
 LOCALIZED_LINKS['names-directory'] = LOCALIZED_LINKS['names'];
 
 const DEFAULT_HREFS: Record<string, string[]> = {
-  'image-compressor': ['/decision-wheel', '/random-picker', '/countdown'],
+  'image-compressor': ['/image-converter', '/decision-wheel', '/random-picker'],
+  'image-converter': ['/image-compressor', '/decision-wheel', '/random-picker'],
   'age-calculator': ['/birthday-facts', '/countdown', '/name-meaning'],
   'birthday-facts': ['/age-calculator', '/countdown', '/name-meaning'],
   'decision-wheel': ['/random-picker', '/countdown', '/image-compressor'],

@@ -17,6 +17,7 @@ const picker = getNamespace(lang, 'picker');
 const countdown = getNamespace(lang, 'countdown');
 const names = getNamespace(lang, 'names');
 const compressor = getNamespace(lang, 'compressor');
+const converter = getNamespace(lang, 'converter');
 
 const tools = [
   {
@@ -25,6 +26,14 @@ const tools = [
     href: getLocalizedPath('/image-compressor', lang),
     badge: lang === 'ar' ? 'جديد • خصوصية 100%' : lang === 'pt' ? 'Novo • 100% Privado' : lang === 'id' ? 'Baru • 100% Privat' : 'New • 100% Private',
     icon: 'image' as const,
+    popular: true,
+  },
+  {
+    title: common.nav.imageConverter,
+    description: converter.subtitle,
+    href: getLocalizedPath('/image-converter', lang),
+    badge: lang === 'ar' ? 'جديد • خصوصية 100%' : lang === 'pt' ? 'Novo • 100% Privado' : lang === 'id' ? 'Baru • 100% Privat' : 'New • 100% Private',
+    icon: 'convert' as const,
     popular: true,
   },
   {
