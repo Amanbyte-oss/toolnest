@@ -291,6 +291,11 @@ const LOCALIZED_LINKS: Record<string, Record<Lang, { name: string; desc: string;
   'image-compressor': {
     en: [
       {
+        name: '📄 Image to PDF',
+        desc: 'Convert images into clean, multi-page PDF documents client-side.',
+        anchor: 'Convert images to PDF documents securely',
+      },
+      {
         name: '🔄 Image Converter',
         desc: 'Convert images between WebP, JPG, and PNG formats client-side.',
         anchor: 'Convert image formats instantly in browser',
@@ -300,13 +305,13 @@ const LOCALIZED_LINKS: Record<string, Record<Lang, { name: string; desc: string;
         desc: 'Track deadlines, product launches, or special events in real time.',
         anchor: 'Set a live countdown clock for your events',
       },
-      {
-        name: '🎯 Random Picker',
-        desc: 'Draw winners fairly from lists with cryptographic randomness.',
-        anchor: 'Pick giveaway winners with fair random algorithm',
-      },
     ],
     pt: [
+      {
+        name: '📄 Imagem para PDF',
+        desc: 'Converta imagens em documentos PDF limpos de várias páginas no navegador.',
+        anchor: 'Converta imagens em PDF com total segurança',
+      },
       {
         name: '🔄 Conversor de Imagens',
         desc: 'Converta imagens entre WebP, JPG e PNG direto no navegador.',
@@ -317,13 +322,13 @@ const LOCALIZED_LINKS: Record<string, Record<Lang, { name: string; desc: string;
         desc: 'Acompanhe prazos, lançamentos de produtos ou eventos em tempo real.',
         anchor: 'Crie uma contagem regressiva ao vivo para seus eventos',
       },
-      {
-        name: '🎯 Sorteador de Nomes',
-        desc: 'Sorteie ganhadores de forma justa com aleatoriedade criptográfica.',
-        anchor: 'Sorteie nomes e opções com algoritmo seguro',
-      },
     ],
     id: [
+      {
+        name: '📄 Gambar ke PDF',
+        desc: 'Ubah gambar menjadi dokumen PDF rapi multi-halaman langsung di perangkat.',
+        anchor: 'Ubah gambar menjadi dokumen PDF secara aman',
+      },
       {
         name: '🔄 Konverter Gambar',
         desc: 'Ubah format gambar antara WebP, JPG, dan PNG langsung di browser.',
@@ -334,13 +339,13 @@ const LOCALIZED_LINKS: Record<string, Record<Lang, { name: string; desc: string;
         desc: 'Pantau batas waktu, peluncuran produk, atau acara spesial secara langsung.',
         anchor: 'Buat jam hitung mundur langsung untuk acara Anda',
       },
-      {
-        name: '🎯 Pengacak Pilihan',
-        desc: 'Undi pemenang secara adil menggunakan algoritma kriptografi acak.',
-        anchor: 'Pilih nama atau opsi dengan pengacak adil',
-      },
     ],
     ar: [
+      {
+        name: '📄 تحويل الصور إلى PDF',
+        desc: 'تحويل الصور إلى مستندات PDF متعددة الصفحات داخل المتصفح بأمان تام.',
+        anchor: 'حول الصور إلى ملفات PDF بخصوصية تامة',
+      },
       {
         name: '🔄 محول صيغ الصور',
         desc: 'تحويل الصور بين صيغ WebP وJPG وPNG داخل المتصفح بدون رفع ملفات.',
@@ -351,15 +356,15 @@ const LOCALIZED_LINKS: Record<string, Record<Lang, { name: string; desc: string;
         desc: 'تابع المواعيد النهائية وإطلاق المنتجات والفعاليات في الوقت الفعلي.',
         anchor: 'أنشئ عداً تنازلياً مباشراً لفعالياتك ومناسباتك',
       },
-      {
-        name: '🎯 القرعة العشوائية',
-        desc: 'اختر الفائزين بنزاهة تامة باستخدام خوارزميات التشفير العشوائي.',
-        anchor: 'أجرِ قرعة نزيهة لتحديد الفائزين بسهولة',
-      },
     ],
   },
   'image-converter': {
     en: [
+      {
+        name: '📄 Image to PDF',
+        desc: 'Combine your converted images into a single PDF document on your device.',
+        anchor: 'Turn your converted images into a PDF',
+      },
       {
         name: '🗜️ Image Compressor',
         desc: 'Compress images to target file sizes or reduce footprint up to 90%.',
@@ -370,13 +375,13 @@ const LOCALIZED_LINKS: Record<string, Record<Lang, { name: string; desc: string;
         desc: 'Track deadlines, product launches, or special events in real time.',
         anchor: 'Set a live countdown clock for your events',
       },
-      {
-        name: '🎯 Random Picker',
-        desc: 'Draw winners fairly from lists with cryptographic randomness.',
-        anchor: 'Pick giveaway winners with fair random algorithm',
-      },
     ],
     pt: [
+      {
+        name: '📄 Imagem para PDF',
+        desc: 'Junte suas imagens convertidas em um único documento PDF no seu dispositivo.',
+        anchor: 'Transforme suas imagens convertidas em PDF',
+      },
       {
         name: '🗜️ Compressor de Imagens',
         desc: 'Comprima imagens para um tamanho alvo ou reduza o peso em até 90%.',
@@ -387,13 +392,13 @@ const LOCALIZED_LINKS: Record<string, Record<Lang, { name: string; desc: string;
         desc: 'Acompanhe prazos, lançamentos de produtos ou eventos em tempo real.',
         anchor: 'Crie uma contagem regressiva ao vivo para seus eventos',
       },
-      {
-        name: '🎯 Sorteador de Nomes',
-        desc: 'Sorteie ganhadores de forma justa com aleatoriedade criptográfica.',
-        anchor: 'Sorteie nomes e opções com algoritmo seguro',
-      },
     ],
     id: [
+      {
+        name: '📄 Gambar ke PDF',
+        desc: 'Gabungkan gambar yang telah dikonversi menjadi satu dokumen PDF di perangkat.',
+        anchor: 'Satukan gambar konversi menjadi file PDF',
+      },
       {
         name: '🗜️ Kompresor Gambar',
         desc: 'Kompres gambar ke target ukuran tertentu atau hemat memori hingga 90%.',
@@ -404,13 +409,13 @@ const LOCALIZED_LINKS: Record<string, Record<Lang, { name: string; desc: string;
         desc: 'Pantau batas waktu, peluncuran produk, atau acara spesial secara langsung.',
         anchor: 'Buat jam hitung mundur langsung untuk acara Anda',
       },
-      {
-        name: '🎯 Pengacak Pilihan',
-        desc: 'Undi pemenang secara adil menggunakan algoritma kriptografi acak.',
-        anchor: 'Pilih nama atau opsi dengan pengacak adil',
-      },
     ],
     ar: [
+      {
+        name: '📄 تحويل الصور إلى PDF',
+        desc: 'اجمع صورك المحولة في ملف PDF واحد متكامل على جهازك مباشرة.',
+        anchor: 'حول صورك المحولة إلى مستند PDF متكامل',
+      },
       {
         name: '🗜️ ضاغط الصور',
         desc: 'ضغط الصور لحجم ملف محدد أو تقليل الحجم بنسبة تصل إلى 90%.',
@@ -421,18 +426,84 @@ const LOCALIZED_LINKS: Record<string, Record<Lang, { name: string; desc: string;
         desc: 'تابع المواعيد النهائية وإطلاق المنتجات والفعاليات في الوقت الفعلي.',
         anchor: 'أنشئ عداً تنازلياً مباشراً لفعالياتك ومناسباتك',
       },
+    ],
+  },
+  'image-to-pdf': {
+    en: [
       {
-        name: '🎯 القرعة العشوائية',
-        desc: 'اختر الفائزين بنزاهة تامة باستخدام خوارزميات التشفير العشوائي.',
-        anchor: 'أجرِ قرعة نزيهة لتحديد الفائزين بسهولة',
+        name: '🗜️ Image Compressor',
+        desc: 'Compress your images before or after PDF conversion to save space.',
+        anchor: 'Compress images securely in your browser',
+      },
+      {
+        name: '🔄 Image Converter',
+        desc: 'Convert images between JPG, PNG, and WebP before creating your PDF.',
+        anchor: 'Convert image formats instantly in browser',
+      },
+      {
+        name: '⏳ Countdown Timer',
+        desc: 'Track deadlines, product launches, or special events in real time.',
+        anchor: 'Set a live countdown clock for your events',
+      },
+    ],
+    pt: [
+      {
+        name: '🗜️ Compressor de Imagens',
+        desc: 'Comprima suas imagens antes ou depois da conversão em PDF.',
+        anchor: 'Comprima imagens com segurança no navegador',
+      },
+      {
+        name: '🔄 Conversor de Imagens',
+        desc: 'Converta imagens entre JPG, PNG e WebP antes de criar seu PDF.',
+        anchor: 'Converta formatos de imagem com rapidez',
+      },
+      {
+        name: '⏳ Contagem Regressiva',
+        desc: 'Acompanhe prazos, lançamentos de produtos ou eventos em tempo real.',
+        anchor: 'Crie uma contagem regressiva ao vivo para seus eventos',
+      },
+    ],
+    id: [
+      {
+        name: '🗜️ Kompresor Gambar',
+        desc: 'Kompres gambar Anda sebelum atau sesudah dijadikan PDF.',
+        anchor: 'Kompres gambar secara aman di browser Anda',
+      },
+      {
+        name: '🔄 Konverter Gambar',
+        desc: 'Ubah format gambar antara JPG, PNG, dan WebP sebelum membuat PDF.',
+        anchor: 'Ubah format gambar secara instan di peramban',
+      },
+      {
+        name: '⏳ Hitung Mundur',
+        desc: 'Pantau batas waktu, peluncuran produk, atau acara spesial secara langsung.',
+        anchor: 'Buat jam hitung mundur langsung untuk acara Anda',
+      },
+    ],
+    ar: [
+      {
+        name: '🗜️ ضاغط الصور',
+        desc: 'ضغط صورك قبل أو بعد تحويلها إلى PDF لتوفير المساحة.',
+        anchor: 'اضغط صورك بأمان داخل متصفحك',
+      },
+      {
+        name: '🔄 محول صيغ الصور',
+        desc: 'تحويل الصور بين JPG وPNG وWebP قبل إنشاء مستند PDF.',
+        anchor: 'حول صيغ الصور فورياً وبخصوصية تامة',
+        },
+      {
+        name: '⏳ العداد التنازلي',
+        desc: 'تابع المواعيد النهائية وإطلاق المنتجات والفعاليات في الوقت الفعلي.',
+        anchor: 'أنشئ عداً تنازلياً مباشراً لفعالياتك ومناسباتك',
       },
     ],
   },
 };
 
 const DEFAULT_HREFS: Record<string, string[]> = {
-  'image-compressor': ['/image-converter', '/countdown', '/random-picker'],
-  'image-converter': ['/image-compressor', '/countdown', '/random-picker'],
+  'image-to-pdf': ['/image-compressor', '/image-converter', '/countdown'],
+  'image-compressor': ['/image-to-pdf', '/image-converter', '/countdown'],
+  'image-converter': ['/image-to-pdf', '/image-compressor', '/countdown'],
   'age-calculator': ['/birthday-facts', '/countdown', '/random-picker'],
   'birthday-facts': ['/age-calculator', '/countdown', '/random-picker'],
   'random-picker': ['/countdown', '/image-compressor', '/birthday-facts'],

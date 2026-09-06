@@ -1,0 +1,208 @@
+---
+import Base from '../layouts/Base.astro';
+import { getNamespace, getLocalizedPath, type Lang } from '../i18n';
+
+export interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'en' } = Astro.props;
+const common = getNamespace(lang, 'common');
+const sitemapPage = getNamespace(lang, 'sitemapPage');
+const terms = getNamespace(lang, 'terms');
+const faqPage = getNamespace(lang, 'faqPage');
+const compressor = getNamespace(lang, 'compressor');
+const converter = getNamespace(lang, 'converter');
+const imageToPdf = getNamespace(lang, 'imageToPdf');
+const age = getNamespace(lang, 'age');
+const birthday = getNamespace(lang, 'birthday');
+const picker = getNamespace(lang, 'picker');
+const countdown = getNamespace(lang, 'countdown');
+const privacy = getNamespace(lang, 'privacy');
+const about = getNamespace(lang, 'about');
+const contact = getNamespace(lang, 'contact');
+
+const t = {
+  sitemapPage,
+  common,
+  nav: common.nav,
+  siteName: common.siteName,
+};
+
+interface SiteGroup {
+  title: string;
+  emoji: string;
+  links: Array<{
+    name: string;
+    href: string;
+    desc: string;
+    badge?: string;
+  }>;
+}
+
+const groups: SiteGroup[] = [
+  {
+    title: sitemapPage.catImages || 'Image & Document Tools',
+    emoji: '🖼️',
+    links: [
+      {
+        name: common.nav?.imageToPdf || 'Image to PDF',
+        href: getLocalizedPath('/image-to-pdf', lang),
+        desc: imageToPdf.subtitle || 'Combine and convert images into clean, multi-page PDF documents.',
+        badge: 'Client-Side',
+      },
+      {
+        name: common.nav?.imageCompressor || 'Image Compressor',
+        href: getLocalizedPath('/image-compressor', lang),
+        desc: compressor.subtitle || 'Compress JPG, PNG, and WebP images up to 90% without quality loss.',
+        badge: 'Client-Side',
+      },
+      {
+        name: common.nav?.imageConverter || 'Image Converter',
+        href: getLocalizedPath('/image-converter', lang),
+        desc: converter.subtitle || 'Convert between WebP, JPG, PNG, and AVIF formats in your browser.',
+        badge: 'Client-Side',
+      },
+    ],
+  },
+  {
+    title: sitemapPage.catCalculators || 'Calculators & Everyday Utilities',
+    emoji: '⚡',
+    links: [
+      {
+        name: common.nav?.ageCalculator || 'Age Calculator',
+        href: getLocalizedPath('/age-calculator', lang),
+        desc: age.subtitle || 'Calculate your exact age in years, months, days, and lived seconds.',
+        badge: 'Instant',
+      },
+      {
+        name: common.nav?.birthdayFacts || 'Birthday Facts',
+        href: getLocalizedPath('/birthday-facts', lang),
+        desc: birthday.subtitle || 'Discover your zodiac sign, birthstone, weekday, and milestone facts.',
+        badge: 'Interactive',
+      },
+      {
+        name: common.nav?.randomPicker || 'Random Picker',
+        href: getLocalizedPath('/random-picker', lang),
+        desc: picker.subtitle || 'Draw giveaway winners fairly using cryptographic hardware entropy.',
+        badge: 'Audited',
+      },
+      {
+        name: common.nav?.countdown || 'Countdown Timer',
+        href: getLocalizedPath('/countdown', lang),
+        desc: countdown.subtitle || 'Create, customize, and share live countdown timers for special events.',
+        badge: 'Shareable',
+      },
+    ],
+  },
+  {
+    title: sitemapPage.catTrust || 'Trust, Company & Legal',
+    emoji: '🏛️',
+    links: [
+      {
+        name: common.nav?.about || 'About ToolNest',
+        href: getLocalizedPath('/about', lang),
+        desc: about.subheading || 'Learn about our mission, privacy-first promise, and client-side architecture.',
+      },
+      {
+        name: common.nav?.contact || 'Contact Us',
+        href: getLocalizedPath('/contact', lang),
+        desc: contact.subheading || 'Send suggestions, report bugs, or request new free utilities.',
+      },
+      {
+        name: faqPage.heading || 'Frequently Asked Questions',
+        href: getLocalizedPath('/faq', lang),
+        desc: faqPage.subheading || 'Everything you need to know about our privacy and tools.',
+      },
+      {
+        name: common.nav?.privacy || 'Privacy Policy',
+        href: getLocalizedPath('/privacy-policy', lang),
+        desc: privacy.introTitle || 'Full disclosure of zero server file uploads, storage, and GDPR/CCPA rights.',
+      },
+      {
+        name: terms.heading || 'Terms of Service',
+        href: getLocalizedPath('/terms-of-service', lang),
+        desc: terms.subheading || 'Fair, clear rules for using ToolNest free utilities.',
+      },
+      {
+        name: 'XML Sitemap',
+        href: '/sitemap.xml',
+        desc: 'Machine-readable XML sitemap index with reciprocal hreflang alternates.',
+      },
+    ],
+  },
+];
+---
+
+<Base
+  metaKey="sitemap"
+  canonicalPath={getLocalizedPath('/sitemap-page', lang)}
+  ogImage="/og/share-banner.svg"
+  breadcrumbs={[{ name: t.nav.sitemap || 'HTML Sitemap', item: getLocalizedPath('/sitemap-page', lang) }]}
+  lang={lang}
+>
+  <article class="space-y-10 max-w-3xl mx-auto">
+    <!-- Header -->
+    <header class="space-y-3 text-center sm:text-left rtl:sm:text-right pb-4 border-b border-border-light dark:border-border-dark">
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-accent/10 text-accent dark:bg-accent/20">
+        <span>🗺️</span>
+        <span>{t.sitemapPage.badge}</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-primary-light dark:text-primary-dark">
+        {t.sitemapPage.heading}
+      </h1>
+      <p class="text-base text-secondary-light dark:text-secondary-dark leading-relaxed">
+        {t.sitemapPage.subheading}
+      </p>
+    </header>
+
+    <!-- Groups -->
+    <div class="space-y-10">
+      {groups.map((group) => (
+        <section class="space-y-4" aria-labelledby={`group-${group.title.toLowerCase().replace(/\s+/g, '-')}`}>
+          <div class="flex items-center gap-2 pb-2 border-b border-border-light dark:border-border-dark">
+            <span class="text-xl">{group.emoji}</span>
+            <h2 id={`group-${group.title.toLowerCase().replace(/\s+/g, '-')}`} class="text-xl font-bold text-primary-light dark:text-primary-dark">
+              {group.title}
+            </h2>
+            <span class="ms-auto text-xs px-2 py-0.5 rounded-md bg-black/5 dark:bg-white/5 font-mono text-secondary-light dark:text-secondary-dark">
+              {group.links.length}
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            {group.links.map((link) => (
+              <a
+                href={link.href}
+                class="group card p-4 hover:border-accent/60 transition-all flex flex-col justify-between"
+              >
+                <div class="space-y-1.5">
+                  <div class="flex items-center justify-between gap-2">
+                    <h3 class="text-sm font-bold text-primary-light dark:text-primary-dark group-hover:text-accent transition-colors">
+                      {link.name}
+                    </h3>
+                    {link.badge && (
+                      <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                        {link.badge}
+                      </span>
+                    )}
+                  </div>
+                  <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed line-clamp-2">
+                    {link.desc}
+                  </p>
+                </div>
+
+                <div class="pt-3 flex items-center text-xs font-semibold text-accent gap-1 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform">
+                  <span>Visit page</span>
+                  <svg class="w-3.5 h-3.5 rtl:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M5 12h14M12 5l7 7-7 7"></path>
+                  </svg>
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+  </article>
+</Base>

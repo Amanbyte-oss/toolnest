@@ -1,0 +1,1393 @@
+---
+/**
+ * src/views/ImageToPdfView.astro
+ * 100% Client-Side Image to PDF Converter for ToolNest.
+ * Zero server uploads, privacy-first, touch drag-and-drop,
+ * mobile camera scanning, auto-enhance document filter,
+ * collapsible layout options, live PDF preview, and dynamic jsPDF.
+ */
+import Base from '../layouts/Base.astro';
+import Faq from '../components/Faq.astro';
+import ToolCard from '../components/ToolCard.astro';
+import { getNamespace, getLocalizedPath, type Lang, isRtlLang } from '../i18n';
+import { getLocalizedRelatedLinks } from '../i18n/relatedLinks';
+
+export interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'en' } = Astro.props;
+const common = getNamespace(lang, 'common');
+const pdfNs = getNamespace(lang, 'imageToPdf');
+const faqNs = getNamespace(lang, 'faq');
+const t = { pdf: pdfNs, common, nav: common.nav, siteName: common.siteName };
+
+const isRtl = isRtlLang(lang);
+const canonicalPath = getLocalizedPath('/image-to-pdf', lang);
+
+// Localized FAQs
+const faqs = (faqNs.imageToPdf || []).map((f: any) => ({
+  question: f.question || f.q,
+  answer: f.answer || f.a,
+}));
+
+const relatedTools = getLocalizedRelatedLinks(lang, 'image-to-pdf');
+
+const webAppSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  '@id': `https://toolnest.pages.dev${canonicalPath}#app`,
+  name: t.pdf.title,
+  url: `https://toolnest.pages.dev${canonicalPath}`,
+  description: t.pdf.subtitle,
+  applicationCategory: 'UtilitiesApplication',
+  operatingSystem: 'Any',
+  browserRequirements: 'Requires HTML5 Canvas and JavaScript support. Works 100% client-side without server uploads.',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'ToolNest',
+    url: 'https://toolnest.pages.dev',
+  },
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: faq.answer,
+    },
+  })),
+};
+---
+
+<Base
+  metaKey="imageToPdf"
+  canonicalPath={canonicalPath}
+  ogImage="/og/image-to-pdf.svg"
+  breadcrumbs={[
+    { name: common.nav.home, item: getLocalizedPath('/', lang) },
+    { name: common.nav.imageToPdf || 'Image to PDF', item: canonicalPath },
+  ]}
+  extraSchemas={[webAppSchema, faqSchema]}
+  lang={lang}
+>
+  <div class="space-y-8 max-w-4xl mx-auto">
+    <!-- Header with Trust Badges -->
+    <header class="space-y-4 text-center">
+      <div class="inline-flex flex-wrap items-center justify-center gap-2">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 shadow-xs">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>{t.pdf.privacyBadge}</span>
+        </span>
+        <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark text-secondary-light dark:text-secondary-dark">
+          ✨ {lang === 'ar' ? 'بدون علامة مائية' : lang === 'pt' ? 'Sem marca d\'água' : lang === 'id' ? 'Tanpa watermark' : 'No Watermark'}
+        </span>
+      </div>
+
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-primary-light dark:text-primary-dark">
+        {t.pdf.title}
+      </h1>
+
+      <p class="text-base sm:text-lg text-secondary-light dark:text-secondary-dark max-w-2xl mx-auto leading-relaxed">
+        {t.pdf.subtitle}
+      </p>
+    </header>
+
+    <!-- Hidden native file inputs -->
+    <input
+      type="file"
+      id="pdf-file-input"
+      accept="image/jpeg,image/png,image/webp,image/avif,image/bmp,image/gif"
+      multiple
+      class="hidden"
+      aria-label="Upload images"
+    />
+    <input
+      type="file"
+      id="pdf-camera-input"
+      accept="image/*"
+      capture="environment"
+      class="hidden"
+      aria-label="Scan document with camera"
+    />
+
+    <!-- Toast / Undo Notification -->
+    <div
+      id="pdf-toast"
+      class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-4 py-3 rounded-2xl bg-surface-dark/95 text-white border border-border-dark shadow-2xl flex items-center gap-3 text-sm transition-all duration-200 backdrop-blur-md max-w-[90vw]"
+      role="status"
+      aria-live="polite"
+    >
+      <span id="pdf-toast-msg" class="truncate max-w-[260px] sm:max-w-md"></span>
+      <button
+        id="pdf-toast-undo"
+        type="button"
+        class="hidden px-2.5 py-1 rounded-lg bg-accent text-white font-bold text-xs hover:bg-accent-hover transition-colors shrink-0"
+      >
+        {t.pdf.toolbar.undo}
+      </button>
+    </div>
+
+    <!-- MAIN APP CONTAINER -->
+    <main class="space-y-6">
+      <!-- 1. EMPTY STATE DROPZONE -->
+      <section
+        id="pdf-dropzone"
+        class="group relative rounded-3xl border-2 border-dashed border-border-light dark:border-border-dark hover:border-accent dark:hover:border-accent bg-surface-light dark:bg-surface-dark p-8 sm:p-14 text-center cursor-pointer transition-all duration-200 shadow-sm hover:shadow-md focus:outline-none focus:ring-4 focus:ring-accent/20"
+        tabindex="0"
+        role="button"
+        aria-label={t.pdf.dropzone.title}
+      >
+        <div class="max-w-md mx-auto space-y-4 pointer-events-none">
+          <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-3xl bg-accent/10 dark:bg-accent/20 flex items-center justify-center text-accent group-hover:scale-105 transition-transform duration-200 shadow-inner">
+            <svg class="w-8 h-8 sm:w-10 sm:h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <circle cx="10" cy="13" r="2"/>
+              <path d="m20 17-1.09-1.09a2 2 0 0 0-2.82 0L10 22"/>
+            </svg>
+          </div>
+
+          <div class="space-y-1">
+            <h2 class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark">
+              {t.pdf.dropzone.title}
+            </h2>
+            <p class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark">
+              {t.pdf.dropzone.subtitle}
+            </p>
+          </div>
+
+          <div class="pt-2 flex flex-wrap items-center justify-center gap-3 pointer-events-auto">
+            <button
+              type="button"
+              id="pdf-browse-btn"
+              class="btn-primary inline-flex items-center gap-2 text-sm font-bold shadow-md shadow-accent/20 active:scale-95 transition-transform"
+            >
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="17 8 12 3 7 8"/>
+                <line x1="12" y1="3" x2="12" y2="15"/>
+              </svg>
+              <span>{t.pdf.dropzone.browseBtn}</span>
+            </button>
+
+            <button
+              type="button"
+              id="pdf-camera-btn"
+              class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark hover:bg-slate-100 dark:hover:bg-slate-800 text-sm font-bold text-primary-light dark:text-primary-dark shadow-xs transition-colors active:scale-95"
+            >
+              <svg class="w-4 h-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                <circle cx="12" cy="13" r="4"/>
+              </svg>
+              <span>{t.pdf.dropzone.cameraBtn}</span>
+            </button>
+          </div>
+
+          <p class="text-[11px] sm:text-xs text-secondary-light/70 dark:text-secondary-dark/70">
+            {t.pdf.dropzone.pasteHint}
+          </p>
+        </div>
+      </section>
+
+      <!-- 2. WORKSPACE SECTION (Rendered when images are loaded) -->
+      <section id="pdf-workspace" class="hidden space-y-6">
+        <!-- Top Toolbar & Status Row -->
+        <div class="flex flex-wrap items-center justify-between gap-3 p-3 rounded-2xl bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark shadow-xs">
+          <!-- Left: Add & Camera buttons -->
+          <div class="flex items-center gap-2">
+            <button
+              type="button"
+              id="pdf-tb-add"
+              class="btn-primary text-xs px-3.5 py-2 font-bold inline-flex items-center gap-1.5 shadow-xs"
+            >
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="12" y1="5" x2="12" y2="19"/>
+                <line x1="5" y1="12" x2="19" y2="12"/>
+              </svg>
+              <span>{t.pdf.toolbar.addMore}</span>
+            </button>
+
+            <button
+              type="button"
+              id="pdf-tb-camera"
+              class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border border-border-light dark:border-border-dark text-xs font-semibold text-primary-light dark:text-primary-dark hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            >
+              <span>{t.pdf.toolbar.scanCamera}</span>
+            </button>
+          </div>
+
+          <!-- Middle / Right: Quick actions -->
+          <div class="flex flex-wrap items-center gap-1 sm:gap-1.5">
+            <button
+              type="button"
+              id="pdf-tb-rotate-all"
+              class="px-2.5 py-1.5 rounded-lg border border-border-light dark:border-border-dark text-xs font-medium text-secondary-light dark:text-secondary-dark hover:text-accent hover:border-accent/40 transition-colors"
+              title={t.pdf.toolbar.rotateAll}
+            >
+              🔄 <span class="hidden sm:inline">{t.pdf.toolbar.rotateAll}</span>
+            </button>
+
+            <button
+              type="button"
+              id="pdf-tb-enhance-all"
+              class="px-2.5 py-1.5 rounded-lg border border-border-light dark:border-border-dark text-xs font-medium text-secondary-light dark:text-secondary-dark hover:text-accent hover:border-accent/40 transition-colors"
+              title={t.pdf.toolbar.autoEnhance}
+            >
+              ✨ <span class="hidden sm:inline">{t.pdf.toolbar.autoEnhance}</span>
+            </button>
+
+            <button
+              type="button"
+              id="pdf-tb-sort"
+              class="px-2.5 py-1.5 rounded-lg border border-border-light dark:border-border-dark text-xs font-medium text-secondary-light dark:text-secondary-dark hover:text-accent hover:border-accent/40 transition-colors"
+              title={t.pdf.toolbar.sortName}
+            >
+              🔤 <span class="hidden sm:inline">{t.pdf.toolbar.sortName}</span>
+            </button>
+
+            <button
+              type="button"
+              id="pdf-tb-reverse"
+              class="px-2.5 py-1.5 rounded-lg border border-border-light dark:border-border-dark text-xs font-medium text-secondary-light dark:text-secondary-dark hover:text-accent hover:border-accent/40 transition-colors"
+              title={t.pdf.toolbar.reverse}
+            >
+              ⇄ <span class="hidden sm:inline">{t.pdf.toolbar.reverse}</span>
+            </button>
+
+            <button
+              type="button"
+              id="pdf-tb-clear"
+              class="px-2.5 py-1.5 rounded-lg border border-red-500/20 text-xs font-medium text-red-500 hover:bg-red-500/10 transition-colors"
+              title={t.pdf.toolbar.clearAll}
+            >
+              🗑️ <span class="hidden sm:inline">{t.pdf.toolbar.clearAll}</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Thumbnail Grid -->
+        <div
+          id="pdf-grid"
+          class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4 select-none"
+          role="list"
+          aria-label="Document pages"
+        >
+          <!-- Dynamic cards injected via JavaScript -->
+        </div>
+
+        <!-- Collapsible Options Accordion -->
+        <details id="pdf-options-details" class="group rounded-3xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark shadow-xs overflow-hidden transition-all">
+          <summary class="flex items-center justify-between p-4 sm:p-5 cursor-pointer font-bold text-sm sm:text-base text-primary-light dark:text-primary-dark list-none hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+            <span class="flex items-center gap-2">
+              <span>⚙️</span>
+              <span>{t.pdf.options.title}</span>
+            </span>
+            <span class="text-xs font-normal text-secondary-light dark:text-secondary-dark flex items-center gap-2">
+              <span id="pdf-options-summary-pill" class="hidden sm:inline font-mono px-2 py-0.5 rounded bg-accent/10 text-accent font-semibold text-[11px]">A4 · Auto · Contain</span>
+              <svg class="w-4 h-4 transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </span>
+          </summary>
+
+          <div class="p-4 sm:p-6 pt-2 border-t border-border-light/60 dark:border-border-dark/60 space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+              <!-- Left: Controls -->
+              <div class="space-y-4">
+                <!-- Page Size -->
+                <div class="space-y-1.5">
+                  <label class="text-xs font-bold uppercase tracking-wider text-secondary-light dark:text-secondary-dark">
+                    {t.pdf.options.pageSizeLabel}
+                  </label>
+                  <div class="grid grid-cols-3 gap-1.5 p-1 rounded-xl bg-bg-light dark:bg-bg-dark border border-border-light dark:border-border-dark text-xs" role="radiogroup">
+                    <button type="button" class="pdf-opt-btn active py-1.5 px-2 rounded-lg font-bold text-center transition-all" data-opt="pageSize" data-val="a4">
+                      {t.pdf.options.pageSizeA4}
+                    </button>
+                    <button type="button" class="pdf-opt-btn py-1.5 px-2 rounded-lg font-bold text-center transition-all" data-opt="pageSize" data-val="letter">
+                      {t.pdf.options.pageSizeLetter}
+                    </button>
+                    <button type="button" class="pdf-opt-btn py-1.5 px-2 rounded-lg font-bold text-center transition-all" data-opt="pageSize" data-val="fit">
+                      {t.pdf.options.pageSizeFit}
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Orientation -->
+                <div class="space-y-1.5">
+                  <label class="text-xs font-bold uppercase tracking-wider text-secondary-light dark:text-secondary-dark">
+                    {t.pdf.options.orientationLabel}
+                  </label>
+                  <div class="grid grid-cols-3 gap-1.5 p-1 rounded-xl bg-bg-light dark:bg-bg-dark border border-border-light dark:border-border-dark text-xs" role="radiogroup">
+                    <button type="button" class="pdf-opt-btn active py-1.5 px-2 rounded-lg font-bold text-center transition-all" data-opt="orientation" data-val="auto">
+                      {t.pdf.options.orientationAuto}
+                    </button>
+                    <button type="button" class="pdf-opt-btn py-1.5 px-2 rounded-lg font-bold text-center transition-all" data-opt="orientation" data-val="portrait">
+                      {t.pdf.options.orientationPortrait}
+                    </button>
+                    <button type="button" class="pdf-opt-btn py-1.5 px-2 rounded-lg font-bold text-center transition-all" data-opt="orientation" data-val="landscape">
+                      {t.pdf.options.orientationLandscape}
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Margin -->
+                <div class="space-y-1.5">
+                  <label class="text-xs font-bold uppercase tracking-wider text-secondary-light dark:text-secondary-dark">
+                    {t.pdf.options.marginLabel}
+                  </label>
+                  <div class="grid grid-cols-4 gap-1 p-1 rounded-xl bg-bg-light dark:bg-bg-dark border border-border-light dark:border-border-dark text-[11px] sm:text-xs" role="radiogroup">
+                    <button type="button" class="pdf-opt-btn py-1.5 px-1.5 rounded-lg font-bold text-center transition-all" data-opt="margin" data-val="0">
+                      {t.pdf.options.marginNone}
+                    </button>
+                    <button type="button" class="pdf-opt-btn active py-1.5 px-1.5 rounded-lg font-bold text-center transition-all" data-opt="margin" data-val="5">
+                      {t.pdf.options.marginSmall}
+                    </button>
+                    <button type="button" class="pdf-opt-btn py-1.5 px-1.5 rounded-lg font-bold text-center transition-all" data-opt="margin" data-val="12">
+                      {t.pdf.options.marginMedium}
+                    </button>
+                    <button type="button" class="pdf-opt-btn py-1.5 px-1.5 rounded-lg font-bold text-center transition-all" data-opt="margin" data-val="20">
+                      {t.pdf.options.marginLarge}
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Image Fit & Background Color -->
+                <div class="grid grid-cols-2 gap-3">
+                  <div class="space-y-1.5">
+                    <label class="text-xs font-bold uppercase tracking-wider text-secondary-light dark:text-secondary-dark">
+                      {t.pdf.options.fitLabel}
+                    </label>
+                    <div class="grid grid-cols-2 gap-1 p-1 rounded-xl bg-bg-light dark:bg-bg-dark border border-border-light dark:border-border-dark text-xs">
+                      <button type="button" class="pdf-opt-btn active py-1.5 px-2 rounded-lg font-bold text-center transition-all" data-opt="imageFit" data-val="contain">
+                        {t.pdf.options.fitContain}
+                      </button>
+                      <button type="button" class="pdf-opt-btn py-1.5 px-2 rounded-lg font-bold text-center transition-all" data-opt="imageFit" data-val="fill">
+                        {t.pdf.options.fitFill}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="space-y-1.5">
+                    <label class="text-xs font-bold uppercase tracking-wider text-secondary-light dark:text-secondary-dark">
+                      {t.pdf.options.bgLabel}
+                    </label>
+                    <div class="grid grid-cols-2 gap-1 p-1 rounded-xl bg-bg-light dark:bg-bg-dark border border-border-light dark:border-border-dark text-xs">
+                      <button type="button" class="pdf-opt-btn active py-1.5 px-2 rounded-lg font-bold text-center transition-all" data-opt="bgColor" data-val="#ffffff">
+                        {t.pdf.options.bgWhite}
+                      </button>
+                      <button type="button" class="pdf-opt-btn py-1.5 px-2 rounded-lg font-bold text-center transition-all" data-opt="bgColor" data-val="#111315">
+                        {t.pdf.options.bgBlack}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Quality Preset -->
+                <div class="space-y-1.5">
+                  <label class="text-xs font-bold uppercase tracking-wider text-secondary-light dark:text-secondary-dark">
+                    {t.pdf.options.qualityLabel}
+                  </label>
+                  <div class="grid grid-cols-3 gap-1.5 p-1 rounded-xl bg-bg-light dark:bg-bg-dark border border-border-light dark:border-border-dark text-xs">
+                    <button type="button" class="pdf-opt-btn py-1.5 px-2 rounded-lg font-bold text-center transition-all" data-opt="quality" data-val="high">
+                      {t.pdf.options.qualityHigh}
+                    </button>
+                    <button type="button" class="pdf-opt-btn active py-1.5 px-2 rounded-lg font-bold text-center transition-all" data-opt="quality" data-val="medium">
+                      {t.pdf.options.qualityMedium}
+                    </button>
+                    <button type="button" class="pdf-opt-btn py-1.5 px-2 rounded-lg font-bold text-center transition-all" data-opt="quality" data-val="small">
+                      {t.pdf.options.qualitySmall}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right: Live Page 1 Preview -->
+              <div class="space-y-2 text-center p-4 rounded-2xl bg-bg-light/60 dark:bg-bg-dark/60 border border-border-light dark:border-border-dark">
+                <div class="text-xs font-bold text-primary-light dark:text-primary-dark">
+                  {t.pdf.options.previewTitle}
+                </div>
+                <div class="text-[11px] text-secondary-light/70 dark:text-secondary-dark/70">
+                  {t.pdf.options.previewSubtitle}
+                </div>
+                <div class="py-2 flex items-center justify-center min-h-[220px]">
+                  <canvas id="pdf-preview-canvas" class="max-h-[200px] max-w-[200px] shadow-lg rounded-sm border border-slate-300 dark:border-slate-700"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <!-- DOWNLOAD BAR (Sticky on mobile, prominent on desktop) -->
+        <div class="sticky bottom-4 z-40 p-4 rounded-2xl bg-surface-light/95 dark:bg-surface-dark/95 border border-border-light dark:border-border-dark shadow-xl backdrop-blur-md flex flex-col sm:flex-row items-center justify-between gap-4">
+          <!-- Left: Page Count & Live Size Estimate -->
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center text-accent text-lg">
+              📄
+            </span>
+            <div>
+              <div id="pdf-pages-badge" class="font-bold text-sm sm:text-base text-primary-light dark:text-primary-dark">
+                0 pages
+              </div>
+              <div class="text-xs text-secondary-light dark:text-secondary-dark flex items-center gap-1.5">
+                <span>{t.pdf.options.estimatedSize}</span>
+                <span id="pdf-est-size" class="font-mono font-bold text-accent">≈ 0 KB</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Progress Bar & Download Button -->
+          <div class="w-full sm:w-auto flex flex-col sm:flex-row items-center gap-3">
+            <!-- Progress Fill Bar -->
+            <div id="pdf-progress-container" class="hidden w-full sm:w-48 space-y-1">
+              <div class="flex justify-between text-[11px] font-mono text-secondary-light dark:text-secondary-dark">
+                <span id="pdf-progress-label">Generating...</span>
+                <span id="pdf-progress-pct">0%</span>
+              </div>
+              <div class="w-full h-2 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+                <div id="pdf-progress-bar" class="h-full bg-accent transition-all duration-150 w-0"></div>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              id="pdf-download-btn"
+              class="btn-primary w-full sm:w-auto px-8 py-3.5 text-base font-extrabold shadow-lg shadow-accent/25 hover:shadow-accent/40 active:scale-98 transition-all flex items-center justify-center gap-2"
+            >
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              <span id="pdf-download-btn-text">{t.pdf.download.btn.replace('{count}', '0')}</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Post-Download Funnel Card -->
+        <div id="pdf-funnel-card" class="hidden p-4 rounded-2xl bg-gradient-to-r from-accent/10 via-surface-light to-surface-light dark:from-accent/20 dark:via-surface-dark dark:to-surface-dark border border-accent/30 text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div class="flex items-center gap-2 text-primary-light dark:text-primary-dark">
+            <span>💡</span>
+            <span>{t.pdf.download.compressFunnel}</span>
+          </div>
+          <a
+            href={getLocalizedPath('/image-compressor', lang)}
+            class="btn-primary text-xs py-1.5 px-3.5 shrink-0 shadow-xs"
+          >
+            {common.nav.imageCompressor} →
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <!-- Cross-Tool Recommendations -->
+    <section class="space-y-4 pt-8 border-t border-border-light dark:border-border-dark">
+      <h2 class="text-lg font-bold text-primary-light dark:text-primary-dark">
+        {common.moreTools || 'Related Tools'}
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        {relatedTools.map((tool) => (
+          <ToolCard
+            title={tool.name}
+            description={tool.desc}
+            href={tool.href}
+            anchor={tool.anchor}
+            icon={tool.href.includes('compressor') ? 'image' : tool.href.includes('converter') ? 'convert' : 'clock'}
+            lang={lang}
+          />
+        ))}
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <Faq faqs={faqs} lang={lang} />
+  </div>
+
+  <style>
+    /* Option button active states */
+    .pdf-opt-btn {
+      color: #64748b;
+      background: transparent;
+    }
+    :global(.dark) .pdf-opt-btn {
+      color: #94a3b8;
+    }
+    .pdf-opt-btn.active {
+      color: #ffffff !important;
+      background-color: var(--color-accent, #6366f1);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+    /* Touch drag ghost visual */
+    .drag-dragging {
+      opacity: 0.4;
+      transform: scale(0.95);
+    }
+    .drag-over {
+      outline: 2px dashed var(--color-accent, #6366f1);
+      outline-offset: 2px;
+    }
+  </style>
+
+  <!-- Pass i18n dictionary to client -->
+  <script is:inline define:vars={{ i18n: t.pdf, isRtl, lang }}>
+    window.__PDF_I18N__ = i18n;
+    window.__IS_RTL__ = isRtl;
+    window.__PAGE_LANG__ = lang;
+  </script>
+
+  <!-- CLIENT SCRIPT -->
+  <script>
+    interface ImageItem {
+      id: string;
+      file: File;
+      name: string;
+      size: number;
+      width: number;
+      height: number;
+      rotation: number; // 0, 90, 180, 270
+      enhanced: boolean;
+      dataUrl: string;
+      canvas?: HTMLCanvasElement;
+    }
+
+    interface PdfOptions {
+      pageSize: 'a4' | 'letter' | 'fit';
+      orientation: 'auto' | 'portrait' | 'landscape';
+      margin: number; // 0, 5, 12, 20
+      imageFit: 'contain' | 'fill';
+      bgColor: '#ffffff' | '#111315';
+      quality: 'high' | 'medium' | 'small';
+    }
+
+    const i18n = (window as any).__PDF_I18N__;
+    const isRtl = (window as any).__IS_RTL__;
+    const lang = (window as any).__PAGE_LANG__ || 'en';
+
+    // App State
+    let images: ImageItem[] = [];
+    let lastDeleted: { item: ImageItem; index: number } | null = null;
+    let toastTimeout: any = null;
+    let isGenerating = false;
+
+    const options: PdfOptions = {
+      pageSize: 'a4',
+      orientation: 'auto',
+      margin: 5,
+      imageFit: 'contain',
+      bgColor: '#ffffff',
+      quality: 'medium',
+    };
+
+    // DOM Elements
+    const dropzone = document.getElementById('pdf-dropzone') as HTMLElement;
+    const workspace = document.getElementById('pdf-workspace') as HTMLElement;
+    const grid = document.getElementById('pdf-grid') as HTMLElement;
+    const fileInput = document.getElementById('pdf-file-input') as HTMLInputElement;
+    const cameraInput = document.getElementById('pdf-camera-input') as HTMLInputElement;
+    const browseBtn = document.getElementById('pdf-browse-btn') as HTMLElement;
+    const cameraBtn = document.getElementById('pdf-camera-btn') as HTMLElement;
+    const tbAdd = document.getElementById('pdf-tb-add') as HTMLElement;
+    const tbCamera = document.getElementById('pdf-tb-camera') as HTMLElement;
+    const tbRotateAll = document.getElementById('pdf-tb-rotate-all') as HTMLElement;
+    const tbEnhanceAll = document.getElementById('pdf-tb-enhance-all') as HTMLElement;
+    const tbSort = document.getElementById('pdf-tb-sort') as HTMLElement;
+    const tbReverse = document.getElementById('pdf-tb-reverse') as HTMLElement;
+    const tbClear = document.getElementById('pdf-tb-clear') as HTMLElement;
+    const downloadBtn = document.getElementById('pdf-download-btn') as HTMLButtonElement;
+    const downloadBtnText = document.getElementById('pdf-download-btn-text') as HTMLElement;
+    const pagesBadge = document.getElementById('pdf-pages-badge') as HTMLElement;
+    const estSizeEl = document.getElementById('pdf-est-size') as HTMLElement;
+    const previewCanvas = document.getElementById('pdf-preview-canvas') as HTMLCanvasElement;
+    const funnelCard = document.getElementById('pdf-funnel-card') as HTMLElement;
+    const toast = document.getElementById('pdf-toast') as HTMLElement;
+    const toastMsg = document.getElementById('pdf-toast-msg') as HTMLElement;
+    const toastUndo = document.getElementById('pdf-toast-undo') as HTMLElement;
+    const progressContainer = document.getElementById('pdf-progress-container') as HTMLElement;
+    const progressBar = document.getElementById('pdf-progress-bar') as HTMLElement;
+    const progressLabel = document.getElementById('pdf-progress-label') as HTMLElement;
+    const progressPct = document.getElementById('pdf-progress-pct') as HTMLElement;
+    const optionsSummaryPill = document.getElementById('pdf-options-summary-pill') as HTMLElement;
+
+    // Toast Notification helper
+    function showToast(message: string, showUndoBtn = false) {
+      if (!toast || !toastMsg) return;
+      clearTimeout(toastTimeout);
+      toastMsg.textContent = message;
+      if (toastUndo) {
+        toastUndo.classList.toggle('hidden', !showUndoBtn);
+      }
+      toast.classList.remove('hidden');
+      toastTimeout = setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 4500);
+    }
+
+    if (toastUndo) {
+      toastUndo.addEventListener('click', () => {
+        if (lastDeleted) {
+          images.splice(lastDeleted.index, 0, lastDeleted.item);
+          lastDeleted = null;
+          toast.classList.add('hidden');
+          renderWorkspace();
+        }
+      });
+    }
+
+    // Format file size
+    function formatBytes(bytes: number): string {
+      if (bytes === 0) return '0 B';
+      const k = 1024;
+      const sizes = ['B', 'KB', 'MB', 'GB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return `${parseFloat((bytes / Math.pow(k, i)).toFixed(1))} ${sizes[i]}`;
+    }
+
+    // Estimate PDF Size dynamically
+    function updateEstimatedSize() {
+      if (images.length === 0) {
+        if (estSizeEl) estSizeEl.textContent = '≈ 0 KB';
+        return;
+      }
+
+      // Estimation per page based on quality preset & average photo dimensions
+      const qualityFactor = options.quality === 'high' ? 0.35 : options.quality === 'medium' ? 0.18 : 0.09;
+      let totalEstBytes = 15000; // PDF container overhead
+      images.forEach((img) => {
+        // Base estimate: compressed JPEG inside PDF
+        const targetPixels = options.quality === 'high' ? Math.min(img.width * img.height, 2480 * 3508) : options.quality === 'medium' ? Math.min(img.width * img.height, 1800 * 2400) : Math.min(img.width * img.height, 1200 * 1600);
+        const estBytes = targetPixels * qualityFactor * 0.4;
+        totalEstBytes += Math.max(40000, estBytes);
+      });
+
+      if (estSizeEl) {
+        estSizeEl.textContent = `≈ ${formatBytes(totalEstBytes)}`;
+      }
+    }
+
+    // File Processing (Async & Memory Safe)
+    async function processFiles(files: FileList | File[]) {
+      const validFiles: File[] = [];
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        if (file.type.startsWith('image/')) {
+          validFiles.push(file);
+        }
+      }
+
+      if (validFiles.length === 0) {
+        showToast(i18n.errors.unsupportedFile);
+        return;
+      }
+
+      if (images.length + validFiles.length > 50) {
+        showToast(i18n.errors.limitReached);
+        validFiles.splice(50 - images.length);
+      }
+
+      for (const file of validFiles) {
+        const id = 'img_' + Math.random().toString(36).substring(2, 11);
+        try {
+          const { dataUrl, width, height } = await loadImageMeta(file);
+          images.push({
+            id,
+            file,
+            name: file.name,
+            size: file.size,
+            width,
+            height,
+            rotation: 0,
+            enhanced: false,
+            dataUrl,
+          });
+        } catch (e) {
+          console.error('Failed to load image:', file.name, e);
+        }
+      }
+
+      renderWorkspace();
+    }
+
+    function loadImageMeta(file: File): Promise<{ dataUrl: string; width: number; height: number }> {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const img = new Image();
+          img.onload = () => {
+            resolve({
+              dataUrl: reader.result as string,
+              width: img.naturalWidth || img.width,
+              height: img.naturalHeight || img.height,
+            });
+          };
+          img.onerror = reject;
+          img.src = reader.result as string;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // Render Thumbnail Grid & UI State
+    function renderWorkspace() {
+      if (images.length === 0) {
+        dropzone.classList.remove('hidden');
+        workspace.classList.add('hidden');
+        return;
+      }
+
+      dropzone.classList.add('hidden');
+      workspace.classList.remove('hidden');
+
+      // Update badges & button texts
+      const count = images.length;
+      if (pagesBadge) {
+        const fullBtnText = count === 1 ? i18n.download.btnSingle : i18n.download.btn.replace('{count}', String(count));
+        pagesBadge.textContent = fullBtnText.includes('·') ? fullBtnText.split('·')[1].trim() : `${count} pages`;
+      }
+      if (downloadBtnText) {
+        downloadBtnText.textContent = count === 1 ? i18n.download.btnSingle : i18n.download.btn.replace('{count}', String(count));
+      }
+
+      updateEstimatedSize();
+      renderGridCards();
+      renderLivePreview();
+      updateOptionsSummary();
+    }
+
+    function updateOptionsSummary() {
+      if (!optionsSummaryPill) return;
+      const sizeLabel = options.pageSize.toUpperCase();
+      const orientLabel = options.orientation === 'auto' ? 'Auto' : options.orientation === 'portrait' ? 'Port' : 'Land';
+      const fitLabel = options.imageFit === 'contain' ? 'Contain' : 'Fill';
+      optionsSummaryPill.textContent = `${sizeLabel} · ${orientLabel} · ${fitLabel}`;
+    }
+
+    function renderGridCards() {
+      if (!grid) return;
+      grid.innerHTML = '';
+
+      images.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'pdf-card group relative flex flex-col justify-between rounded-2xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark p-2.5 sm:p-3 shadow-xs hover:shadow-md transition-all duration-150 cursor-grab active:cursor-grabbing';
+        card.setAttribute('data-id', item.id);
+        card.setAttribute('data-index', String(index));
+        card.setAttribute('data-rotation', String(item.rotation));
+        card.setAttribute('data-enhanced', String(item.enhanced));
+        card.draggable = true;
+
+        // Top Row: Page Badge + Action buttons
+        const topRow = document.createElement('div');
+        topRow.className = 'flex items-center justify-between gap-1 mb-2';
+
+        const pageBadge = document.createElement('span');
+        pageBadge.className = 'page-badge px-2 py-0.5 rounded-full text-[11px] font-extrabold bg-accent/15 text-accent dark:bg-accent/25';
+        pageBadge.textContent = `${index + 1}`;
+
+        const actions = document.createElement('div');
+        actions.className = 'flex items-center gap-0.5';
+
+        // Move Left / Right
+        const moveLeftBtn = document.createElement('button');
+        moveLeftBtn.type = 'button';
+        moveLeftBtn.className = 'btn-move-left p-1 rounded-md text-secondary-light dark:text-secondary-dark hover:text-accent hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-30 disabled:pointer-events-none transition-colors';
+        moveLeftBtn.title = i18n.card.moveLeft;
+        moveLeftBtn.innerHTML = isRtl ? '→' : '←';
+        moveLeftBtn.disabled = index === 0;
+        moveLeftBtn.onclick = (e) => {
+          e.stopPropagation();
+          swapImages(index, index - 1);
+        };
+
+        const moveRightBtn = document.createElement('button');
+        moveRightBtn.type = 'button';
+        moveRightBtn.className = 'btn-move-right p-1 rounded-md text-secondary-light dark:text-secondary-dark hover:text-accent hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-30 disabled:pointer-events-none transition-colors';
+        moveRightBtn.title = i18n.card.moveRight;
+        moveRightBtn.innerHTML = isRtl ? '←' : '→';
+        moveRightBtn.disabled = index === images.length - 1;
+        moveRightBtn.onclick = (e) => {
+          e.stopPropagation();
+          swapImages(index, index + 1);
+        };
+
+        // Rotate
+        const rotateBtn = document.createElement('button');
+        rotateBtn.type = 'button';
+        rotateBtn.className = 'btn-rotate p-1 rounded-md text-secondary-light dark:text-secondary-dark hover:text-accent hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors';
+        rotateBtn.title = i18n.card.rotate;
+        rotateBtn.innerHTML = '🔄';
+        rotateBtn.onclick = (e) => {
+          e.stopPropagation();
+          item.rotation = (item.rotation + 90) % 360;
+          renderWorkspace();
+        };
+
+        // Auto-Enhance toggle
+        const enhanceBtn = document.createElement('button');
+        enhanceBtn.type = 'button';
+        enhanceBtn.className = `btn-enhance p-1 rounded-md transition-colors ${item.enhanced ? 'text-amber-500 bg-amber-500/10 font-bold' : 'text-secondary-light dark:text-secondary-dark hover:text-accent hover:bg-slate-100 dark:hover:bg-slate-800'}`;
+        enhanceBtn.title = i18n.card.enhance;
+        enhanceBtn.innerHTML = '✨';
+        enhanceBtn.onclick = (e) => {
+          e.stopPropagation();
+          item.enhanced = !item.enhanced;
+          renderWorkspace();
+        };
+
+        // Delete
+        const deleteBtn = document.createElement('button');
+        deleteBtn.type = 'button';
+        deleteBtn.className = 'btn-delete p-1 rounded-md text-secondary-light dark:text-secondary-dark hover:text-red-500 hover:bg-red-500/10 transition-colors';
+        deleteBtn.title = i18n.card.delete;
+        deleteBtn.innerHTML = '✕';
+        deleteBtn.onclick = (e) => {
+          e.stopPropagation();
+          lastDeleted = { item, index };
+          images.splice(index, 1);
+          showToast(i18n.toolbar.undoDeleted.replace('{name}', item.name), true);
+          renderWorkspace();
+        };
+
+        actions.appendChild(moveLeftBtn);
+        actions.appendChild(moveRightBtn);
+        actions.appendChild(rotateBtn);
+        actions.appendChild(enhanceBtn);
+        actions.appendChild(deleteBtn);
+
+        topRow.appendChild(pageBadge);
+        topRow.appendChild(actions);
+
+        // Center: Thumbnail Container
+        const thumbWrap = document.createElement('div');
+        thumbWrap.className = 'relative w-full h-32 sm:h-36 rounded-xl bg-slate-100 dark:bg-slate-800/80 overflow-hidden flex items-center justify-center';
+
+        const img = document.createElement('img');
+        img.src = item.dataUrl;
+        img.alt = item.name;
+        img.className = 'max-w-full max-h-full object-contain transition-transform duration-200 pointer-events-none';
+        img.style.transform = `rotate(${item.rotation}deg)`;
+        if (item.enhanced) {
+          img.style.filter = 'contrast(1.22) brightness(1.05) saturate(1.08)';
+        }
+
+        thumbWrap.appendChild(img);
+
+        // Bottom: File Meta
+        const meta = document.createElement('div');
+        meta.className = 'mt-2 text-center';
+
+        const nameEl = document.createElement('div');
+        nameEl.className = 'card-filename text-[11px] font-bold text-primary-light dark:text-primary-dark truncate max-w-full';
+        nameEl.textContent = item.name;
+
+        const sizeEl = document.createElement('div');
+        sizeEl.className = 'text-[10px] text-secondary-light/70 dark:text-secondary-dark/70 font-mono';
+        sizeEl.textContent = `${formatBytes(item.size)} · ${item.width}×${item.height}`;
+
+        meta.appendChild(nameEl);
+        meta.appendChild(sizeEl);
+
+        card.appendChild(topRow);
+        card.appendChild(thumbWrap);
+        card.appendChild(meta);
+
+        // Drag & Drop event listeners
+        attachDragEvents(card, index);
+
+        grid.appendChild(card);
+      });
+
+      // Append persistent "+ Add More" card at the end of the grid
+      const addCard = document.createElement('div');
+      addCard.className = 'flex flex-col items-center justify-center min-h-[160px] rounded-2xl border-2 border-dashed border-border-light dark:border-border-dark hover:border-accent hover:bg-accent/5 p-4 text-center cursor-pointer transition-all';
+      addCard.innerHTML = `
+        <div class="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center text-accent mb-2">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </div>
+        <span class="text-xs font-bold text-primary-light dark:text-primary-dark">${i18n.toolbar.addMore}</span>
+      `;
+      addCard.onclick = () => fileInput?.click();
+      grid.appendChild(addCard);
+    }
+
+    // Drag-and-drop Reordering (Desktop Drag & Touch Pointer Events)
+    let draggedIndex: number | null = null;
+
+    function attachDragEvents(card: HTMLElement, index: number) {
+      card.addEventListener('dragstart', (e) => {
+        draggedIndex = index;
+        card.classList.add('drag-dragging');
+        if (e.dataTransfer) {
+          e.dataTransfer.effectAllowed = 'move';
+        }
+      });
+
+      card.addEventListener('dragend', () => {
+        card.classList.remove('drag-dragging');
+        document.querySelectorAll('.drag-over').forEach((el) => el.classList.remove('drag-over'));
+      });
+
+      card.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        if (draggedIndex === null || draggedIndex === index) return;
+        card.classList.add('drag-over');
+      });
+
+      card.addEventListener('dragleave', () => {
+        card.classList.remove('drag-over');
+      });
+
+      card.addEventListener('drop', (e) => {
+        e.preventDefault();
+        card.classList.remove('drag-over');
+        if (draggedIndex !== null && draggedIndex !== index) {
+          const item = images.splice(draggedIndex, 1)[0];
+          images.splice(index, 0, item);
+          draggedIndex = null;
+          renderWorkspace();
+        }
+      });
+
+      // Mobile Touch Drag-and-Drop
+      card.addEventListener('touchend', (e) => {
+        if ((e.target as HTMLElement).closest('button')) return;
+        if (!e.changedTouches || e.changedTouches.length === 0) return;
+        const touch = e.changedTouches[0];
+        const targetEl = document.elementFromPoint(touch.clientX, touch.clientY);
+        const targetCard = targetEl?.closest('.pdf-card') as HTMLElement;
+        if (targetCard && targetCard !== card) {
+          const targetIndex = parseInt(targetCard.getAttribute('data-index') || '-1', 10);
+          if (targetIndex >= 0 && targetIndex !== index) {
+            const item = images.splice(index, 1)[0];
+            images.splice(targetIndex, 0, item);
+            renderWorkspace();
+          }
+        }
+      }, { passive: true });
+    }
+
+    function swapImages(fromIndex: number, toIndex: number) {
+      if (toIndex < 0 || toIndex >= images.length) return;
+      const temp = images[fromIndex];
+      images[fromIndex] = images[toIndex];
+      images[toIndex] = temp;
+      renderWorkspace();
+    }
+
+    // Live Page 1 Preview Canvas
+    function renderLivePreview() {
+      if (!previewCanvas || images.length === 0) return;
+      const firstItem = images[0];
+
+      const ctx = previewCanvas.getContext('2d');
+      if (!ctx) return;
+
+      // Determine dimensions in mm
+      let pageW = 210;
+      let pageH = 297;
+      if (options.pageSize === 'letter') {
+        pageW = 215.9;
+        pageH = 279.4;
+      }
+
+      // Check rotated image aspect
+      const isRotated90 = firstItem.rotation === 90 || firstItem.rotation === 270;
+      const effW = isRotated90 ? firstItem.height : firstItem.width;
+      const effH = isRotated90 ? firstItem.width : firstItem.height;
+
+      if (options.pageSize === 'fit') {
+        pageW = 200;
+        pageH = Math.max(100, Math.min(300, (effH / effW) * 200));
+      } else {
+        // Handle orientation
+        if (options.orientation === 'landscape' || (options.orientation === 'auto' && effW > effH)) {
+          const tmp = pageW;
+          pageW = pageH;
+          pageH = tmp;
+        }
+      }
+
+      // Scale canvas to preview box (e.g. 200px max)
+      const scale = 200 / Math.max(pageW, pageH);
+      const canvasW = Math.round(pageW * scale);
+      const canvasH = Math.round(pageH * scale);
+
+      previewCanvas.width = canvasW;
+      previewCanvas.height = canvasH;
+
+      // Draw background
+      ctx.fillStyle = options.bgColor;
+      ctx.fillRect(0, 0, canvasW, canvasH);
+
+      // Draw margin guideline
+      const marginPx = Math.round(options.margin * scale);
+      if (marginPx > 0) {
+        ctx.strokeStyle = options.bgColor === '#ffffff' ? '#e2e8f0' : '#334155';
+        ctx.lineWidth = 1;
+        ctx.setLineDash([2, 2]);
+        ctx.strokeRect(marginPx, marginPx, canvasW - 2 * marginPx, canvasH - 2 * marginPx);
+        ctx.setLineDash([]);
+      }
+
+      // Draw Image
+      const img = new Image();
+      img.onload = () => {
+        ctx.save();
+        const availW = canvasW - 2 * marginPx;
+        const availH = canvasH - 2 * marginPx;
+
+        // Create temporary offscreen rotated canvas
+        const offCanvas = document.createElement('canvas');
+        offCanvas.width = effW;
+        offCanvas.height = effH;
+        const offCtx = offCanvas.getContext('2d');
+        if (!offCtx) return;
+
+        offCtx.translate(effW / 2, effH / 2);
+        offCtx.rotate((firstItem.rotation * Math.PI) / 180);
+        if (firstItem.enhanced) {
+          offCtx.filter = 'contrast(1.22) brightness(1.05) saturate(1.08)';
+        }
+        offCtx.drawImage(img, -firstItem.width / 2, -firstItem.height / 2);
+
+        // Draw onto preview canvas according to imageFit
+        if (options.imageFit === 'contain') {
+          const r = Math.min(availW / effW, availH / effH);
+          const drawW = effW * r;
+          const drawH = effH * r;
+          const drawX = marginPx + (availW - drawW) / 2;
+          const drawY = marginPx + (availH - drawH) / 2;
+          ctx.drawImage(offCanvas, drawX, drawY, drawW, drawH);
+        } else {
+          // Fill: cover and crop
+          const r = Math.max(availW / effW, availH / effH);
+          const drawW = effW * r;
+          const drawH = effH * r;
+          const drawX = marginPx + (availW - drawW) / 2;
+          const drawY = marginPx + (availH - drawH) / 2;
+          ctx.beginPath();
+          ctx.rect(marginPx, marginPx, availW, availH);
+          ctx.clip();
+          ctx.drawImage(offCanvas, drawX, drawY, drawW, drawH);
+        }
+        ctx.restore();
+      };
+      img.src = firstItem.dataUrl;
+    }
+
+    // Bind Event Listeners: Inputs & Buttons
+    if (dropzone) {
+      dropzone.onclick = (e) => {
+        if (e.target !== cameraBtn && !cameraBtn?.contains(e.target as Node)) {
+          fileInput?.click();
+        }
+      };
+      dropzone.onkeydown = (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          fileInput?.click();
+        }
+      };
+
+      dropzone.ondragover = (e) => {
+        e.preventDefault();
+        dropzone.classList.add('border-accent');
+      };
+      dropzone.ondragleave = () => {
+        dropzone.classList.remove('border-accent');
+      };
+      dropzone.ondrop = (e) => {
+        e.preventDefault();
+        dropzone.classList.remove('border-accent');
+        if (e.dataTransfer && e.dataTransfer.files) {
+          processFiles(e.dataTransfer.files);
+        }
+      };
+    }
+
+    if (browseBtn) browseBtn.onclick = (e) => { e.stopPropagation(); fileInput?.click(); };
+    if (cameraBtn) cameraBtn.onclick = (e) => { e.stopPropagation(); cameraInput?.click(); };
+    if (tbAdd) tbAdd.onclick = () => fileInput?.click();
+    if (tbCamera) tbCamera.onclick = () => cameraInput?.click();
+
+    if (fileInput) {
+      fileInput.onchange = () => {
+        if (fileInput.files) processFiles(fileInput.files);
+        fileInput.value = '';
+      };
+    }
+
+    if (cameraInput) {
+      cameraInput.onchange = () => {
+        if (cameraInput.files) processFiles(cameraInput.files);
+        cameraInput.value = '';
+      };
+    }
+
+    // Ctrl+V Paste anywhere on page
+    window.addEventListener('paste', (e: ClipboardEvent) => {
+      const items = e.clipboardData?.items;
+      if (!items) return;
+      const pastedFiles: File[] = [];
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].type.startsWith('image/')) {
+          const file = items[i].getAsFile();
+          if (file) pastedFiles.push(file);
+        }
+      }
+      if (pastedFiles.length > 0) {
+        processFiles(pastedFiles);
+        showToast(lang === 'ar' ? 'تم لصق الصورة بنجاح!' : lang === 'pt' ? 'Imagem colada com sucesso!' : lang === 'id' ? 'Gambar berhasil ditempel!' : 'Pasted image from clipboard!');
+      }
+    });
+
+    // Quick Actions Toolbar Buttons
+    if (tbRotateAll) {
+      tbRotateAll.onclick = () => {
+        images.forEach((img) => (img.rotation = (img.rotation + 90) % 360));
+        renderWorkspace();
+      };
+    }
+
+    if (tbEnhanceAll) {
+      tbEnhanceAll.onclick = () => {
+        const anyUnenhanced = images.some((img) => !img.enhanced);
+        images.forEach((img) => (img.enhanced = anyUnenhanced));
+        renderWorkspace();
+      };
+    }
+
+    if (tbSort) {
+      tbSort.onclick = () => {
+        images.sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' }));
+        renderWorkspace();
+      };
+    }
+
+    if (tbReverse) {
+      tbReverse.onclick = () => {
+        images.reverse();
+        renderWorkspace();
+      };
+    }
+
+    if (tbClear) {
+      tbClear.onclick = () => {
+        if (confirm(lang === 'ar' ? 'هل تريد بالتأكيد إزالة جميع الصور؟' : lang === 'pt' ? 'Deseja remover todas as imagens?' : lang === 'id' ? 'Hapus semua gambar dari daftar?' : 'Remove all images from document?')) {
+          images = [];
+          renderWorkspace();
+        }
+      };
+    }
+
+    // Options Buttons Binding
+    document.querySelectorAll('.pdf-opt-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const opt = btn.getAttribute('data-opt') as keyof PdfOptions;
+        const val = btn.getAttribute('data-val');
+        if (!opt || val === null) return;
+
+        // Set state
+        if (opt === 'margin') {
+          options.margin = parseInt(val, 10);
+        } else {
+          (options as any)[opt] = val;
+        }
+
+        // Update active class in group
+        const parent = btn.parentElement;
+        if (parent) {
+          parent.querySelectorAll('.pdf-opt-btn').forEach((b) => b.classList.remove('active'));
+          btn.classList.add('active');
+        }
+
+        renderLivePreview();
+        updateEstimatedSize();
+        updateOptionsSummary();
+      });
+    });
+
+    // PDF GENERATION & DOWNLOAD ENGINE (jsPDF)
+    if (downloadBtn) {
+      downloadBtn.onclick = async () => {
+        if (images.length === 0 || isGenerating) return;
+
+        isGenerating = true;
+        downloadBtn.disabled = true;
+        progressContainer?.classList.remove('hidden');
+
+        try {
+          // 1. Dynamically load jsPDF
+          const { jsPDF } = await import('jspdf');
+
+          // Initialize jsPDF document
+          // Use pt or mm (we use mm)
+          let doc: any = null;
+
+          const total = images.length;
+          const qualityValue = options.quality === 'high' ? 0.92 : options.quality === 'medium' ? 0.75 : 0.55;
+          const maxDim = options.quality === 'high' ? 2480 : options.quality === 'medium' ? 1800 : 1200;
+
+          for (let i = 0; i < total; i++) {
+            const item = images[i];
+
+            // Update Progress
+            const pct = Math.round(((i + 1) / total) * 100);
+            if (progressBar) progressBar.style.width = `${pct}%`;
+            if (progressPct) progressPct.textContent = `${pct}%`;
+            if (progressLabel) progressLabel.textContent = i18n.download.generating.replace('{current}', String(i + 1)).replace('{total}', String(total));
+
+            // Small delay to allow UI refresh on low-end devices
+            await new Promise((r) => requestAnimationFrame(r));
+
+            // Compute rotated width & height
+            const isRotated90 = item.rotation === 90 || item.rotation === 270;
+            const effW = isRotated90 ? item.height : item.width;
+            const effH = isRotated90 ? item.width : item.height;
+
+            // Memory downscale if necessary
+            let targetW = effW;
+            let targetH = effH;
+            if (Math.max(targetW, targetH) > maxDim) {
+              const scale = maxDim / Math.max(targetW, targetH);
+              targetW = Math.round(targetW * scale);
+              targetH = Math.round(targetH * scale);
+            }
+
+            // Render to offscreen canvas with rotation & enhancement
+            const canvas = document.createElement('canvas');
+            canvas.width = targetW;
+            canvas.height = targetH;
+            const ctx = canvas.getContext('2d');
+            if (!ctx) continue;
+
+            // Fill page background color onto canvas first (prevents black background for transparent PNGs)
+            ctx.fillStyle = options.bgColor;
+            ctx.fillRect(0, 0, targetW, targetH);
+
+            ctx.save();
+            ctx.translate(targetW / 2, targetH / 2);
+            ctx.rotate((item.rotation * Math.PI) / 180);
+            if (item.enhanced) {
+              ctx.filter = 'contrast(1.22) brightness(1.05) saturate(1.08)';
+            }
+
+            // Draw original image
+            const imgElem = await getImageElement(item.dataUrl);
+            const origDrawW = isRotated90 ? targetH : targetW;
+            const origDrawH = isRotated90 ? targetW : targetH;
+            ctx.drawImage(imgElem, -origDrawW / 2, -origDrawH / 2, origDrawW, origDrawH);
+            ctx.restore();
+
+            // Determine page format & orientation in mm
+            let pageW = 210;
+            let pageH = 297;
+            if (options.pageSize === 'letter') {
+              pageW = 215.9;
+              pageH = 279.4;
+            }
+
+            let pageOrientation: 'p' | 'l' = 'p';
+            if (options.pageSize === 'fit') {
+              pageW = (targetW / 150) * 25.4;
+              pageH = (targetH / 150) * 25.4;
+              pageOrientation = pageW >= pageH ? 'l' : 'p';
+            } else {
+              if (options.orientation === 'landscape' || (options.orientation === 'auto' && targetW > targetH)) {
+                const tmp = pageW;
+                pageW = pageH;
+                pageH = tmp;
+                pageOrientation = 'l';
+              }
+            }
+
+            // Create or add page
+            if (i === 0) {
+              doc = new jsPDF({
+                orientation: pageOrientation,
+                unit: 'mm',
+                format: options.pageSize === 'fit' ? [pageW, pageH] : options.pageSize === 'letter' ? 'letter' : 'a4',
+              });
+            } else {
+              doc.addPage(options.pageSize === 'fit' ? [pageW, pageH] : options.pageSize === 'letter' ? 'letter' : 'a4', pageOrientation);
+            }
+
+            // Fill page background
+            doc.setFillColor(options.bgColor === '#ffffff' ? 255 : 17, options.bgColor === '#ffffff' ? 255 : 19, options.bgColor === '#ffffff' ? 255 : 21);
+            doc.rect(0, 0, pageW, pageH, 'F');
+
+            // Calculate draw coordinates inside margins
+            const margin = options.margin;
+            const availW = Math.max(10, pageW - 2 * margin);
+            const availH = Math.max(10, pageH - 2 * margin);
+
+            let drawW = availW;
+            let drawH = availH;
+            let drawX = margin;
+            let drawY = margin;
+
+            if (options.imageFit === 'contain') {
+              const r = Math.min(availW / targetW, availH / targetH);
+              drawW = targetW * r;
+              drawH = targetH * r;
+              drawX = margin + (availW - drawW) / 2;
+              drawY = margin + (availH - drawH) / 2;
+            } else {
+              // Fill
+              const r = Math.max(availW / targetW, availH / targetH);
+              drawW = targetW * r;
+              drawH = targetH * r;
+              drawX = margin + (availW - drawW) / 2;
+              drawY = margin + (availH - drawH) / 2;
+            }
+
+            // Convert canvas to JPEG data URL
+            const jpegData = canvas.toDataURL('image/jpeg', qualityValue);
+            doc.addImage(jpegData, 'JPEG', drawX, drawY, drawW, drawH, undefined, 'FAST');
+          }
+
+          // Generate blob and trigger download
+          const blob = doc.output('blob');
+          const firstBaseName = (images[0]?.name || 'document').replace(/\.[^/.]+$/, '').replace(/[^a-zA-Z0-9_-]/g, '_');
+          const downloadName = `${firstBaseName}-toolnest.pdf`;
+
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = downloadName;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          setTimeout(() => URL.revokeObjectURL(url), 10000);
+
+          showToast(i18n.download.success);
+          if (funnelCard) funnelCard.classList.remove('hidden');
+        } catch (err) {
+          console.error('PDF Generation Error:', err);
+          showToast('Failed to create PDF. Please try with fewer images.');
+        } finally {
+          isGenerating = false;
+          downloadBtn.disabled = false;
+          progressContainer?.classList.add('hidden');
+        }
+      };
+    }
+
+    function getImageElement(src: string): Promise<HTMLImageElement> {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.src = src;
+      });
+    }
+  </script>
+</Base>

@@ -1,0 +1,154 @@
+---
+import Base from '../layouts/Base.astro';
+import { getNamespace, getLocalizedPath, type Lang } from '../i18n';
+
+export interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'en' } = Astro.props;
+const common = getNamespace(lang, 'common');
+const terms = getNamespace(lang, 'terms');
+
+const t = {
+  terms,
+  common,
+  nav: common.nav,
+  siteName: common.siteName,
+};
+
+const termsSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: terms.title || 'Terms of Service | ToolNest',
+  url: `https://toolnest.pages.dev${getLocalizedPath('/terms-of-service', lang)}`,
+  description: terms.metaDesc,
+  publisher: {
+    '@type': 'Organization',
+    name: 'ToolNest',
+    url: 'https://toolnest.pages.dev',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://toolnest.pages.dev/favicon.svg',
+    },
+  },
+};
+---
+
+<Base
+  metaKey="terms"
+  canonicalPath={getLocalizedPath('/terms-of-service', lang)}
+  ogImage="/og/share-banner.svg"
+  breadcrumbs={[{ name: t.nav.terms || 'Terms of Service', item: getLocalizedPath('/terms-of-service', lang) }]}
+  extraSchemas={[termsSchema]}
+  lang={lang}
+>
+  <article class="space-y-8 max-w-3xl mx-auto">
+    <!-- Header -->
+    <header class="space-y-3 pb-5 border-b border-border-light dark:border-border-dark text-center sm:text-left rtl:sm:text-right">
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-accent/10 text-accent dark:bg-accent/20">
+        <span>⚖️</span>
+        <span>{t.terms.badge}</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-primary-light dark:text-primary-dark">
+        {t.terms.heading}
+      </h1>
+      <p class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark">
+        {t.terms.lastUpdated}
+      </p>
+      <p class="text-base text-secondary-light dark:text-secondary-dark leading-relaxed pt-1">
+        {t.terms.subheading}
+      </p>
+    </header>
+
+    <!-- 1. Acceptance -->
+    <section class="card p-6 sm:p-7 space-y-3" aria-labelledby="terms-acceptance-heading">
+      <h2 id="terms-acceptance-heading" class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark flex items-center gap-2">
+        <span class="w-7 h-7 rounded-lg bg-accent/10 text-accent flex items-center justify-center text-sm font-black">1</span>
+        <span>{t.terms.acceptanceTitle}</span>
+      </h2>
+      <p class="text-sm sm:text-base text-secondary-light dark:text-secondary-dark leading-relaxed">
+        {t.terms.acceptanceP}
+      </p>
+    </section>
+
+    <!-- 2. Free Service & License -->
+    <section class="card p-6 sm:p-7 space-y-3" aria-labelledby="terms-service-heading">
+      <h2 id="terms-service-heading" class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark flex items-center gap-2">
+        <span class="w-7 h-7 rounded-lg bg-accent/10 text-accent flex items-center justify-center text-sm font-black">2</span>
+        <span>{t.terms.freeServiceTitle}</span>
+      </h2>
+      <p class="text-sm sm:text-base text-secondary-light dark:text-secondary-dark leading-relaxed">
+        {t.terms.freeServiceP}
+      </p>
+    </section>
+
+    <!-- 3. Ownership & Privacy (Crucial selling point) -->
+    <section class="card p-6 sm:p-7 space-y-3 border-l-4 rtl:border-l-0 rtl:border-r-4 border-emerald-500 bg-emerald-500/5 dark:bg-emerald-500/10" aria-labelledby="terms-ownership-heading">
+      <h2 id="terms-ownership-heading" class="text-lg sm:text-xl font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-2">
+        <span>🛡️</span>
+        <span>{t.terms.ownershipTitle}</span>
+      </h2>
+      <p class="text-sm sm:text-base text-secondary-light dark:text-secondary-dark leading-relaxed">
+        {t.terms.ownershipP}
+      </p>
+    </section>
+
+    <!-- 4. Acceptable Use -->
+    <section class="card p-6 sm:p-7 space-y-3" aria-labelledby="terms-acceptable-heading">
+      <h2 id="terms-acceptable-heading" class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark flex items-center gap-2">
+        <span class="w-7 h-7 rounded-lg bg-accent/10 text-accent flex items-center justify-center text-sm font-black">4</span>
+        <span>{t.terms.acceptableUseTitle}</span>
+      </h2>
+      <p class="text-sm sm:text-base text-secondary-light dark:text-secondary-dark leading-relaxed">
+        {t.terms.acceptableUseP}
+      </p>
+    </section>
+
+    <!-- 5. Disclaimer of Warranties -->
+    <section class="card p-6 sm:p-7 space-y-3" aria-labelledby="terms-disclaimer-heading">
+      <h2 id="terms-disclaimer-heading" class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark flex items-center gap-2">
+        <span class="w-7 h-7 rounded-lg bg-accent/10 text-accent flex items-center justify-center text-sm font-black">5</span>
+        <span>{t.terms.disclaimerTitle}</span>
+      </h2>
+      <p class="text-sm sm:text-base text-secondary-light dark:text-secondary-dark leading-relaxed">
+        {t.terms.disclaimerP}
+      </p>
+    </section>
+
+    <!-- 6. Limitation of Liability -->
+    <section class="card p-6 sm:p-7 space-y-3" aria-labelledby="terms-liability-heading">
+      <h2 id="terms-liability-heading" class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark flex items-center gap-2">
+        <span class="w-7 h-7 rounded-lg bg-accent/10 text-accent flex items-center justify-center text-sm font-black">6</span>
+        <span>{t.terms.liabilityTitle}</span>
+      </h2>
+      <p class="text-sm sm:text-base text-secondary-light dark:text-secondary-dark leading-relaxed">
+        {t.terms.liabilityP}
+      </p>
+    </section>
+
+    <!-- 7. Modifications to Terms -->
+    <section class="card p-6 sm:p-7 space-y-3" aria-labelledby="terms-changes-heading">
+      <h2 id="terms-changes-heading" class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark flex items-center gap-2">
+        <span class="w-7 h-7 rounded-lg bg-accent/10 text-accent flex items-center justify-center text-sm font-black">7</span>
+        <span>{t.terms.changesTitle}</span>
+      </h2>
+      <p class="text-sm sm:text-base text-secondary-light dark:text-secondary-dark leading-relaxed">
+        {t.terms.changesP}
+      </p>
+    </section>
+
+    <!-- Bottom Contact Notice -->
+    <div class="p-5 rounded-2xl bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-xs text-secondary-light dark:text-secondary-dark text-center sm:text-left rtl:sm:text-right">
+        Questions regarding our terms? Feel free to reach out to our team.
+      </p>
+      <a
+        href={getLocalizedPath('/contact', lang)}
+        class="btn-primary text-xs py-2 px-4 font-bold inline-flex items-center gap-1.5 shrink-0"
+      >
+        <span>{t.nav.contact}</span> &rarr;
+      </a>
+    </div>
+  </article>
+</Base>

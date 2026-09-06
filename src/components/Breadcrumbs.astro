@@ -22,9 +22,21 @@ if (!items || items.length === 0) {
   return null;
 }
 
+const homePath = getLocalizedPath('/', lang);
+const filteredItems = items.filter((b) => b.item !== homePath && b.item !== '/');
+
+// For tool pages (single item not being about/contact/privacy/terms/faq/sitemap), insert Tools directory crumb
+const isNonToolPage = filteredItems.some((b) => 
+  b.item.includes('about') || b.item.includes('contact') || b.item.includes('privacy') || 
+  b.item.includes('terms') || b.item.includes('faq') || b.item.includes('sitemap')
+);
+
 const allItems = [
-  { name: common.nav?.home || 'Home', item: getLocalizedPath('/', lang) },
-  ...items,
+  { name: common.nav?.home || 'Home', item: homePath },
+  ...(!isNonToolPage && filteredItems.length === 1
+    ? [{ name: common.nav?.toolsDropdown || 'Tools', item: getLocalizedPath('/sitemap-page', lang) }]
+    : []),
+  ...filteredItems,
 ];
 ---
 

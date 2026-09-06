@@ -1,0 +1,620 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://toolnest.pages.dev/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/pt/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/id/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/ar/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/image-to-pdf</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/image-to-pdf" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/image-to-pdf" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/image-to-pdf" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/image-to-pdf" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/image-to-pdf" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/pt/image-to-pdf</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/image-to-pdf" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/image-to-pdf" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/image-to-pdf" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/image-to-pdf" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/image-to-pdf" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/id/image-to-pdf</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/image-to-pdf" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/image-to-pdf" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/image-to-pdf" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/image-to-pdf" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/image-to-pdf" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/ar/image-to-pdf</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/image-to-pdf" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/image-to-pdf" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/image-to-pdf" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/image-to-pdf" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/image-to-pdf" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/image-compressor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/image-compressor" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/image-compressor" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/image-compressor" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/image-compressor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/image-compressor" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/pt/image-compressor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/image-compressor" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/image-compressor" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/image-compressor" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/image-compressor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/image-compressor" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/id/image-compressor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/image-compressor" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/image-compressor" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/image-compressor" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/image-compressor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/image-compressor" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/ar/image-compressor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/image-compressor" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/image-compressor" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/image-compressor" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/image-compressor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/image-compressor" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/image-converter</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/image-converter" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/image-converter" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/image-converter" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/image-converter" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/image-converter" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/pt/image-converter</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/image-converter" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/image-converter" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/image-converter" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/image-converter" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/image-converter" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/id/image-converter</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/image-converter" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/image-converter" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/image-converter" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/image-converter" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/image-converter" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/ar/image-converter</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/image-converter" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/image-converter" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/image-converter" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/image-converter" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/image-converter" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/age-calculator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/age-calculator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/age-calculator" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/age-calculator" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/age-calculator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/age-calculator" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/pt/age-calculator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/age-calculator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/age-calculator" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/age-calculator" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/age-calculator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/age-calculator" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/id/age-calculator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/age-calculator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/age-calculator" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/age-calculator" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/age-calculator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/age-calculator" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/ar/age-calculator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/age-calculator" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/age-calculator" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/age-calculator" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/age-calculator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/age-calculator" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/birthday-facts</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/birthday-facts" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/birthday-facts" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/birthday-facts" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/birthday-facts" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/birthday-facts" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/pt/birthday-facts</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/birthday-facts" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/birthday-facts" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/birthday-facts" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/birthday-facts" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/birthday-facts" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/id/birthday-facts</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/birthday-facts" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/birthday-facts" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/birthday-facts" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/birthday-facts" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/birthday-facts" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/ar/birthday-facts</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/birthday-facts" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/birthday-facts" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/birthday-facts" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/birthday-facts" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/birthday-facts" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/random-picker</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/random-picker" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/random-picker" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/random-picker" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/random-picker" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/random-picker" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/pt/random-picker</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/random-picker" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/random-picker" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/random-picker" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/random-picker" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/random-picker" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/id/random-picker</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/random-picker" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/random-picker" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/random-picker" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/random-picker" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/random-picker" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/ar/random-picker</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/random-picker" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/random-picker" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/random-picker" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/random-picker" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/random-picker" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/countdown</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/countdown" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/countdown" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/countdown" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/countdown" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/countdown" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/pt/countdown</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/countdown" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/countdown" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/countdown" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/countdown" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/countdown" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/id/countdown</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/countdown" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/countdown" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/countdown" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/countdown" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/countdown" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/ar/countdown</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/countdown" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/countdown" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/countdown" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/countdown" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/countdown" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/about</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/about" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/about" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/about" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/about" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/about" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/pt/about</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/about" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/about" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/about" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/about" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/about" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/id/about</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/about" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/about" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/about" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/about" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/about" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/ar/about</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/about" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/about" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/about" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/about" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/about" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/contact</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/contact" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/contact" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/contact" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/contact" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/contact" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/pt/contact</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/contact" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/contact" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/contact" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/contact" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/contact" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/id/contact</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/contact" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/contact" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/contact" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/contact" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/contact" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/ar/contact</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/contact" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/contact" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/contact" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/contact" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/contact" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/privacy-policy</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/privacy-policy" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/privacy-policy" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/privacy-policy" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/privacy-policy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/privacy-policy" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/pt/privacy-policy</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/privacy-policy" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/privacy-policy" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/privacy-policy" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/privacy-policy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/privacy-policy" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/id/privacy-policy</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/privacy-policy" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/privacy-policy" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/privacy-policy" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/privacy-policy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/privacy-policy" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/ar/privacy-policy</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/privacy-policy" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/privacy-policy" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/privacy-policy" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/privacy-policy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/privacy-policy" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/terms-of-service</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/terms-of-service" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/terms-of-service" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/terms-of-service" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/terms-of-service" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/terms-of-service" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/pt/terms-of-service</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/terms-of-service" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/terms-of-service" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/terms-of-service" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/terms-of-service" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/terms-of-service" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/id/terms-of-service</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/terms-of-service" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/terms-of-service" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/terms-of-service" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/terms-of-service" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/terms-of-service" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/ar/terms-of-service</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/terms-of-service" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/terms-of-service" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/terms-of-service" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/terms-of-service" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/terms-of-service" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/faq</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/faq" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/faq" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/faq" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/faq" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/faq" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/pt/faq</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/faq" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/faq" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/faq" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/faq" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/faq" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/id/faq</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/faq" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/faq" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/faq" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/faq" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/faq" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/ar/faq</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/faq" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/faq" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/faq" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/faq" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/faq" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/sitemap-page</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/sitemap-page" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/sitemap-page" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/sitemap-page" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/sitemap-page" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/sitemap-page" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/pt/sitemap-page</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/sitemap-page" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/sitemap-page" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/sitemap-page" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/sitemap-page" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/sitemap-page" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/id/sitemap-page</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/sitemap-page" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/sitemap-page" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/sitemap-page" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/sitemap-page" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/sitemap-page" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/ar/sitemap-page</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/sitemap-page" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/sitemap-page" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/sitemap-page" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/sitemap-page" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/sitemap-page" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+</urlset>

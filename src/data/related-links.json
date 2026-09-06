@@ -81,6 +81,12 @@
   ],
   "image-compressor": [
     {
+      "name": "📄 Image to PDF",
+      "href": "/image-to-pdf",
+      "desc": "Convert images into clean, multi-page PDF documents client-side.",
+      "anchor": "Convert images to PDF documents securely"
+    },
+    {
       "name": "🔄 Image Converter",
       "href": "/image-converter",
       "desc": "Convert images between WebP, JPG, and PNG formats client-side.",
@@ -91,15 +97,15 @@
       "href": "/countdown",
       "desc": "Track deadlines, product launches, or special events in real time.",
       "anchor": "Set a live countdown clock for your events"
-    },
-    {
-      "name": "🎯 Random Picker",
-      "href": "/random-picker",
-      "desc": "Draw winners fairly from lists with cryptographic randomness.",
-      "anchor": "Pick giveaway winners with fair random algorithm"
     }
   ],
   "image-converter": [
+    {
+      "name": "📄 Image to PDF",
+      "href": "/image-to-pdf",
+      "desc": "Combine your converted images into a single PDF document on your device.",
+      "anchor": "Turn your converted images into a PDF"
+    },
     {
       "name": "🗜️ Image Compressor",
       "href": "/image-compressor",
@@ -111,12 +117,26 @@
       "href": "/countdown",
       "desc": "Track deadlines, product launches, or special events in real time.",
       "anchor": "Set a live countdown clock for your events"
+    }
+  ],
+  "image-to-pdf": [
+    {
+      "name": "🗜️ Image Compressor",
+      "href": "/image-compressor",
+      "desc": "Compress your images before or after PDF conversion to save space.",
+      "anchor": "Compress images securely in your browser"
     },
     {
-      "name": "🎯 Random Picker",
-      "href": "/random-picker",
-      "desc": "Draw winners fairly from lists with cryptographic randomness.",
-      "anchor": "Pick giveaway winners with fair random algorithm"
+      "name": "🔄 Image Converter",
+      "href": "/image-converter",
+      "desc": "Convert images between JPG, PNG, and WebP before creating your PDF.",
+      "anchor": "Convert image formats instantly in browser"
+    },
+    {
+      "name": "⏳ Countdown Timer",
+      "href": "/countdown",
+      "desc": "Track deadlines, product launches, or special events in real time.",
+      "anchor": "Set a live countdown clock for your events"
     }
   ]
 }

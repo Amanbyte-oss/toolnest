@@ -9,6 +9,7 @@ export const LAST_STATE_PREFIX = 'toolnest_last_';
 export const MAX_ENTRIES = 10;
 
 export const TOOL_ICONS = {
+  pdf: '📄',
   compressor: '🗜️',
   converter: '🔄',
   age: '🎂',
@@ -18,6 +19,7 @@ export const TOOL_ICONS = {
 };
 
 export const TOOL_METADATA = {
+  pdf: { name: 'Image to PDF', href: '/image-to-pdf', badge: 'PDF' },
   compressor: { name: 'Image Compressor', href: '/image-compressor', badge: 'Compress' },
   converter: { name: 'Image Converter', href: '/image-converter', badge: 'Convert' },
   age: { name: 'Age Calculator', href: '/age-calculator', badge: 'Age' },

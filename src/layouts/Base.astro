@@ -37,6 +37,7 @@ const {
 } = Astro.props;
 
 const common = getNamespace(lang, 'common');
+const offline = getNamespace(lang, 'offline');
 const defaultTitle = `${common.siteName} — ${common.tagline}`;
 const defaultDescription = common.description;
 
@@ -132,5 +133,52 @@ const isRtl = isRtlLang(lang);
     <Footer lang={lang} />
     <BackToTop />
     <Toast />
+
+    <!-- Offline Notification Banner -->
+    <div
+      id="offline-banner"
+      class="hidden fixed bottom-4 start-4 end-4 sm:start-auto sm:end-4 z-50 p-3.5 max-w-md rounded-2xl bg-amber-500 text-black font-semibold text-xs sm:text-sm shadow-xl flex items-center justify-between gap-3 border border-amber-600/30"
+      role="status"
+      aria-live="polite"
+    >
+      <div class="flex items-center gap-2.5">
+        <span class="text-base shrink-0">⚡</span>
+        <span>{offline?.banner || "You are offline — ToolNest client-side tools continue to work without internet!"}</span>
+      </div>
+      <button
+        type="button"
+        id="offline-banner-close"
+        class="w-7 h-7 rounded-lg bg-black/10 hover:bg-black/20 flex items-center justify-center shrink-0 text-black transition-colors"
+        aria-label="Dismiss offline banner"
+      >
+        ✕
+      </button>
+    </div>
+
+    <script is:inline>
+      (function () {
+        function updateOnlineStatus() {
+          var banner = document.getElementById('offline-banner');
+          if (!banner) return;
+          if (navigator.onLine === false) {
+            banner.classList.remove('hidden');
+          } else {
+            banner.classList.add('hidden');
+          }
+        }
+        window.addEventListener('online', updateOnlineStatus);
+        window.addEventListener('offline', updateOnlineStatus);
+        document.addEventListener('DOMContentLoaded', function () {
+          updateOnlineStatus();
+          var closeBtn = document.getElementById('offline-banner-close');
+          if (closeBtn) {
+            closeBtn.addEventListener('click', function () {
+              var banner = document.getElementById('offline-banner');
+              if (banner) banner.classList.add('hidden');
+            });
+          }
+        });
+      })();
+    </script>
   </body>
 </html>

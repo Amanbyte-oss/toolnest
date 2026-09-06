@@ -7,7 +7,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "check:i18n": "node scripts/i18n-check.mjs",
-    "build": "node scripts/i18n-check.mjs && astro build && node scripts/write-assetsignore.mjs",
+    "build": "node scripts/i18n-check.mjs && astro build && node scripts/write-assetsignore.mjs && node scripts/generate-sitemap.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -16,6 +16,7 @@
     "@astrojs/sitemap": "^3.2.1",
     "@astrojs/tailwind": "^5.1.5",
     "astro": "^5.4.2",
+    "jspdf": "^4.2.1",
     "jszip": "^3.10.1",
     "tailwindcss": "^3.4.17"
   },

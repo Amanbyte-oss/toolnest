@@ -16,18 +16,36 @@ const t = {
   nav: common.nav,
   siteName: common.siteName,
 };
+
+const privacySchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: privacy.title || 'Privacy Policy | ToolNest',
+  url: `https://toolnest.pages.dev${getLocalizedPath('/privacy-policy', lang)}`,
+  description: privacy.metaDesc,
+  publisher: {
+    '@type': 'Organization',
+    name: 'ToolNest',
+    url: 'https://toolnest.pages.dev',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://toolnest.pages.dev/favicon.svg',
+    },
+  },
+};
 ---
 
 <Base
   metaKey="privacy"
   canonicalPath={getLocalizedPath('/privacy-policy', lang)}
-  ogImage="/og/about.svg"
+  ogImage="/og/share-banner.svg"
   breadcrumbs={[{ name: t.nav.privacy, item: getLocalizedPath('/privacy-policy', lang) }]}
+  extraSchemas={[privacySchema]}
   lang={lang}
 >
-  <article class="space-y-8 max-w-2xl mx-auto">
+  <article class="space-y-8 max-w-3xl mx-auto">
     <!-- Header -->
-    <header class="space-y-3 pb-4 border-b border-border-light dark:border-border-dark">
+    <header class="space-y-3 pb-5 border-b border-border-light dark:border-border-dark text-center sm:text-left rtl:sm:text-right">
       <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-accent/10 text-accent dark:bg-accent/20">
         <span>🔒</span>
         <span>{t.privacy.badge}</span>
@@ -40,54 +58,103 @@ const t = {
       </p>
     </header>
 
-    <!-- 1. Introduction -->
-    <section class="space-y-3" aria-labelledby="intro-heading">
-      <h2 id="intro-heading" class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark">
-        {t.privacy.introTitle}
+    <!-- Highlighted Client-Side Privacy Box -->
+    <section class="card p-6 sm:p-7 space-y-3 border-l-4 rtl:border-l-0 rtl:border-r-4 border-emerald-500 bg-emerald-500/5 dark:bg-emerald-500/10" aria-labelledby="client-architecture-heading">
+      <h2 id="client-architecture-heading" class="text-lg sm:text-xl font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-2">
+        <span>🛡️</span>
+        <span>{t.privacy.clientSideTitle || '100% Client-Side Processing Architecture'}</span>
       </h2>
-      <p class="text-sm text-secondary-light dark:text-secondary-dark leading-relaxed">
+      <p class="text-sm sm:text-base text-secondary-light dark:text-secondary-dark leading-relaxed">
+        {t.privacy.clientSideP || 'All image compression, format conversion, and PDF creation execute entirely inside your web browser. Your files never leave your device.'}
+      </p>
+    </section>
+
+    <!-- 1. Introduction -->
+    <section class="card p-6 space-y-3" aria-labelledby="intro-heading">
+      <h2 id="intro-heading" class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark flex items-center gap-2">
+        <span class="w-7 h-7 rounded-lg bg-accent/10 text-accent flex items-center justify-center text-sm font-black">1</span>
+        <span>{t.privacy.introTitle}</span>
+      </h2>
+      <p class="text-sm sm:text-base text-secondary-light dark:text-secondary-dark leading-relaxed">
         {t.privacy.introP}
       </p>
     </section>
 
     <!-- 2. What Data We Collect -->
-    <section class="space-y-3" aria-labelledby="data-collection-heading">
-      <h2 id="data-collection-heading" class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark">
-        {t.privacy.collectTitle}
+    <section class="card p-6 space-y-3" aria-labelledby="data-collection-heading">
+      <h2 id="data-collection-heading" class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark flex items-center gap-2">
+        <span class="w-7 h-7 rounded-lg bg-accent/10 text-accent flex items-center justify-center text-sm font-black">2</span>
+        <span>{t.privacy.collectTitle}</span>
       </h2>
-      <div class="space-y-3 text-sm text-secondary-light dark:text-secondary-dark leading-relaxed">
+      <div class="space-y-3 text-sm sm:text-base text-secondary-light dark:text-secondary-dark leading-relaxed">
         <p>{t.privacy.collectP1}</p>
         <p>{t.privacy.collectP2}</p>
       </div>
     </section>
 
-    <!-- 3. Cookies & Advertising -->
-    <section class="space-y-3" aria-labelledby="advertising-heading">
-      <h2 id="advertising-heading" class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark">
-        {t.privacy.cookiesTitle}
+    <!-- 3. Cookies & Advertising (AdSense Disclosure) -->
+    <section class="card p-6 space-y-3" aria-labelledby="advertising-heading">
+      <h2 id="advertising-heading" class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark flex items-center gap-2">
+        <span class="w-7 h-7 rounded-lg bg-accent/10 text-accent flex items-center justify-center text-sm font-black">3</span>
+        <span>{t.privacy.cookiesTitle}</span>
       </h2>
-      <div class="space-y-3 text-sm text-secondary-light dark:text-secondary-dark leading-relaxed">
+      <div class="space-y-3 text-sm sm:text-base text-secondary-light dark:text-secondary-dark leading-relaxed">
         <p>{t.privacy.cookiesP1}</p>
       </div>
     </section>
 
     <!-- 4. Web Analytics -->
-    <section class="space-y-3" aria-labelledby="analytics-heading">
-      <h2 id="analytics-heading" class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark">
-        {t.privacy.analyticsTitle}
+    <section class="card p-6 space-y-3" aria-labelledby="analytics-heading">
+      <h2 id="analytics-heading" class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark flex items-center gap-2">
+        <span class="w-7 h-7 rounded-lg bg-accent/10 text-accent flex items-center justify-center text-sm font-black">4</span>
+        <span>{t.privacy.analyticsTitle}</span>
       </h2>
-      <p class="text-sm text-secondary-light dark:text-secondary-dark leading-relaxed">
+      <p class="text-sm sm:text-base text-secondary-light dark:text-secondary-dark leading-relaxed">
         {t.privacy.analyticsP}
       </p>
     </section>
 
     <!-- 5. URL Query Parameters & Shareable States -->
-    <section class="space-y-3" aria-labelledby="url-states-heading">
-      <h2 id="url-states-heading" class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark">
-        {t.privacy.urlTitle}
+    <section class="card p-6 space-y-3" aria-labelledby="url-states-heading">
+      <h2 id="url-states-heading" class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark flex items-center gap-2">
+        <span class="w-7 h-7 rounded-lg bg-accent/10 text-accent flex items-center justify-center text-sm font-black">5</span>
+        <span>{t.privacy.urlTitle}</span>
       </h2>
-      <p class="text-sm text-secondary-light dark:text-secondary-dark leading-relaxed">
+      <p class="text-sm sm:text-base text-secondary-light dark:text-secondary-dark leading-relaxed">
         {t.privacy.urlP}
+      </p>
+    </section>
+
+    <!-- 6. Third-Party Services & Edge Delivery -->
+    <section class="card p-6 space-y-3" aria-labelledby="third-party-heading">
+      <h2 id="third-party-heading" class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark flex items-center gap-2">
+        <span class="w-7 h-7 rounded-lg bg-accent/10 text-accent flex items-center justify-center text-sm font-black">6</span>
+        <span>{t.privacy.thirdPartiesTitle}</span>
+      </h2>
+      <p class="text-sm sm:text-base text-secondary-light dark:text-secondary-dark leading-relaxed">
+        {t.privacy.thirdPartiesP}
+      </p>
+    </section>
+
+    <!-- 7. AI & External Processing -->
+    <section class="card p-6 space-y-3" aria-labelledby="ai-heading">
+      <h2 id="ai-heading" class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark flex items-center gap-2">
+        <span class="w-7 h-7 rounded-lg bg-accent/10 text-accent flex items-center justify-center text-sm font-black">7</span>
+        <span>{t.privacy.aiTitle}</span>
+      </h2>
+      <p class="text-sm sm:text-base text-secondary-light dark:text-secondary-dark leading-relaxed">
+        {t.privacy.aiP}
+      </p>
+    </section>
+
+    <!-- 8. User Rights (GDPR, CCPA, LGPD) -->
+    <section class="card p-6 space-y-3 border-l-4 rtl:border-l-0 rtl:border-r-4 border-accent" aria-labelledby="rights-heading">
+      <h2 id="rights-heading" class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark flex items-center gap-2">
+        <span class="w-7 h-7 rounded-lg bg-accent/10 text-accent flex items-center justify-center text-sm font-black">8</span>
+        <span>{t.privacy.rightsTitle}</span>
+      </h2>
+      <p class="text-sm sm:text-base text-secondary-light dark:text-secondary-dark leading-relaxed">
+        {t.privacy.rightsP}
       </p>
     </section>
   </article>

@@ -11,6 +11,7 @@ const common = getNamespace(lang, 'common');
 const notFound = getNamespace(lang, 'notFound');
 const compressor = getNamespace(lang, 'compressor');
 const converter = getNamespace(lang, 'converter');
+const imageToPdf = getNamespace(lang, 'imageToPdf');
 const age = getNamespace(lang, 'age');
 const birthday = getNamespace(lang, 'birthday');
 const picker = getNamespace(lang, 'picker');
@@ -24,6 +25,7 @@ const t = {
 };
 
 const tools = [
+  { name: `📄 ${common.nav?.imageToPdf || 'Image to PDF'}`, href: getLocalizedPath('/image-to-pdf', lang), desc: imageToPdf.subtitle || 'Convert photos and scans to clean PDF' },
   { name: `🗜️ ${common.nav?.imageCompressor || 'Image Compressor'}`, href: getLocalizedPath('/image-compressor', lang), desc: compressor.subtitle },
   { name: `🔄 ${common.nav?.imageConverter || 'Image Converter'}`, href: getLocalizedPath('/image-converter', lang), desc: converter.subtitle },
   { name: `🎂 ${common.nav?.ageCalculator || 'Age Calculator'}`, href: getLocalizedPath('/age-calculator', lang), desc: age.subtitle },
@@ -39,7 +41,7 @@ const tools = [
   noindex={true}
   lang={lang}
 >
-  <div class="py-8 sm:py-16 text-center space-y-8 max-w-xl mx-auto">
+  <div class="py-8 sm:py-14 text-center space-y-8 max-w-2xl mx-auto">
     <!-- Big 404 Badge & Visual -->
     <div class="space-y-3">
       <div class="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark text-3xl shadow-sm text-accent">
@@ -56,6 +58,25 @@ const tools = [
       </p>
     </div>
 
+    <!-- Live Tool Search Filter (Find any tool immediately) -->
+    <div class="max-w-md mx-auto">
+      <div class="relative">
+        <span class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none text-secondary-light dark:text-secondary-dark">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.3-4.3"></path>
+          </svg>
+        </span>
+        <input
+          type="search"
+          id="notfound-search"
+          class="input-base w-full ps-10 pe-4 py-3 text-sm rounded-xl"
+          placeholder={t.notFound.searchPlaceholder || 'Search our free tools...'}
+          aria-label={t.notFound.searchPlaceholder || 'Search our free tools...'}
+        />
+      </div>
+    </div>
+
     <!-- Home Action Button -->
     <div>
       <a href={getLocalizedPath('/', lang)} class="btn-primary inline-flex py-3 px-6 text-sm font-bold shadow-md shadow-accent/20">
@@ -66,13 +87,19 @@ const tools = [
     <!-- Grid of Links to All Tools -->
     <div class="pt-6 border-t border-border-light dark:border-border-dark space-y-4 text-left rtl:text-right">
       <h2 class="text-sm font-bold uppercase tracking-wider text-secondary-light dark:text-secondary-dark text-center">
-        {t.notFound.exploreTitle}
+        {t.notFound.exploreTitle || 'Explore All Free Tools'}
       </h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+      <p id="notfound-empty" class="hidden text-center text-xs text-secondary-light dark:text-secondary-dark py-4">
+        {t.notFound.noToolsFound || 'No tools match your search.'}
+      </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="notfound-tools-grid">
         {tools.map((tool) => (
           <a
             href={tool.href}
-            class="group card p-3.5 hover:border-accent/60 transition-all flex items-center justify-between"
+            class="notfound-tool-card group card p-3.5 hover:border-accent/60 transition-all flex items-center justify-between"
+            data-search-text={`${tool.name.toLowerCase()} ${tool.desc.toLowerCase()}`}
           >
             <div>
               <span class="text-sm font-bold text-primary-light dark:text-primary-dark group-hover:text-accent transition-colors block">
@@ -90,4 +117,50 @@ const tools = [
       </div>
     </div>
   </div>
+
+  <script is:inline>
+    // 1. Language redirect logic if root /404.html was hit from a localized subpath
+    (function () {
+      var currentPath = window.location.pathname;
+      var match = currentPath.match(/^\/(pt|id|ar)(\/|$)/);
+      if (match && match[1]) {
+        var lang = match[1];
+        if (!currentPath.startsWith('/' + lang + '/404')) {
+          window.location.replace('/' + lang + '/404');
+        }
+      }
+    })();
+
+    // 2. Interactive instant search
+    document.addEventListener('DOMContentLoaded', function () {
+      var searchInput = document.getElementById('notfound-search');
+      var cards = document.querySelectorAll('.notfound-tool-card');
+      var emptyMsg = document.getElementById('notfound-empty');
+
+      if (!searchInput) return;
+
+      searchInput.addEventListener('input', function (e) {
+        var query = (e.target.value || '').trim().toLowerCase();
+        var visibleCount = 0;
+
+        cards.forEach(function (card) {
+          var text = card.getAttribute('data-search-text') || '';
+          if (!query || text.indexOf(query) !== -1) {
+            card.classList.remove('hidden');
+            visibleCount++;
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+
+        if (emptyMsg) {
+          if (visibleCount === 0) {
+            emptyMsg.classList.remove('hidden');
+          } else {
+            emptyMsg.classList.add('hidden');
+          }
+        }
+      });
+    });
+  </script>
 </Base>

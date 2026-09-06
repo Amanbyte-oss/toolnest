@@ -34,7 +34,7 @@ const {
   description: descProp,
   metaKey,
   canonicalPath = Astro.url.pathname,
-  ogImage = '/favicon.svg',
+  ogImage = '/og/share-banner.svg',
   type = 'website',
   breadcrumbs = [],
   extraSchemas = [],
@@ -101,7 +101,7 @@ const organizationJsonLd = {
   sameAs: [],
 };
 
-// WebSite schema
+// WebSite schema with SearchAction
 const websiteJsonLd = isHomePage
   ? {
       '@context': 'https://schema.org',
@@ -114,6 +114,11 @@ const websiteJsonLd = isHomePage
       publisher: {
         '@id': `${siteUrl}/#organization`,
       },
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: `${siteUrl}/?q={search_term_string}`,
+        'query-input': 'required name=search_term_string',
+      },
     }
   : null;
 
@@ -125,9 +130,20 @@ const homeGraphJsonLd = isHomePage
   : null;
 
 // Breadcrumbs schema
+const homePath = getLocalizedPath('/', lang);
+const filteredBreadcrumbs = breadcrumbs.filter((b) => b.item !== homePath && b.item !== '/');
+const isNonToolPage = filteredBreadcrumbs.some((b) => 
+  b.item.includes('about') || b.item.includes('contact') || b.item.includes('privacy') || 
+  b.item.includes('terms') || b.item.includes('faq') || b.item.includes('sitemap')
+);
+const middleCrumb = (!isNonToolPage && filteredBreadcrumbs.length === 1)
+  ? [{ name: commonNs.nav?.toolsDropdown || 'Tools', item: `${siteUrl}${getLocalizedPath('/sitemap-page', lang)}` }]
+  : [];
+
 const breadcrumbsList = [
-  { name: commonNs.nav.home, item: `${siteUrl}${getLocalizedPath('/', lang)}` },
-  ...breadcrumbs.map((b) => ({
+  { name: commonNs.nav.home, item: `${siteUrl}${homePath}` },
+  ...middleCrumb,
+  ...filteredBreadcrumbs.map((b) => ({
     name: b.name,
     item: b.item.startsWith('http') ? b.item : new URL(b.item.startsWith('/') ? b.item : `/${b.item}`, siteUrl).toString(),
   })),
@@ -159,12 +175,16 @@ const breadcrumbJsonLd =
   <meta name="robots" content="index, follow" />
 )}
 
-<!-- Reciprocal Hreflang Alternates (SEO Critical - Absolute URLs) -->
-<link rel="alternate" hreflang="en" href={`${siteUrl}${getLocalizedPath(cleanPath, 'en')}`} />
-<link rel="alternate" hreflang="pt" href={`${siteUrl}${getLocalizedPath(cleanPath, 'pt')}`} />
-<link rel="alternate" hreflang="id" href={`${siteUrl}${getLocalizedPath(cleanPath, 'id')}`} />
-<link rel="alternate" hreflang="ar" href={`${siteUrl}${getLocalizedPath(cleanPath, 'ar')}`} />
-<link rel="alternate" hreflang="x-default" href={`${siteUrl}${getLocalizedPath(cleanPath, 'en')}`} />
+{!noindex && (
+  <>
+    <!-- Reciprocal Hreflang Alternates (SEO Critical - Absolute URLs) -->
+    <link rel="alternate" hreflang="en" href={`${siteUrl}${getLocalizedPath(cleanPath, 'en')}`} />
+    <link rel="alternate" hreflang="pt" href={`${siteUrl}${getLocalizedPath(cleanPath, 'pt')}`} />
+    <link rel="alternate" hreflang="id" href={`${siteUrl}${getLocalizedPath(cleanPath, 'id')}`} />
+    <link rel="alternate" hreflang="ar" href={`${siteUrl}${getLocalizedPath(cleanPath, 'ar')}`} />
+    <link rel="alternate" hreflang="x-default" href={`${siteUrl}${getLocalizedPath(cleanPath, 'en')}`} />
+  </>
+)}
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content={type} />

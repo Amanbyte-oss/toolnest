@@ -19,7 +19,14 @@
       "contact": "Contato",
       "switchLanguage": "Idioma",
       "imageCompressor": "Compressor de Imagens",
-      "imageConverter": "Conversor de Imagens"
+      "imageConverter": "Conversor de Imagens",
+      "imageToPdf": "Imagem para PDF",
+      "terms": "Termos de Uso",
+      "faq": "Perguntas Frequentes",
+      "sitemap": "Mapa do Site",
+      "toolsDropdown": "Ferramentas",
+      "imageCategory": "Ferramentas de Imagem e Documentos",
+      "utilityCategory": "Calculadoras e Utilitários"
     },
     "buttons": {
       "calculate": "Calcular",
@@ -145,6 +152,26 @@
     "imageConverter": {
       "title": "Conversor de Imagens Grátis — JPG, PNG, WebP, AVIF Online (Sem Upload)",
       "description": "Converta imagens JPG, PNG, WebP, AVIF, GIF e BMP 100% no seu dispositivo. Rápido, privado, PNG sem perdas e conversão WebP/JPG sem envio para servidores."
+    },
+    "imageToPdf": {
+      "title": "Conversor de Imagem para PDF Grátis — JPG para PDF Online (Privado)",
+      "description": "Converta imagens JPG, PNG e WebP em documentos PDF diretamente no seu dispositivo. Reordene páginas, gire, ajuste margens e aprimore documentos sem marcas d'água."
+    },
+    "terms": {
+      "title": "Termos de Uso — Diretrizes e Uso Aceitável | ToolNest",
+      "description": "Leia os Termos de Uso do ToolNest. Regras claras sobre nossas ferramentas gratuitas no navegador, propriedade dos seus arquivos e isenção de responsabilidade."
+    },
+    "faq": {
+      "title": "Perguntas Frequentes (FAQ) — Privacidade e Ajuda | ToolNest",
+      "description": "Tire suas dúvidas sobre o ToolNest: privacidade 100% no dispositivo, processamento sem upload de arquivos, uso offline e ferramentas grátis."
+    },
+    "sitemap": {
+      "title": "Mapa do Site HTML e Diretório de Ferramentas | ToolNest",
+      "description": "Explore o catálogo completo de ferramentas gratuitas de imagem, conversores, calculadoras e páginas institucionais no ToolNest."
+    },
+    "serverError": {
+      "title": "Erro no Servidor (500) | ToolNest",
+      "description": "Ocorreu um erro inesperado. Volte à página inicial do ToolNest para acessar todas as ferramentas gratuitas."
     }
   },
   "picker": {
@@ -578,7 +605,13 @@
     "successMsg": "Obrigado! Sua mensagem foi preparada com sucesso.",
     "validationName": "Por favor, informe o seu nome.",
     "validationEmail": "Por favor, informe um endereço de e-mail válido.",
-    "validationMessage": "Por favor, escreva uma mensagem com pelo menos 10 caracteres."
+    "validationMessage": "Por favor, escreva uma mensagem com pelo menos 10 caracteres.",
+    "subjectPlaceholder": "Selecione um assunto...",
+    "subjectBug": "Relatar um Erro",
+    "subjectSuggestion": "Sugestão de Recurso",
+    "subjectNewTool": "Ideia de Nova Ferramenta",
+    "subjectOther": "Dúvida Geral / Outro",
+    "errorRetry": "Não foi possível enviar a mensagem diretamente. Tente novamente ou use o link de e-mail direto acima."
   },
   "privacy": {
     "title": "Política de Privacidade — Dados e Transparência | ToolNest",
@@ -597,14 +630,25 @@
     "analyticsTitle": "4. Métricas de Acesso",
     "analyticsP": "Podemos utilizar métricas agregadas e sem identificação pessoal na rede de borda para avaliar o tráfego global, páginas mais acessadas e compatibilidade entre dispositivos.",
     "urlTitle": "5. Persistência de Estado por URL",
-    "urlP": "Certas ferramentas salvam os parâmetros selecionados diretamente na barra de endereço (URL), permitindo que você guarde nos favoritos ou compartilhe links sem precisar de banco de dados externo."
+    "urlP": "Certas ferramentas salvam os parâmetros selecionados diretamente na barra de endereço (URL), permitindo que você guarde nos favoritos ou compartilhe links sem precisar de banco de dados externo.",
+    "clientSideTitle": "6. Arquitetura de Processamento no Dispositivo",
+    "clientSideP": "Ferramentas como Compressor de Imagens, Conversor de Imagens e Imagem para PDF executam 100% no seu navegador via HTML5 Canvas e WebAssembly. Suas fotos e documentos nunca são enviados a nenhum servidor ou nuvem do ToolNest. O processamento ocorre na memória do seu dispositivo e é apagado ao fechar a aba.",
+    "thirdPartiesTitle": "7. Serviços de Terceiros e Publicidade",
+    "thirdPartiesP": "O ToolNest é hospedado no Cloudflare Pages para fornecer carregamento ultrarrápido e seguro. Podemos exibir anúncios compatíveis com a privacidade (como Google AdSense) para manter nossas ferramentas gratuitas. Provedores parceiros podem utilizar cookies para exibir anúncios relevantes.",
+    "aiTitle": "8. Inteligência Artificial e Processamento de Texto",
+    "aiP": "Caso utilize recursos de IA no ToolNest, as consultas são processadas através de conexões seguras e criptografadas (como Gemini ou Groq). Nenhum arquivo pessoal ou documento sensível é usado para treinar modelos de inteligência artificial.",
+    "rightsTitle": "9. Seus Direitos de Privacidade (LGPD e GDPR)",
+    "rightsP": "Sob a LGPD e o GDPR, você tem total controle sobre seus dados. Como o ToolNest não possui contas nem banco de dados de usuários, seu histórico fica gravado apenas no localStorage do seu navegador. Você pode apagá-lo a qualquer momento clicando em 'Limpar Histórico' ou limpando os dados do navegador."
   },
   "notFound": {
     "title": "Página Não Encontrada (404) | ToolNest",
     "heading": "Esta página desapareceu",
     "subtext": "Não conseguimos encontrar a página que você estava procurando. Ela pode ter sido movida, renomeada ou talvez nunca tenha existido.",
     "backHome": "Voltar à Página Inicial",
-    "exploreTitle": "Conheça Nossas Ferramentas Gratuitas"
+    "exploreTitle": "Conheça Nossas Ferramentas Gratuitas",
+    "searchPlaceholder": "Pesquisar ferramentas gratuitas...",
+    "noToolsFound": "Nenhuma ferramenta encontrada.",
+    "allTools": "Ver Todas as Ferramentas"
   },
   "errors": {
     "requiredField": "Este campo é obrigatório.",
@@ -867,6 +911,32 @@
       {
         "q": "O que é AVIF e quando devo usá-lo?",
         "a": "O AVIF é um formato moderno de altíssima eficiência baseado no codec AV1. Ele oferece arquivos muito leves mantendo detalhes finos em navegadores compatíveis."
+      }
+    ],
+    "imageToPdf": [
+      {
+        "q": "Minhas imagens ou documentos são enviados para algum servidor?",
+        "a": "Não, nunca. O ToolNest funciona 100% no seu navegador usando Canvas HTML5 e jsPDF. Seus documentos pessoais, passaportes, comprovantes e fotos nunca saem do seu celular ou computador."
+      },
+      {
+        "q": "O PDF gerado possui alguma marca d'água?",
+        "a": "Não. Todos os arquivos PDF gerados são totalmente limpos, sem marcas d'água, logotipos ou limites arbitrários."
+      },
+      {
+        "q": "Quantas imagens posso juntar em um único PDF?",
+        "a": "Você pode converter até 50 imagens de uma só vez. Para garantir velocidade em celulares com pouca memória, fotos pesadas são ajustadas mantendo textos nítidos."
+      },
+      {
+        "q": "Posso mudar a ordem, girar ou excluir páginas antes de gerar o PDF?",
+        "a": "Sim. Basta arrastar os cards das imagens para mudar a sequência ou usar os botões de mover. Você também pode girar documentos fotografados de lado em passos de 90°."
+      },
+      {
+        "q": "Quais formatos de imagem são suportados?",
+        "a": "Suportamos JPG, JPEG, PNG (inclusive com transparência), WebP e AVIF, além de captura direta pela câmera do celular."
+      },
+      {
+        "q": "O que a função Auto-Aprimorar faz?",
+        "a": "O Auto-Aprimorar aplica um filtro de contraste e brilho otimizado para documentos fotografados, clareando o fundo e tornando textos escuros muito mais legíveis, como um scanner de mesa."
       }
     ]
   },
@@ -1257,5 +1327,168 @@
       "corruptFile": "Não foi possível ler o arquivo de imagem. Pode estar corrompido.",
       "avifUnsupported": "A exportação AVIF não é suportada neste navegador. Escolha WebP, JPG ou PNG."
     }
+  },
+  "imageToPdf": {
+    "title": "Conversor de Imagem para PDF",
+    "subtitle": "Converta fotos JPG, PNG e WebP em arquivos PDF diretamente no seu aparelho. 100% privado, sem marcas d'água e sem limites.",
+    "privacyBadge": "Processado no seu dispositivo — seus documentos nunca são enviados",
+    "dropzone": {
+      "title": "Toque ou solte as imagens aqui",
+      "subtitle": "Suporta fotos JPG, PNG, WebP e AVIF",
+      "browseBtn": "Escolher Arquivos",
+      "cameraBtn": "Escanear com a Câmera",
+      "pasteHint": "ou cole da área de transferência (Ctrl+V)"
+    },
+    "toolbar": {
+      "addMore": "+ Adicionar Mais",
+      "scanCamera": "📷 Câmera",
+      "rotateAll": "Girar Todas",
+      "sortName": "Ordenar por Nome",
+      "reverse": "Inverter Ordem",
+      "autoEnhance": "Aprimorar Todas",
+      "clearAll": "Limpar Tudo",
+      "undo": "Desfazer",
+      "undoDeleted": "Item \"{name}\" removido."
+    },
+    "card": {
+      "page": "Página {num}",
+      "moveLeft": "Mover p/ Esquerda",
+      "moveRight": "Mover p/ Direita",
+      "rotate": "Girar 90°",
+      "enhance": "Aprimorar",
+      "delete": "Excluir"
+    },
+    "options": {
+      "title": "Opções de Página e Layout do PDF",
+      "pageSizeLabel": "Tamanho da Página",
+      "pageSizeA4": "A4",
+      "pageSizeLetter": "Carta",
+      "pageSizeFit": "Ajustar à Imagem",
+      "orientationLabel": "Orientação",
+      "orientationAuto": "Automática",
+      "orientationPortrait": "Retrato",
+      "orientationLandscape": "Paisagem",
+      "marginLabel": "Margens",
+      "marginNone": "Sem margem (0mm)",
+      "marginSmall": "Pequena (5mm)",
+      "marginMedium": "Média (12mm)",
+      "marginLarge": "Grande (20mm)",
+      "fitLabel": "Enquadramento da Imagem",
+      "fitContain": "Conter (Imagem Inteira)",
+      "fitFill": "Preencher (Cortar na Página)",
+      "bgLabel": "Cor de Fundo da Página",
+      "bgWhite": "Branco",
+      "bgBlack": "Preto",
+      "qualityLabel": "Qualidade de Compressão",
+      "qualityHigh": "Alta (300 DPI)",
+      "qualityMedium": "Média (200 DPI)",
+      "qualitySmall": "Arquivo Leve (150 DPI)",
+      "estimatedSize": "Tamanho Estimado do PDF:",
+      "previewTitle": "Prévia ao Vivo da Página 1",
+      "previewSubtitle": "Visualização real das margens, orientação e enquadramento"
+    },
+    "download": {
+      "btn": "Baixar PDF · {count} páginas",
+      "btnSingle": "Baixar PDF · 1 página",
+      "generating": "Gerando PDF... ({current}/{total})",
+      "success": "PDF baixado com sucesso!",
+      "compressFunnel": "Precisa de um arquivo menor? Comprima as imagens deste PDF com nosso Compressor de Imagens →"
+    },
+    "errors": {
+      "noImages": "Por favor, adicione ao menos uma imagem para gerar o PDF.",
+      "limitReached": "Limite máximo de 50 imagens por conversão.",
+      "unsupportedFile": "Formato não suportado. Por favor envie JPG, PNG, WebP ou AVIF.",
+      "memoryWarning": "Fotos de alta resolução detectadas. Imagens serão otimizadas para economizar memória."
+    }
+  },
+  "terms": {
+    "title": "Termos de Uso | ToolNest",
+    "metaDesc": "Leia os termos e condições para o uso das ferramentas online gratuitas do ToolNest.",
+    "badge": "Acordo Legal de Uso",
+    "heading": "Termos de Uso",
+    "lastUpdated": "Última atualização: Setembro de 2026",
+    "subheading": "Regras claras e transparentes para a utilização das ferramentas web gratuitas do ToolNest.",
+    "acceptanceTitle": "1. Aceitação dos Termos",
+    "acceptanceP": "Ao acessar ou utilizar o ToolNest (toolnest.pages.dev), você concorda com estes Termos de Uso. Caso discorde de qualquer cláusula, solicitamos que interrompa o uso do serviço imediatamente.",
+    "freeServiceTitle": "2. Serviço Gratuito e Licença de Uso",
+    "freeServiceP": "O ToolNest disponibiliza utilitários gratuitos para uso pessoal, profissional e educacional. Concedemos uma licença revogável, não exclusiva e intransferível para utilizar os recursos de acordo com estes termos.",
+    "ownershipTitle": "3. Propriedade dos Arquivos e Privacidade",
+    "ownershipP": "Você retém 100% da propriedade intelectual sobre todas as fotos, documentos e dados manipulados no ToolNest. Como nossas ferramentas rodam inteiramente no navegador do seu dispositivo, seus arquivos nunca são copiados ou enviados aos nossos servidores.",
+    "acceptableUseTitle": "4. Uso Aceitável",
+    "acceptableUseP": "Você concorda em não utilizar o ToolNest para atividades ilícitas, não tentar sobrecarregar ou violar a infraestrutura de rede e não realizar extrações automatizadas abusivas.",
+    "disclaimerTitle": "5. Isenção de Garantias",
+    "disclaimerP": "Todas as ferramentas são fornecidas 'como estão' e 'conforme disponíveis', sem garantias expressas ou implícitas. Embora prezem pela precisão técnica, não garantimos funcionamento ininterrupto ou livre de falhas eventuais.",
+    "liabilityTitle": "6. Limitação de Responsabilidade",
+    "liabilityP": "Em nenhuma hipótese o ToolNest ou seus desenvolvedores serão responsáveis por quaisquer danos indiretos decorrentes do uso ou da impossibilidade de uso das ferramentas.",
+    "changesTitle": "7. Alterações nos Termos",
+    "changesP": "Reservamo-nos o direito de atualizar estes termos a qualquer momento. O uso contínuo do site após alterações representa sua plena concordância com os novos termos."
+  },
+  "faqPage": {
+    "title": "Perguntas Frequentes (FAQ) | ToolNest",
+    "metaDesc": "Respostas para dúvidas comuns sobre privacidade dos arquivos, compatibilidade e uso offline no ToolNest.",
+    "badge": "Central de Ajuda e Respostas",
+    "heading": "Perguntas Frequentes",
+    "subheading": "Tudo o que você precisa saber sobre nossa segurança, privacidade dos arquivos e ferramentas no navegador.",
+    "searchPlaceholder": "Pesquise por dúvidas ou tópicos...",
+    "noResults": "Nenhuma pergunta encontrada com estes termos.",
+    "generalSection": "Perguntas Gerais e de Privacidade",
+    "toolsSection": "Dúvidas Específicas sobre as Ferramentas",
+    "generalFaqs": [
+      {
+        "q": "O ToolNest é totalmente gratuito?",
+        "a": "Sim! Todas as ferramentas do ToolNest são 100% gratuitas, sem limites diários ocultos e sem necessidade de cartão de crédito."
+      },
+      {
+        "q": "Vocês salvam ou enviam minhas fotos e documentos para a nuvem?",
+        "a": "Nunca. Toda a compressão de imagens, conversão de formatos, criação de PDFs e cálculos rodam na memória do seu navegador via HTML5 Canvas e WebAssembly. Seus arquivos jamais saem do seu aparelho."
+      },
+      {
+        "q": "Preciso criar conta ou fazer login para usar?",
+        "a": "Não é necessário criar conta nem informar e-mail. Você pode usar qualquer ferramenta instantaneamente no celular, tablet ou computador."
+      },
+      {
+        "q": "Posso usar o ToolNest offline sem internet?",
+        "a": "Sim! Após abrir a página da ferramenta, utilitários como Compressor de Imagens, Imagem para PDF e Calculadora de Idade funcionam perfeitamente sem conexão com a internet."
+      },
+      {
+        "q": "Existe alguma marca d'água nas imagens ou PDFs baixados?",
+        "a": "Absolutamente nenhuma. Seus arquivos são gerados limpos, sem marcas d'água, anúncios embutidos ou logotipos."
+      },
+      {
+        "q": "Quais navegadores e dispositivos são compatíveis?",
+        "a": "O ToolNest funciona em todos os navegadores modernos, incluindo Chrome, Safari, Firefox e Edge no Windows, macOS, Linux, Android e iOS."
+      }
+    ]
+  },
+  "sitemapPage": {
+    "title": "Mapa do Site e Diretório de Ferramentas | ToolNest",
+    "metaDesc": "Navegue por todas as ferramentas gratuitas, conversores, calculadoras e páginas informativas no ToolNest.",
+    "badge": "Diretório e Índice",
+    "heading": "Diretório do ToolNest",
+    "subheading": "Um catálogo completo e organizado com todas as ferramentas, conversores e páginas do ToolNest.",
+    "catImages": "Ferramentas de Imagem e Documentos",
+    "catCalculators": "Calculadoras e Utilitários Diários",
+    "catTrust": "Informações Institucionais e Legais"
+  },
+  "newsletter": {
+    "title": "Receba Novidades sobre Ferramentas",
+    "desc": "Inscreva-se para receber atualizações quando lançarmos novos utilitários gratuitos e privados. Sem spam.",
+    "placeholder": "Seu endereço de e-mail...",
+    "button": "Inscrever-se",
+    "privacyNote": "Sem spam. Leia nossa {privacyLink}.",
+    "privacyLinkLabel": "Política de Privacidade",
+    "success": "🎉 Obrigado! Você receberá novidades sobre novos lançamentos.",
+    "error": "Por favor, insira um e-mail válido.",
+    "alreadySubscribed": "Você já está cadastrado para receber novidades!"
+  },
+  "serverError": {
+    "heading": "Erro no Servidor (500)",
+    "subtext": "Ocorreu uma instabilidade inesperada. Fique tranquilo — nossas ferramentas rodam direto no seu aparelho e continuam funcionando normalmente.",
+    "backHome": "Voltar para a Página Inicial",
+    "exploreTools": "Ver Ferramentas Gratuitas"
+  },
+  "offline": {
+    "banner": "⚡ Você está offline — as ferramentas do ToolNest continuam funcionando sem internet!",
+    "online": "Conexão restabelecida!"
   }
 }

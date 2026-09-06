@@ -25,11 +25,26 @@ const TEST_ROUTES = [
   { path: '/ar/image-compressor', distPath: '/ar/image-compressor/index.html', lang: 'ar', dir: 'rtl', name: 'Image Compressor (AR)' },
   { path: '/image-converter', distPath: '/image-converter/index.html', lang: 'en', dir: 'ltr', name: 'Image Converter (EN)' },
   { path: '/ar/image-converter', distPath: '/ar/image-converter/index.html', lang: 'ar', dir: 'rtl', name: 'Image Converter (AR)' },
+  { path: '/image-to-pdf', distPath: '/image-to-pdf/index.html', lang: 'en', dir: 'ltr', name: 'Image to PDF (EN)' },
+  { path: '/ar/image-to-pdf', distPath: '/ar/image-to-pdf/index.html', lang: 'ar', dir: 'rtl', name: 'Image to PDF (AR)' },
   { path: '/random-picker', distPath: '/en/random-picker/index.html', lang: 'en', dir: 'ltr', name: 'Random Picker (EN)' },
   { path: '/ar/random-picker', distPath: '/ar/random-picker/index.html', lang: 'ar', dir: 'rtl', name: 'Random Picker (AR)' },
   { path: '/countdown', distPath: '/en/countdown/index.html', lang: 'en', dir: 'ltr', name: 'Countdown (EN)' },
   { path: '/ar/countdown', distPath: '/ar/countdown/index.html', lang: 'ar', dir: 'rtl', name: 'Countdown (AR)' },
-  { path: '/404.html', distPath: '/404.html', lang: 'en', dir: 'ltr', name: '404 Page' }
+  { path: '/about', distPath: '/about/index.html', lang: 'en', dir: 'ltr', name: 'About (EN)' },
+  { path: '/ar/about', distPath: '/ar/about/index.html', lang: 'ar', dir: 'rtl', name: 'About (AR)' },
+  { path: '/contact', distPath: '/contact/index.html', lang: 'en', dir: 'ltr', name: 'Contact (EN)' },
+  { path: '/ar/contact', distPath: '/ar/contact/index.html', lang: 'ar', dir: 'rtl', name: 'Contact (AR)' },
+  { path: '/privacy-policy', distPath: '/privacy-policy/index.html', lang: 'en', dir: 'ltr', name: 'Privacy Policy (EN)' },
+  { path: '/ar/privacy-policy', distPath: '/ar/privacy-policy/index.html', lang: 'ar', dir: 'rtl', name: 'Privacy Policy (AR)' },
+  { path: '/terms-of-service', distPath: '/terms-of-service/index.html', lang: 'en', dir: 'ltr', name: 'Terms of Service (EN)' },
+  { path: '/ar/terms-of-service', distPath: '/ar/terms-of-service/index.html', lang: 'ar', dir: 'rtl', name: 'Terms of Service (AR)' },
+  { path: '/faq', distPath: '/faq/index.html', lang: 'en', dir: 'ltr', name: 'FAQ (EN)' },
+  { path: '/ar/faq', distPath: '/ar/faq/index.html', lang: 'ar', dir: 'rtl', name: 'FAQ (AR)' },
+  { path: '/sitemap-page', distPath: '/sitemap-page/index.html', lang: 'en', dir: 'ltr', name: 'HTML Sitemap (EN)' },
+  { path: '/ar/sitemap-page', distPath: '/ar/sitemap-page/index.html', lang: 'ar', dir: 'rtl', name: 'HTML Sitemap (AR)' },
+  { path: '/404.html', distPath: '/404.html', lang: 'en', dir: 'ltr', name: '404 Page' },
+  { path: '/500.html', distPath: '/500.html', lang: 'en', dir: 'ltr', name: '500 Page' }
 ];
 
 const VIEWPORTS = [320, 360, 375, 390, 414, 768];

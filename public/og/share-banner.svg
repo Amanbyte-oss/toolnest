@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0d0f11" />
+      <stop offset="50%" stop-color="#14171a" />
+      <stop offset="100%" stop-color="#0a0c0e" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1" />
+      <stop offset="100%" stop-color="#8b5cf6" />
+    </linearGradient>
+    <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)" />
+
+  <!-- Ambient Glow -->
+  <circle cx="200" cy="150" r="350" fill="url(#glowGrad)" />
+  <circle cx="1000" cy="480" r="400" fill="url(#glowGrad)" />
+
+  <!-- Subtle Grid Pattern -->
+  <g opacity="0.05" stroke="#ffffff" stroke-width="1">
+    <line x1="100" y1="0" x2="100" y2="630" />
+    <line x1="250" y1="0" x2="250" y2="630" />
+    <line x1="400" y1="0" x2="400" y2="630" />
+    <line x1="550" y1="0" x2="550" y2="630" />
+    <line x1="700" y1="0" x2="700" y2="630" />
+    <line x1="850" y1="0" x2="850" y2="630" />
+    <line x1="1000" y1="0" x2="1000" y2="630" />
+    <line x1="1150" y1="0" x2="1150" y2="630" />
+    <line x1="0" y1="100" x2="1200" y2="100" />
+    <line x1="0" y1="250" x2="1200" y2="250" />
+    <line x1="0" y1="400" x2="1200" y2="400" />
+    <line x1="0" y1="550" x2="1200" y2="550" />
+  </g>
+
+  <!-- Border Card Frame -->
+  <rect x="50" y="50" width="1100" height="530" rx="32" fill="none" stroke="#262a30" stroke-width="2" />
+
+  <!-- Logo Icon Badge -->
+  <g transform="translate(100, 110)">
+    <rect width="84" height="84" rx="24" fill="#1b1f24" stroke="#333a42" stroke-width="2" />
+    <path d="M51.5 22a3.5 3.5 0 0 0 0 5l5.5 5.5a3.5 3.5 0 0 0 5 0l13.2-13.2a21 21 0 0 1-27.8 27.8l-24.2 24.2a7.4 7.4 0 0 1-10.5-10.5l24.2-24.2a21 21 0 0 1 27.8-27.8l-13.2 13.2z" fill="url(#accentGrad)" transform="translate(4, 4) scale(0.9)" />
+  </g>
+
+  <!-- Trust Shield Badge -->
+  <g transform="translate(210, 130)">
+    <rect width="320" height="44" rx="22" fill="rgba(16, 185, 129, 0.12)" stroke="rgba(16, 185, 129, 0.3)" stroke-width="1.5" />
+    <circle cx="24" cy="22" r="5" fill="#10b981" />
+    <text x="42" y="28" fill="#10b981" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="700" letter-spacing="0.5">100% PRIVATE • CLIENT-SIDE</text>
+  </g>
+
+  <!-- Brand Title -->
+  <text x="100" y="270" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="64" font-weight="900" letter-spacing="-1.5">
+    ToolNest
+  </text>
+
+  <!-- Tagline / Mission -->
+  <text x="100" y="335" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="26" font-weight="500">
+    Fast, private, client-side everyday web utilities. Zero tracking, zero uploads.
+  </text>
+
+  <!-- Tool Pills Row -->
+  <g transform="translate(100, 390)">
+    <!-- Pill 1: Compressor -->
+    <rect x="0" y="0" width="220" height="52" rx="16" fill="#181c22" stroke="#2d333b" stroke-width="1.5" />
+    <text x="24" y="33" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="18" font-weight="600">🗜️ Image Compressor</text>
+
+    <!-- Pill 2: Converter -->
+    <rect x="236" y="0" width="205" height="52" rx="16" fill="#181c22" stroke="#2d333b" stroke-width="1.5" />
+    <text x="260" y="33" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="18" font-weight="600">🔄 Image Converter</text>
+
+    <!-- Pill 3: Image to PDF -->
+    <rect x="457" y="0" width="185" height="52" rx="16" fill="#181c22" stroke="#2d333b" stroke-width="1.5" />
+    <text x="481" y="33" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="18" font-weight="600">📄 Image to PDF</text>
+
+    <!-- Pill 4: Age & Date -->
+    <rect x="658" y="0" width="195" height="52" rx="16" fill="#181c22" stroke="#2d333b" stroke-width="1.5" />
+    <text x="682" y="33" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="18" font-weight="600">🎂 Age Calculator</text>
+
+    <!-- Pill 5: Utilities -->
+    <rect x="869" y="0" width="130" height="52" rx="16" fill="#181c22" stroke="#2d333b" stroke-width="1.5" />
+    <text x="893" y="33" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="18" font-weight="600">🎲 + More</text>
+  </g>
+
+  <!-- Bottom Details Bar -->
+  <line x1="100" y1="490" x2="1100" y2="490" stroke="#262a30" stroke-width="1.5" />
+  <g transform="translate(100, 532)">
+    <text x="0" y="0" fill="#64748b" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="600">
+      toolnest.pages.dev • 100% Free • No Sign-up • Multilingual (EN, PT, ID, AR)
+    </text>
+  </g>
+</svg>

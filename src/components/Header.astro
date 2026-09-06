@@ -1,8 +1,8 @@
 ---
 /**
  * Header.astro
- * Responsive header with desktop navigation, language switcher dropdown,
- * theme toggle, and fully accessible mobile slide-in drawer menu.
+ * Responsive header with desktop categorized tools dropdown, direct About & Contact links,
+ * language switcher, theme toggle, and fully accessible mobile slide-in drawer menu.
  */
 import {
   LANGUAGES,
@@ -28,19 +28,32 @@ interface ToolNavItem {
   name: string;
   href: string;
   emoji: string;
+  desc?: string;
 }
 
-const navTools: ToolNavItem[] = [
-  { name: t.nav.imageCompressor, href: getLocalizedPath('/image-compressor', lang), emoji: '🗜️' },
-  { name: t.nav.imageConverter, href: getLocalizedPath('/image-converter', lang), emoji: '🔄' },
-  { name: t.nav.ageCalculator, href: getLocalizedPath('/age-calculator', lang), emoji: '🎂' },
-  { name: t.nav.birthdayFacts, href: getLocalizedPath('/birthday-facts', lang), emoji: '🎉' },
-  { name: t.nav.randomPicker, href: getLocalizedPath('/random-picker', lang), emoji: '🎲' },
-  { name: t.nav.countdown, href: getLocalizedPath('/countdown', lang), emoji: '⏳' },
+const imageTools: ToolNavItem[] = [
+  { name: t.nav.imageToPdf || 'Image to PDF', href: getLocalizedPath('/image-to-pdf', lang), emoji: '📄', desc: 'Photos to PDF' },
+  { name: t.nav.imageCompressor, href: getLocalizedPath('/image-compressor', lang), emoji: '🗜️', desc: 'Reduce file size' },
+  { name: t.nav.imageConverter, href: getLocalizedPath('/image-converter', lang), emoji: '🔄', desc: 'WebP, JPG, PNG' },
 ];
+
+const utilityTools: ToolNavItem[] = [
+  { name: t.nav.ageCalculator, href: getLocalizedPath('/age-calculator', lang), emoji: '🎂', desc: 'Exact chronological age' },
+  { name: t.nav.birthdayFacts, href: getLocalizedPath('/birthday-facts', lang), emoji: '🎉', desc: 'Zodiac & milestones' },
+  { name: t.nav.randomPicker, href: getLocalizedPath('/random-picker', lang), emoji: '🎲', desc: 'Fair name & item raffles' },
+  { name: t.nav.countdown, href: getLocalizedPath('/countdown', lang), emoji: '⏳', desc: 'Live event timers' },
+];
+
+const allNavTools = [...imageTools, ...utilityTools];
 
 const homeHref = getLocalizedPath('/', lang);
 const currentNormalizedPath = currentPath.replace(/\/$/, '') || '/';
+
+const isAnyToolActive = allNavTools.some(
+  (tool) => currentNormalizedPath === tool.href.replace(/\/$/, '')
+);
+const isAboutActive = currentNormalizedPath === getLocalizedPath('/about', lang).replace(/\/$/, '');
+const isContactActive = currentNormalizedPath === getLocalizedPath('/contact', lang).replace(/\/$/, '');
 ---
 
 <header class="sticky top-0 z-50 w-full border-b border-border-light dark:border-border-dark bg-bg-light/90 dark:bg-bg-dark/90 backdrop-blur-md transition-colors duration-150">
@@ -59,25 +72,133 @@ const currentNormalizedPath = currentPath.replace(/\/$/, '') || '/';
       <span>ToolNest</span>
     </a>
 
-    <!-- Desktop Navigation (>= md breakpoint) -->
-    <nav class="hidden md:flex items-center gap-0.5 lg:gap-1 flex-nowrap whitespace-nowrap overflow-x-auto" aria-label="Main Navigation">
-      {navTools.map((tool) => {
-        const isActive = currentNormalizedPath === tool.href.replace(/\/$/, '');
-        return (
-          <a
-            href={tool.href}
-            class:list={[
-              'px-2.5 lg:px-3 py-1.5 text-xs lg:text-sm rounded-lg font-medium transition-colors duration-150 flex items-center shrink-0 min-h-[36px]',
-              isActive
-                ? 'text-accent bg-accent/10 dark:bg-accent/15 font-semibold'
-                : 'text-secondary-light dark:text-secondary-dark hover:text-primary-light dark:hover:text-primary-dark hover:bg-black/5 dark:hover:bg-white/5',
-            ]}
-            aria-current={isActive ? 'page' : undefined}
-          >
-            {tool.name}
-          </a>
-        );
-      })}
+    <!-- Desktop Navigation (>= md breakpoint): Categorized Tools Dropdown, About, Contact -->
+    <nav class="hidden md:flex items-center gap-1.5 lg:gap-2" aria-label="Main Navigation">
+      <!-- Tools Dropdown -->
+      <div class="relative" id="tools-dropdown-container">
+        <button
+          id="tools-dropdown-btn"
+          type="button"
+          class:list={[
+            'h-10 px-3.5 rounded-xl flex items-center gap-2 text-xs lg:text-sm font-semibold transition-colors duration-150 cursor-pointer',
+            isAnyToolActive
+              ? 'text-accent bg-accent/10 dark:bg-accent/15 font-bold'
+              : 'text-secondary-light dark:text-secondary-dark hover:text-primary-light dark:hover:text-primary-dark hover:bg-black/5 dark:hover:bg-white/5',
+          ]}
+          aria-haspopup="true"
+          aria-expanded="false"
+          aria-label={t.nav.toolsDropdown || 'Tools'}
+        >
+          <span>🛠️</span>
+          <span>{t.nav.toolsDropdown || 'Tools'}</span>
+          <svg class="w-3.5 h-3.5 text-secondary-light dark:text-secondary-dark opacity-75 transition-transform duration-150" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="m6 9 6 6 6-6"></path>
+          </svg>
+        </button>
+
+        <!-- Dropdown Menu Box -->
+        <div
+          id="tools-dropdown-menu"
+          class="hidden absolute start-0 mt-1.5 w-80 rounded-2xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark shadow-2xl p-3 z-50 transition-all duration-150 space-y-3"
+          role="menu"
+        >
+          <!-- Category 1: Image & Document Tools -->
+          <div class="space-y-1">
+            <div class="px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-accent flex items-center gap-1.5">
+              <span>🖼️</span>
+              <span>{t.nav.imageCategory || 'Image & Document Tools'}</span>
+            </div>
+            {imageTools.map((tool) => {
+              const isActive = currentNormalizedPath === tool.href.replace(/\/$/, '');
+              return (
+                <a
+                  href={tool.href}
+                  class:list={[
+                    'flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-colors',
+                    isActive
+                      ? 'bg-accent/10 text-accent font-semibold'
+                      : 'text-primary-light dark:text-primary-dark hover:bg-black/5 dark:hover:bg-white/5',
+                  ]}
+                  role="menuitem"
+                  aria-current={isActive ? 'page' : undefined}
+                >
+                  <div class="flex items-center gap-2.5">
+                    <span class="text-base">{tool.emoji}</span>
+                    <span>{tool.name}</span>
+                  </div>
+                  {tool.desc && (
+                    <span class="text-[10px] text-secondary-light dark:text-secondary-dark opacity-80">
+                      {tool.desc}
+                    </span>
+                  )}
+                </a>
+              );
+            })}
+          </div>
+
+          <!-- Category 2: Calculators & Utilities -->
+          <div class="space-y-1 pt-2 border-t border-border-light/60 dark:border-border-dark/60">
+            <div class="px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-accent flex items-center gap-1.5">
+              <span>⚡</span>
+              <span>{t.nav.utilityCategory || 'Calculators & Utilities'}</span>
+            </div>
+            {utilityTools.map((tool) => {
+              const isActive = currentNormalizedPath === tool.href.replace(/\/$/, '');
+              return (
+                <a
+                  href={tool.href}
+                  class:list={[
+                    'flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-colors',
+                    isActive
+                      ? 'bg-accent/10 text-accent font-semibold'
+                      : 'text-primary-light dark:text-primary-dark hover:bg-black/5 dark:hover:bg-white/5',
+                  ]}
+                  role="menuitem"
+                  aria-current={isActive ? 'page' : undefined}
+                >
+                  <div class="flex items-center gap-2.5">
+                    <span class="text-base">{tool.emoji}</span>
+                    <span>{tool.name}</span>
+                  </div>
+                  {tool.desc && (
+                    <span class="text-[10px] text-secondary-light dark:text-secondary-dark opacity-80">
+                      {tool.desc}
+                    </span>
+                  )}
+                </a>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      <!-- About Link -->
+      <a
+        href={getLocalizedPath('/about', lang)}
+        class:list={[
+          'h-10 px-3.5 rounded-xl flex items-center text-xs lg:text-sm font-semibold transition-colors duration-150',
+          isAboutActive
+            ? 'text-accent bg-accent/10 dark:bg-accent/15 font-bold'
+            : 'text-secondary-light dark:text-secondary-dark hover:text-primary-light dark:hover:text-primary-dark hover:bg-black/5 dark:hover:bg-white/5',
+        ]}
+        aria-current={isAboutActive ? 'page' : undefined}
+      >
+        {t.nav.about}
+      </a>
+
+      <!-- Contact Link -->
+      <a
+        href={getLocalizedPath('/contact', lang)}
+        class:list={[
+          'h-10 px-3.5 rounded-xl flex items-center text-xs lg:text-sm font-semibold transition-colors duration-150',
+          isContactActive
+            ? 'text-accent bg-accent/10 dark:bg-accent/15 font-bold'
+            : 'text-secondary-light dark:text-secondary-dark hover:text-primary-light dark:hover:text-primary-dark hover:bg-black/5 dark:hover:bg-white/5',
+        ]}
+        aria-current={isContactActive ? 'page' : undefined}
+      >
+        {t.nav.contact}
+      </a>
     </nav>
 
     <!-- Header Actions (Language Switcher, Theme Toggle & Mobile Menu Trigger) -->
@@ -87,7 +208,7 @@ const currentNormalizedPath = currentPath.replace(/\/$/, '') || '/';
         <button
           id="lang-dropdown-btn"
           type="button"
-          class="h-10 px-3 rounded-xl flex items-center gap-2 text-xs font-semibold text-secondary-light dark:text-secondary-dark hover:text-primary-light dark:hover:text-primary-dark hover:bg-black/5 dark:hover:bg-white/5 border border-border-light dark:border-border-dark transition-all duration-150 active:scale-95 focus:outline-none focus:ring-2 focus:ring-accent"
+          class="h-10 px-3 rounded-xl flex items-center gap-2 text-xs font-semibold text-secondary-light dark:text-secondary-dark hover:text-primary-light dark:hover:text-primary-dark hover:bg-black/5 dark:hover:bg-white/5 border border-border-light dark:border-border-dark transition-all duration-150 active:scale-95 focus:outline-none focus:ring-2 focus:ring-accent cursor-pointer"
           aria-haspopup="true"
           aria-expanded="false"
           aria-label={t.nav.switchLanguage}
@@ -146,7 +267,7 @@ const currentNormalizedPath = currentPath.replace(/\/$/, '') || '/';
       <button
         id="theme-toggle"
         type="button"
-        class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center text-secondary-light dark:text-secondary-dark hover:text-primary-light dark:hover:text-primary-dark hover:bg-black/5 dark:hover:bg-white/5 border border-border-light dark:border-border-dark transition-all duration-150 active:scale-95 focus:outline-none focus:ring-2 focus:ring-accent relative overflow-hidden"
+        class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center text-secondary-light dark:text-secondary-dark hover:text-primary-light dark:hover:text-primary-dark hover:bg-black/5 dark:hover:bg-white/5 border border-border-light dark:border-border-dark transition-all duration-150 active:scale-95 focus:outline-none focus:ring-2 focus:ring-accent relative overflow-hidden cursor-pointer"
         aria-label={t.switchTheme || 'Switch theme'}
         title={t.switchTheme || 'Switch theme'}
       >
@@ -188,7 +309,7 @@ const currentNormalizedPath = currentPath.replace(/\/$/, '') || '/';
       <button
         id="mobile-menu-toggle"
         type="button"
-        class="md:hidden w-11 h-11 min-h-[44px] min-w-[44px] sm:w-12 sm:h-12 rounded-xl flex items-center justify-center text-secondary-light dark:text-secondary-dark hover:text-primary-light dark:hover:text-primary-dark hover:bg-black/5 dark:hover:bg-white/5 border border-border-light dark:border-border-dark transition-all duration-150 active:scale-95 focus:outline-none focus:ring-2 focus:ring-accent"
+        class="md:hidden w-11 h-11 min-h-[44px] min-w-[44px] rounded-xl flex items-center justify-center text-secondary-light dark:text-secondary-dark hover:text-primary-light dark:hover:text-primary-dark hover:bg-black/5 dark:hover:bg-white/5 border border-border-light dark:border-border-dark transition-all duration-150 active:scale-95 focus:outline-none focus:ring-2 focus:ring-accent cursor-pointer"
         aria-label={t.openMenu || 'Open menu'}
         aria-expanded="false"
         aria-controls="mobile-drawer"
@@ -203,14 +324,14 @@ const currentNormalizedPath = currentPath.replace(/\/$/, '') || '/';
   </div>
 </header>
 
-<!-- Mobile Drawer Backdrop Overlay (Rendered outside <header> to escape backdrop-filter containing block trap) -->
+<!-- Mobile Drawer Backdrop Overlay -->
 <div
   id="mobile-backdrop"
   class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] md:hidden"
   aria-hidden="true"
 ></div>
 
-<!-- Mobile Slide-In Navigation Drawer (Rendered outside <header> for true viewport height and full stacking context) -->
+<!-- Mobile Slide-In Navigation Drawer -->
 <aside
   id="mobile-drawer"
   class="fixed top-0 bottom-0 bg-surface-light dark:bg-surface-dark border-s border-border-light dark:border-border-dark z-[70] shadow-2xl md:hidden flex flex-col overflow-hidden"
@@ -238,7 +359,7 @@ const currentNormalizedPath = currentPath.replace(/\/$/, '') || '/';
     <button
       id="mobile-menu-close"
       type="button"
-      class="w-11 h-11 min-h-[44px] min-w-[44px] rounded-xl flex items-center justify-center text-secondary-light dark:text-secondary-dark hover:text-primary-light dark:hover:text-primary-dark hover:bg-black/5 dark:hover:bg-white/5 border border-border-light dark:border-border-dark transition-colors focus:outline-none focus:ring-2 focus:ring-accent"
+      class="w-11 h-11 min-h-[44px] min-w-[44px] rounded-xl flex items-center justify-center text-secondary-light dark:text-secondary-dark hover:text-primary-light dark:hover:text-primary-dark hover:bg-black/5 dark:hover:bg-white/5 border border-border-light dark:border-border-dark transition-colors focus:outline-none focus:ring-2 focus:ring-accent cursor-pointer"
       aria-label={t.close || 'Close menu'}
     >
       <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -248,7 +369,7 @@ const currentNormalizedPath = currentPath.replace(/\/$/, '') || '/';
   </div>
 
   <!-- Drawer Navigation Links & Controls -->
-  <div class="flex-1 overflow-y-auto px-3 py-4 space-y-4">
+  <div class="flex-1 overflow-y-auto px-3 py-4 space-y-5">
     <!-- Language Switcher inside Mobile Drawer (Accessible 44px+ touch targets) -->
     <div class="space-y-2 pb-4 border-b border-border-light dark:border-border-dark">
       <span class="text-[11px] font-bold uppercase tracking-wider text-secondary-light dark:text-secondary-dark px-1 block">
@@ -279,15 +400,19 @@ const currentNormalizedPath = currentPath.replace(/\/$/, '') || '/';
       </div>
     </div>
 
-    <!-- Tool Navigation Links -->
-    <nav class="space-y-1.5" aria-label="Mobile Navigation">
-      {navTools.map((tool) => {
+    <!-- Category 1: Image Tools -->
+    <div class="space-y-1.5">
+      <span class="text-[11px] font-bold uppercase tracking-wider text-accent px-1.5 flex items-center gap-1.5">
+        <span>🖼️</span>
+        <span>{t.nav.imageCategory || 'Image & Document Tools'}</span>
+      </span>
+      {imageTools.map((tool) => {
         const isActive = currentNormalizedPath === tool.href.replace(/\/$/, '');
         return (
           <a
             href={tool.href}
             class:list={[
-              'drawer-nav-link flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-medium transition-colors min-h-[48px]',
+              'drawer-nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors min-h-[48px]',
               isActive
                 ? 'bg-accent text-white font-semibold shadow-sm shadow-accent/20'
                 : 'text-primary-light dark:text-primary-dark hover:bg-black/5 dark:hover:bg-white/5',
@@ -299,19 +424,57 @@ const currentNormalizedPath = currentPath.replace(/\/$/, '') || '/';
           </a>
         );
       })}
-    </nav>
+    </div>
 
-    <!-- Footer Links inside Drawer (Accessible 44px+ touch targets) -->
-    <div class="pt-4 border-t border-border-light dark:border-border-dark space-y-2 text-xs text-secondary-light dark:text-secondary-dark px-1">
-      <div class="flex items-center justify-between gap-1">
-        <a href={getLocalizedPath('/about', lang)} class="drawer-nav-link hover:text-accent transition-colors px-2 py-3 min-h-[44px] flex items-center">
+    <!-- Category 2: Calculators & Utilities -->
+    <div class="space-y-1.5 pt-2 border-t border-border-light dark:border-border-dark">
+      <span class="text-[11px] font-bold uppercase tracking-wider text-accent px-1.5 flex items-center gap-1.5">
+        <span>⚡</span>
+        <span>{t.nav.utilityCategory || 'Calculators & Utilities'}</span>
+      </span>
+      {utilityTools.map((tool) => {
+        const isActive = currentNormalizedPath === tool.href.replace(/\/$/, '');
+        return (
+          <a
+            href={tool.href}
+            class:list={[
+              'drawer-nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors min-h-[48px]',
+              isActive
+                ? 'bg-accent text-white font-semibold shadow-sm shadow-accent/20'
+                : 'text-primary-light dark:text-primary-dark hover:bg-black/5 dark:hover:bg-white/5',
+            ]}
+            aria-current={isActive ? 'page' : undefined}
+          >
+            <span class="text-lg shrink-0">{tool.emoji}</span>
+            <span class="truncate">{tool.name}</span>
+          </a>
+        );
+      })}
+    </div>
+
+    <!-- Trust Pages Links inside Drawer -->
+    <div class="pt-3 border-t border-border-light dark:border-border-dark space-y-1">
+      <span class="text-[11px] font-bold uppercase tracking-wider text-secondary-light dark:text-secondary-dark px-1.5 block">
+        {t.siteName}
+      </span>
+      <div class="grid grid-cols-2 gap-1 text-xs text-secondary-light dark:text-secondary-dark">
+        <a href={getLocalizedPath('/about', lang)} class="drawer-nav-link hover:text-accent transition-colors px-2 py-2.5 min-h-[44px] flex items-center">
           {t.nav.about}
         </a>
-        <a href={getLocalizedPath('/privacy-policy', lang)} class="drawer-nav-link hover:text-accent transition-colors px-2 py-3 min-h-[44px] flex items-center">
+        <a href={getLocalizedPath('/contact', lang)} class="drawer-nav-link hover:text-accent transition-colors px-2 py-2.5 min-h-[44px] flex items-center">
+          {t.nav.contact}
+        </a>
+        <a href={getLocalizedPath('/faq', lang)} class="drawer-nav-link hover:text-accent transition-colors px-2 py-2.5 min-h-[44px] flex items-center">
+          {t.nav.faq || 'FAQ'}
+        </a>
+        <a href={getLocalizedPath('/sitemap-page', lang)} class="drawer-nav-link hover:text-accent transition-colors px-2 py-2.5 min-h-[44px] flex items-center">
+          {t.nav.sitemap || 'Sitemap'}
+        </a>
+        <a href={getLocalizedPath('/privacy-policy', lang)} class="drawer-nav-link hover:text-accent transition-colors px-2 py-2.5 min-h-[44px] flex items-center">
           {t.nav.privacy}
         </a>
-        <a href={getLocalizedPath('/contact', lang)} class="drawer-nav-link hover:text-accent transition-colors px-2 py-3 min-h-[44px] flex items-center">
-          {t.nav.contact}
+        <a href={getLocalizedPath('/terms-of-service', lang)} class="drawer-nav-link hover:text-accent transition-colors px-2 py-2.5 min-h-[44px] flex items-center">
+          {t.nav.terms || 'Terms'}
         </a>
       </div>
     </div>
@@ -406,41 +569,74 @@ const currentNormalizedPath = currentPath.replace(/\/$/, '') || '/';
     const abortController = new AbortController();
     const { signal } = abortController;
 
+    // Desktop Tools Dropdown
+    const toolsBtn = document.getElementById('tools-dropdown-btn');
+    const toolsMenu = document.getElementById('tools-dropdown-menu');
+
+    if (toolsBtn && toolsMenu) {
+      const toggleToolsMenu = (open?: boolean) => {
+        const shouldOpen = open !== undefined ? open : toolsMenu.classList.contains('hidden');
+        if (shouldOpen) {
+          toolsMenu.classList.remove('hidden');
+          toolsBtn.setAttribute('aria-expanded', 'true');
+        } else {
+          toolsMenu.classList.add('hidden');
+          toolsBtn.setAttribute('aria-expanded', 'false');
+        }
+      };
+
+      toolsBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleToolsMenu();
+      }, { signal });
+
+      document.addEventListener('click', (e) => {
+        const target = e.target as Node | null;
+        if (target && !toolsMenu.contains(target) && !toolsBtn.contains(target)) {
+          toggleToolsMenu(false);
+        }
+      }, { signal });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !toolsMenu.classList.contains('hidden')) {
+          toggleToolsMenu(false);
+          toolsBtn.focus();
+        }
+      }, { signal });
+    }
+
     // Desktop Language Switcher
     const langBtn = document.getElementById('lang-dropdown-btn');
     const langMenu = document.getElementById('lang-dropdown-menu');
 
     if (langBtn && langMenu) {
-      const currentLangBtn = langBtn;
-      const currentLangMenu = langMenu;
-
       const toggleLangMenu = (open?: boolean) => {
-        const shouldOpen = open !== undefined ? open : currentLangMenu.classList.contains('hidden');
+        const shouldOpen = open !== undefined ? open : langMenu.classList.contains('hidden');
         if (shouldOpen) {
-          currentLangMenu.classList.remove('hidden');
-          currentLangBtn.setAttribute('aria-expanded', 'true');
+          langMenu.classList.remove('hidden');
+          langBtn.setAttribute('aria-expanded', 'true');
         } else {
-          currentLangMenu.classList.add('hidden');
-          currentLangBtn.setAttribute('aria-expanded', 'false');
+          langMenu.classList.add('hidden');
+          langBtn.setAttribute('aria-expanded', 'false');
         }
       };
 
-      currentLangBtn.addEventListener('click', (e) => {
+      langBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         toggleLangMenu();
       }, { signal });
 
       document.addEventListener('click', (e) => {
         const target = e.target as Node | null;
-        if (target && !currentLangMenu.contains(target) && !currentLangBtn.contains(target)) {
+        if (target && !langMenu.contains(target) && !langBtn.contains(target)) {
           toggleLangMenu(false);
         }
       }, { signal });
 
       document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && !currentLangMenu.classList.contains('hidden')) {
+        if (e.key === 'Escape' && !langMenu.classList.contains('hidden')) {
           toggleLangMenu(false);
-          currentLangBtn.focus();
+          langBtn.focus();
         }
       }, { signal });
     }
@@ -474,10 +670,6 @@ const currentNormalizedPath = currentPath.replace(/\/$/, '') || '/';
 
     if (!menuToggleBtn || !drawer || !backdrop) return;
 
-    const toggleBtn = menuToggleBtn;
-    const drawerEl = drawer;
-    const backdropEl = backdrop;
-
     let isDrawerOpen = false;
 
     function lockScroll() {
@@ -506,12 +698,12 @@ const currentNormalizedPath = currentPath.replace(/\/$/, '') || '/';
         el.setAttribute('inert', '');
       });
 
-      toggleBtn.setAttribute('aria-expanded', 'true');
-      toggleBtn.setAttribute('aria-label', 'Close menu');
-      drawerEl.setAttribute('aria-hidden', 'false');
+      menuToggleBtn.setAttribute('aria-expanded', 'true');
+      menuToggleBtn.setAttribute('aria-label', 'Close menu');
+      drawer.setAttribute('aria-hidden', 'false');
 
-      backdropEl.classList.add('is-open');
-      drawerEl.classList.add('is-open');
+      backdrop.classList.add('is-open');
+      drawer.classList.add('is-open');
 
       requestAnimationFrame(() => {
         if (menuCloseBtn) menuCloseBtn.focus();
@@ -527,19 +719,19 @@ const currentNormalizedPath = currentPath.replace(/\/$/, '') || '/';
         el.removeAttribute('inert');
       });
 
-      toggleBtn.setAttribute('aria-expanded', 'false');
-      toggleBtn.setAttribute('aria-label', 'Open menu');
-      drawerEl.setAttribute('aria-hidden', 'true');
+      menuToggleBtn.setAttribute('aria-expanded', 'false');
+      menuToggleBtn.setAttribute('aria-label', 'Open menu');
+      drawer.setAttribute('aria-hidden', 'true');
 
-      backdropEl.classList.remove('is-open');
-      drawerEl.classList.remove('is-open');
+      backdrop.classList.remove('is-open');
+      drawer.classList.remove('is-open');
 
-      if (restoreFocus && toggleBtn) {
-        toggleBtn.focus();
+      if (restoreFocus && menuToggleBtn) {
+        menuToggleBtn.focus();
       }
     };
 
-    toggleBtn.addEventListener('click', () => {
+    menuToggleBtn.addEventListener('click', () => {
       if (isDrawerOpen) closeDrawer();
       else openDrawer();
     }, { signal });
@@ -548,13 +740,13 @@ const currentNormalizedPath = currentPath.replace(/\/$/, '') || '/';
       menuCloseBtn.addEventListener('click', () => closeDrawer(), { signal });
     }
 
-    backdropEl.addEventListener('click', () => closeDrawer(), { signal });
+    backdrop.addEventListener('click', () => closeDrawer(), { signal });
 
-    drawerEl.querySelectorAll('.drawer-nav-link').forEach((link) => {
+    drawer.querySelectorAll('.drawer-nav-link').forEach((link) => {
       link.addEventListener('click', () => closeDrawer(false), { signal });
     });
 
-    drawerEl.querySelectorAll('.lang-option').forEach((link) => {
+    drawer.querySelectorAll('.lang-option').forEach((link) => {
       link.addEventListener('click', () => closeDrawer(false), { signal });
     });
 

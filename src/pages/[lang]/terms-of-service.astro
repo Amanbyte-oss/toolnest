@@ -1,0 +1,15 @@
+---
+export const prerender = true;
+import TermsOfServiceView from '../../views/TermsOfServiceView.astro';
+import { LOCALES, type Lang } from '../../i18n';
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({
+    params: { lang },
+  }));
+}
+
+const { lang } = Astro.params as { lang: Lang };
+---
+
+<TermsOfServiceView lang={lang} />

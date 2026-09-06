@@ -19,7 +19,14 @@
       "contact": "Kontak",
       "switchLanguage": "Bahasa",
       "imageCompressor": "Kompres Foto",
-      "imageConverter": "Konversi Gambar"
+      "imageConverter": "Konversi Gambar",
+      "imageToPdf": "Gambar ke PDF",
+      "terms": "Syarat Layanan",
+      "faq": "Tanya Jawab",
+      "sitemap": "Peta Situs",
+      "toolsDropdown": "Alat",
+      "imageCategory": "Alat Gambar & Dokumen",
+      "utilityCategory": "Kalkulator & Utilitas"
     },
     "buttons": {
       "calculate": "Hitung",
@@ -145,6 +152,26 @@
     "imageConverter": {
       "title": "Konversi Gambar Online Gratis — Ubah Format JPG, PNG, WebP, AVIF",
       "description": "Ubah format foto JPG, PNG, WebP, AVIF, GIF, dan BMP 100% di perangkat Anda. Cepat, privat, tanpa upload ke server."
+    },
+    "imageToPdf": {
+      "title": "Konverter Gambar ke PDF Gratis — Ubah JPG ke PDF Online (Privat)",
+      "description": "Ubah gambar JPG, PNG, dan WebP menjadi dokumen PDF langsung di perangkat Anda. Atur urutan halaman, putar, tentukan margin, dan unduh tanpa watermark."
+    },
+    "terms": {
+      "title": "Syarat Layanan — Ketentuan Penggunaan Legal | ToolNest",
+      "description": "Baca Syarat Layanan ToolNest. Panduan jelas tentang penggunaan alat web gratis, kepemilikan data pengguna, dan batasan tanggung jawab."
+    },
+    "faq": {
+      "title": "Pertanyaan Umum (FAQ) — Privasi File & Bantuan | ToolNest",
+      "description": "Temukan jawaban seputar ToolNest: privasi 100% di perangkat, tanpa unggah file ke server, fitur offline, dan utilitas gratis."
+    },
+    "sitemap": {
+      "title": "Peta Situs HTML & Direktori Alat | ToolNest",
+      "description": "Jelajahi direktori lengkap alat gambar gratis, konverter, kalkulator, dan halaman informasi di ToolNest."
+    },
+    "serverError": {
+      "title": "Kesalahan Server (500) | ToolNest",
+      "description": "Terjadi kesalahan yang tidak terduga. Kembali ke beranda ToolNest untuk mengakses seluruh utilitas gratis."
     }
   },
   "picker": {
@@ -578,7 +605,13 @@
     "successMsg": "Terima kasih! Pesan Anda telah siap dikirimkan.",
     "validationName": "Harap masukkan nama Anda.",
     "validationEmail": "Harap masukkan alamat email yang valid.",
-    "validationMessage": "Harap tuliskan pesan Anda (minimal 10 karakter)."
+    "validationMessage": "Harap tuliskan pesan Anda (minimal 10 karakter).",
+    "subjectPlaceholder": "Pilih topik pertanyaan...",
+    "subjectBug": "Laporkan Masalah / Bug",
+    "subjectSuggestion": "Saran Fitur Baru",
+    "subjectNewTool": "Ide Alat Baru",
+    "subjectOther": "Pertanyaan Umum / Lainnya",
+    "errorRetry": "Gagal mengirim pesan secara otomatis. Silakan coba lagi atau gunakan tautan email langsung di atas."
   },
   "privacy": {
     "title": "Kebijakan Privasi — Keamanan Data & Transparansi | ToolNest",
@@ -597,14 +630,25 @@
     "analyticsTitle": "4. Analisis Akses Web",
     "analyticsP": "Kami dapat menggunakan statistik agregat tanpa identitas pribadi pada jaringan tepi untuk memantau volume lalu lintas pengunjung, halaman yang populer, dan kompatibilitas perangkat pengguna.",
     "urlTitle": "5. Penyimpanan Status pada Tautan (URL)",
-    "urlP": "Beberapa alat menyematkan parameter pilihan langsung ke dalam tautan (URL) peramban Anda, sehingga Anda dapat menyimpan bookmark atau membagikannya kepada rekan tanpa memerlukan basis data eksternal."
+    "urlP": "Beberapa alat menyematkan parameter pilihan langsung ke dalam tautan (URL) peramban Anda, sehingga Anda dapat menyimpan bookmark atau membagikannya kepada rekan tanpa memerlukan basis data eksternal.",
+    "clientSideTitle": "6. Arsitektur Pemrosesan Sisi Klien",
+    "clientSideP": "Alat seperti Kompresor Gambar, Konverter Gambar, dan Gambar ke PDF berjalan 100% langsung di browser Anda melalui HTML5 Canvas dan WebAssembly. Foto dan dokumen Anda tidak pernah diunggah ke server ToolNest mana pun. Pemrosesan terjadi di memori perangkat Anda dan langsung hilang saat tab ditutup.",
+    "thirdPartiesTitle": "7. Layanan Pihak Ketiga & Iklan",
+    "thirdPartiesP": "ToolNest dihosting di Cloudflare Pages untuk menyajikan file statis secara cepat dan aman. Kami mungkin menampilkan iklan yang mematuhi privasi (seperti Google AdSense) untuk menjaga layanan tetap gratis bagi semua orang.",
+    "aiTitle": "8. Kecerdasan Buatan (AI) & Pengolahan Teks",
+    "aiP": "Jika Anda menggunakan utilitas berbantuan AI di ToolNest, kueri dikirim melalui API terenkripsi (seperti Gemini atau Groq). Tidak ada file atau dokumen pribadi yang disimpan permanen atau dipakai melatih model AI.",
+    "rightsTitle": "9. Hak Privasi Pengguna (GDPR & Regulasi Data)",
+    "rightsP": "Anda memiliki hak penuh untuk mengakses dan menghapus data Anda. Karena ToolNest tidak memiliki sistem akun atau database terpusat, riwayat alat hanya tersimpan di localStorage browser Anda dan dapat Anda hapus kapan pun dengan menekan tombol 'Hapus Riwayat'."
   },
   "notFound": {
     "title": "Halaman Tidak Ditemukan (404) | ToolNest",
     "heading": "Halaman ini tidak dapat ditemukan",
     "subtext": "Kami tidak dapat menemukan halaman yang Anda cari. Halaman mungkin telah dipindahkan, diubah namanya, atau memang tidak pernah ada.",
     "backHome": "Kembali ke Beranda",
-    "exploreTitle": "Jelajahi Pilihan Alat Gratis Kami"
+    "exploreTitle": "Jelajahi Pilihan Alat Gratis Kami",
+    "searchPlaceholder": "Cari alat gratis kami...",
+    "noToolsFound": "Tidak ada alat yang cocok dengan pencarian Anda.",
+    "allTools": "Jelajahi Semua Alat"
   },
   "errors": {
     "requiredField": "Bagian ini wajib diisi.",
@@ -867,6 +911,32 @@
       {
         "q": "Apa itu format AVIF?",
         "a": "AVIF adalah format gambar generasi terbaru berbasis codec AV1 yang menghasilkan ukuran file sangat hemat dengan kualitas prima."
+      }
+    ],
+    "imageToPdf": [
+      {
+        "q": "Apakah gambar atau dokumen saya diunggah ke server?",
+        "a": "Tidak, sama sekali tidak pernah. ToolNest bekerja 100% di sisi klien pada browser Anda menggunakan Canvas HTML5 dan jsPDF. Data pribadi, dokumen penting, dan foto Anda tidak pernah meninggalkan perangkat."
+      },
+      {
+        "q": "Apakah ada watermark pada file PDF yang dibuat?",
+        "a": "Tidak ada. Semua file PDF yang dihasilkan bebas watermark, logo, maupun biaya tersembunyi."
+      },
+      {
+        "q": "Berapa banyak gambar yang bisa digabungkan ke satu PDF?",
+        "a": "Anda bisa menggabungkan hingga 50 gambar sekaligus dalam satu file PDF. Foto beresolusi sangat besar akan dioptimalkan secara aman agar tetap lancar di ponsel hemat RAM."
+      },
+      {
+        "q": "Bisakah saya mengatur ulang urutan atau memutar halaman sebelum membuat PDF?",
+        "a": "Bisa. Cukup geser (drag) kartu gambar untuk mengubah urutan halaman, atau gunakan tombol panah geser. Anda juga bisa memutar orientasi foto dokumen miring 90 derajat."
+      },
+      {
+        "q": "Format gambar apa saja yang didukung?",
+        "a": "Kami mendukung format JPG, JPEG, PNG (termasuk transparansi), WebP, AVIF, serta foto langsung dari kamera HP."
+      },
+      {
+        "q": "Apa fungsi fitur Peningkatan Otomatis (Auto-Enhance)?",
+        "a": "Fitur ini menyesuaikan kontras dan kecerahan foto dokumen agar teks yang buram atau redup menjadi tajam dan mudah dibaca, layaknya hasil pindaian mesin scanner kantor."
       }
     ]
   },
@@ -1257,5 +1327,168 @@
       "corruptFile": "Berkas gambar tidak dapat dibaca atau rusak.",
       "avifUnsupported": "Ekspor format AVIF tidak didukung di browser ini. Harap pilih WebP, JPG, atau PNG."
     }
+  },
+  "imageToPdf": {
+    "title": "Konverter Gambar ke PDF",
+    "subtitle": "Ubah foto JPG, PNG, dan WebP menjadi dokumen PDF rapi langsung di ponsel atau laptop Anda. 100% privat, tanpa watermark.",
+    "privacyBadge": "Diproses di perangkat Anda — dokumen Anda tidak pernah diunggah",
+    "dropzone": {
+      "title": "Ketuk atau seret gambar ke sini",
+      "subtitle": "Mendukung format JPG, PNG, WebP, dan AVIF",
+      "browseBtn": "Pilih Berkas",
+      "cameraBtn": "Pindai via Kamera",
+      "pasteHint": "atau tempel dari clipboard (Ctrl+V)"
+    },
+    "toolbar": {
+      "addMore": "+ Tambah Gambar",
+      "scanCamera": "📷 Kamera",
+      "rotateAll": "Putar Semua",
+      "sortName": "Urutkan Nama",
+      "reverse": "Balik Urutan",
+      "autoEnhance": "Tingkatkan Semua",
+      "clearAll": "Hapus Semua",
+      "undo": "Urungkan",
+      "undoDeleted": "\"{name}\" telah dihapus."
+    },
+    "card": {
+      "page": "Halaman {num}",
+      "moveLeft": "Geser Kiri",
+      "moveRight": "Geser Kanan",
+      "rotate": "Putar 90°",
+      "enhance": "Tingkatkan",
+      "delete": "Hapus"
+    },
+    "options": {
+      "title": "Opsi Halaman & Tata Letak PDF",
+      "pageSizeLabel": "Ukuran Halaman",
+      "pageSizeA4": "A4",
+      "pageSizeLetter": "Letter",
+      "pageSizeFit": "Sesuai Ukuran Gambar",
+      "orientationLabel": "Orientasi",
+      "orientationAuto": "Otomatis",
+      "orientationPortrait": "Potret",
+      "orientationLandscape": "Lanskap",
+      "marginLabel": "Batas Tepi (Margin)",
+      "marginNone": "Tanpa Margin (0mm)",
+      "marginSmall": "Kecil (5mm)",
+      "marginMedium": "Sedang (12mm)",
+      "marginLarge": "Besar (20mm)",
+      "fitLabel": "Pengepasan Gambar",
+      "fitContain": "Muat Utuh (Seluruh Gambar)",
+      "fitFill": "Penuhi (Pangkas ke Halaman)",
+      "bgLabel": "Warna Latar Halaman",
+      "bgWhite": "Putih",
+      "bgBlack": "Hitam",
+      "qualityLabel": "Kualitas Kompresi",
+      "qualityHigh": "Tinggi (300 DPI)",
+      "qualityMedium": "Sedang (200 DPI)",
+      "qualitySmall": "Ukuran Ringan (150 DPI)",
+      "estimatedSize": "Estimasi Ukuran PDF:",
+      "previewTitle": "Pratinjau Langsung Halaman 1",
+      "previewSubtitle": "Tampilan nyata margin, orientasi, dan tata letak"
+    },
+    "download": {
+      "btn": "Unduh PDF · {count} halaman",
+      "btnSingle": "Unduh PDF · 1 halaman",
+      "generating": "Membuat PDF... ({current}/{total})",
+      "success": "PDF berhasil diunduh!",
+      "compressFunnel": "Ingin ukuran lebih kecil? Kompres gambar PDF ini dengan Kompresor Gambar kami →"
+    },
+    "errors": {
+      "noImages": "Harap tambahkan setidaknya satu gambar untuk membuat PDF.",
+      "limitReached": "Batas maksimal 50 gambar dalam satu dokumen PDF.",
+      "unsupportedFile": "Format file tidak didukung. Harap pilih JPG, PNG, WebP, atau AVIF.",
+      "memoryWarning": "Foto beresolusi sangat besar terdeteksi. Gambar akan dioptimalkan demi stabilitas memori."
+    }
+  },
+  "terms": {
+    "title": "Syarat Layanan | ToolNest",
+    "metaDesc": "Baca syarat dan ketentuan penggunaan alat online gratis sisi klien di ToolNest.",
+    "badge": "Perjanjian & Ketentuan Hukum",
+    "heading": "Syarat Layanan",
+    "lastUpdated": "Pembaruan terakhir: September 2026",
+    "subheading": "Ketentuan yang adil dan transparan untuk penggunaan berbagai utilitas web gratis di ToolNest.",
+    "acceptanceTitle": "1. Penerimaan Syarat",
+    "acceptanceP": "Dengan mengakses atau memakai ToolNest (toolnest.pages.dev), Anda setuju terikat pada Syarat Layanan ini. Jika Anda tidak menyetujui bagian mana pun, harap hentikan penggunaan alat kami segera.",
+    "freeServiceTitle": "2. Layanan Gratis & Lisensi",
+    "freeServiceP": "ToolNest menyediakan alat bantu gratis untuk keperluan pribadi, kerja, dan pendidikan. Kami memberi Anda lisensi non-eksklusif dan dapat dibatalkan untuk mengakses alat sesuai ketentuan ini.",
+    "ownershipTitle": "3. Kepemilikan Konten & Privasi",
+    "ownershipP": "Anda memegang 100% hak cipta atas seluruh gambar, dokumen, angka, dan konten yang diproses di ToolNest. Karena alat kami berjalan 100% di browser Anda, konten Anda tidak pernah disimpan atau diunggah ke server kami.",
+    "acceptableUseTitle": "4. Penggunaan yang Wajar",
+    "acceptableUseP": "Anda setuju untuk tidak memanfaatkan ToolNest untuk tindakan melawan hukum, merusak infrastruktur server, atau melakukan scraping otomatis tanpa izin tertulis.",
+    "disclaimerTitle": "5. Penafian Jaminan",
+    "disclaimerP": "Semua alat dan perhitungan disediakan 'sebagaimana adanya' tanpa jaminan apa pun, baik tersurat maupun tersirat. Kami tidak menjamin bahwa alat akan selalu bebas dari kesalahan sewaktu-waktu.",
+    "liabilityTitle": "6. Batasan Tanggung Jawab",
+    "liabilityP": "Dalam kondisi apa pun, ToolNest maupun pengelolanya tidak bertanggung jawab atas kerugian tidak langsung yang timbul dari penggunaan alat kami.",
+    "changesTitle": "7. Perubahan Ketentuan",
+    "changesP": "Kami berhak memperbarui ketentuan ini kapan pun. Melanjutkan penggunaan ToolNest setelah pembaruan berarti Anda menyetujui syarat layanan yang baru."
+  },
+  "faqPage": {
+    "title": "Tanya Jawab (FAQ) | ToolNest",
+    "metaDesc": "Jawaban atas pertanyaan umum tentang privasi file, kompatibilitas perangkat, dan fitur offline di ToolNest.",
+    "badge": "Bantuan & Informasi",
+    "heading": "Pertanyaan yang Sering Diajukan",
+    "subheading": "Segala hal yang perlu Anda ketahui mengenai keamanan file, privasi sisi klien, dan cara kerja alat kami.",
+    "searchPlaceholder": "Cari pertanyaan dan topik...",
+    "noResults": "Tidak ada pertanyaan yang sesuai dengan pencarian.",
+    "generalSection": "Pertanyaan Umum & Privasi",
+    "toolsSection": "Pertanyaan Khusus Alat",
+    "generalFaqs": [
+      {
+        "q": "Apakah ToolNest benar-benar gratis?",
+        "a": "Ya! Semua alat di ToolNest 100% gratis tanpa biaya tersembunyi, tanpa batas kuota harian, dan tanpa kartu kredit."
+      },
+      {
+        "q": "Apakah foto dan dokumen saya diunggah ke server?",
+        "a": "Tidak pernah. Semua proses kompresi gambar, konversi format, pembuatan PDF, dan hitungan tanggal berlangsung di memori browser Anda. File tidak pernah meninggalkan perangkat."
+      },
+      {
+        "q": "Apakah saya harus membuat akun atau mendaftar?",
+        "a": "Tidak perlu membuat akun. Anda dapat langsung menggunakan seluruh alat di HP, tablet, maupun laptop tanpa login."
+      },
+      {
+        "q": "Bisakah ToolNest digunakan secara offline tanpa internet?",
+        "a": "Bisa! Begitu halaman alat selesai dimuat, alat seperti Gambar ke PDF, Kompresor Gambar, dan Kalkulator Umur dapat digunakan penuh tanpa koneksi internet."
+      },
+      {
+        "q": "Apakah ada watermark pada gambar atau PDF hasil unduhan?",
+        "a": "Sama sekali tidak ada watermark. Dokumen dan gambar Anda bersih tanpa watermark atau logo apa pun."
+      },
+      {
+        "q": "Browser dan sistem operasi apa saja yang didukung?",
+        "a": "ToolNest kompatibel dengan semua browser modern seperti Google Chrome, Safari, Firefox, dan Edge di Android, iOS, Windows, Mac, serta Linux."
+      }
+    ]
+  },
+  "sitemapPage": {
+    "title": "Peta Situs & Direktori Alat | ToolNest",
+    "metaDesc": "Jelajahi seluruh utilitas online gratis, konverter, kalkulator, dan halaman informasi di ToolNest.",
+    "badge": "Direktori & Indeks",
+    "heading": "Direktori Situs ToolNest",
+    "subheading": "Katalog lengkap berisi seluruh alat bantu gratis, konverter, kalkulator, dan informasi resmi di ToolNest.",
+    "catImages": "Alat Gambar & Dokumen",
+    "catCalculators": "Kalkulator & Utilitas Sehari-hari",
+    "catTrust": "Halaman Informasi & Ketentuan Legal"
+  },
+  "newsletter": {
+    "title": "Dapatkan Info Alat Terbaru",
+    "desc": "Daftar untuk info rilis utilitas gratis dan privat baru dari kami. Bebas spam selamanya.",
+    "placeholder": "Alamat email Anda...",
+    "button": "Langganan",
+    "privacyNote": "Bebas spam. Baca {privacyLink} kami.",
+    "privacyLinkLabel": "Kebijakan Privasi",
+    "success": "🎉 Terima kasih! Anda terdaftar untuk info alat baru.",
+    "error": "Silakan masukkan alamat email yang valid.",
+    "alreadySubscribed": "Anda sudah terdaftar dalam daftar notifikasi!"
+  },
+  "serverError": {
+    "heading": "Kesalahan Server (500)",
+    "subtext": "Terjadi kesalahan yang tidak terduga. Jangan khawatir — alat bantu kami berjalan langsung di perangkat Anda dan tetap berfungsi normal.",
+    "backHome": "Kembali ke Beranda",
+    "exploreTools": "Jelajahi Alat Gratis"
+  },
+  "offline": {
+    "banner": "⚡ Anda sedang offline — alat sisi klien ToolNest tetap bekerja tanpa internet!",
+    "online": "Kembali online!"
   }
 }

@@ -1,0 +1,15 @@
+---
+export const prerender = true;
+import HtmlSitemapView from '../../views/HtmlSitemapView.astro';
+import { LOCALES, type Lang } from '../../i18n';
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({
+    params: { lang },
+  }));
+}
+
+const { lang } = Astro.params as { lang: Lang };
+---
+
+<HtmlSitemapView lang={lang} />

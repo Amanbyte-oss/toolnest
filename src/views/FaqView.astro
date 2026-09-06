@@ -1,0 +1,272 @@
+---
+import Base from '../layouts/Base.astro';
+import { getNamespace, getLocalizedPath, type Lang } from '../i18n';
+
+export interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'en' } = Astro.props;
+const common = getNamespace(lang, 'common');
+const faqPage = getNamespace(lang, 'faqPage');
+const faq = getNamespace(lang, 'faq');
+
+const t = {
+  faqPage,
+  faq,
+  common,
+  nav: common.nav,
+  siteName: common.siteName,
+};
+
+const generalList = Array.isArray(faqPage.generalFaqs) ? faqPage.generalFaqs : [];
+
+interface FaqCategory {
+  id: string;
+  name: string;
+  emoji: string;
+  items: Array<{ q: string; a: string }>;
+}
+
+const categories: FaqCategory[] = [
+  {
+    id: 'general',
+    name: faqPage.generalSection || 'General & Privacy Questions',
+    emoji: '🛡️',
+    items: generalList,
+  },
+  {
+    id: 'pdf',
+    name: common.nav?.imageToPdf || 'Image to PDF',
+    emoji: '📄',
+    items: Array.isArray(faq.imageToPdf) ? faq.imageToPdf : [],
+  },
+  {
+    id: 'compressor',
+    name: common.nav?.imageCompressor || 'Image Compressor',
+    emoji: '🗜️',
+    items: Array.isArray(faq.compressor) ? faq.compressor : [],
+  },
+  {
+    id: 'converter',
+    name: common.nav?.imageConverter || 'Image Converter',
+    emoji: '🔄',
+    items: Array.isArray(faq.converter) ? faq.converter : [],
+  },
+  {
+    id: 'age',
+    name: common.nav?.ageCalculator || 'Age Calculator',
+    emoji: '🎂',
+    items: Array.isArray(faq.age) ? faq.age : [],
+  },
+  {
+    id: 'birthday',
+    name: common.nav?.birthdayFacts || 'Birthday Facts',
+    emoji: '🎉',
+    items: Array.isArray(faq.birthday) ? faq.birthday : [],
+  },
+  {
+    id: 'picker',
+    name: common.nav?.randomPicker || 'Random Picker',
+    emoji: '🎲',
+    items: Array.isArray(faq.picker) ? faq.picker : [],
+  },
+  {
+    id: 'countdown',
+    name: common.nav?.countdown || 'Countdown Timer',
+    emoji: '⏳',
+    items: Array.isArray(faq.countdown) ? faq.countdown : [],
+  },
+];
+
+// Build full FAQPage schema
+const allSchemaFaqs: Array<{ q: string; a: string }> = [];
+categories.forEach((cat) => {
+  cat.items.forEach((item) => {
+    allSchemaFaqs.push(item);
+  });
+});
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  name: faqPage.title || 'Frequently Asked Questions | ToolNest',
+  description: faqPage.metaDesc,
+  url: `https://toolnest.pages.dev${getLocalizedPath('/faq', lang)}`,
+  mainEntity: allSchemaFaqs.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.a,
+    },
+  })),
+};
+---
+
+<Base
+  metaKey="faq"
+  canonicalPath={getLocalizedPath('/faq', lang)}
+  ogImage="/og/share-banner.svg"
+  breadcrumbs={[{ name: t.nav.faq || 'FAQ', item: getLocalizedPath('/faq', lang) }]}
+  extraSchemas={[faqSchema]}
+  lang={lang}
+>
+  <article class="space-y-10 max-w-3xl mx-auto">
+    <!-- Header -->
+    <header class="space-y-3 text-center sm:text-left rtl:sm:text-right pb-4 border-b border-border-light dark:border-border-dark">
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-accent/10 text-accent dark:bg-accent/20">
+        <span>❓</span>
+        <span>{t.faqPage.badge}</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-primary-light dark:text-primary-dark">
+        {t.faqPage.heading}
+      </h1>
+      <p class="text-base text-secondary-light dark:text-secondary-dark leading-relaxed">
+        {t.faqPage.subheading}
+      </p>
+
+      <!-- Interactive Search Filter -->
+      <div class="pt-4 max-w-lg">
+        <div class="relative">
+          <span class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none text-secondary-light dark:text-secondary-dark">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.3-4.3"></path>
+            </svg>
+          </span>
+          <input
+            type="search"
+            id="faq-search-input"
+            class="input-base w-full ps-10 pe-4 py-2.5 text-sm rounded-xl"
+            placeholder={t.faqPage.searchPlaceholder}
+            aria-label={t.faqPage.searchPlaceholder}
+          />
+        </div>
+      </div>
+    </header>
+
+    <!-- Quick Navigation Pills -->
+    <div class="flex flex-wrap gap-2 pb-2" aria-label="FAQ Topics">
+      {categories.map((cat) => (
+        <a
+          href={`#cat-${cat.id}`}
+          class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark text-secondary-light dark:text-secondary-dark hover:text-accent hover:border-accent/40 transition-colors"
+        >
+          <span>{cat.emoji}</span>
+          <span>{cat.name}</span>
+        </a>
+      ))}
+    </div>
+
+    <!-- Empty search message -->
+    <div id="faq-no-results" class="hidden card p-8 text-center space-y-2">
+      <div class="text-2xl">🔍</div>
+      <p class="text-sm font-semibold text-secondary-light dark:text-secondary-dark">
+        {t.faqPage.noResults}
+      </p>
+    </div>
+
+    <!-- FAQ Accordion Sections -->
+    <div class="space-y-10" id="faq-categories-container">
+      {categories.map((cat) => (
+        <section id={`cat-${cat.id}`} class="faq-category-section space-y-4" aria-labelledby={`heading-${cat.id}`}>
+          <div class="flex items-center gap-2 pb-2 border-b border-border-light dark:border-border-dark">
+            <span class="text-xl">{cat.emoji}</span>
+            <h2 id={`heading-${cat.id}`} class="text-xl font-bold text-primary-light dark:text-primary-dark">
+              {cat.name}
+            </h2>
+            <span class="ms-auto text-xs px-2 py-0.5 rounded-md bg-black/5 dark:bg-white/5 font-mono text-secondary-light dark:text-secondary-dark">
+              {cat.items.length}
+            </span>
+          </div>
+
+          <div class="space-y-3">
+            {cat.items.map((item, idx) => (
+              <details
+                class="faq-accordion-item card overflow-hidden group transition-all duration-150"
+                data-search-text={`${item.q.toLowerCase()} ${item.a.toLowerCase()}`}
+              >
+                <summary class="flex items-center justify-between p-4 sm:p-5 cursor-pointer font-semibold text-sm sm:text-base text-primary-light dark:text-primary-dark select-none list-none group-hover:text-accent transition-colors gap-3">
+                  <span class="flex-1 text-left rtl:text-right">{item.q}</span>
+                  <span class="w-7 h-7 rounded-lg bg-black/5 dark:bg-white/5 flex items-center justify-center shrink-0 text-secondary-light dark:text-secondary-dark group-open:rotate-180 group-open:bg-accent/10 group-open:text-accent transition-transform duration-200">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                      <path d="m6 9 6 6 6-6"></path>
+                    </svg>
+                  </span>
+                </summary>
+                <div class="px-4 sm:px-5 pb-5 pt-1 text-xs sm:text-sm text-secondary-light dark:text-secondary-dark leading-relaxed border-t border-border-light/40 dark:border-border-dark/40">
+                  <p>{item.a}</p>
+                </div>
+              </details>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+
+    <!-- Still have questions card -->
+    <section class="card p-6 sm:p-8 space-y-3 border-accent/30 bg-gradient-to-r from-accent/5 via-surface-light to-surface-light dark:from-accent/15 dark:via-surface-dark dark:to-surface-dark">
+      <h2 class="text-lg font-bold text-primary-light dark:text-primary-dark">
+        Still have questions?
+      </h2>
+      <p class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark leading-relaxed max-w-xl">
+        Can't find what you're looking for? Reach out through our contact form. We answer feature suggestions and inquiries promptly.
+      </p>
+      <div class="pt-2">
+        <a
+          href={getLocalizedPath('/contact', lang)}
+          class="btn-primary text-xs py-2.5 px-5 font-bold inline-flex items-center gap-1.5 shadow-xs"
+        >
+          <span>{t.nav.contact}</span> &rarr;
+        </a>
+      </div>
+    </section>
+  </article>
+
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', function () {
+      var searchInput = document.getElementById('faq-search-input');
+      var items = document.querySelectorAll('.faq-accordion-item');
+      var sections = document.querySelectorAll('.faq-category-section');
+      var noResults = document.getElementById('faq-no-results');
+
+      if (!searchInput) return;
+
+      searchInput.addEventListener('input', function (e) {
+        var query = (e.target.value || '').trim().toLowerCase();
+        var visibleCount = 0;
+
+        items.forEach(function (item) {
+          var text = item.getAttribute('data-search-text') || '';
+          if (!query || text.indexOf(query) !== -1) {
+            item.classList.remove('hidden');
+            visibleCount++;
+            if (query.length > 2) {
+              item.setAttribute('open', '');
+            }
+          } else {
+            item.classList.add('hidden');
+          }
+        });
+
+        sections.forEach(function (sec) {
+          var visibleChildren = sec.querySelectorAll('.faq-accordion-item:not(.hidden)');
+          if (visibleChildren.length === 0) {
+            sec.classList.add('hidden');
+          } else {
+            sec.classList.remove('hidden');
+          }
+        });
+
+        if (noResults) {
+          if (visibleCount === 0) {
+            noResults.classList.remove('hidden');
+          } else {
+            noResults.classList.add('hidden');
+          }
+        }
+      });
+    });
+  </script>
+</Base>

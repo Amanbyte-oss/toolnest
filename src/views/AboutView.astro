@@ -11,6 +11,7 @@ const common = getNamespace(lang, 'common');
 const about = getNamespace(lang, 'about');
 const compressor = getNamespace(lang, 'compressor');
 const converter = getNamespace(lang, 'converter');
+const imageToPdf = getNamespace(lang, 'imageToPdf');
 const age = getNamespace(lang, 'age');
 const birthday = getNamespace(lang, 'birthday');
 const picker = getNamespace(lang, 'picker');
@@ -24,6 +25,11 @@ const t = {
 };
 
 const tools = [
+  {
+    name: `📄 ${common.nav?.imageToPdf || 'Image to PDF'}`,
+    description: imageToPdf.subtitle || 'Combine and convert images into clean, multi-page PDF documents.',
+    href: getLocalizedPath('/image-to-pdf', lang),
+  },
   {
     name: `🗜️ ${common.nav?.imageCompressor || 'Image Compressor'}`,
     description: compressor.subtitle,
@@ -56,6 +62,13 @@ const tools = [
   },
 ];
 
+const stats = [
+  { label: 'Free Online Tools', value: '7', icon: '🛠️' },
+  { label: 'Languages Supported', value: '4', icon: '🌐' },
+  { label: 'Client-Side Privacy', value: '100%', icon: '🛡️' },
+  { label: 'Sign-Up Required', value: '0', icon: '⚡' },
+];
+
 const aboutSchema = {
   '@context': 'https://schema.org',
   '@type': 'AboutPage',
@@ -77,14 +90,14 @@ const aboutSchema = {
 <Base
   metaKey="about"
   canonicalPath={getLocalizedPath('/about', lang)}
-  ogImage="/og/about.svg"
+  ogImage="/og/share-banner.svg"
   breadcrumbs={[{ name: t.nav.about, item: getLocalizedPath('/about', lang) }]}
   extraSchemas={[aboutSchema]}
   lang={lang}
 >
   <article class="space-y-10 max-w-3xl mx-auto">
     <!-- Header -->
-    <header class="space-y-3 text-center sm:text-left">
+    <header class="space-y-3 text-center sm:text-left rtl:sm:text-right">
       <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-accent/10 text-accent dark:bg-accent/20">
         <span>✨</span>
         <span>{t.about.badge}</span>
@@ -97,6 +110,21 @@ const aboutSchema = {
       </p>
     </header>
 
+    <!-- Key Metrics Grid -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      {stats.map((st) => (
+        <div class="card p-4 text-center space-y-1">
+          <span class="text-xl block">{st.icon}</span>
+          <div class="text-xl sm:text-2xl font-black text-primary-light dark:text-primary-dark">
+            {st.value}
+          </div>
+          <div class="text-[11px] font-medium text-secondary-light dark:text-secondary-dark">
+            {st.label}
+          </div>
+        </div>
+      ))}
+    </div>
+
     <!-- Mission & Core Philosophy -->
     <section class="card p-6 sm:p-8 space-y-4" aria-labelledby="mission-heading">
       <h2 id="mission-heading" class="text-xl font-bold text-primary-light dark:text-primary-dark">
@@ -108,8 +136,24 @@ const aboutSchema = {
       </div>
     </section>
 
+    <!-- Privacy-First Promise (Client-Side Processing) -->
+    <section class="card p-6 sm:p-8 space-y-4 border-l-4 rtl:border-l-0 rtl:border-r-4 border-emerald-500 bg-emerald-500/5 dark:bg-emerald-500/10" aria-labelledby="privacy-promise-heading">
+      <h2 id="privacy-promise-heading" class="text-xl font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-2">
+        <span>🔒</span>
+        <span>Our 100% Client-Side Privacy Promise</span>
+      </h2>
+      <div class="space-y-3 text-sm sm:text-base text-secondary-light dark:text-secondary-dark leading-relaxed">
+        <p>
+          Unlike traditional web tools that require you to upload your sensitive photos, identity documents, and personal spreadsheets to cloud servers, ToolNest executes everything directly inside your web browser.
+        </p>
+        <p>
+          Whether you are compressing personal photos, generating multi-page PDF documents from passport scans, or converting image formats, your files are processed in local device memory (RAM) via HTML5 Canvas and WebAssembly. Nothing is ever sent to our servers or stored in any remote database. When you close the browser tab, the data is completely wiped.
+        </p>
+      </div>
+    </section>
+
     <!-- Methodology & Calculation Standards -->
-    <section class="card p-6 sm:p-8 space-y-4 border-l-4 border-accent" aria-labelledby="methodology-heading">
+    <section class="card p-6 sm:p-8 space-y-4 border-l-4 rtl:border-l-0 rtl:border-r-4 border-accent" aria-labelledby="methodology-heading">
       <h2 id="methodology-heading" class="text-xl font-bold text-primary-light dark:text-primary-dark flex items-center gap-2">
         <span>📐</span>
         <span>{t.about.methodologyTitle}</span>
