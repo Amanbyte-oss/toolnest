@@ -31,6 +31,7 @@ interface ToolNavItem {
 }
 
 const navTools: ToolNavItem[] = [
+  { name: t.nav.imageCompressor, href: getLocalizedPath('/image-compressor', lang), emoji: '🗜️' },
   { name: t.nav.ageCalculator, href: getLocalizedPath('/age-calculator', lang), emoji: '🎂' },
   { name: t.nav.birthdayFacts, href: getLocalizedPath('/birthday-facts', lang), emoji: '🎉' },
   { name: t.nav.decisionWheel, href: getLocalizedPath('/decision-wheel', lang), emoji: '🎡' },
@@ -393,7 +394,7 @@ const currentNormalizedPath = currentPath.replace(/\/$/, '') || '/';
 <script>
   import { initThemeToggle } from '../scripts/theme-toggle.js';
 
-  let headerCleanup = null;
+  let headerCleanup: (() => void) | null = null;
 
   function initHeader() {
     initThemeToggle();
@@ -411,32 +412,36 @@ const currentNormalizedPath = currentPath.replace(/\/$/, '') || '/';
     const langMenu = document.getElementById('lang-dropdown-menu');
 
     if (langBtn && langMenu) {
-      function toggleLangMenu(open) {
-        const shouldOpen = open !== undefined ? open : langMenu.classList.contains('hidden');
-        if (shouldOpen) {
-          langMenu.classList.remove('hidden');
-          langBtn.setAttribute('aria-expanded', 'true');
-        } else {
-          langMenu.classList.add('hidden');
-          langBtn.setAttribute('aria-expanded', 'false');
-        }
-      }
+      const currentLangBtn = langBtn;
+      const currentLangMenu = langMenu;
 
-      langBtn.addEventListener('click', (e) => {
+      const toggleLangMenu = (open?: boolean) => {
+        const shouldOpen = open !== undefined ? open : currentLangMenu.classList.contains('hidden');
+        if (shouldOpen) {
+          currentLangMenu.classList.remove('hidden');
+          currentLangBtn.setAttribute('aria-expanded', 'true');
+        } else {
+          currentLangMenu.classList.add('hidden');
+          currentLangBtn.setAttribute('aria-expanded', 'false');
+        }
+      };
+
+      currentLangBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         toggleLangMenu();
       }, { signal });
 
       document.addEventListener('click', (e) => {
-        if (!langMenu.contains(e.target) && !langBtn.contains(e.target)) {
+        const target = e.target as Node | null;
+        if (target && !currentLangMenu.contains(target) && !currentLangBtn.contains(target)) {
           toggleLangMenu(false);
         }
       }, { signal });
 
       document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && !langMenu.classList.contains('hidden')) {
+        if (e.key === 'Escape' && !currentLangMenu.classList.contains('hidden')) {
           toggleLangMenu(false);
-          langBtn.focus();
+          currentLangBtn.focus();
         }
       }, { signal });
     }
@@ -470,6 +475,10 @@ const currentNormalizedPath = currentPath.replace(/\/$/, '') || '/';
 
     if (!menuToggleBtn || !drawer || !backdrop) return;
 
+    const toggleBtn = menuToggleBtn;
+    const drawerEl = drawer;
+    const backdropEl = backdrop;
+
     let isDrawerOpen = false;
 
     function lockScroll() {
@@ -489,7 +498,7 @@ const currentNormalizedPath = currentPath.replace(/\/$/, '') || '/';
       document.documentElement.style.paddingRight = '';
     }
 
-    function openDrawer() {
+    const openDrawer = () => {
       if (isDrawerOpen) return;
       isDrawerOpen = true;
       lockScroll();
@@ -498,19 +507,19 @@ const currentNormalizedPath = currentPath.replace(/\/$/, '') || '/';
         el.setAttribute('inert', '');
       });
 
-      menuToggleBtn.setAttribute('aria-expanded', 'true');
-      menuToggleBtn.setAttribute('aria-label', 'Close menu');
-      drawer.setAttribute('aria-hidden', 'false');
+      toggleBtn.setAttribute('aria-expanded', 'true');
+      toggleBtn.setAttribute('aria-label', 'Close menu');
+      drawerEl.setAttribute('aria-hidden', 'false');
 
-      backdrop.classList.add('is-open');
-      drawer.classList.add('is-open');
+      backdropEl.classList.add('is-open');
+      drawerEl.classList.add('is-open');
 
       requestAnimationFrame(() => {
         if (menuCloseBtn) menuCloseBtn.focus();
       });
-    }
+    };
 
-    function closeDrawer(restoreFocus = true) {
+    const closeDrawer = (restoreFocus = true) => {
       if (!isDrawerOpen) return;
       isDrawerOpen = false;
       unlockScroll();
@@ -519,19 +528,19 @@ const currentNormalizedPath = currentPath.replace(/\/$/, '') || '/';
         el.removeAttribute('inert');
       });
 
-      menuToggleBtn.setAttribute('aria-expanded', 'false');
-      menuToggleBtn.setAttribute('aria-label', 'Open menu');
-      drawer.setAttribute('aria-hidden', 'true');
+      toggleBtn.setAttribute('aria-expanded', 'false');
+      toggleBtn.setAttribute('aria-label', 'Open menu');
+      drawerEl.setAttribute('aria-hidden', 'true');
 
-      backdrop.classList.remove('is-open');
-      drawer.classList.remove('is-open');
+      backdropEl.classList.remove('is-open');
+      drawerEl.classList.remove('is-open');
 
-      if (restoreFocus && menuToggleBtn) {
-        menuToggleBtn.focus();
+      if (restoreFocus && toggleBtn) {
+        toggleBtn.focus();
       }
-    }
+    };
 
-    menuToggleBtn.addEventListener('click', () => {
+    toggleBtn.addEventListener('click', () => {
       if (isDrawerOpen) closeDrawer();
       else openDrawer();
     }, { signal });
@@ -540,13 +549,13 @@ const currentNormalizedPath = currentPath.replace(/\/$/, '') || '/';
       menuCloseBtn.addEventListener('click', () => closeDrawer(), { signal });
     }
 
-    backdrop.addEventListener('click', () => closeDrawer(), { signal });
+    backdropEl.addEventListener('click', () => closeDrawer(), { signal });
 
-    drawer.querySelectorAll('.drawer-nav-link').forEach((link) => {
+    drawerEl.querySelectorAll('.drawer-nav-link').forEach((link) => {
       link.addEventListener('click', () => closeDrawer(false), { signal });
     });
 
-    drawer.querySelectorAll('.lang-option').forEach((link) => {
+    drawerEl.querySelectorAll('.lang-option').forEach((link) => {
       link.addEventListener('click', () => closeDrawer(false), { signal });
     });
 

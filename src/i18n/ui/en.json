@@ -19,7 +19,8 @@
       "about": "About",
       "privacy": "Privacy Policy",
       "contact": "Contact",
-      "switchLanguage": "Language"
+      "switchLanguage": "Language",
+      "imageCompressor": "Image Compressor"
     },
     "buttons": {
       "calculate": "Calculate",
@@ -149,6 +150,10 @@
     "notFound": {
       "title": "Page Not Found (404) | ToolNest",
       "description": "The page you requested could not be found on ToolNest."
+    },
+    "imageCompressor": {
+      "title": "Free Image Compressor — Compress JPG, PNG, WebP Online (No Upload)",
+      "description": "Compress JPG, PNG, WebP, and AVIF images directly in your browser. 100% private, client-side compression with quality control, batch resize, and no file uploads."
     }
   },
   "wheel": {
@@ -1051,7 +1056,33 @@
       "a2": "{name} currently holds a {popularity} popularity rating among contemporary baby names worldwide.",
       "q3": "Want deeper insights? Unlock AI analysis of any name",
       "a3": "You can click the \"Unlock AI Insights\" button on this page to generate rich, personalized interpretations—including personality traits, psychological archetypes, style classification, and unique historical fun facts powered by Google Gemini."
-    }
+    },
+    "compressor": [
+      {
+        "q": "Are my images uploaded to any server or cloud storage?",
+        "a": "Never. All compression, resizing, and format conversion happens 100% locally inside your browser using the HTML5 Canvas API and modern WebAssembly. Your photos never leave your device, ensuring total privacy."
+      },
+      {
+        "q": "Is this online image compressor free to use with no limits?",
+        "a": "Yes! ToolNest Image Compressor is completely free, unlimited, and requires no account registration, credit card, or watermarking. You can compress as many files as you need."
+      },
+      {
+        "q": "Which output format provides the smallest file size?",
+        "a": "WebP typically delivers 25–35% smaller file sizes than JPEG at equivalent visual quality. We set WebP as the default output format for maximum compression, but you can also select JPEG or PNG."
+      },
+      {
+        "q": "How does the Target File Size mode work?",
+        "a": "Target Size mode uses a smart binary search algorithm that repeatedly compresses the image to converge on your desired file size (e.g., under 100 KB or 50 KB), automatically adjusting quality and dimensions to guarantee compliance with strict upload limits."
+      },
+      {
+        "q": "Does compressing images strip EXIF metadata and GPS locations?",
+        "a": "Yes, by default metadata stripping is enabled. The tool removes embedded camera models, timestamps, exposure settings, and sensitive GPS geolocation coordinates for enhanced privacy and smaller file size."
+      },
+      {
+        "q": "How much file size reduction can I expect without noticeable quality loss?",
+        "a": "Most photographs achieve between 60% and 80% file size reduction with our Balanced and Smart Compress presets while remaining visually indistinguishable from the original to the human eye."
+      }
+    ]
   },
   "nameMeaning": {
     "useCases": {
@@ -1413,6 +1444,103 @@
         "traits": "Compassionate, Guiding, Selfless",
         "summary": "The pinnacle Master Number embodying supreme empathy, spiritual mentorship, and selfless devotion to humanity."
       }
+    }
+  },
+  "compressor": {
+    "title": "Free Online Image Compressor",
+    "subtitle": "Compress JPG, PNG, WebP & AVIF images 100% on your device. Fast, private, zero server uploads.",
+    "privacyBadge": "100% Client-Side • Nothing Leaves Your Device",
+    "privacyBadgeDesc": "Images are processed entirely in your browser using Canvas & WebAssembly",
+    "keyTakeaways": {
+      "title": "Quick Answer & Key Takeaways",
+      "kt1": "Zero Uploads: All compression runs 100% on your device. Your sensitive photos never touch any server or cloud.",
+      "kt2": "Smart Presets & Target Size: Reduce sizes by 70–80% with Smart Compress, or hit exact form limits like \"Under 100 KB\".",
+      "kt3": "Batch Processing & ZIP: Compress multiple images at once and download them individually or as a single ZIP archive."
+    },
+    "dropzone": {
+      "title": "Drag & drop images here",
+      "subtitle": "or browse from your device, paste from clipboard (Ctrl+V), or take a photo",
+      "browseBtn": "Browse Files",
+      "cameraBtn": "Take Photo",
+      "pasteHint": "Tip: Press Ctrl+V (or Cmd+V) anywhere on the page to paste",
+      "dragOverText": "Drop images to start compressing...",
+      "supportedFormats": "Supports JPG, PNG, WebP, AVIF up to 50MB each"
+    },
+    "controls": {
+      "outputFormat": "Output Format",
+      "formatWebpDesc": "Best compression & modern web standard",
+      "formatJpegDesc": "Universal compatibility for legacy devices",
+      "formatPngDesc": "Lossless graphics with transparency",
+      "modeLabel": "Compression Mode",
+      "modeSmart": "Smart Compress (~75%)",
+      "modeManual": "Custom Quality",
+      "modeTarget": "Target File Size",
+      "qualityLabel": "Image Quality",
+      "presetsLabel": "Presets",
+      "presetHigh": "High Quality (90%)",
+      "presetBalanced": "Balanced (75%)",
+      "presetSmall": "Small Size (55%)",
+      "presetExtreme": "Extreme Email (35%)",
+      "targetSizeLabel": "Desired Max File Size",
+      "targetSizeHint": "Binary searches quality & downscales if needed to hit exact size",
+      "kbUnit": "KB",
+      "mbUnit": "MB",
+      "resizeHeading": "Resize Dimensions (Optional)",
+      "enableResize": "Enable image resizing",
+      "maxWidth": "Max Width",
+      "maxHeight": "Max Height",
+      "keepAspect": "Keep aspect ratio",
+      "scalePresets": "Quick Scale",
+      "stripExif": "Strip EXIF & GPS metadata",
+      "stripExifHint": "Removes camera info and location tags for privacy and extra savings",
+      "applyToAll": "Re-compress All",
+      "qualityEstimatedSavings": "Estimated savings: ~{savings}%"
+    },
+    "batch": {
+      "queueTitle": "Compression Queue",
+      "processing": "Compressing image {current} of {total}...",
+      "allDone": "All {total} images compressed successfully!",
+      "downloadAllZip": "Download All (ZIP)",
+      "zipping": "Creating ZIP archive...",
+      "clearAll": "Clear All",
+      "totalSaved": "Total Saved"
+    },
+    "results": {
+      "original": "Original",
+      "compressed": "Compressed",
+      "savedBadge": "Saved {percent}%",
+      "dimensions": "Dimensions",
+      "quality": "Quality",
+      "download": "Download",
+      "share": "Share",
+      "remove": "Remove",
+      "compareSlider": "Compare Quality",
+      "dragToCompare": "Drag slider to compare Before / After",
+      "before": "Before",
+      "after": "After",
+      "noSavings": "Already optimal"
+    },
+    "recent": {
+      "title": "Recent Compressions (In-Memory)",
+      "desc": "Kept in browser memory during this session only. Cleared on refresh to protect your privacy.",
+      "empty": "No images compressed in this session yet."
+    },
+    "errors": {
+      "invalidType": "Unsupported file format. Please select JPG, PNG, WebP, or AVIF.",
+      "fileTooLarge": "Image file is too large to process in browser memory (over 50MB).",
+      "corruptFile": "Could not decode image file. It may be corrupt or unreadable.",
+      "noImagesInClipboard": "No image found in clipboard. Copy an image first.",
+      "zipFailed": "Failed to create ZIP file. Please download files individually."
+    },
+    "howTo": {
+      "title": "How to Compress Images Online for Free in 3 Steps",
+      "subtitle": "A quick guide to reducing image file size in your browser with zero quality compromise.",
+      "s1Title": "Upload or paste your images",
+      "s1Desc": "Drag and drop your photos, click Browse Files, paste from your clipboard with Ctrl+V, or snap a photo on mobile.",
+      "s2Title": "Choose quality, format, or target size",
+      "s2Desc": "Select Smart Compress, adjust the quality slider, or specify an exact size limit like \"Under 100 KB\" for job or visa forms.",
+      "s3Title": "Compare quality and download",
+      "s3Desc": "Use the interactive before/after slider to verify crisp visual quality, then download individual files or a combined ZIP."
     }
   }
 }

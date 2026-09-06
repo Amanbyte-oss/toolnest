@@ -19,7 +19,8 @@
       "about": "Tentang",
       "privacy": "Privasi",
       "contact": "Kontak",
-      "switchLanguage": "Bahasa"
+      "switchLanguage": "Bahasa",
+      "imageCompressor": "Kompres Foto"
     },
     "buttons": {
       "calculate": "Hitung",
@@ -149,6 +150,10 @@
     "notFound": {
       "title": "Halaman Tidak Ditemukan (404) | ToolNest",
       "description": "Halaman yang Anda tuju tidak dapat ditemukan di ToolNest."
+    },
+    "imageCompressor": {
+      "title": "Kompres Foto Gratis — Kecilkan Ukuran JPG, PNG, WebP Online",
+      "description": "Kompres gambar JPG, PNG, WebP, dan AVIF langsung di browser. 100% privat di perangkat Anda tanpa upload ke server."
     }
   },
   "wheel": {
@@ -1051,7 +1056,33 @@
       "a2": "Nama {name} saat ini memiliki tingkat kepopuleran {popularity} di antara nama-nama bayi di berbagai penjuru dunia.",
       "q3": "Ingin wawasan lebih mendalam? Buka analisis AI untuk nama apa saja",
       "a3": "Kamu bisa menekan tombol \"Buka Analisis AI\" di halaman ini untuk menghasilkan interpretasi kaya dan personal—termasuk sifat kepribadian, gaya nama, dan fakta sejarah menarik berbasis Google Gemini."
-    }
+    },
+    "compressor": [
+      {
+        "q": "Apakah foto saya diunggah ke server atau penyimpanan cloud?",
+        "a": "Sama sekali tidak. Semua proses kompresi, ubah resolusi, dan konversi format berjalan 100% di browser Anda menggunakan HTML5 Canvas & WebAssembly. Foto Anda tidak pernah meninggalkan perangkat."
+      },
+      {
+        "q": "Apakah kompresor foto online ini gratis tanpa batas?",
+        "a": "Ya! Kompresor Foto ToolNest gratis sepenuhnya tanpa batas jumlah, tanpa perlu mendaftar akun, dan tanpa watermark."
+      },
+      {
+        "q": "Format apa yang menghasilkan ukuran berkas paling kecil?",
+        "a": "WebP biasanya 25–35% lebih kecil dibandingkan JPEG pada kualitas visual yang sama. Kami menjadikan WebP sebagai format standar, tetapi Anda juga dapat memilih JPEG atau PNG."
+      },
+      {
+        "q": "Bagaimana cara kerja mode Target Ukuran Berkas?",
+        "a": "Mode Target Ukuran memakai algoritma pencarian biner untuk mencapai target ukuran persis (misal di bawah 100 KB atau 50 KB) yang sering diwajibkan portal instansi atau visa."
+      },
+      {
+        "q": "Apakah kompresi ini menghapus data EXIF dan lokasi GPS?",
+        "a": "Ya, penghapusan metadata aktif secara default. Tipe kamera, waktu pemotretan, dan lokasi GPS dihapus demi privasi serta menghemat ukuran tambahan."
+      },
+      {
+        "q": "Berapa persen ukuran foto yang bisa dihemat tanpa merusak kualitas?",
+        "a": "Sebagian besar foto berhasil dikurangi ukurannya antara 60% hingga 80% dengan preset Pintar atau Seimbang tanpa perbedaan yang kentara oleh mata manusia."
+      }
+    ]
   },
   "nameMeaning": {
     "useCases": {
@@ -1413,6 +1444,103 @@
         "traits": "Penuh Welas Asih, Pembimbing, Tulus",
         "summary": "Puncak Angka Master yang mewujudkan empati tertinggi, bimbingan kebajikan, dan ketulusan bagi sesama."
       }
+    }
+  },
+  "compressor": {
+    "title": "Kompres Foto & Gambar Online Gratis",
+    "subtitle": "Kecilkan ukuran foto JPG, PNG, WebP & AVIF 100% di perangkat Anda. Cepat, privat, tanpa upload ke server.",
+    "privacyBadge": "100% di Perangkat Anda • Tidak Ada yang Diunggah",
+    "privacyBadgeDesc": "Gambar diproses sepenuhnya di browser menggunakan Canvas & WebAssembly",
+    "keyTakeaways": {
+      "title": "Jawaban Cepat & Poin Utama",
+      "kt1": "Tanpa Upload: Semua kompresi berjalan 100% di browser Anda. Foto pribadi tidak pernah terkirim ke server.",
+      "kt2": "Preset Pintar & Target Ukuran: Kurangi ukuran 70–80% atau sesuaikan batas formulir seperti \"Di bawah 100 KB\".",
+      "kt3": "Proses Sekaligus & Unduh ZIP: Kompres banyak foto sekaligus dan unduh satu per satu atau dalam format ZIP."
+    },
+    "dropzone": {
+      "title": "Tarik & lepas foto di sini",
+      "subtitle": "atau pilih dari perangkat, tempel dari clipboard (Ctrl+V), atau ambil foto langsung",
+      "browseBtn": "Pilih Berkas",
+      "cameraBtn": "Ambil Foto",
+      "pasteHint": "Tips: Tekan Ctrl+V (atau Cmd+V) di mana saja untuk menempelkan foto",
+      "dragOverText": "Lepaskan foto untuk mulai mengompres...",
+      "supportedFormats": "Mendukung JPG, PNG, WebP, AVIF hingga 50MB per berkas"
+    },
+    "controls": {
+      "outputFormat": "Format Keluaran",
+      "formatWebpDesc": "Kompresi terbaik & standar web masa kini",
+      "formatJpegDesc": "Kompatibilitas universal untuk semua perangkat",
+      "formatPngDesc": "Grafik lossless dengan transparansi",
+      "modeLabel": "Mode Kompresi",
+      "modeSmart": "Kompres Pintar (~75%)",
+      "modeManual": "Kualitas Kustom",
+      "modeTarget": "Target Ukuran Berkas",
+      "qualityLabel": "Kualitas Gambar",
+      "presetsLabel": "Preset Cepat",
+      "presetHigh": "Kualitas Tinggi (90%)",
+      "presetBalanced": "Seimbang (75%)",
+      "presetSmall": "Ukuran Kecil (55%)",
+      "presetExtreme": "Ekstrem Email (35%)",
+      "targetSizeLabel": "Target Ukuran Maksimal",
+      "targetSizeHint": "Pencarian biner otomatis kualitas & resolusi agar pas dengan batas ukuran",
+      "kbUnit": "KB",
+      "mbUnit": "MB",
+      "resizeHeading": "Ubah Resolusi / Dimensi (Opsional)",
+      "enableResize": "Aktifkan pengubahan ukuran gambar",
+      "maxWidth": "Lebar Maks.",
+      "maxHeight": "Tinggi Maks.",
+      "keepAspect": "Pertahankan rasio aspek",
+      "scalePresets": "Skala Cepat",
+      "stripExif": "Hapus metadata EXIF & GPS",
+      "stripExifHint": "Hapus info kamera dan koordinat lokasi untuk privasi & hemat ukuran ekstra",
+      "applyToAll": "Kompres Ulang Semua",
+      "qualityEstimatedSavings": "Estimasi penghematan: ~{savings}%"
+    },
+    "batch": {
+      "queueTitle": "Antrean Kompresi",
+      "processing": "Mengompres foto {current} dari {total}...",
+      "allDone": "Semua {total} foto berhasil dikompres!",
+      "downloadAllZip": "Unduh Semua (ZIP)",
+      "zipping": "Membuat arsip ZIP...",
+      "clearAll": "Hapus Semua",
+      "totalSaved": "Total Penghematan"
+    },
+    "results": {
+      "original": "Asli",
+      "compressed": "Hasil Kompres",
+      "savedBadge": "Hemat {percent}%",
+      "dimensions": "Resolusi",
+      "quality": "Kualitas",
+      "download": "Unduh",
+      "share": "Bagikan",
+      "remove": "Hapus",
+      "compareSlider": "Bandingkan Kualitas",
+      "dragToCompare": "Geser pembatas untuk bandingkan Sebelum / Sesudah",
+      "before": "Sebelum",
+      "after": "Sesudah",
+      "noSavings": "Sudah optimal"
+    },
+    "recent": {
+      "title": "Riwayat Kompresi (Memori Sesi)",
+      "desc": "Tersimpan di memori browser selama sesi ini saja. Dihapus saat refresh demi menjaga privasi Anda.",
+      "empty": "Belum ada foto yang dikompres pada sesi ini."
+    },
+    "errors": {
+      "invalidType": "Format berkas tidak didukung. Harap pilih JPG, PNG, WebP, atau AVIF.",
+      "fileTooLarge": "Ukuran berkas terlalu besar untuk memori browser (lebih dari 50MB).",
+      "corruptFile": "Berkas gambar tidak dapat dibaca atau rusak.",
+      "noImagesInClipboard": "Tidak ada gambar yang ditemukan di clipboard.",
+      "zipFailed": "Gagal membuat berkas ZIP. Silakan unduh foto satu per satu."
+    },
+    "howTo": {
+      "title": "Cara Kompres Foto Online Gratis dalam 3 Langkah",
+      "subtitle": "Panduan praktis mengecilkan ukuran gambar di browser tanpa mengurangi ketajaman visual.",
+      "s1Title": "Unggah atau tempel foto Anda",
+      "s1Desc": "Tarik & lepas foto, klik Pilih Berkas, tempel dengan Ctrl+V, atau potret langsung menggunakan kamera ponsel.",
+      "s2Title": "Pilih kualitas, format, atau target ukuran",
+      "s2Desc": "Pilih Kompres Pintar, geser slider kualitas, atau tentukan batas seperti \"Di bawah 100 KB\" untuk lamaran kerja/ujian.",
+      "s3Title": "Bandingkan hasil dan unduh",
+      "s3Desc": "Gunakan slider sebelum/sesudah untuk memastikan kualitas gambar tetap tajam, lalu unduh berkas atau arsip ZIP."
     }
   }
 }

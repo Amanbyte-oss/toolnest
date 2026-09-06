@@ -19,7 +19,8 @@
       "about": "Sobre",
       "privacy": "Privacidade",
       "contact": "Contato",
-      "switchLanguage": "Idioma"
+      "switchLanguage": "Idioma",
+      "imageCompressor": "Compressor de Imagens"
     },
     "buttons": {
       "calculate": "Calcular",
@@ -149,6 +150,10 @@
     "notFound": {
       "title": "Página Não Encontrada (404) | ToolNest",
       "description": "A página solicitada não foi encontrada no ToolNest."
+    },
+    "imageCompressor": {
+      "title": "Compressor de Imagens Grátis — Reduzir JPG, PNG, WebP Online",
+      "description": "Comprima imagens JPG, PNG, WebP e AVIF diretamente no navegador. 100% privado, no dispositivo, sem upload para servidores."
     }
   },
   "wheel": {
@@ -1051,7 +1056,33 @@
       "a2": "O nome {name} apresenta atualmente um nível de popularidade {popularity} entre os nomes de bebês no Brasil e no mundo.",
       "q3": "Quer saber mais? Descubra análises de IA para qualquer nome",
       "a3": "Você pode clicar no botão \"Liberar Análise com IA\" nesta página para gerar interpretações personalizadas — incluindo traços de personalidade, estilo e curiosidades históricas com Google Gemini."
-    }
+    },
+    "compressor": [
+      {
+        "q": "Minhas imagens são enviadas para algum servidor ou nuvem?",
+        "a": "Nunca. Toda a compressão, redimensionamento e conversão de formato ocorrem 100% no seu navegador via Canvas e WebAssembly. Suas fotos nunca deixam o seu dispositivo."
+      },
+      {
+        "q": "Este compressor de imagens online é gratuito e sem limites?",
+        "a": "Sim! O Compressor de Imagens do ToolNest é totalmente gratuito, ilimitado, sem necessidade de cadastro ou marca d’água. Comprima quantas fotos quiser."
+      },
+      {
+        "q": "Qual formato gera o menor tamanho de arquivo?",
+        "a": "O WebP normalmente entrega tamanhos de 25% a 35% menores que o JPEG com qualidade visual equivalente. Usamos WebP como padrão, mas você também pode optar por JPEG ou PNG."
+      },
+      {
+        "q": "Como funciona o modo de Tamanho Alvo de Arquivo?",
+        "a": "O modo Tamanho Alvo utiliza busca binária para convergir no tamanho desejado (ex.: menos de 100 KB ou 50 KB), ajustando automaticamente qualidade e dimensões para formulários e inscrições."
+      },
+      {
+        "q": "A compressão remove metadados EXIF e dados de GPS?",
+        "a": "Sim, a remoção de metadados vem ativada por padrão. Informações de modelo de câmera, data e localização geográfica por GPS são eliminadas para sua segurança."
+      },
+      {
+        "q": "Quanto de redução de tamanho posso esperar sem perder qualidade visível?",
+        "a": "A grande maioria das fotos alcança entre 60% e 80% de redução com os modos Inteligente e Equilibrado, permanecendo praticamente idênticas ao olho humano."
+      }
+    ]
   },
   "nameMeaning": {
     "useCases": {
@@ -1413,6 +1444,103 @@
         "traits": "Compassivo, Guia, Desprendido",
         "summary": "O mais elevado Número Mestre, personificando empatia sublime, mentoria espiritual e devoção altruísta."
       }
+    }
+  },
+  "compressor": {
+    "title": "Compressor de Imagens Online Grátis",
+    "subtitle": "Comprima imagens JPG, PNG, WebP e AVIF 100% no seu dispositivo. Rápido, privado e sem envio para servidores.",
+    "privacyBadge": "100% no seu dispositivo • Nada é enviado à nuvem",
+    "privacyBadgeDesc": "As imagens são processadas totalmente no seu navegador via Canvas e WebAssembly",
+    "keyTakeaways": {
+      "title": "Resposta Rápida & Principais Destaques",
+      "kt1": "Zero Uploads: Toda a compressão roda 100% no seu navegador. Suas fotos nunca passam por servidores.",
+      "kt2": "Modos Inteligentes & Tamanho Alvo: Reduza o tamanho em 70–80% ou atinja limites exatos como \"Abaixo de 100 KB\".",
+      "kt3": "Processamento em Lote & ZIP: Comprima várias imagens juntas e baixe individualmente ou em um arquivo ZIP."
+    },
+    "dropzone": {
+      "title": "Arraste e solte imagens aqui",
+      "subtitle": "ou procure no dispositivo, cole da área de transferência (Ctrl+V) ou tire uma foto",
+      "browseBtn": "Escolher Arquivos",
+      "cameraBtn": "Tirar Foto",
+      "pasteHint": "Dica: Pressione Ctrl+V (ou Cmd+V) em qualquer lugar para colar",
+      "dragOverText": "Solte as imagens para iniciar a compressão...",
+      "supportedFormats": "Suporta JPG, PNG, WebP, AVIF de até 50MB cada"
+    },
+    "controls": {
+      "outputFormat": "Formato de Saída",
+      "formatWebpDesc": "Melhor compressão e padrão moderno da web",
+      "formatJpegDesc": "Compatibilidade universal com aparelhos antigos",
+      "formatPngDesc": "Gráficos sem perdas com transparência",
+      "modeLabel": "Modo de Compressão",
+      "modeSmart": "Compressão Inteligente (~75%)",
+      "modeManual": "Qualidade Personalizada",
+      "modeTarget": "Tamanho Alvo de Arquivo",
+      "qualityLabel": "Qualidade da Imagem",
+      "presetsLabel": "Predefinições",
+      "presetHigh": "Alta Qualidade (90%)",
+      "presetBalanced": "Equilibrado (75%)",
+      "presetSmall": "Tamanho Pequeno (55%)",
+      "presetExtreme": "E-mail Extremo (35%)",
+      "targetSizeLabel": "Tamanho Máximo Desejado",
+      "targetSizeHint": "Busca binária de qualidade e redimensiona se necessário para atingir o tamanho exato",
+      "kbUnit": "KB",
+      "mbUnit": "MB",
+      "resizeHeading": "Redimensionar Dimensões (Opcional)",
+      "enableResize": "Ativar redimensionamento",
+      "maxWidth": "Largura Máx.",
+      "maxHeight": "Altura Máx.",
+      "keepAspect": "Manter proporção original",
+      "scalePresets": "Escala Rápida",
+      "stripExif": "Remover metadados EXIF e GPS",
+      "stripExifHint": "Remove informações de câmera e localização para mais privacidade e menor tamanho",
+      "applyToAll": "Recomprimir Tudo",
+      "qualityEstimatedSavings": "Economia estimada: ~{savings}%"
+    },
+    "batch": {
+      "queueTitle": "Fila de Compressão",
+      "processing": "Comprimindo imagem {current} de {total}...",
+      "allDone": "Todas as {total} imagens foram comprimidas com sucesso!",
+      "downloadAllZip": "Baixar Tudo (ZIP)",
+      "zipping": "Criando arquivo ZIP...",
+      "clearAll": "Limpar Tudo",
+      "totalSaved": "Total Economizado"
+    },
+    "results": {
+      "original": "Original",
+      "compressed": "Comprimido",
+      "savedBadge": "Economia de {percent}%",
+      "dimensions": "Dimensões",
+      "quality": "Qualidade",
+      "download": "Baixar",
+      "share": "Compartilhar",
+      "remove": "Remover",
+      "compareSlider": "Comparar Qualidade",
+      "dragToCompare": "Arraste para comparar Antes / Depois",
+      "before": "Antes",
+      "after": "Depois",
+      "noSavings": "Já otimizado"
+    },
+    "recent": {
+      "title": "Compressões Recentes (Na Memória)",
+      "desc": "Mantidas apenas nesta sessão do navegador. Apagadas ao recarregar a página para sua privacidade.",
+      "empty": "Nenhuma imagem comprimida nesta sessão ainda."
+    },
+    "errors": {
+      "invalidType": "Formato não suportado. Selecione JPG, PNG, WebP ou AVIF.",
+      "fileTooLarge": "Arquivo muito grande para processar na memória do navegador (mais de 50MB).",
+      "corruptFile": "Não foi possível ler o arquivo de imagem. Pode estar corrompido.",
+      "noImagesInClipboard": "Nenhuma imagem encontrada na área de transferência.",
+      "zipFailed": "Falha ao criar arquivo ZIP. Baixe as imagens individualmente."
+    },
+    "howTo": {
+      "title": "Como Comprimir Imagens Online Grátis em 3 Passos",
+      "subtitle": "Guia rápido para diminuir o tamanho de imagens no navegador sem perder qualidade visível.",
+      "s1Title": "Envie ou cole suas imagens",
+      "s1Desc": "Arraste suas fotos, clique em Escolher Arquivos, cole com Ctrl+V ou capture com a câmera no celular.",
+      "s2Title": "Escolha qualidade, formato ou tamanho alvo",
+      "s2Desc": "Selecione Compressão Inteligente, ajuste o controle de qualidade ou defina um limite como \"Abaixo de 100 KB\".",
+      "s3Title": "Compare a qualidade e baixe",
+      "s3Desc": "Use o comparador interativo antes/depois para checar a nitidez e baixe os arquivos ou um pacote ZIP."
     }
   }
 }

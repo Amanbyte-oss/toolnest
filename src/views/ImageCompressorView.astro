@@ -1,0 +1,1623 @@
+---
+/**
+ * src/views/ImageCompressorView.astro
+ * 100% Client-Side Image Compressor & Optimizer.
+ * Privacy-first: Canvas/WebAssembly processing, zero server uploads.
+ */
+import Base from '../layouts/Base.astro';
+import Faq from '../components/Faq.astro';
+import ToolCard from '../components/ToolCard.astro';
+import { getNamespace, getLocalizedPath, type Lang, isRtlLang } from '../i18n';
+import { getLocalizedRelatedLinks } from '../i18n/relatedLinks';
+
+export interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'en' } = Astro.props;
+const common = getNamespace(lang, 'common');
+const compressor = getNamespace(lang, 'compressor');
+const faqNs = getNamespace(lang, 'faq');
+const t = { compressor, common, nav: common.nav, siteName: common.siteName };
+
+const isRtl = isRtlLang(lang);
+const canonicalPath = getLocalizedPath('/image-compressor', lang);
+
+// Localized FAQs
+const faqs = (faqNs.compressor || []).map((f: any) => ({
+  question: f.question || f.q,
+  answer: f.answer || f.a,
+}));
+
+const relatedTools = getLocalizedRelatedLinks(lang, 'image-compressor');
+
+// Structured Data: WebApplication, HowTo, FAQPage
+const webAppSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  '@id': `https://toolnest.pages.dev${canonicalPath}#app`,
+  name: t.compressor.title,
+  url: `https://toolnest.pages.dev${canonicalPath}`,
+  description: t.compressor.subtitle,
+  applicationCategory: 'MultimediaApplication',
+  operatingSystem: 'Any',
+  browserRequirements: 'Requires HTML5 Canvas and JavaScript support. Works 100% client-side without internet uploads.',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'ToolNest',
+    url: 'https://toolnest.pages.dev',
+  },
+};
+
+const howToSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: t.compressor.howTo.title,
+  description: t.compressor.howTo.subtitle,
+  step: [
+    {
+      '@type': 'HowToStep',
+      position: 1,
+      name: t.compressor.howTo.s1Title,
+      text: t.compressor.howTo.s1Desc,
+    },
+    {
+      '@type': 'HowToStep',
+      position: 2,
+      name: t.compressor.howTo.s2Title,
+      text: t.compressor.howTo.s2Desc,
+    },
+    {
+      '@type': 'HowToStep',
+      position: 3,
+      name: t.compressor.howTo.s3Title,
+      text: t.compressor.howTo.s3Desc,
+    },
+  ],
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: faq.answer,
+    },
+  })),
+};
+---
+
+<Base
+  metaKey="imageCompressor"
+  canonicalPath={canonicalPath}
+  ogImage="/og/image-compressor.svg"
+  breadcrumbs={[
+    { name: common.nav.home, item: getLocalizedPath('/', lang) },
+    { name: common.nav.imageCompressor, item: canonicalPath },
+  ]}
+  extraSchemas={[webAppSchema, howToSchema, faqSchema]}
+  lang={lang}
+>
+  <div class="space-y-8 pb-12">
+    <!-- HERO & PRIVACY BADGE -->
+    <header class="text-center py-4 sm:py-6 space-y-4">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 shadow-xs">
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+        </span>
+        <span class="flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          {t.compressor.privacyBadge}
+        </span>
+      </div>
+
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-primary-light dark:text-primary-dark">
+        {t.compressor.title}
+      </h1>
+      <p class="text-base sm:text-lg text-secondary-light dark:text-secondary-dark max-w-2xl mx-auto leading-relaxed">
+        {t.compressor.subtitle}
+      </p>
+    </header>
+
+    <!-- KEY TAKEAWAYS -->
+    <aside class="card p-4 sm:p-5 border-s-4 border-accent bg-accent/5 space-y-2.5" aria-label={t.compressor.keyTakeaways.title}>
+      <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent">
+        <span>⚡</span>
+        <span>{t.compressor.keyTakeaways.title}</span>
+      </div>
+      <ul class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark space-y-1.5 list-disc list-inside leading-relaxed">
+        <li><strong>{t.compressor.keyTakeaways.kt1.split(':')[0]}:</strong>{t.compressor.keyTakeaways.kt1.split(':')[1] || ''}</li>
+        <li><strong>{t.compressor.keyTakeaways.kt2.split(':')[0]}:</strong>{t.compressor.keyTakeaways.kt2.split(':')[1] || ''}</li>
+        <li><strong>{t.compressor.keyTakeaways.kt3.split(':')[0]}:</strong>{t.compressor.keyTakeaways.kt3.split(':')[1] || ''}</li>
+      </ul>
+    </aside>
+
+    <!-- UPLOAD DROPZONE -->
+    <section class="card relative p-6 sm:p-10 border-2 border-dashed border-border-light dark:border-border-dark hover:border-accent dark:hover:border-accent/80 transition-all duration-200 text-center space-y-4 cursor-pointer group" id="dropzone" aria-label={t.compressor.dropzone.title}>
+      <input type="file" id="file-input" multiple accept="image/jpeg,image/png,image/webp,image/avif" class="hidden" />
+      <input type="file" id="camera-input" accept="image/*" capture="environment" class="hidden" />
+
+      <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-2xl bg-accent/10 dark:bg-accent/20 flex items-center justify-center text-accent group-hover:scale-110 group-hover:bg-accent/15 transition-all duration-200 shadow-sm">
+        <svg class="w-8 h-8 sm:w-10 sm:h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="17 8 12 3 7 8"></polyline>
+          <line x1="12" y1="3" x2="12" y2="15"></line>
+        </svg>
+      </div>
+
+      <div class="space-y-1.5">
+        <h2 class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark">
+          {t.compressor.dropzone.title}
+        </h2>
+        <p class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark max-w-md mx-auto">
+          {t.compressor.dropzone.subtitle}
+        </p>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
+        <button
+          type="button"
+          id="browse-btn"
+          class="btn-primary text-sm px-6 py-3 shadow-md inline-flex items-center gap-2 cursor-pointer"
+        >
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <span>{t.compressor.dropzone.browseBtn}</span>
+        </button>
+
+        <button
+          type="button"
+          id="camera-btn"
+          class="btn-secondary text-sm px-4 py-3 inline-flex items-center gap-2 cursor-pointer"
+        >
+          <svg class="w-4 h-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path>
+            <circle cx="12" cy="13" r="3"></circle>
+          </svg>
+          <span>{t.compressor.dropzone.cameraBtn}</span>
+        </button>
+      </div>
+
+      <!-- Paste Hint & Support Badge -->
+      <div class="pt-2 flex flex-wrap items-center justify-center gap-3 text-xs text-secondary-light dark:text-secondary-dark">
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-black/5 dark:bg-white/5 font-mono">
+          <kbd class="font-sans font-semibold">Ctrl+V</kbd> {t.compressor.dropzone.pasteHint.replace('Tip: ', '').replace('Dica: ', '').replace('Tips: ', '').replace('تلميح: ', '')}
+        </span>
+        <span>•</span>
+        <span>{t.compressor.dropzone.supportedFormats}</span>
+      </div>
+    </section>
+
+    <!-- SETTINGS & CONTROLS TOOLBAR -->
+    <section class="card p-5 sm:p-7 space-y-6" id="compression-settings" aria-label={t.compressor.controls.outputFormat}>
+      <!-- Top Row: Output Format & Compression Mode -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Output Format -->
+        <div class="space-y-2.5">
+          <label class="block text-xs font-bold uppercase tracking-wider text-secondary-light dark:text-secondary-dark">
+            {t.compressor.controls.outputFormat}
+          </label>
+          <div class="grid grid-cols-3 gap-2">
+            <button
+              type="button"
+              class="format-pill active px-3 py-2.5 rounded-xl border text-xs sm:text-sm font-semibold flex flex-col items-center justify-center gap-0.5 transition-all cursor-pointer"
+              data-format="image/webp"
+            >
+              <span>WebP</span>
+              <span class="text-[10px] font-normal opacity-80">Best size</span>
+            </button>
+            <button
+              type="button"
+              class="format-pill px-3 py-2.5 rounded-xl border text-xs sm:text-sm font-semibold flex flex-col items-center justify-center gap-0.5 transition-all cursor-pointer"
+              data-format="image/jpeg"
+            >
+              <span>JPEG</span>
+              <span class="text-[10px] font-normal opacity-80">Universal</span>
+            </button>
+            <button
+              type="button"
+              class="format-pill px-3 py-2.5 rounded-xl border text-xs sm:text-sm font-semibold flex flex-col items-center justify-center gap-0.5 transition-all cursor-pointer"
+              data-format="image/png"
+            >
+              <span>PNG</span>
+              <span class="text-[10px] font-normal opacity-80">Lossless</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Mode Selector -->
+        <div class="space-y-2.5">
+          <label class="block text-xs font-bold uppercase tracking-wider text-secondary-light dark:text-secondary-dark">
+            {t.compressor.controls.modeLabel}
+          </label>
+          <div class="grid grid-cols-3 gap-2">
+            <button
+              type="button"
+              class="mode-pill active px-2.5 py-2.5 rounded-xl border text-xs sm:text-sm font-semibold flex flex-col items-center justify-center text-center gap-0.5 transition-all cursor-pointer"
+              data-mode="smart"
+            >
+              <span>Smart</span>
+              <span class="text-[10px] font-normal opacity-80">~75% cut</span>
+            </button>
+            <button
+              type="button"
+              class="mode-pill px-2.5 py-2.5 rounded-xl border text-xs sm:text-sm font-semibold flex flex-col items-center justify-center text-center gap-0.5 transition-all cursor-pointer"
+              data-mode="manual"
+            >
+              <span>Quality</span>
+              <span class="text-[10px] font-normal opacity-80">Slider</span>
+            </button>
+            <button
+              type="button"
+              class="mode-pill px-2.5 py-2.5 rounded-xl border text-xs sm:text-sm font-semibold flex flex-col items-center justify-center text-center gap-0.5 transition-all cursor-pointer"
+              data-mode="target"
+            >
+              <span>Target</span>
+              <span class="text-[10px] font-normal opacity-80">Max KB</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mode 1: Smart Compress Info (visible in smart mode) -->
+      <div id="panel-smart" class="p-4 rounded-xl bg-accent/5 border border-accent/20 flex items-center justify-between gap-3 text-xs sm:text-sm text-secondary-light dark:text-secondary-dark">
+        <div class="flex items-center gap-2.5">
+          <span class="text-xl">✨</span>
+          <span><strong>{t.compressor.controls.modeSmart}:</strong> Balances sharp visual clarity with maximum file reduction. Downscales ultra-large 4K+ camera photos automatically.</span>
+        </div>
+        <span class="shrink-0 font-bold text-accent px-2.5 py-1 rounded-full bg-accent/10">~70–80% savings</span>
+      </div>
+
+      <!-- Mode 2: Manual Quality Slider (visible in manual mode) -->
+      <div id="panel-manual" class="space-y-4 hidden">
+        <div class="flex items-center justify-between">
+          <label for="quality-slider" class="text-xs font-bold uppercase tracking-wider text-secondary-light dark:text-secondary-dark">
+            {t.compressor.controls.qualityLabel}
+          </label>
+          <div class="flex items-center gap-2">
+            <span class="text-xs text-secondary-light dark:text-secondary-dark" id="estimated-savings-badge">
+              Estimated savings: ~75%
+            </span>
+            <span class="text-base font-extrabold text-accent px-2.5 py-0.5 rounded-lg bg-accent/10" id="quality-display">
+              75%
+            </span>
+          </div>
+        </div>
+
+        <input
+          type="range"
+          id="quality-slider"
+          min="5"
+          max="100"
+          value="75"
+          step="1"
+          class="w-full h-2.5 bg-black/10 dark:bg-white/10 rounded-lg appearance-none cursor-pointer accent-accent"
+        />
+
+        <!-- Preset Buttons -->
+        <div class="flex flex-wrap items-center gap-2 pt-1">
+          <span class="text-xs font-semibold text-secondary-light dark:text-secondary-dark me-1">
+            {t.compressor.controls.presetsLabel}:
+          </span>
+          <button type="button" class="preset-btn px-2.5 py-1 rounded-lg border border-border-light dark:border-border-dark text-xs font-medium hover:border-accent transition-colors cursor-pointer" data-val="90">
+            {t.compressor.controls.presetHigh}
+          </button>
+          <button type="button" class="preset-btn active px-2.5 py-1 rounded-lg border border-border-light dark:border-border-dark text-xs font-medium hover:border-accent transition-colors cursor-pointer" data-val="75">
+            {t.compressor.controls.presetBalanced}
+          </button>
+          <button type="button" class="preset-btn px-2.5 py-1 rounded-lg border border-border-light dark:border-border-dark text-xs font-medium hover:border-accent transition-colors cursor-pointer" data-val="55">
+            {t.compressor.controls.presetSmall}
+          </button>
+          <button type="button" class="preset-btn px-2.5 py-1 rounded-lg border border-border-light dark:border-border-dark text-xs font-medium hover:border-accent transition-colors cursor-pointer" data-val="35">
+            {t.compressor.controls.presetExtreme}
+          </button>
+        </div>
+      </div>
+
+      <!-- Mode 3: Target File Size (visible in target mode) -->
+      <div id="panel-target" class="p-4 rounded-xl bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark space-y-3 hidden">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <label for="target-size-input" class="text-xs font-bold uppercase tracking-wider text-primary-light dark:text-primary-dark">
+              {t.compressor.controls.targetSizeLabel}
+            </label>
+            <p class="text-xs text-secondary-light dark:text-secondary-dark">
+              {t.compressor.controls.targetSizeHint}
+            </p>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <input
+              type="number"
+              id="target-size-input"
+              min="10"
+              max="20000"
+              value="100"
+              class="w-24 px-3 py-1.5 rounded-lg border border-border-light dark:border-border-dark bg-input-light dark:bg-input-dark text-primary-light dark:text-primary-dark text-sm font-bold focus:outline-none focus:ring-2 focus:ring-accent"
+            />
+            <span class="text-sm font-bold text-accent">KB</span>
+          </div>
+        </div>
+
+        <!-- Quick size buttons -->
+        <div class="flex flex-wrap items-center gap-2 pt-1">
+          <span class="text-xs text-secondary-light dark:text-secondary-dark">Quick:</span>
+          {['50', '100', '200', '500', '1000'].map((val) => (
+            <button
+              type="button"
+              class="target-preset-btn px-2.5 py-1 rounded-lg border border-border-light dark:border-border-dark text-xs font-medium hover:border-accent hover:text-accent transition-colors cursor-pointer"
+              data-size={val}
+            >
+              {val === '1000' ? '1 MB' : `${val} KB`}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <!-- Optional Resize Dimensions (Collapsible Accordion) -->
+      <div class="border-t border-border-light dark:border-border-dark pt-4">
+        <details class="group" id="resize-accordion">
+          <summary class="flex items-center justify-between font-semibold text-xs uppercase tracking-wider text-secondary-light dark:text-secondary-dark cursor-pointer select-none py-1 hover:text-primary-light dark:hover:text-primary-dark">
+            <span class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <polyline points="9 21 3 21 3 15"></polyline>
+                <line x1="21" y1="3" x2="14" y2="10"></line>
+                <line x1="3" y1="21" x2="10" y2="14"></line>
+              </svg>
+              <span>{t.compressor.controls.resizeHeading}</span>
+            </span>
+            <span class="text-xs font-normal text-secondary-light dark:text-secondary-dark group-open:rotate-180 transition-transform">
+              ▼
+            </span>
+          </summary>
+
+          <div class="pt-4 space-y-4">
+            <div class="flex items-center gap-3">
+              <label class="flex items-center gap-2 text-xs font-semibold text-primary-light dark:text-primary-dark cursor-pointer">
+                <input type="checkbox" id="enable-resize-check" class="w-4 h-4 rounded text-accent focus:ring-accent accent-accent" />
+                <span>{t.compressor.controls.enableResize}</span>
+              </label>
+
+              <label class="flex items-center gap-2 text-xs text-secondary-light dark:text-secondary-dark cursor-pointer">
+                <input type="checkbox" id="keep-aspect-check" checked class="w-4 h-4 rounded text-accent focus:ring-accent accent-accent" />
+                <span>{t.compressor.controls.keepAspect}</span>
+              </label>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 max-w-sm">
+              <div class="space-y-1">
+                <label for="resize-max-width" class="block text-xs text-secondary-light dark:text-secondary-dark font-medium">
+                  {t.compressor.controls.maxWidth} (px)
+                </label>
+                <input
+                  type="number"
+                  id="resize-max-width"
+                  placeholder="e.g. 1920"
+                  class="input-base text-sm py-2 min-h-[40px]"
+                  disabled
+                />
+              </div>
+              <div class="space-y-1">
+                <label for="resize-max-height" class="block text-xs text-secondary-light dark:text-secondary-dark font-medium">
+                  {t.compressor.controls.maxHeight} (px)
+                </label>
+                <input
+                  type="number"
+                  id="resize-max-height"
+                  placeholder="e.g. 1080"
+                  class="input-base text-sm py-2 min-h-[40px]"
+                  disabled
+                />
+              </div>
+            </div>
+
+            <!-- Quick Scale Pills -->
+            <div class="flex items-center gap-2 pt-1">
+              <span class="text-xs text-secondary-light dark:text-secondary-dark">{t.compressor.controls.scalePresets}:</span>
+              {[25, 50, 75, 100].map((scale) => (
+                <button
+                  type="button"
+                  class="scale-pill px-2.5 py-1 rounded-md border border-border-light dark:border-border-dark text-xs font-medium hover:border-accent transition-colors cursor-pointer disabled:opacity-40"
+                  data-scale={scale}
+                  disabled
+                >
+                  {scale}%
+                </button>
+              ))}
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- EXIF & Re-compress Bottom Row -->
+      <div class="flex flex-wrap items-center justify-between gap-4 pt-2 border-t border-border-light dark:border-border-dark">
+        <label class="flex items-center gap-2 text-xs font-semibold text-primary-light dark:text-primary-dark cursor-pointer">
+          <input type="checkbox" id="strip-exif-check" checked class="w-4 h-4 rounded text-accent focus:ring-accent accent-accent" />
+          <span>{t.compressor.controls.stripExif}</span>
+          <span class="text-secondary-light dark:text-secondary-dark font-normal hidden sm:inline">({t.compressor.controls.stripExifHint})</span>
+        </label>
+
+        <button
+          type="button"
+          id="recompress-all-btn"
+          class="btn-secondary text-xs px-4 py-2 min-h-[38px] hidden inline-flex items-center gap-1.5 cursor-pointer"
+        >
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="23 4 23 10 17 10"></polyline>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+          </svg>
+          <span>{t.compressor.controls.applyToAll}</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- BATCH PROGRESS & ACTIONS BAR -->
+    <section id="batch-bar" class="card p-4 sm:p-5 space-y-3 hidden" aria-label={t.compressor.batch.queueTitle}>
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div class="space-y-1">
+          <div class="flex items-center gap-2">
+            <span class="font-bold text-sm sm:text-base text-primary-light dark:text-primary-dark" id="batch-status-text">
+              {t.compressor.batch.queueTitle}
+            </span>
+            <span class="text-xs px-2 py-0.5 rounded-full font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400" id="total-savings-pill">
+              Total Saved: 0 KB (0%)
+            </span>
+          </div>
+          <p class="text-xs text-secondary-light dark:text-secondary-dark" id="batch-sub-text">
+            Processing...
+          </p>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button
+            type="button"
+            id="download-all-zip-btn"
+            class="btn-primary text-xs sm:text-sm px-4 py-2 min-h-[40px] inline-flex items-center gap-2 cursor-pointer"
+          >
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            <span id="zip-btn-text">{t.compressor.batch.downloadAllZip}</span>
+          </button>
+
+          <button
+            type="button"
+            id="clear-all-btn"
+            class="btn-secondary text-xs px-3 py-2 min-h-[40px] text-error hover:text-error cursor-pointer"
+          >
+            {t.compressor.batch.clearAll}
+          </button>
+        </div>
+      </div>
+
+      <!-- Progress Line -->
+      <div class="w-full bg-black/5 dark:bg-white/5 rounded-full h-2 overflow-hidden">
+        <div id="batch-progress-bar" class="bg-accent h-2 rounded-full transition-all duration-300 w-0"></div>
+      </div>
+    </section>
+
+    <!-- RESULTS LIST CONTAINER -->
+    <section id="results-container" class="space-y-4" aria-live="polite">
+      <!-- Result cards are injected dynamically here -->
+    </section>
+
+    <!-- RECENT HISTORY (IN-MEMORY ONLY) -->
+    <section class="card p-5 sm:p-6 space-y-3" id="recent-history-card">
+      <div class="flex items-center justify-between">
+        <div class="space-y-0.5">
+          <h2 class="text-sm font-bold text-primary-light dark:text-primary-dark">
+            {t.compressor.recent.title}
+          </h2>
+          <p class="text-xs text-secondary-light dark:text-secondary-dark">
+            {t.compressor.recent.desc}
+          </p>
+        </div>
+        <span class="text-xs px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 font-mono text-secondary-light dark:text-secondary-dark" id="history-count">
+          0 items
+        </span>
+      </div>
+
+      <div id="history-list" class="text-xs text-secondary-light dark:text-secondary-dark py-2">
+        {t.compressor.recent.empty}
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="space-y-4 pt-4" aria-labelledby="how-it-works-heading">
+      <div class="text-left space-y-1">
+        <h2 id="how-it-works-heading" class="text-xl sm:text-2xl font-bold tracking-tight text-primary-light dark:text-primary-dark">
+          {t.compressor.howTo.title}
+        </h2>
+        <p class="text-sm text-secondary-light dark:text-secondary-dark">
+          {t.compressor.howTo.subtitle}
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="card p-5 space-y-2 border border-border-light dark:border-border-dark">
+          <div class="w-8 h-8 rounded-lg bg-accent/10 text-accent font-bold flex items-center justify-center text-sm">
+            1
+          </div>
+          <h3 class="font-bold text-base text-primary-light dark:text-primary-dark">
+            {t.compressor.howTo.s1Title}
+          </h3>
+          <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
+            {t.compressor.howTo.s1Desc}
+          </p>
+        </div>
+
+        <div class="card p-5 space-y-2 border border-border-light dark:border-border-dark">
+          <div class="w-8 h-8 rounded-lg bg-accent/10 text-accent font-bold flex items-center justify-center text-sm">
+            2
+          </div>
+          <h3 class="font-bold text-base text-primary-light dark:text-primary-dark">
+            {t.compressor.howTo.s2Title}
+          </h3>
+          <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
+            {t.compressor.howTo.s2Desc}
+          </p>
+        </div>
+
+        <div class="card p-5 space-y-2 border border-border-light dark:border-border-dark">
+          <div class="w-8 h-8 rounded-lg bg-accent/10 text-accent font-bold flex items-center justify-center text-sm">
+            3
+          </div>
+          <h3 class="font-bold text-base text-primary-light dark:text-primary-dark">
+            {t.compressor.howTo.s3Title}
+          </h3>
+          <p class="text-xs text-secondary-light dark:text-secondary-dark leading-relaxed">
+            {t.compressor.howTo.s3Desc}
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <div class="pt-4">
+      <Faq items={faqs} lang={lang} />
+    </div>
+
+    <!-- RELATED TOOLS -->
+    {relatedTools.length > 0 && (
+      <section class="space-y-4 pt-6" aria-labelledby="related-tools-heading">
+        <h2 id="related-tools-heading" class="text-xl sm:text-2xl font-bold tracking-tight text-primary-light dark:text-primary-dark">
+          {common.buttons.relatedTools || 'Related Free Tools'}
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          {relatedTools.map((tool) => (
+            <ToolCard
+              title={tool.name}
+              description={tool.desc}
+              href={tool.href}
+              anchor={tool.anchor}
+              lang={lang}
+            />
+          ))}
+        </div>
+      </section>
+    )}
+  </div>
+
+  <!-- Pass localized strings to client script -->
+  <script is:inline define:vars={{
+    compressorStrings: t.compressor,
+    isRtlPage: isRtl
+  }}>
+    window.__COMPRESSOR_I18N__ = compressorStrings;
+    window.__IS_RTL__ = isRtlPage;
+  </script>
+</Base>
+
+<style>
+  .format-pill.active,
+  .mode-pill.active {
+    background-color: rgb(99 102 241 / 0.12);
+    border-color: rgb(99 102 241);
+    color: rgb(99 102 241);
+  }
+  .format-pill:not(.active),
+  .mode-pill:not(.active) {
+    border-color: var(--color-border, #e5e7eb);
+    color: inherit;
+  }
+  .preset-btn.active {
+    background-color: rgb(99 102 241);
+    color: #ffffff;
+    border-color: rgb(99 102 241);
+  }
+
+  /* Comparison slider styles */
+  .comparison-container {
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+    touch-action: pan-y;
+  }
+  .comparison-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .comparison-handle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    cursor: ew-resize;
+    z-index: 10;
+    transform: translateX(-50%);
+  }
+  [dir="rtl"] .comparison-handle {
+    transform: translateX(50%);
+  }
+  .handle-pill {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 32px;
+    height: 32px;
+    border-radius: 9999px;
+    background-color: #ffffff;
+    color: #1f2937;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    pointer-events: none;
+  }
+</style>
+
+<script>
+  // Dynamic lazy import of JSZip only when user triggers "Download All (ZIP)"
+  let jszipModule: any = null;
+  async function getJSZip() {
+    if (!jszipModule) {
+      const mod = await import('jszip');
+      jszipModule = mod.default || mod;
+    }
+    return jszipModule;
+  }
+
+  interface ProcessedImage {
+    id: string;
+    originalFile: File;
+    originalName: string;
+    originalSize: number;
+    originalWidth: number;
+    originalHeight: number;
+    originalUrl: string;
+    compressedBlob: Blob;
+    compressedSize: number;
+    compressedWidth: number;
+    compressedHeight: number;
+    compressedUrl: string;
+    outputType: string;
+    qualityUsed: number;
+    savingsPercent: number;
+    timestamp: number;
+  }
+
+  const i18n = (window as any).__COMPRESSOR_I18N__ || {};
+  const isRtl = (window as any).__IS_RTL__ || false;
+
+  // State
+  let currentFormat = 'image/webp';
+  let currentMode: 'smart' | 'manual' | 'target' = 'smart';
+  let currentQuality = 0.75;
+  let currentTargetKB = 100;
+  let enableResize = false;
+  let keepAspect = true;
+  let resizeMaxWidth = 0;
+  let resizeMaxHeight = 0;
+  let stripExif = true;
+
+  const processedList: ProcessedImage[] = [];
+  const inMemoryHistory: ProcessedImage[] = [];
+
+  // Helper: Format bytes
+  function formatBytes(bytes: number): string {
+    if (bytes <= 0) return '0 B';
+    const k = 1024;
+    const sizes = ['B', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return `${(bytes / Math.pow(k, i)).toFixed(i === 0 ? 0 : 1)} ${sizes[i]}`;
+  }
+
+  // Toast Notification helper
+  function showToast(message: string, isError = false) {
+    const toast = document.createElement('div');
+    toast.className = `fixed bottom-6 end-6 z-[100] px-4 py-3 rounded-xl text-sm font-semibold shadow-2xl flex items-center gap-2 transform transition-all duration-200 translate-y-4 opacity-0 ${
+      isError ? 'bg-red-600 text-white' : 'bg-emerald-600 text-white'
+    }`;
+    toast.innerHTML = `<span>${isError ? '⚠️' : '✓'}</span><span>${message}</span>`;
+    document.body.appendChild(toast);
+
+    requestAnimationFrame(() => {
+      toast.classList.remove('translate-y-4', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+    });
+
+    setTimeout(() => {
+      toast.classList.remove('translate-y-0', 'opacity-100');
+      toast.classList.add('translate-y-4', 'opacity-0');
+      setTimeout(() => toast.remove(), 250);
+    }, 3500);
+  }
+
+  // DOM Elements
+  const dropzone = document.getElementById('dropzone');
+  const fileInput = document.getElementById('file-input') as HTMLInputElement | null;
+  const cameraInput = document.getElementById('camera-input') as HTMLInputElement | null;
+  const browseBtn = document.getElementById('browse-btn');
+  const cameraBtn = document.getElementById('camera-btn');
+  const qualitySlider = document.getElementById('quality-slider') as HTMLInputElement | null;
+  const qualityDisplay = document.getElementById('quality-display');
+  const savingsBadge = document.getElementById('estimated-savings-badge');
+  const targetSizeInput = document.getElementById('target-size-input') as HTMLInputElement | null;
+  const enableResizeCheck = document.getElementById('enable-resize-check') as HTMLInputElement | null;
+  const keepAspectCheck = document.getElementById('keep-aspect-check') as HTMLInputElement | null;
+  const resizeWidthInput = document.getElementById('resize-max-width') as HTMLInputElement | null;
+  const resizeHeightInput = document.getElementById('resize-max-height') as HTMLInputElement | null;
+  const stripExifCheck = document.getElementById('strip-exif-check') as HTMLInputElement | null;
+  const recompressAllBtn = document.getElementById('recompress-all-btn');
+  const batchBar = document.getElementById('batch-bar');
+  const batchProgressBar = document.getElementById('batch-progress-bar');
+  const batchStatusText = document.getElementById('batch-status-text');
+  const batchSubText = document.getElementById('batch-sub-text');
+  const totalSavingsPill = document.getElementById('total-savings-pill');
+  const downloadAllZipBtn = document.getElementById('download-all-zip-btn');
+  const zipBtnText = document.getElementById('zip-btn-text');
+  const clearAllBtn = document.getElementById('clear-all-btn');
+  const resultsContainer = document.getElementById('results-container');
+  const historyList = document.getElementById('history-list');
+  const historyCount = document.getElementById('history-count');
+
+  const panelSmart = document.getElementById('panel-smart');
+  const panelManual = document.getElementById('panel-manual');
+  const panelTarget = document.getElementById('panel-target');
+
+  // Format Switcher
+  document.querySelectorAll('.format-pill').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.format-pill').forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentFormat = btn.getAttribute('data-format') || 'image/webp';
+      updateEstimatedSavings();
+      showRecompressBtnIfHasFiles();
+    });
+  });
+
+  // Mode Switcher
+  document.querySelectorAll('.mode-pill').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.mode-pill').forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      const mode = btn.getAttribute('data-mode') as 'smart' | 'manual' | 'target';
+      currentMode = mode;
+
+      panelSmart?.classList.toggle('hidden', mode !== 'smart');
+      panelManual?.classList.toggle('hidden', mode !== 'manual');
+      panelTarget?.classList.toggle('hidden', mode !== 'target');
+
+      updateEstimatedSavings();
+      showRecompressBtnIfHasFiles();
+    });
+  });
+
+  // Quality Slider
+  qualitySlider?.addEventListener('input', () => {
+    const val = parseInt(qualitySlider.value, 10);
+    currentQuality = val / 100;
+    if (qualityDisplay) qualityDisplay.textContent = `${val}%`;
+    updateEstimatedSavings();
+    showRecompressBtnIfHasFiles();
+  });
+
+  // Presets
+  document.querySelectorAll('.preset-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.preset-btn').forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      const val = parseInt(btn.getAttribute('data-val') || '75', 10);
+      currentQuality = val / 100;
+      if (qualitySlider) qualitySlider.value = String(val);
+      if (qualityDisplay) qualityDisplay.textContent = `${val}%`;
+
+      if (val === 35 && enableResizeCheck && resizeWidthInput) {
+        // Extreme Email preset: auto downscale to max 1280px
+        enableResizeCheck.checked = true;
+        enableResize = true;
+        resizeWidthInput.disabled = false;
+        if (resizeHeightInput) resizeHeightInput.disabled = false;
+        resizeWidthInput.value = '1280';
+      }
+
+      updateEstimatedSavings();
+      showRecompressBtnIfHasFiles();
+    });
+  });
+
+  // Target Size Presets
+  document.querySelectorAll('.target-preset-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const sz = btn.getAttribute('data-size') || '100';
+      if (targetSizeInput) targetSizeInput.value = sz;
+      currentTargetKB = parseInt(sz, 10);
+      showRecompressBtnIfHasFiles();
+    });
+  });
+
+  targetSizeInput?.addEventListener('input', () => {
+    const val = parseInt(targetSizeInput.value, 10);
+    if (!isNaN(val) && val > 0) {
+      currentTargetKB = val;
+      showRecompressBtnIfHasFiles();
+    }
+  });
+
+  // Resize Checkbox
+  enableResizeCheck?.addEventListener('change', () => {
+    enableResize = enableResizeCheck.checked;
+    if (resizeWidthInput) resizeWidthInput.disabled = !enableResize;
+    if (resizeHeightInput) resizeHeightInput.disabled = !enableResize;
+    document.querySelectorAll('.scale-pill').forEach((pill) => {
+      (pill as HTMLButtonElement).disabled = !enableResize;
+    });
+    showRecompressBtnIfHasFiles();
+  });
+
+  keepAspectCheck?.addEventListener('change', () => {
+    keepAspect = keepAspectCheck.checked;
+  });
+
+  // Quick Scale Pills
+  document.querySelectorAll('.scale-pill').forEach((pill) => {
+    pill.addEventListener('click', () => {
+      const scale = parseInt(pill.getAttribute('data-scale') || '100', 10);
+      if (processedList.length > 0) {
+        const first = processedList[0];
+        const newW = Math.round((first.originalWidth * scale) / 100);
+        const newH = Math.round((first.originalHeight * scale) / 100);
+        if (resizeWidthInput) resizeWidthInput.value = String(newW);
+        if (resizeHeightInput) resizeHeightInput.value = String(newH);
+      }
+      showRecompressBtnIfHasFiles();
+    });
+  });
+
+  // Strip EXIF
+  stripExifCheck?.addEventListener('change', () => {
+    stripExif = stripExifCheck.checked;
+    showRecompressBtnIfHasFiles();
+  });
+
+  function updateEstimatedSavings() {
+    let estimate = 75;
+    if (currentMode === 'smart') {
+      estimate = currentFormat === 'image/webp' ? 78 : currentFormat === 'image/jpeg' ? 72 : 45;
+    } else if (currentMode === 'manual') {
+      const q = currentQuality;
+      if (q > 0.85) estimate = 40;
+      else if (q > 0.7) estimate = 70;
+      else if (q > 0.5) estimate = 82;
+      else estimate = 90;
+    } else {
+      estimate = 80;
+    }
+    if (savingsBadge) {
+      savingsBadge.textContent = `Estimated savings: ~${estimate}%`;
+    }
+  }
+
+  function showRecompressBtnIfHasFiles() {
+    if (processedList.length > 0 && recompressAllBtn) {
+      recompressAllBtn.classList.remove('hidden');
+    }
+  }
+
+  // File Upload Handlers
+  browseBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    fileInput?.click();
+  });
+
+  cameraBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    cameraInput?.click();
+  });
+
+  dropzone?.addEventListener('click', () => {
+    fileInput?.click();
+  });
+
+  fileInput?.addEventListener('change', (e) => {
+    const files = (e.target as HTMLInputElement).files;
+    if (files && files.length > 0) {
+      enqueueFiles(Array.from(files));
+      fileInput.value = '';
+    }
+  });
+
+  cameraInput?.addEventListener('change', (e) => {
+    const files = (e.target as HTMLInputElement).files;
+    if (files && files.length > 0) {
+      enqueueFiles(Array.from(files));
+      cameraInput.value = '';
+    }
+  });
+
+  // Drag & Drop
+  ['dragenter', 'dragover'].forEach((eventName) => {
+    dropzone?.addEventListener(eventName, (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      dropzone.classList.add('border-accent', 'bg-accent/10');
+    });
+  });
+
+  ['dragleave', 'drop'].forEach((eventName) => {
+    dropzone?.addEventListener(eventName, (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      dropzone.classList.remove('border-accent', 'bg-accent/10');
+    });
+  });
+
+  dropzone?.addEventListener('drop', (e) => {
+    const dt = e.dataTransfer;
+    if (dt && dt.files && dt.files.length > 0) {
+      enqueueFiles(Array.from(dt.files));
+    }
+  });
+
+  // Clipboard Paste anywhere on the page
+  window.addEventListener('paste', (e: ClipboardEvent) => {
+    if (!e.clipboardData || !e.clipboardData.items) return;
+    const items = e.clipboardData.items;
+    const pastedFiles: File[] = [];
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].type.startsWith('image/')) {
+        const file = items[i].getAsFile();
+        if (file) pastedFiles.push(file);
+      }
+    }
+    if (pastedFiles.length > 0) {
+      showToast('Image pasted from clipboard!');
+      enqueueFiles(pastedFiles);
+    }
+  });
+
+  // File Enqueue & Batch Queue Processing
+  async function enqueueFiles(files: File[]) {
+    const validImages: File[] = [];
+    for (const file of files) {
+      if (file.type.startsWith('image/') || /\.(jpe?g|png|webp|avif)$/i.test(file.name)) {
+        if (file.size > 50 * 1024 * 1024) {
+          showToast(`${file.name}: ${i18n.errors?.fileTooLarge || 'File is over 50MB limit.'}`, true);
+        } else {
+          validImages.push(file);
+        }
+      } else {
+        showToast(`${file.name}: ${i18n.errors?.invalidType || 'Unsupported file format.'}`, true);
+      }
+    }
+
+    if (validImages.length === 0) return;
+
+    if (batchBar) batchBar.classList.remove('hidden');
+    const total = validImages.length;
+
+    for (let i = 0; i < validImages.length; i++) {
+      const file = validImages[i];
+      if (batchStatusText) {
+        batchStatusText.textContent = `${i18n.batch?.queueTitle || 'Compression Queue'} (${i + 1}/${total})`;
+      }
+      if (batchSubText) {
+        batchSubText.textContent = `${i18n.batch?.processing?.replace('{current}', String(i + 1)).replace('{total}', String(total)) || `Compressing ${file.name}...`}`;
+      }
+      if (batchProgressBar) {
+        batchProgressBar.style.width = `${Math.round(((i + 1) / total) * 100)}%`;
+      }
+
+      try {
+        await processSingleFile(file);
+      } catch (err) {
+        console.error('Failed to compress image:', err);
+        showToast(`${file.name}: ${i18n.errors?.corruptFile || 'Failed to decode image.'}`, true);
+      }
+
+      // Yield event loop to ensure smooth 60fps UI and avoid browser freeze
+      await new Promise((resolve) => setTimeout(resolve, 30));
+    }
+
+    if (batchSubText) {
+      batchSubText.textContent = i18n.batch?.allDone?.replace('{total}', String(total)) || `All ${total} images compressed!`;
+    }
+    updateBatchSummary();
+  }
+
+  // Core Compression Pipeline using HTML5 Canvas & createImageBitmap
+  async function processSingleFile(file: File) {
+    let imgBitmap: ImageBitmap | HTMLImageElement;
+    let originalWidth = 0;
+    let originalHeight = 0;
+
+    if ('createImageBitmap' in window) {
+      imgBitmap = await createImageBitmap(file);
+      originalWidth = imgBitmap.width;
+      originalHeight = imgBitmap.height;
+    } else {
+      imgBitmap = await new Promise<HTMLImageElement>((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.src = URL.createObjectURL(file);
+      });
+      originalWidth = (imgBitmap as HTMLImageElement).naturalWidth;
+      originalHeight = (imgBitmap as HTMLImageElement).naturalHeight;
+    }
+
+    // Determine target dimensions
+    let targetW = originalWidth;
+    let targetH = originalHeight;
+
+    if (enableResize && resizeWidthInput && resizeHeightInput) {
+      const wVal = parseInt(resizeWidthInput.value, 10);
+      const hVal = parseInt(resizeHeightInput.value, 10);
+      if (!isNaN(wVal) && wVal > 0) {
+        targetW = wVal;
+        targetH = keepAspect ? Math.round((originalHeight / originalWidth) * targetW) : (hVal || originalHeight);
+      } else if (!isNaN(hVal) && hVal > 0) {
+        targetH = hVal;
+        targetW = keepAspect ? Math.round((originalWidth / originalHeight) * targetH) : (wVal || originalWidth);
+      }
+    } else if (currentMode === 'smart') {
+      // Smart Compress: if photo is greater than 2560px, downscale for 80%+ savings while keeping Retina sharpness
+      const maxDim = 2560;
+      if (targetW > maxDim || targetH > maxDim) {
+        if (targetW > targetH) {
+          targetH = Math.round((targetH * maxDim) / targetW);
+          targetW = maxDim;
+        } else {
+          targetW = Math.round((targetW * maxDim) / targetH);
+          targetH = maxDim;
+        }
+      }
+    }
+
+    const canvas = document.createElement('canvas');
+    canvas.width = targetW;
+    canvas.height = targetH;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) throw new Error('Could not get canvas 2D context');
+
+    // EXIF metadata stripping: Canvas draw automatically strips all EXIF GPS/camera data
+    ctx.drawImage(imgBitmap, 0, 0, targetW, targetH);
+
+    let compressedBlob: Blob;
+    let finalQuality = currentQuality;
+
+    if (currentMode === 'target') {
+      // TARGET SIZE BINARY SEARCH ALGORITHM
+      const targetBytes = currentTargetKB * 1024;
+      const targetResult = await binarySearchQualityForTargetSize(canvas, ctx, imgBitmap, targetW, targetH, targetBytes, currentFormat);
+      compressedBlob = targetResult.blob;
+      targetW = targetResult.width;
+      targetH = targetResult.height;
+      finalQuality = targetResult.quality;
+    } else if (currentMode === 'smart') {
+      finalQuality = 0.75;
+      compressedBlob = await canvasToBlob(canvas, currentFormat, finalQuality);
+    } else {
+      // Custom Quality
+      compressedBlob = await canvasToBlob(canvas, currentFormat, currentQuality);
+    }
+
+    const originalUrl = URL.createObjectURL(file);
+    const compressedUrl = URL.createObjectURL(compressedBlob);
+    const savingsPercent = Math.max(0, Math.round(((file.size - compressedBlob.size) / file.size) * 100));
+
+    const item: ProcessedImage = {
+      id: `img_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
+      originalFile: file,
+      originalName: file.name,
+      originalSize: file.size,
+      originalWidth,
+      originalHeight,
+      originalUrl,
+      compressedBlob,
+      compressedSize: compressedBlob.size,
+      compressedWidth: targetW,
+      compressedHeight: targetH,
+      compressedUrl,
+      outputType: currentFormat,
+      qualityUsed: finalQuality,
+      savingsPercent,
+      timestamp: Date.now(),
+    };
+
+    processedList.unshift(item);
+    renderResultCard(item);
+
+    // In-memory history tracking (session only)
+    inMemoryHistory.unshift(item);
+    if (inMemoryHistory.length > 5) inMemoryHistory.pop();
+    renderHistory();
+  }
+
+  // Canvas to Blob Promisified
+  function canvasToBlob(canvas: HTMLCanvasElement, format: string, quality: number): Promise<Blob> {
+    return new Promise((resolve, reject) => {
+      canvas.toBlob((blob) => {
+        if (blob) resolve(blob);
+        else reject(new Error('Canvas toBlob returned null'));
+      }, format, quality);
+    });
+  }
+
+  // Target Size Mode: Binary Search Quality & Dimension Auto-Downscaling
+  async function binarySearchQualityForTargetSize(
+    canvas: HTMLCanvasElement,
+    ctx: CanvasRenderingContext2D,
+    srcImage: ImageBitmap | HTMLImageElement,
+    initialW: number,
+    initialH: number,
+    targetBytes: number,
+    format: string
+  ): Promise<{ blob: Blob; width: number; height: number; quality: number }> {
+    let curW = initialW;
+    let curH = initialH;
+    let bestBlob: Blob | null = null;
+    let bestQuality = 0.5;
+
+    // For PNG (lossless), canvas quality param is ignored; downscale dimensions until under target
+    if (format === 'image/png') {
+      let attempts = 0;
+      while (attempts < 6) {
+        attempts++;
+        const blob = await canvasToBlob(canvas, format, 1.0);
+        if (blob.size <= targetBytes) {
+          return { blob, width: curW, height: curH, quality: 1.0 };
+        }
+        const scale = Math.sqrt(targetBytes / blob.size) * 0.95;
+        curW = Math.max(100, Math.round(curW * scale));
+        curH = Math.max(100, Math.round(curH * scale));
+        canvas.width = curW;
+        canvas.height = curH;
+        ctx.drawImage(srcImage, 0, 0, curW, curH);
+      }
+      const finalBlob = await canvasToBlob(canvas, format, 1.0);
+      return { blob: finalBlob, width: curW, height: curH, quality: 1.0 };
+    }
+
+    // For WebP and JPEG: Binary Search Quality between 0.05 and 0.95
+    let lowQ = 0.05;
+    let highQ = 0.95;
+
+    for (let iter = 0; iter < 6; iter++) {
+      const midQ = (lowQ + highQ) / 2;
+      const testBlob = await canvasToBlob(canvas, format, midQ);
+
+      if (testBlob.size <= targetBytes) {
+        bestBlob = testBlob;
+        bestQuality = midQ;
+        lowQ = midQ; // Try to get higher quality while staying under target
+      } else {
+        highQ = midQ; // File is too large, lower quality
+      }
+    }
+
+    // If even lowest quality (0.05) is larger than target, downscale dimensions
+    if (!bestBlob || bestBlob.size > targetBytes) {
+      let downscaleAttempts = 0;
+      while (downscaleAttempts < 4) {
+        downscaleAttempts++;
+        const testBlob = await canvasToBlob(canvas, format, 0.4);
+        if (testBlob.size <= targetBytes) {
+          bestBlob = testBlob;
+          bestQuality = 0.4;
+          break;
+        }
+        const scale = Math.sqrt(targetBytes / testBlob.size) * 0.92;
+        curW = Math.max(120, Math.round(curW * scale));
+        curH = Math.max(120, Math.round(curH * scale));
+        canvas.width = curW;
+        canvas.height = curH;
+        ctx.drawImage(srcImage, 0, 0, curW, curH);
+      }
+      if (!bestBlob) {
+        bestBlob = await canvasToBlob(canvas, format, 0.3);
+        bestQuality = 0.3;
+      }
+    }
+
+    return { blob: bestBlob, width: curW, height: curH, quality: bestQuality };
+  }
+
+  // Render Per-File Result Card with Interactive Before/After Slider
+  function renderResultCard(item: ProcessedImage) {
+    if (!resultsContainer) return;
+
+    const extension = item.outputType === 'image/webp' ? '.webp' : item.outputType === 'image/png' ? '.png' : '.jpg';
+    const baseName = item.originalName.replace(/\.[^/.]+$/, '');
+    const downloadFilename = `${baseName}-compressed${extension}`;
+
+    const card = document.createElement('div');
+    card.id = `card-${item.id}`;
+    card.className = 'card p-5 sm:p-6 space-y-4 border border-border-light dark:border-border-dark shadow-sm hover:shadow-md transition-all';
+
+    card.innerHTML = `
+      <!-- Card Header: Name, Sizes, Savings Badge -->
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-border-light dark:border-border-dark pb-3">
+        <div class="space-y-0.5 max-w-sm sm:max-w-md truncate">
+          <div class="flex items-center gap-2">
+            <span class="font-bold text-sm sm:text-base text-primary-light dark:text-primary-dark truncate" title="${item.originalName}">
+              ${item.originalName}
+            </span>
+            <span class="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 font-semibold text-secondary-light dark:text-secondary-dark">
+              ${item.outputType.replace('image/', '')}
+            </span>
+          </div>
+          <div class="text-xs text-secondary-light dark:text-secondary-dark flex items-center gap-1.5">
+            <span>${formatBytes(item.originalSize)}</span>
+            <span>→</span>
+            <span class="font-bold text-primary-light dark:text-primary-dark">${formatBytes(item.compressedSize)}</span>
+            <span>(${item.compressedWidth}×${item.compressedHeight} px)</span>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          ${
+            item.savingsPercent > 0
+              ? `<span class="px-3 py-1 rounded-full text-xs font-extrabold bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
+                  ${i18n.results?.savedBadge?.replace('{percent}', String(item.savingsPercent)) || `Saved ${item.savingsPercent}%`}
+                </span>`
+              : `<span class="px-3 py-1 rounded-full text-xs font-medium bg-black/5 dark:bg-white/5 text-secondary-light dark:text-secondary-dark">
+                  ${i18n.results?.noSavings || 'Optimal'}
+                </span>`
+          }
+
+          <button type="button" class="remove-card-btn text-xs text-secondary-light dark:text-secondary-dark hover:text-error p-1 rounded transition-colors" title="Remove" data-id="${item.id}">
+            ✕
+          </button>
+        </div>
+      </div>
+
+      <!-- Before / After Quality Comparison Slider -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between text-xs text-secondary-light dark:text-secondary-dark px-1">
+          <span class="font-semibold">${i18n.results?.compareSlider || 'Compare Quality'}</span>
+          <span>${i18n.results?.dragToCompare || 'Drag divider to compare'}</span>
+        </div>
+
+        <div class="comparison-container rounded-xl overflow-hidden aspect-video max-h-[360px] bg-black/10 dark:bg-black/30 flex items-center justify-center cursor-ew-resize border border-border-light dark:border-border-dark" id="slider-${item.id}">
+          <!-- Before Image (Base) -->
+          <img src="${item.originalUrl}" alt="Original before compression" class="w-full h-full object-contain pointer-events-none select-none" />
+          <span class="absolute top-2.5 start-2.5 px-2 py-0.5 rounded bg-black/70 text-white text-[10px] font-bold uppercase tracking-wider backdrop-blur-xs z-10">
+            ${i18n.results?.before || 'Before'} (${formatBytes(item.originalSize)})
+          </span>
+
+          <!-- After Image (Overlay with Clip-Path) -->
+          <div class="comparison-overlay w-full h-full" id="overlay-${item.id}" style="clip-path: inset(0 0 0 50%);">
+            <img src="${item.compressedUrl}" alt="Compressed after" class="w-full h-full object-contain pointer-events-none select-none" />
+            <span class="absolute top-2.5 end-2.5 px-2 py-0.5 rounded bg-emerald-600/90 text-white text-[10px] font-bold uppercase tracking-wider backdrop-blur-xs z-10">
+              ${i18n.results?.after || 'After'} (${formatBytes(item.compressedSize)})
+            </span>
+          </div>
+
+          <!-- Divider Handle -->
+          <div class="comparison-handle" id="handle-${item.id}" style="${isRtl ? 'right: 50%;' : 'left: 50%;'}">
+            <div class="handle-pill">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+        <div class="text-xs text-secondary-light dark:text-secondary-dark">
+          <span>Quality: <strong>${Math.round(item.qualityUsed * 100)}%</strong></span>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <!-- Web Share API Button -->
+          <button
+            type="button"
+            class="share-btn btn-secondary text-xs px-3.5 py-2 min-h-[38px] inline-flex items-center gap-1.5 cursor-pointer"
+            data-id="${item.id}"
+            title="Share via WhatsApp, AirDrop, etc."
+          >
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="18" cy="5" r="3"></circle>
+              <circle cx="6" cy="12" r="3"></circle>
+              <circle cx="18" cy="19" r="3"></circle>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+            </svg>
+            <span>${i18n.results?.share || 'Share'}</span>
+          </button>
+
+          <!-- Download Button -->
+          <a
+            href="${item.compressedUrl}"
+            download="${downloadFilename}"
+            class="btn-primary text-xs px-4 py-2 min-h-[38px] inline-flex items-center gap-1.5 cursor-pointer"
+          >
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            <span>${i18n.results?.download || 'Download'}</span>
+          </a>
+        </div>
+      </div>
+    `;
+
+    resultsContainer.prepend(card);
+
+    // Setup Comparison Slider interactions
+    setupSliderInteraction(item.id);
+
+    // Setup Share Button
+    const shareBtn = card.querySelector('.share-btn');
+    shareBtn?.addEventListener('click', () => handleShareItem(item));
+
+    // Setup Remove Button
+    const removeBtn = card.querySelector('.remove-card-btn');
+    removeBtn?.addEventListener('click', () => {
+      card.remove();
+      const idx = processedList.findIndex((p) => p.id === item.id);
+      if (idx !== -1) {
+        URL.revokeObjectURL(item.originalUrl);
+        URL.revokeObjectURL(item.compressedUrl);
+        processedList.splice(idx, 1);
+      }
+      updateBatchSummary();
+    });
+  }
+
+  // Interactive Comparison Slider (Mouse, Touch & RTL friendly)
+  function setupSliderInteraction(id: string) {
+    const container = document.getElementById(`slider-${id}`);
+    const overlay = document.getElementById(`overlay-${id}`);
+    const handle = document.getElementById(`handle-${id}`);
+    if (!container || !overlay || !handle) return;
+
+    let isDragging = false;
+
+    function setPosition(percentage: number) {
+      const clamped = Math.max(0, Math.min(100, percentage));
+      if (isRtl) {
+        overlay.style.clipPath = `inset(0 ${100 - clamped}% 0 0)`;
+        handle.style.right = `${clamped}%`;
+      } else {
+        overlay.style.clipPath = `inset(0 0 0 ${clamped}%)`;
+        handle.style.left = `${clamped}%`;
+      }
+    }
+
+    function onPointerMove(e: PointerEvent) {
+      if (!isDragging) return;
+      const rect = container.getBoundingClientRect();
+      const clientX = e.clientX;
+      let percentage = isRtl
+        ? ((rect.right - clientX) / rect.width) * 100
+        : ((clientX - rect.left) / rect.width) * 100;
+      setPosition(percentage);
+    }
+
+    function onPointerUp() {
+      isDragging = false;
+      window.removeEventListener('pointermove', onPointerMove);
+      window.removeEventListener('pointerup', onPointerUp);
+    }
+
+    container.addEventListener('pointerdown', (e: PointerEvent) => {
+      isDragging = true;
+      const rect = container.getBoundingClientRect();
+      const clientX = e.clientX;
+      let percentage = isRtl
+        ? ((rect.right - clientX) / rect.width) * 100
+        : ((clientX - rect.left) / rect.width) * 100;
+      setPosition(percentage);
+      window.addEventListener('pointermove', onPointerMove);
+      window.addEventListener('pointerup', onPointerUp);
+    });
+  }
+
+  // Web Share API Handler
+  async function handleShareItem(item: ProcessedImage) {
+    const extension = item.outputType === 'image/webp' ? '.webp' : item.outputType === 'image/png' ? '.png' : '.jpg';
+    const baseName = item.originalName.replace(/\.[^/.]+$/, '');
+    const filename = `${baseName}-compressed${extension}`;
+
+    if (navigator.share && navigator.canShare) {
+      try {
+        const file = new File([item.compressedBlob], filename, { type: item.outputType });
+        if (navigator.canShare({ files: [file] })) {
+          await navigator.share({
+            files: [file],
+            title: filename,
+            text: 'Compressed with ToolNest Image Compressor (100% private in-browser)',
+          });
+          return;
+        }
+      } catch (err) {
+        if ((err as Error).name !== 'AbortError') {
+          console.warn('Web Share failed, falling back to download:', err);
+        } else {
+          return;
+        }
+      }
+    }
+
+    // Fallback: Trigger download
+    const a = document.createElement('a');
+    a.href = item.compressedUrl;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    showToast('File downloaded (device does not support direct Web Share)');
+  }
+
+  // Update Batch Totals
+  function updateBatchSummary() {
+    if (processedList.length === 0) {
+      if (batchBar) batchBar.classList.add('hidden');
+      if (recompressAllBtn) recompressAllBtn.classList.add('hidden');
+      return;
+    }
+
+    let origTotal = 0;
+    let compTotal = 0;
+    for (const p of processedList) {
+      origTotal += p.originalSize;
+      compTotal += p.compressedSize;
+    }
+
+    const savedBytes = Math.max(0, origTotal - compTotal);
+    const savedPct = origTotal > 0 ? Math.round((savedBytes / origTotal) * 100) : 0;
+
+    if (totalSavingsPill) {
+      totalSavingsPill.textContent = `Total Saved: ${formatBytes(savedBytes)} (${savedPct}%)`;
+    }
+    if (batchStatusText) {
+      batchStatusText.textContent = `${processedList.length} files compressed`;
+    }
+  }
+
+  // Download All as ZIP (Lazy-loads JSZip)
+  downloadAllZipBtn?.addEventListener('click', async () => {
+    if (processedList.length === 0) return;
+
+    if (zipBtnText) zipBtnText.textContent = i18n.batch?.zipping || 'Creating ZIP archive...';
+    downloadAllZipBtn.setAttribute('disabled', 'true');
+
+    try {
+      const JSZip = await getJSZip();
+      const zip = new JSZip();
+
+      for (let i = 0; i < processedList.length; i++) {
+        const item = processedList[i];
+        const extension = item.outputType === 'image/webp' ? '.webp' : item.outputType === 'image/png' ? '.png' : '.jpg';
+        const baseName = item.originalName.replace(/\.[^/.]+$/, '');
+        const filename = `${baseName}-compressed${extension}`;
+        zip.file(filename, item.compressedBlob);
+      }
+
+      const zipBlob = await zip.generateAsync({
+        type: 'blob',
+        compression: 'DEFLATE',
+        compressionOptions: { level: 6 },
+      });
+
+      const url = URL.createObjectURL(zipBlob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `toolnest-compressed-images-${Date.now()}.zip`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      showToast('ZIP archive downloaded successfully!');
+    } catch (err) {
+      console.error('ZIP generation failed:', err);
+      showToast(i18n.errors?.zipFailed || 'Failed to generate ZIP archive.', true);
+    } finally {
+      if (zipBtnText) zipBtnText.textContent = i18n.batch?.downloadAllZip || 'Download All (ZIP)';
+      downloadAllZipBtn.removeAttribute('disabled');
+    }
+  });
+
+  // Clear All
+  clearAllBtn?.addEventListener('click', () => {
+    for (const item of processedList) {
+      URL.revokeObjectURL(item.originalUrl);
+      URL.revokeObjectURL(item.compressedUrl);
+    }
+    processedList.length = 0;
+    if (resultsContainer) resultsContainer.innerHTML = '';
+    updateBatchSummary();
+    showToast('Queue cleared');
+  });
+
+  // Re-compress All with new settings
+  recompressAllBtn?.addEventListener('click', async () => {
+    if (processedList.length === 0) return;
+    const existingFiles = processedList.map((p) => p.originalFile);
+    // Clear current results
+    for (const item of processedList) {
+      URL.revokeObjectURL(item.originalUrl);
+      URL.revokeObjectURL(item.compressedUrl);
+    }
+    processedList.length = 0;
+    if (resultsContainer) resultsContainer.innerHTML = '';
+
+    showToast('Re-compressing images with updated settings...');
+    await enqueueFiles(existingFiles);
+  });
+
+  // Render Recent In-Memory History (Cleared on refresh)
+  function renderHistory() {
+    if (!historyList || !historyCount) return;
+
+    historyCount.textContent = `${inMemoryHistory.length} items`;
+    if (inMemoryHistory.length === 0) {
+      historyList.innerHTML = i18n.recent?.empty || 'No images compressed in this session yet.';
+      return;
+    }
+
+    let html = '<div class="divide-y divide-border-light dark:divide-border-dark">';
+    for (const item of inMemoryHistory) {
+      const ext = item.outputType === 'image/webp' ? '.webp' : item.outputType === 'image/png' ? '.png' : '.jpg';
+      const filename = `${item.originalName.replace(/\.[^/.]+$/, '')}-compressed${ext}`;
+      html += `
+        <div class="py-2.5 flex items-center justify-between gap-3">
+          <div class="truncate max-w-[200px] sm:max-w-xs space-y-0.5">
+            <span class="font-medium text-primary-light dark:text-primary-dark truncate block">${item.originalName}</span>
+            <span class="text-[11px] text-secondary-light dark:text-secondary-dark font-mono">${formatBytes(item.originalSize)} → ${formatBytes(item.compressedSize)} (${item.savingsPercent}% saved)</span>
+          </div>
+          <a href="${item.compressedUrl}" download="${filename}" class="btn-secondary text-[11px] px-2.5 py-1 min-h-[30px] inline-flex items-center gap-1 cursor-pointer shrink-0">
+            <span>Download</span>
+          </a>
+        </div>
+      `;
+    }
+    html += '</div>';
+    historyList.innerHTML = html;
+  }
+</script>

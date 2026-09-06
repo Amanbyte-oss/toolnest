@@ -498,17 +498,88 @@ const LOCALIZED_LINKS: Record<string, Record<Lang, { name: string; desc: string;
       },
     ],
   },
+  'image-compressor': {
+    en: [
+      {
+        name: '🎡 Decision Wheel',
+        desc: 'Spin the wheel to make quick, unbiased choices or randomize ideas.',
+        anchor: 'Make quick decisions with the interactive decision wheel',
+      },
+      {
+        name: '🎲 Random Picker',
+        desc: 'Pick contest winners, classroom students, or names without duplicates.',
+        anchor: 'Draw random winners or split teams fairly',
+      },
+      {
+        name: '⏳ Countdown Timer',
+        desc: 'Track live event deadlines, project milestones, and special dates.',
+        anchor: 'Create a live shareable event countdown',
+      },
+    ],
+    pt: [
+      {
+        name: '🎡 Roleta de Decisões',
+        desc: 'Gire a roleta para tomar decisões rápidas e justas ou sortear ideias.',
+        anchor: 'Tome decisões rápidas com a roleta interativa',
+      },
+      {
+        name: '🎲 Sorteador Aleatório',
+        desc: 'Sorteie ganhadores, equipes ou itens da lista sem repetições.',
+        anchor: 'Sorteie nomes ou divida grupos de forma justa',
+      },
+      {
+        name: '⏳ Contagem Regressiva',
+        desc: 'Acompanhe prazos, metas de projetos e datas comemorativas em tempo real.',
+        anchor: 'Crie uma contagem regressiva ao vivo e compartilhável',
+      },
+    ],
+    id: [
+      {
+        name: '🎡 Roda Keputusan',
+        desc: 'Putar roda untuk menentukan pilihan acak secara adil dan cepat.',
+        anchor: 'Ambil keputusan cepat dengan roda putar interaktif',
+      },
+      {
+        name: '🎲 Pengacak Nama',
+        desc: 'Pilih pemenang lomba, siswa kelas, atau daftar tanpa duplikat.',
+        anchor: 'Pilih pemenang acak atau bagi tim secara adil',
+      },
+      {
+        name: '⏳ Hitung Mundur',
+        desc: 'Pantau tenggat waktu acara, target proyek, dan momen spesial.',
+        anchor: 'Buat jam hitung mundur langsung yang dapat dibagikan',
+      },
+    ],
+    ar: [
+      {
+        name: '🎡 عجلة القرارات',
+        desc: 'قم بتدوير العجلة لاتخاذ قرارات سريعة وعادلة بين الخيارات والأنشطة.',
+        anchor: 'اتخذ قرارات سريعة باستخدام عجلة الحظ التفاعلية',
+      },
+      {
+        name: '🎲 السحب العشوائي',
+        desc: 'اختر الفائزين في المسابقات أو قسّم الفرق دون أي تكرار.',
+        anchor: 'اختر فائزين عشوائيين أو قسّم المجموعات بعدالة',
+      },
+      {
+        name: '⏳ العداد التنازلي',
+        desc: 'تابع المواعيد النهائية للمشاريع والمناسبات الخاصة في الوقت الفعلي.',
+        anchor: 'أنشئ عداداً تنازلياً مباشراً وقابلاً للمشاركة',
+      },
+    ],
+  },
 };
 
 // Aliases
 LOCALIZED_LINKS['names-directory'] = LOCALIZED_LINKS['names'];
 
 const DEFAULT_HREFS: Record<string, string[]> = {
+  'image-compressor': ['/decision-wheel', '/random-picker', '/countdown'],
   'age-calculator': ['/birthday-facts', '/countdown', '/name-meaning'],
   'birthday-facts': ['/age-calculator', '/countdown', '/name-meaning'],
-  'decision-wheel': ['/random-picker', '/countdown', '/age-calculator'],
-  'random-picker': ['/decision-wheel', '/countdown', '/birthday-facts'],
-  'countdown': ['/age-calculator', '/birthday-facts', '/decision-wheel'],
+  'decision-wheel': ['/random-picker', '/countdown', '/image-compressor'],
+  'random-picker': ['/decision-wheel', '/image-compressor', '/birthday-facts'],
+  'countdown': ['/image-compressor', '/birthday-facts', '/decision-wheel'],
   'name-meaning': ['/names', '/birthday-facts', '/age-calculator'],
   'names': ['/name-meaning', '/birthday-facts', '/age-calculator'],
   'names-directory': ['/name-meaning', '/birthday-facts', '/age-calculator'],

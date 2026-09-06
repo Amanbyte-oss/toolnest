@@ -16,8 +16,17 @@ const wheel = getNamespace(lang, 'wheel');
 const picker = getNamespace(lang, 'picker');
 const countdown = getNamespace(lang, 'countdown');
 const names = getNamespace(lang, 'names');
+const compressor = getNamespace(lang, 'compressor');
 
 const tools = [
+  {
+    title: common.nav.imageCompressor,
+    description: compressor.subtitle,
+    href: getLocalizedPath('/image-compressor', lang),
+    badge: lang === 'ar' ? 'جديد • خصوصية 100%' : lang === 'pt' ? 'Novo • 100% Privado' : lang === 'id' ? 'Baru • 100% Privat' : 'New • 100% Private',
+    icon: 'image' as const,
+    popular: true,
+  },
   {
     title: common.nav.ageCalculator,
     description: age.subtitle,

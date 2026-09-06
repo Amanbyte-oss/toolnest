@@ -1,8 +1,8 @@
 ---
 export const prerender = true;
-import NameDetailView, { type NameEntry } from '../../../views/NameDetailView.astro';
+import NameDetailView from '../../../views/NameDetailView.astro';
 import namesData from '../../../data/names.json';
-import { LOCALES, type Lang } from '../../../i18n';
+import { LOCALES, type Lang, type NameEntry } from '../../../i18n';
 
 export async function getStaticPaths() {
   const sorted = [...namesData].sort((a, b) => a.name.localeCompare(b.name));
