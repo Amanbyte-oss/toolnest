@@ -14,6 +14,7 @@ const faqPage = getNamespace(lang, 'faqPage');
 const compressor = getNamespace(lang, 'compressor');
 const converter = getNamespace(lang, 'converter');
 const imageToPdf = getNamespace(lang, 'imageToPdf');
+const pdfMerge = getNamespace(lang, 'pdfMerge');
 const age = getNamespace(lang, 'age');
 const birthday = getNamespace(lang, 'birthday');
 const picker = getNamespace(lang, 'picker');
@@ -49,6 +50,12 @@ const groups: SiteGroup[] = [
         name: common.nav?.imageToPdf || 'Image to PDF',
         href: getLocalizedPath('/image-to-pdf', lang),
         desc: imageToPdf.subtitle || 'Combine and convert images into clean, multi-page PDF documents.',
+        badge: 'Client-Side',
+      },
+      {
+        name: common.nav?.pdfMerge || 'PDF Merge',
+        href: getLocalizedPath('/pdf-merge', lang),
+        desc: pdfMerge.subtitle || 'Combine and merge multiple PDF documents into one directly on your device.',
         badge: 'Client-Side',
       },
       {

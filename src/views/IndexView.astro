@@ -17,12 +17,21 @@ const countdown = getNamespace(lang, 'countdown');
 const compressor = getNamespace(lang, 'compressor');
 const converter = getNamespace(lang, 'converter');
 const imageToPdf = getNamespace(lang, 'imageToPdf');
+const pdfMerge = getNamespace(lang, 'pdfMerge');
 
 const tools = [
   {
     title: common.nav.imageToPdf || imageToPdf.title,
     description: imageToPdf.subtitle,
     href: getLocalizedPath('/image-to-pdf', lang),
+    badge: lang === 'ar' ? 'جديد • خصوصية 100%' : lang === 'pt' ? 'Novo • 100% Privado' : lang === 'id' ? 'Baru • 100% Privat' : 'New • 100% Private',
+    icon: 'pdf' as const,
+    popular: true,
+  },
+  {
+    title: common.nav.pdfMerge || pdfMerge.title,
+    description: pdfMerge.subtitle,
+    href: getLocalizedPath('/pdf-merge', lang),
     badge: lang === 'ar' ? 'جديد • خصوصية 100%' : lang === 'pt' ? 'Novo • 100% Privado' : lang === 'id' ? 'Baru • 100% Privat' : 'New • 100% Private',
     icon: 'pdf' as const,
     popular: true,

@@ -7,6 +7,7 @@ const LOCALES = ['en', 'pt', 'id', 'ar'];
 const ROUTES = [
   { path: '', priority: '1.0', changefreq: 'daily' },
   { path: '/image-to-pdf', priority: '0.9', changefreq: 'weekly' },
+  { path: '/pdf-merge', priority: '0.9', changefreq: 'weekly' },
   { path: '/image-compressor', priority: '0.9', changefreq: 'weekly' },
   { path: '/image-converter', priority: '0.9', changefreq: 'weekly' },
   { path: '/age-calculator', priority: '0.9', changefreq: 'weekly' },

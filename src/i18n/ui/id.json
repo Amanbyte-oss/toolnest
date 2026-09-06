@@ -26,7 +26,8 @@
       "sitemap": "Peta Situs",
       "toolsDropdown": "Alat",
       "imageCategory": "Alat Gambar & Dokumen",
-      "utilityCategory": "Kalkulator & Utilitas"
+      "utilityCategory": "Kalkulator & Utilitas",
+      "pdfMerge": "Gabung PDF"
     },
     "buttons": {
       "calculate": "Hitung",
@@ -172,6 +173,10 @@
     "serverError": {
       "title": "Kesalahan Server (500) | ToolNest",
       "description": "Terjadi kesalahan yang tidak terduga. Kembali ke beranda ToolNest untuk mengakses seluruh utilitas gratis."
+    },
+    "pdfMerge": {
+      "title": "Gabung PDF Gratis — Satukan File PDF Online (Tanpa Upload, Privat)",
+      "description": "Gabungkan dan satukan beberapa file PDF menjadi satu langsung di perangkat Anda. Penggabungan 100% privat di peramban, atur ulang halaman, putar, selang-seling, dan buat penanda tanpa watermark maupun upload file."
     }
   },
   "picker": {
@@ -938,6 +943,32 @@
         "q": "Apa fungsi fitur Peningkatan Otomatis (Auto-Enhance)?",
         "a": "Fitur ini menyesuaikan kontras dan kecerahan foto dokumen agar teks yang buram atau redup menjadi tajam dan mudah dibaca, layaknya hasil pindaian mesin scanner kantor."
       }
+    ],
+    "pdfMerge": [
+      {
+        "q": "Apakah file PDF saya diunggah ke server?",
+        "a": "Tidak, sama sekali tidak pernah. ToolNest menjalankan penggabungan PDF 100% di sisi klien langsung di dalam peramban Anda menggunakan pdf-lib dan WebAssembly. Dokumen rahasia, KTP/paspor, berkas pajak, dan rekening koran Anda tidak pernah keluar dari perangkat Anda."
+      },
+      {
+        "q": "Apakah ada batas ukuran file atau jumlah halaman?",
+        "a": "Anda dapat menggabungkan lebih dari 20 file PDF dengan ratusan halaman. File berukuran besar (>100MB) diproses secara berurutan di memori peramban agar tetap lancar di ponsel dengan RAM 2GB."
+      },
+      {
+        "q": "Bisakah saya memilih halaman tertentu atau rentang halaman dari setiap PDF?",
+        "a": "Ya! Fitur ini biasanya berbayar di tempat lain. Di ToolNest, cukup ketuk 'Pilih Halaman' pada file mana saja untuk membuka kisi gambar mini visual atau ketik rentang seperti '1-3, 7, 10-12' untuk menggabungkan hanya halaman yang Anda butuhkan."
+      },
+      {
+        "q": "Bisakah saya memutar atau membalik urutan halaman sebelum digabung?",
+        "a": "Ya. Anda dapat menyeret kartu file untuk mengubah urutan dokumen, membalik urutan halaman (cocok untuk hasil pemindaian yang terbalik), dan memutar halaman individual atau terpilih sebesar 90 derajat."
+      },
+      {
+        "q": "Apa itu Mode Selang-Seling (Interleave)?",
+        "a": "Mode Selang-Seling menggabungkan halaman secara bergantian dari dua dokumen PDF (misalnya Halaman 1 File A, Halaman 1 File B, Halaman 2 File A, Halaman 2 File B). Sangat tepat untuk menyatukan hasil scan halaman ganjil dan genap yang terpisah menjadi satu dokumen urut."
+      },
+      {
+        "q": "Apakah kualitas asli PDF atau teks yang dapat dicari akan hilang?",
+        "a": "Tidak. Penggabungan 100% lossless tanpa penurunan mutu. pdf-lib langsung menyalin aliran konten, font bawaan, dan grafik vektor asli PDF tanpa rasterisasi atau kompresi ulang. Teks tetap tajam dan dapat disorot/disalin."
+      }
     ]
   },
   "data": {
@@ -1490,5 +1521,83 @@
   "offline": {
     "banner": "⚡ Anda sedang offline — alat sisi klien ToolNest tetap bekerja tanpa internet!",
     "online": "Kembali online!"
+  },
+  "pdfMerge": {
+    "title": "Gabungkan File PDF Online",
+    "subtitle": "Satukan banyak dokumen PDF menjadi satu secara rapi, aman, dan langsung di perangkat Anda. 100% privat, tanpa watermark, halaman tak terbatas.",
+    "privacyBadge": "PDF Anda tidak pernah meninggalkan perangkat Anda",
+    "dropzone": {
+      "title": "Ketuk atau letakkan file PDF di sini",
+      "subtitle": "Tarik & lepas banyak PDF, klik untuk memilih, atau tempel dengan Ctrl+V",
+      "browseBtn": "Pilih File PDF",
+      "pasteHint": "atau tempel dari papan klip (Ctrl+V)"
+    },
+    "toolbar": {
+      "addMore": "+ Tambah File PDF",
+      "sortName": "Urutkan Berdasarkan Nama",
+      "reverseFiles": "Balik Urutan File",
+      "selectAllPages": "Pilih Semua Halaman",
+      "modeNormal": "Urutan Normal",
+      "modeInterleave": "Mode Selang-Seling",
+      "interleaveHint": "Menyelang-nyelingkan halaman antar dokumen (cocok untuk scan ganjil & genap)",
+      "bookmarksToggle": "Buat Pembatas Buku / Daftar Isi di PDF",
+      "clearAll": "Hapus Semua",
+      "undo": "Urungkan",
+      "undoDeleted": "File \"{name}\" dihapus."
+    },
+    "card": {
+      "pagesCount": "{count} halaman",
+      "pagesCountSingle": "1 halaman",
+      "selectedPages": "{selected} dari {total} halaman terpilih",
+      "choosePages": "Pilih Halaman",
+      "rotateAll": "Putar +90°",
+      "reversePages": "Balik Halaman",
+      "bookmarkTitle": "Judul Pembatas Buku",
+      "moveUp": "Pindah ke Atas",
+      "moveDown": "Pindah ke Bawah",
+      "delete": "Hapus File",
+      "passwordProtected": "Dilindungi Kata Sandi",
+      "passwordMsg": "File PDF ini dilindungi kata sandi. Hapus kata sandi terlebih dahulu sebelum menggabungkan.",
+      "corruptFile": "PDF Rusak atau Tidak Valid",
+      "corruptMsg": "Gagal memproses file PDF ini. File mungkin rusak atau bukan dokumen PDF yang valid.",
+      "largeFileWarning": "File besar (>100MB) — pemrosesan mungkin memerlukan lebih banyak memori di ponsel"
+    },
+    "modal": {
+      "title": "Pilih Halaman untuk Digabung — {name}",
+      "subtitle": "Ketuk gambar mini atau masukkan nomor/rentang halaman (cth. 1-3, 7, 10-12)",
+      "rangeLabel": "Rentang Halaman",
+      "rangePlaceholder": "cth. 1-5, 8, 11-14",
+      "selectAll": "Pilih Semua",
+      "selectNone": "Batal Pilih Semua",
+      "invert": "Balikkan Pilihan",
+      "rotateSelected": "Putar Terpilih (+90°)",
+      "reverseOrder": "Balik Urutan",
+      "apply": "Terapkan Pilihan",
+      "close": "Selesai"
+    },
+    "merge": {
+      "btn": "Gabung {files} PDF · {pages} halaman · ≈ {size}",
+      "btnSingle": "Simpan PDF · {pages} halaman · ≈ {size}",
+      "btnDisabled": "Tambahkan minimal 2 file PDF untuk digabungkan",
+      "progress": "Menggabungkan PDF… {percent}%",
+      "preparing": "Menyiapkan dokumen…",
+      "success": "PDF berhasil digabungkan!",
+      "outputFilename": "gabungan_dokumen.pdf"
+    },
+    "preview": {
+      "title": "PDF Gabungan Anda Sudah Siap!",
+      "subtitle": "Dihasilkan 100% di perangkat Anda tanpa ada file yang dikirim ke server.",
+      "downloadBtn": "Unduh PDF Gabungan",
+      "backToEdit": "Ubah & Atur Ulang File",
+      "stats": "{files} PDF digabung menjadi {pages} halaman ({size})"
+    },
+    "crossSell": {
+      "imageToPdf": "Perlu ubah foto jadi PDF? Coba Gambar ke PDF →"
+    },
+    "errors": {
+      "minFiles": "Silakan tambahkan minimal 2 file PDF untuk digabungkan.",
+      "noPages": "Minimal satu halaman harus dipilih di antara file Anda.",
+      "generic": "Terjadi kesalahan saat menggabungkan PDF Anda. Silakan periksa file Anda dan coba lagi."
+    }
   }
 }

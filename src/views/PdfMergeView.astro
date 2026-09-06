@@ -1,0 +1,1734 @@
+---
+/**
+ * src/views/PdfMergeView.astro
+ * 100% Client-Side PDF Merge Tool for ToolNest.
+ * 
+ * Features:
+ * - 100% browser-based merging using pdf-lib (zero server uploads, complete privacy).
+ * - Lazy isolated PDF.js thumbnails with web worker.
+ * - Drag & drop, file browser, and Ctrl+V clipboard paste.
+ * - Touch-friendly drag-to-reorder cards with touch fallback buttons.
+ * - Page-level merging modal: visual page thumbnails + range syntax (e.g. 1-3, 7, 10-12).
+ * - Per-file page sorting (reverse order) and rotation (90°/180°/270°).
+ * - Interleave mode: alternating pages from 2 files (odd/even scan reunification).
+ * - PDF Bookmarks / Outlines generation with editable chapter titles.
+ * - Live estimated output size calculation.
+ * - Friendly encrypted / password-protected and corrupt PDF detection.
+ * - Memory safe: sequential document processing, doc destruction, >100MB warning.
+ * - Merged preview with first-page thumbnail before download.
+ * - Full i18n (en, pt, id, ar) with RTL mirroring and mobile optimization down to 360px.
+ */
+import Base from '../layouts/Base.astro';
+import Faq from '../components/Faq.astro';
+import ToolCard from '../components/ToolCard.astro';
+import { getNamespace, getLocalizedPath, type Lang, isRtlLang } from '../i18n';
+import { getLocalizedRelatedLinks } from '../i18n/relatedLinks';
+
+export interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'en' } = Astro.props;
+const common = getNamespace(lang, 'common');
+const mergeNs = getNamespace(lang, 'pdfMerge');
+const faqNs = getNamespace(lang, 'faq');
+const t = { merge: mergeNs, common, nav: common.nav, siteName: common.siteName };
+
+const isRtl = isRtlLang(lang);
+const canonicalPath = getLocalizedPath('/pdf-merge', lang);
+
+// Localized FAQs
+const faqs = (faqNs.pdfMerge || []).map((f: any) => ({
+  question: f.question || f.q,
+  answer: f.answer || f.a,
+}));
+
+const relatedTools = getLocalizedRelatedLinks(lang, 'pdf-merge');
+
+const webAppSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  '@id': `https://toolnest.pages.dev${canonicalPath}#app`,
+  name: t.merge.title,
+  url: `https://toolnest.pages.dev${canonicalPath}`,
+  description: t.merge.subtitle,
+  applicationCategory: 'UtilitiesApplication',
+  operatingSystem: 'Any',
+  browserRequirements: 'Requires modern browser with HTML5 Canvas and JavaScript support. Merges 100% client-side without server uploads.',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'ToolNest',
+    url: 'https://toolnest.pages.dev',
+  },
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: faq.answer,
+    },
+  })),
+};
+---
+
+<Base
+  metaKey="pdfMerge"
+  canonicalPath={canonicalPath}
+  ogImage="/og/home.svg"
+  breadcrumbs={[
+    { name: common.nav.home, item: getLocalizedPath('/', lang) },
+    { name: common.nav.pdfMerge || 'PDF Merge', item: canonicalPath },
+  ]}
+  extraSchemas={[webAppSchema, faqSchema]}
+  lang={lang}
+>
+  <div class="space-y-8 max-w-4xl mx-auto">
+    <!-- Header with Trust Badges -->
+    <header class="space-y-4 text-center">
+      <div class="inline-flex flex-wrap items-center justify-center gap-2">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 shadow-xs">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>{t.merge.privacyBadge}</span>
+        </span>
+        <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark text-secondary-light dark:text-secondary-dark">
+          ✨ {lang === 'ar' ? 'بدون علامة مائية' : lang === 'pt' ? 'Sem marca d\'água' : lang === 'id' ? 'Tanpa watermark' : 'No Watermark'}
+        </span>
+      </div>
+
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-primary-light dark:text-primary-dark">
+        {t.merge.title}
+      </h1>
+
+      <p class="text-base sm:text-lg text-secondary-light dark:text-secondary-dark max-w-2xl mx-auto leading-relaxed">
+        {t.merge.subtitle}
+      </p>
+    </header>
+
+    <!-- Hidden native file input -->
+    <input
+      type="file"
+      id="pdf-file-input"
+      accept="application/pdf,.pdf"
+      multiple
+      class="hidden"
+      aria-label="Upload PDF files"
+    />
+
+    <!-- Toast Notification -->
+    <div
+      id="pdf-toast"
+      class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-4 py-3 rounded-2xl bg-surface-dark/95 text-white border border-border-dark shadow-2xl flex items-center gap-3 text-sm transition-all duration-200 backdrop-blur-md max-w-[90vw]"
+      role="status"
+      aria-live="polite"
+    >
+      <span id="pdf-toast-msg" class="truncate max-w-[260px] sm:max-w-md"></span>
+      <button
+        id="pdf-toast-undo"
+        type="button"
+        class="hidden px-2.5 py-1 rounded-lg bg-accent text-white font-bold text-xs hover:bg-accent-hover transition-colors shrink-0"
+      >
+        {t.merge.toolbar.undo}
+      </button>
+    </div>
+
+    <!-- MAIN APP CONTAINER -->
+    <main class="space-y-6">
+      <!-- Cross-Link Banner to Image-to-PDF -->
+      <aside class="p-3.5 rounded-2xl bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark shadow-xs flex items-center justify-between gap-3 text-xs">
+        <div class="flex items-center gap-2 text-secondary-light dark:text-secondary-dark min-w-0">
+          <span class="text-base shrink-0">📷</span>
+          <span class="truncate">
+            {lang === 'ar' ? 'هل تريد تحويل صور أو مستندات مصورة إلى PDF أولاً؟' : lang === 'pt' ? 'Precisa converter fotos ou digitalizações em PDF?' : lang === 'id' ? 'Perlu mengubah foto atau dokumen pindaian jadi PDF?' : 'Need to convert photos or document scans to PDF?'}
+          </span>
+        </div>
+        <a
+          href={getLocalizedPath('/image-to-pdf', lang)}
+          class="font-bold text-accent hover:underline inline-flex items-center gap-1 shrink-0"
+        >
+          <span>{lang === 'ar' ? 'تحويل الصور إلى PDF ←' : lang === 'pt' ? 'Imagem para PDF →' : lang === 'id' ? 'Gambar ke PDF →' : 'Try Image to PDF →'}</span>
+        </a>
+      </aside>
+
+      <!-- 1. EMPTY STATE DROPZONE -->
+      <section
+        id="pdf-dropzone"
+        class="group relative rounded-3xl border-2 border-dashed border-border-light dark:border-border-dark hover:border-accent dark:hover:border-accent bg-surface-light dark:bg-surface-dark p-8 sm:p-14 text-center cursor-pointer transition-all duration-200 shadow-sm hover:shadow-md focus:outline-none focus:ring-4 focus:ring-accent/20"
+        tabindex="0"
+        role="button"
+        aria-label={t.merge.dropzone.title}
+      >
+        <div class="max-w-md mx-auto space-y-4 pointer-events-none">
+          <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-3xl bg-accent/10 dark:bg-accent/20 flex items-center justify-center text-accent group-hover:scale-105 transition-transform duration-200 shadow-inner">
+            <svg class="w-8 h-8 sm:w-10 sm:h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="12" y1="18" x2="12" y2="12"/>
+              <line x1="9" y1="15" x2="15" y2="15"/>
+            </svg>
+          </div>
+
+          <div class="space-y-1">
+            <h2 class="text-lg sm:text-xl font-bold text-primary-light dark:text-primary-dark">
+              {t.merge.dropzone.title}
+            </h2>
+            <p class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark">
+              {t.merge.dropzone.subtitle}
+            </p>
+          </div>
+
+          <div class="pt-2 flex flex-wrap items-center justify-center gap-3 pointer-events-auto">
+            <button
+              type="button"
+              id="pdf-browse-btn"
+              class="btn-primary inline-flex items-center gap-2 text-sm font-bold shadow-md shadow-accent/20 active:scale-95 transition-transform"
+            >
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="17 8 12 3 7 8"/>
+                <line x1="12" y1="3" x2="12" y2="15"/>
+              </svg>
+              <span>{t.merge.dropzone.browseBtn}</span>
+            </button>
+          </div>
+
+          <p class="text-[11px] sm:text-xs text-secondary-light/70 dark:text-secondary-dark/70">
+            {t.merge.dropzone.pasteHint}
+          </p>
+        </div>
+      </section>
+
+      <!-- 2. WORKSPACE SECTION (Rendered when PDFs are loaded) -->
+      <section id="pdf-workspace" class="hidden space-y-6">
+        <!-- Top Toolbar & Global Actions -->
+        <div class="flex flex-wrap items-center justify-between gap-3 p-3.5 rounded-2xl bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark shadow-xs">
+          <!-- Left: Add more files button -->
+          <div class="flex items-center gap-2">
+            <button
+              type="button"
+              id="pdf-tb-add"
+              class="btn-primary text-xs px-3.5 py-2 font-bold inline-flex items-center gap-1.5 shadow-xs"
+            >
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="12" y1="5" x2="12" y2="19"/>
+                <line x1="5" y1="12" x2="19" y2="12"/>
+              </svg>
+              <span>{t.merge.toolbar.addMore}</span>
+            </button>
+
+            <!-- Mode Switcher: Normal vs Interleave -->
+            <div class="inline-flex p-0.5 rounded-xl bg-bg-light dark:bg-bg-dark border border-border-light dark:border-border-dark text-xs font-semibold" role="radiogroup" aria-label="Merge mode">
+              <button
+                type="button"
+                id="pdf-mode-normal"
+                class="px-2.5 py-1 rounded-lg text-white bg-accent font-bold transition-all shadow-xs"
+                role="radio"
+                aria-checked="true"
+              >
+                {t.merge.toolbar.modeNormal}
+              </button>
+              <button
+                type="button"
+                id="pdf-mode-interleave"
+                class="px-2.5 py-1 rounded-lg text-secondary-light dark:text-secondary-dark hover:text-primary-light dark:hover:text-primary-dark transition-all"
+                role="radio"
+                aria-checked="false"
+                title={t.merge.toolbar.interleaveHint}
+              >
+                {t.merge.toolbar.modeInterleave}
+              </button>
+            </div>
+          </div>
+
+          <!-- Right: Sort & Reorder Actions -->
+          <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+            <button
+              type="button"
+              id="pdf-tb-sort"
+              class="px-2.5 py-1.5 rounded-xl border border-border-light dark:border-border-dark text-xs font-medium text-secondary-light dark:text-secondary-dark hover:text-accent hover:border-accent/40 transition-colors"
+              title={t.merge.toolbar.sortName}
+            >
+              🔤 <span class="hidden sm:inline">{t.merge.toolbar.sortName}</span>
+            </button>
+
+            <button
+              type="button"
+              id="pdf-tb-reverse"
+              class="px-2.5 py-1.5 rounded-xl border border-border-light dark:border-border-dark text-xs font-medium text-secondary-light dark:text-secondary-dark hover:text-accent hover:border-accent/40 transition-colors"
+              title={t.merge.toolbar.reverseFiles}
+            >
+              ⇄ <span class="hidden sm:inline">{t.merge.toolbar.reverseFiles}</span>
+            </button>
+
+            <button
+              type="button"
+              id="pdf-tb-select-all"
+              class="px-2.5 py-1.5 rounded-xl border border-border-light dark:border-border-dark text-xs font-medium text-secondary-light dark:text-secondary-dark hover:text-accent hover:border-accent/40 transition-colors"
+              title={t.merge.toolbar.selectAllPages}
+            >
+              ✓ <span class="hidden sm:inline">{t.merge.toolbar.selectAllPages}</span>
+            </button>
+
+            <button
+              type="button"
+              id="pdf-tb-clear"
+              class="px-2.5 py-1.5 rounded-xl border border-rose-500/20 text-xs font-medium text-rose-500 hover:bg-rose-500/10 transition-colors"
+              title={t.merge.toolbar.clearAll}
+            >
+              ✕ <span class="hidden sm:inline">{t.merge.toolbar.clearAll}</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Interleave Mode Banner (Visible when Interleave Mode is active) -->
+        <div id="pdf-interleave-banner" class="hidden p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-400 text-xs flex items-center gap-2">
+          <span class="text-base shrink-0">🔀</span>
+          <span>{t.merge.toolbar.interleaveHint}</span>
+        </div>
+
+        <!-- Document Cards List (Drag & Drop Reordering) -->
+        <div id="pdf-file-list" class="space-y-3" role="list">
+          <!-- Dynamically populated by client script -->
+        </div>
+
+        <!-- Bottom Options Bar: Bookmarks & Live Totals -->
+        <div class="p-4 sm:p-5 rounded-2xl bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark shadow-sm space-y-4">
+          <!-- Bookmarks Checkbox Option -->
+          <div class="flex items-center justify-between gap-3 text-xs sm:text-sm">
+            <label class="inline-flex items-center gap-2.5 cursor-pointer select-none">
+              <input
+                type="checkbox"
+                id="pdf-bookmarks-opt"
+                checked
+                class="w-4 h-4 rounded border-border-light dark:border-border-dark text-accent focus:ring-accent accent-accent cursor-pointer"
+              />
+              <span class="font-semibold text-primary-light dark:text-primary-dark">
+                📑 {t.merge.toolbar.bookmarksToggle}
+              </span>
+            </label>
+            <span class="text-xs text-secondary-light dark:text-secondary-dark">
+              {lang === 'ar' ? 'فهرس الفصول' : lang === 'pt' ? 'Sumário interativo' : lang === 'id' ? 'Daftar isi interaktif' : 'Interactive outline'}
+            </span>
+          </div>
+
+          <!-- Progress Bar (Visible during merge) -->
+          <div id="pdf-progress-container" class="hidden space-y-2 pt-2 border-t border-border-light dark:border-border-dark">
+            <div class="flex items-center justify-between text-xs font-semibold text-secondary-light dark:text-secondary-dark">
+              <span id="pdf-progress-label">{t.merge.merge.preparing}</span>
+              <span id="pdf-progress-pct">0%</span>
+            </div>
+            <div class="w-full h-2 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+              <div
+                id="pdf-progress-bar"
+                class="h-full bg-accent rounded-full transition-all duration-200"
+                style="width: 0%"
+              ></div>
+            </div>
+          </div>
+
+          <!-- Big Merge & Download Button -->
+          <div class="pt-2">
+            <button
+              type="button"
+              id="pdf-merge-btn"
+              class="w-full btn-primary py-3.5 sm:py-4 px-6 text-sm sm:text-base font-extrabold shadow-lg shadow-accent/25 flex items-center justify-center gap-2 active:scale-[0.99] transition-transform"
+            >
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="12" y1="18" x2="12" y2="12"/>
+                <line x1="9" y1="15" x2="15" y2="15"/>
+              </svg>
+              <span id="pdf-merge-btn-text">{t.merge.merge.btnDisabled}</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. SUCCESS / MERGED PREVIEW SECTION (Rendered after successful merge) -->
+      <section id="pdf-preview-section" class="hidden space-y-6">
+        <div class="p-6 sm:p-8 rounded-3xl bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark shadow-md text-center space-y-6">
+          <div class="w-16 h-16 mx-auto rounded-3xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+            <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+          </div>
+
+          <div class="space-y-1.5">
+            <h2 class="text-xl sm:text-2xl font-bold text-primary-light dark:text-primary-dark">
+              {t.merge.preview.title}
+            </h2>
+            <p class="text-xs sm:text-sm text-secondary-light dark:text-secondary-dark">
+              {t.merge.preview.subtitle}
+            </p>
+            <p id="pdf-preview-stats" class="text-xs font-semibold text-accent pt-1"></p>
+          </div>
+
+          <!-- Merged First Page Thumbnail Container -->
+          <div class="max-w-xs mx-auto p-3 rounded-2xl bg-bg-light dark:bg-bg-dark border border-border-light dark:border-border-dark shadow-inner">
+            <div class="relative aspect-[1/1.3] w-full rounded-xl overflow-hidden bg-slate-200 dark:bg-slate-800 flex items-center justify-center">
+              <canvas id="pdf-output-canvas" class="max-w-full max-h-full object-contain shadow-xs"></canvas>
+            </div>
+            <p class="text-[11px] text-secondary-light dark:text-secondary-dark mt-2">
+              {lang === 'ar' ? 'معاينة الصفحة الأولى من المستند المدمج' : lang === 'pt' ? 'Prévia da primeira página do arquivo combinado' : lang === 'id' ? 'Pratinjau halaman pertama dokumen gabungan' : 'First page preview of merged document'}
+            </p>
+          </div>
+
+          <!-- Download Action Buttons -->
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2 max-w-md mx-auto">
+            <button
+              type="button"
+              id="pdf-download-again-btn"
+              class="w-full sm:w-auto btn-primary py-3 px-6 text-sm font-bold shadow-md shadow-accent/20 inline-flex items-center justify-center gap-2"
+            >
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              <span>{t.merge.preview.downloadBtn}</span>
+            </button>
+
+            <button
+              type="button"
+              id="pdf-back-edit-btn"
+              class="w-full sm:w-auto px-5 py-3 rounded-xl border border-border-light dark:border-border-dark hover:bg-slate-100 dark:hover:bg-slate-800 text-xs sm:text-sm font-bold text-secondary-light dark:text-secondary-dark transition-colors inline-flex items-center justify-center gap-1.5"
+            >
+              <span>←</span>
+              <span>{t.merge.preview.backToEdit}</span>
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- PAGE SELECTION MODAL -->
+    <div
+      id="pdf-page-modal"
+      class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto transition-opacity duration-200"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="pdf-modal-title"
+    >
+      <div class="relative w-full max-w-2xl bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-3xl shadow-2xl p-5 sm:p-6 space-y-5 max-h-[90vh] flex flex-col my-auto">
+        <!-- Modal Header -->
+        <div class="flex items-start justify-between gap-3 border-b border-border-light dark:border-border-dark pb-3.5">
+          <div class="space-y-1 min-w-0">
+            <h3 id="pdf-modal-title" class="text-base sm:text-lg font-bold text-primary-light dark:text-primary-dark truncate">
+              {t.merge.modal.title}
+            </h3>
+            <p class="text-xs text-secondary-light dark:text-secondary-dark">
+              {t.merge.modal.subtitle}
+            </p>
+          </div>
+          <button
+            type="button"
+            id="pdf-modal-close-x"
+            class="p-1.5 rounded-xl border border-border-light dark:border-border-dark hover:bg-slate-100 dark:hover:bg-slate-800 text-secondary-light dark:text-secondary-dark transition-colors"
+            aria-label={t.merge.modal.close}
+          >
+            ✕
+          </button>
+        </div>
+
+        <!-- Range Input Field with Bi-directional Sync -->
+        <div class="space-y-1.5">
+          <label for="pdf-modal-range-input" class="text-xs font-semibold text-primary-light dark:text-primary-dark flex items-center justify-between">
+            <span>{t.merge.modal.rangeLabel}</span>
+            <span id="pdf-modal-selected-count" class="text-accent font-bold"></span>
+          </label>
+          <div class="relative">
+            <input
+              type="text"
+              id="pdf-modal-range-input"
+              class="input-base w-full text-xs sm:text-sm px-3.5 py-2.5 rounded-xl"
+              placeholder={t.merge.modal.rangePlaceholder}
+              aria-label={t.merge.modal.rangeLabel}
+            />
+          </div>
+        </div>
+
+        <!-- Modal Quick Actions -->
+        <div class="flex flex-wrap items-center gap-1.5 text-xs">
+          <button
+            type="button"
+            id="pdf-modal-select-all"
+            class="px-2.5 py-1 rounded-lg border border-border-light dark:border-border-dark hover:bg-slate-100 dark:hover:bg-slate-800 font-medium"
+          >
+            {t.merge.modal.selectAll}
+          </button>
+          <button
+            type="button"
+            id="pdf-modal-select-none"
+            class="px-2.5 py-1 rounded-lg border border-border-light dark:border-border-dark hover:bg-slate-100 dark:hover:bg-slate-800 font-medium"
+          >
+            {t.merge.modal.selectNone}
+          </button>
+          <button
+            type="button"
+            id="pdf-modal-invert"
+            class="px-2.5 py-1 rounded-lg border border-border-light dark:border-border-dark hover:bg-slate-100 dark:hover:bg-slate-800 font-medium"
+          >
+            {t.merge.modal.invert}
+          </button>
+          <button
+            type="button"
+            id="pdf-modal-rotate-selected"
+            class="px-2.5 py-1 rounded-lg border border-border-light dark:border-border-dark hover:text-accent font-medium inline-flex items-center gap-1"
+          >
+            <span>⟳</span>
+            <span>{t.merge.modal.rotateSelected}</span>
+          </button>
+          <button
+            type="button"
+            id="pdf-modal-reverse-order"
+            class="px-2.5 py-1 rounded-lg border border-border-light dark:border-border-dark hover:text-accent font-medium inline-flex items-center gap-1"
+          >
+            <span>⇄</span>
+            <span>{t.merge.modal.reverseOrder}</span>
+          </button>
+        </div>
+
+        <!-- Page Thumbnails Scrollable Grid -->
+        <div
+          id="pdf-modal-grid"
+          class="flex-1 overflow-y-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 p-1 min-h-[160px]"
+        >
+          <!-- Dynamically populated page cards with thumbnails -->
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="border-t border-border-light dark:border-border-dark pt-3 flex items-center justify-end gap-2">
+          <button
+            type="button"
+            id="pdf-modal-done-btn"
+            class="btn-primary py-2 px-5 text-xs sm:text-sm font-bold shadow-xs cursor-pointer"
+          >
+            {t.merge.modal.close}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cross-Tool Recommendations -->
+    <section class="space-y-4 pt-8 border-t border-border-light dark:border-border-dark">
+      <h2 class="text-lg font-bold text-primary-light dark:text-primary-dark">
+        {common.moreTools || 'Related Tools'}
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        {relatedTools.map((tool) => (
+          <ToolCard
+            title={tool.name}
+            description={tool.desc}
+            href={tool.href}
+            anchor={tool.anchor}
+            icon={tool.href.includes('image-to-pdf') ? 'pdf' : tool.href.includes('compressor') ? 'image' : tool.href.includes('converter') ? 'convert' : 'clock'}
+            lang={lang}
+          />
+        ))}
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <Faq faqs={faqs} lang={lang} />
+  </div>
+
+  <style>
+    /* Touch drag ghost styling */
+    .drag-dragging {
+      opacity: 0.4;
+      transform: scale(0.98);
+    }
+    .drag-over {
+      outline: 2px dashed var(--color-accent, #6366f1);
+      outline-offset: 4px;
+    }
+  </style>
+
+  <!-- Pass localized dictionary to client script -->
+  <script is:inline define:vars={{ i18n: t.merge, isRtl, lang }}>
+    window.__PDF_MERGE_I18N__ = i18n;
+    window.__IS_RTL__ = isRtl;
+    window.__PAGE_LANG__ = lang;
+  </script>
+
+  <!-- CLIENT-SIDE SCRIPT -->
+  <script>
+    interface PageItem {
+      originalIndex: number; // 0-indexed
+      pageNumber: number; // 1-indexed
+      selected: boolean;
+      rotation: number; // 0, 90, 180, 270
+      thumbnailUrl?: string;
+    }
+
+    interface PdfFileItem {
+      id: string;
+      file: File;
+      name: string;
+      size: number;
+      arrayBuffer: ArrayBuffer;
+      pageCount: number;
+      pages: PageItem[];
+      firstPageThumbnail?: string;
+      bookmarkTitle: string;
+      isPasswordProtected?: boolean;
+      isCorrupt?: boolean;
+      errorMessage?: string;
+    }
+
+    const t = (window as any).__PDF_MERGE_I18N__ || {};
+    const isRtl = (window as any).__IS_RTL__ || false;
+    const pageLang = (window as any).__PAGE_LANG__ || 'en';
+
+    // Application state
+    let files: PdfFileItem[] = [];
+    let isInterleaveMode = false;
+    let includeBookmarks = true;
+    let lastDeleted: { item: PdfFileItem; index: number } | null = null;
+    let toastTimeout: any = null;
+    let activeModalFileId: string | null = null;
+    let mergedPdfBlob: Blob | null = null;
+
+    // DOM References
+    const dropzone = document.getElementById('pdf-dropzone') as HTMLElement;
+    const workspace = document.getElementById('pdf-workspace') as HTMLElement;
+    const fileListEl = document.getElementById('pdf-file-list') as HTMLElement;
+    const fileInput = document.getElementById('pdf-file-input') as HTMLInputElement;
+    const browseBtn = document.getElementById('pdf-browse-btn') as HTMLElement;
+    const tbAdd = document.getElementById('pdf-tb-add') as HTMLElement;
+    const tbSort = document.getElementById('pdf-tb-sort') as HTMLElement;
+    const tbReverse = document.getElementById('pdf-tb-reverse') as HTMLElement;
+    const tbSelectAll = document.getElementById('pdf-tb-select-all') as HTMLElement;
+    const tbClear = document.getElementById('pdf-tb-clear') as HTMLElement;
+    const modeNormalBtn = document.getElementById('pdf-mode-normal') as HTMLButtonElement;
+    const modeInterleaveBtn = document.getElementById('pdf-mode-interleave') as HTMLButtonElement;
+    const interleaveBanner = document.getElementById('pdf-interleave-banner') as HTMLElement;
+    const bookmarksOpt = document.getElementById('pdf-bookmarks-opt') as HTMLInputElement;
+    const mergeBtn = document.getElementById('pdf-merge-btn') as HTMLButtonElement;
+    const mergeBtnText = document.getElementById('pdf-merge-btn-text') as HTMLElement;
+    const progressContainer = document.getElementById('pdf-progress-container') as HTMLElement;
+    const progressBar = document.getElementById('pdf-progress-bar') as HTMLElement;
+    const progressLabel = document.getElementById('pdf-progress-label') as HTMLElement;
+    const progressPct = document.getElementById('pdf-progress-pct') as HTMLElement;
+    const previewSection = document.getElementById('pdf-preview-section') as HTMLElement;
+    const previewStats = document.getElementById('pdf-preview-stats') as HTMLElement;
+    const outputCanvas = document.getElementById('pdf-output-canvas') as HTMLCanvasElement;
+    const downloadAgainBtn = document.getElementById('pdf-download-again-btn') as HTMLButtonElement;
+    const backEditBtn = document.getElementById('pdf-back-edit-btn') as HTMLButtonElement;
+    const toast = document.getElementById('pdf-toast') as HTMLElement;
+    const toastMsg = document.getElementById('pdf-toast-msg') as HTMLElement;
+    const toastUndo = document.getElementById('pdf-toast-undo') as HTMLElement;
+
+    // Modal DOM References
+    const pageModal = document.getElementById('pdf-page-modal') as HTMLElement;
+    const modalTitle = document.getElementById('pdf-modal-title') as HTMLElement;
+    const modalRangeInput = document.getElementById('pdf-modal-range-input') as HTMLInputElement;
+    const modalSelectedCount = document.getElementById('pdf-modal-selected-count') as HTMLElement;
+    const modalGrid = document.getElementById('pdf-modal-grid') as HTMLElement;
+    const modalCloseX = document.getElementById('pdf-modal-close-x') as HTMLElement;
+    const modalDoneBtn = document.getElementById('pdf-modal-done-btn') as HTMLElement;
+    const modalSelectAll = document.getElementById('pdf-modal-select-all') as HTMLElement;
+    const modalSelectNone = document.getElementById('pdf-modal-select-none') as HTMLElement;
+    const modalInvert = document.getElementById('pdf-modal-invert') as HTMLElement;
+    const modalRotateSelected = document.getElementById('pdf-modal-rotate-selected') as HTMLElement;
+    const modalReverseOrder = document.getElementById('pdf-modal-reverse-order') as HTMLElement;
+
+    // Format bytes helper
+    function formatBytes(bytes: number): string {
+      if (!bytes || bytes === 0) return '0 B';
+      const k = 1024;
+      const sizes = ['B', 'KB', 'MB', 'GB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return `${(bytes / Math.pow(k, i)).toFixed(1)} ${sizes[i]}`;
+    }
+
+    // Toast helper
+    function showToast(message: string, showUndo = false) {
+      if (!toast || !toastMsg) return;
+      clearTimeout(toastTimeout);
+      toastMsg.textContent = message;
+      if (toastUndo) toastUndo.classList.toggle('hidden', !showUndo);
+      toast.classList.remove('hidden');
+      toastTimeout = setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 4500);
+    }
+
+    if (toastUndo) {
+      toastUndo.addEventListener('click', () => {
+        if (lastDeleted) {
+          files.splice(lastDeleted.index, 0, lastDeleted.item);
+          lastDeleted = null;
+          toast.classList.add('hidden');
+          renderFileList();
+        }
+      });
+    }
+
+    // Lazy load PDF.js instance
+    let pdfjsLibInstance: any = null;
+    async function getPdfJs() {
+      if (!pdfjsLibInstance) {
+        pdfjsLibInstance = await import('pdfjs-dist');
+        pdfjsLibInstance.GlobalWorkerOptions.workerSrc = '/pdf.worker.mjs';
+      }
+      return pdfjsLibInstance;
+    }
+
+    // Lazy load pdf-lib instance
+    let pdfLibInstance: any = null;
+    async function getPdfLib() {
+      if (!pdfLibInstance) {
+        pdfLibInstance = await import('pdf-lib');
+      }
+      return pdfLibInstance;
+    }
+
+    // Render single page thumbnail to Data URL using PDF.js
+    async function renderPageToDataUrl(arrayBuffer: ArrayBuffer, pageNumber: number, maxWidth = 180): Promise<string | null> {
+      let loadingTask: any = null;
+      try {
+        const pdfjs = await getPdfJs();
+        loadingTask = pdfjs.getDocument({ data: new Uint8Array(arrayBuffer.slice(0)) });
+        const doc = await loadingTask.promise;
+        const page = await doc.getPage(pageNumber);
+        const unscaledViewport = page.getViewport({ scale: 1 });
+        const scale = maxWidth / unscaledViewport.width;
+        const viewport = page.getViewport({ scale });
+
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.floor(viewport.width);
+        canvas.height = Math.floor(viewport.height);
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          doc.cleanup();
+          loadingTask.destroy();
+          return null;
+        }
+
+        await page.render({ canvasContext: ctx, viewport }).promise;
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+        doc.cleanup();
+        loadingTask.destroy();
+        return dataUrl;
+      } catch (err) {
+        console.warn('Failed to render page thumbnail:', err);
+        if (loadingTask) {
+          try { loadingTask.destroy(); } catch (e) {}
+        }
+        return null;
+      }
+    }
+
+    // Parse PDF file using pdf-lib and initialize PdfFileItem
+    async function processFile(file: File): Promise<PdfFileItem> {
+      const id = 'pdf_' + Math.random().toString(36).substring(2, 9);
+      const cleanName = file.name.replace(/\.[^/.]+$/, '');
+      const arrayBuffer = await file.arrayBuffer();
+
+      const item: PdfFileItem = {
+        id,
+        file,
+        name: file.name,
+        size: file.size,
+        arrayBuffer,
+        pageCount: 0,
+        pages: [],
+        bookmarkTitle: cleanName,
+      };
+
+      try {
+        const pdfLib = await getPdfLib();
+        const doc = await pdfLib.PDFDocument.load(arrayBuffer, { ignoreEncryption: false });
+        const count = doc.getPageCount();
+        item.pageCount = count;
+        item.pages = Array.from({ length: count }, (_, i) => ({
+          originalIndex: i,
+          pageNumber: i + 1,
+          selected: true,
+          rotation: 0,
+        }));
+
+        // Render first page thumbnail lazily
+        renderPageToDataUrl(arrayBuffer, 1, 160).then((url) => {
+          if (url) {
+            item.firstPageThumbnail = url;
+            const thumbImg = document.getElementById(`thumb-img-${item.id}`) as HTMLImageElement;
+            const thumbPlaceholder = document.getElementById(`thumb-placeholder-${item.id}`) as HTMLElement;
+            if (thumbImg && thumbPlaceholder) {
+              thumbImg.src = url;
+              thumbImg.classList.remove('hidden');
+              thumbPlaceholder.classList.add('hidden');
+            }
+          }
+        });
+      } catch (err: any) {
+        const errStr = String(err).toLowerCase();
+        if (errStr.includes('encrypted') || errStr.includes('password') || err.name === 'EncryptedPDFError') {
+          item.isPasswordProtected = true;
+          item.errorMessage = t.card?.passwordMsg || 'Password-protected';
+        } else {
+          item.isCorrupt = true;
+          item.errorMessage = t.card?.corruptMsg || 'Corrupt or invalid PDF';
+        }
+      }
+
+      return item;
+    }
+
+    // Add files to workspace
+    async function handleFiles(newFiles: FileList | File[]) {
+      const validPdfFiles = Array.from(newFiles).filter(
+        (f) => f.type === 'application/pdf' || f.name.toLowerCase().endsWith('.pdf')
+      );
+
+      if (validPdfFiles.length === 0) {
+        showToast(t.errors?.unsupportedFile || 'Please select valid PDF files.');
+        return;
+      }
+
+      showToast(t.merge?.preparing || 'Processing files…');
+      for (const file of validPdfFiles) {
+        const item = await processFile(file);
+        files.push(item);
+      }
+
+      renderFileList();
+    }
+
+    // Calculate totals across files
+    function getTotals() {
+      let totalFiles = 0;
+      let totalSelectedPages = 0;
+      let estimatedOutputBytes = 0;
+
+      for (const file of files) {
+        if (file.isPasswordProtected || file.isCorrupt || file.pageCount === 0) continue;
+        totalFiles++;
+        const selectedCount = file.pages.filter((p) => p.selected).length;
+        totalSelectedPages += selectedCount;
+        const proportion = selectedCount / file.pageCount;
+        estimatedOutputBytes += Math.round(file.size * proportion);
+      }
+
+      return { totalFiles, totalSelectedPages, estimatedOutputBytes };
+    }
+
+    // Update Merge CTA button text and state
+    function updateMergeButton() {
+      const { totalFiles, totalSelectedPages, estimatedOutputBytes } = getTotals();
+
+      if (totalFiles < 2) {
+        if (totalFiles === 1 && totalSelectedPages > 0) {
+          // Allow saving single modified PDF
+          const template = t.merge?.btnSingle || 'Save PDF · {pages} pages · ≈ {size}';
+          mergeBtnText.textContent = template
+            .replace('{pages}', String(totalSelectedPages))
+            .replace('{size}', formatBytes(estimatedOutputBytes));
+          mergeBtn.disabled = false;
+          mergeBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        } else {
+          mergeBtnText.textContent = t.merge?.btnDisabled || 'Add at least 2 PDF files to merge';
+          mergeBtn.disabled = true;
+          mergeBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        }
+      } else if (totalSelectedPages === 0) {
+        mergeBtnText.textContent = t.errors?.noPages || 'Select at least 1 page to merge';
+        mergeBtn.disabled = true;
+        mergeBtn.classList.add('opacity-50', 'cursor-not-allowed');
+      } else {
+        const template = t.merge?.btn || 'Merge {files} PDFs · {pages} pages · ≈ {size}';
+        mergeBtnText.textContent = template
+          .replace('{files}', String(totalFiles))
+          .replace('{pages}', String(totalSelectedPages))
+          .replace('{size}', formatBytes(estimatedOutputBytes));
+        mergeBtn.disabled = false;
+        mergeBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+      }
+    }
+
+    // Render the file list cards
+    function renderFileList() {
+      if (files.length === 0) {
+        workspace.classList.add('hidden');
+        dropzone.classList.remove('hidden');
+        previewSection.classList.add('hidden');
+        return;
+      }
+
+      dropzone.classList.add('hidden');
+      workspace.classList.remove('hidden');
+      previewSection.classList.add('hidden');
+      fileListEl.innerHTML = '';
+
+      files.forEach((file, index) => {
+        const card = document.createElement('div');
+        card.className = 'group relative rounded-2xl bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark p-3.5 sm:p-4 shadow-xs hover:shadow-md transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4';
+        card.id = `file-card-${file.id}`;
+        card.draggable = true;
+
+        const isProblem = file.isPasswordProtected || file.isCorrupt;
+        const selectedPagesCount = file.pages ? file.pages.filter((p) => p.selected).length : 0;
+        const isLarge = file.size > 100 * 1024 * 1024;
+
+        card.innerHTML = `
+          <div class="flex items-center gap-3 w-full sm:w-auto min-w-0 flex-1">
+            <!-- Drag Handle & Index Badge -->
+            <div class="flex items-center gap-2 shrink-0">
+              <div class="drag-handle cursor-grab active:cursor-grabbing p-1 text-secondary-light/60 dark:text-secondary-dark/60 hover:text-accent" title="Drag to reorder">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/>
+                  <circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/>
+                  <circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/>
+                </svg>
+              </div>
+              <span class="w-6 h-6 rounded-lg bg-bg-light dark:bg-bg-dark border border-border-light dark:border-border-dark text-[11px] font-bold text-secondary-light dark:text-secondary-dark flex items-center justify-center">
+                ${index + 1}
+              </span>
+            </div>
+
+            <!-- Thumbnail Container -->
+            <div class="relative w-12 h-14 sm:w-14 sm:h-16 rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-border-light dark:border-border-dark shrink-0 flex items-center justify-center shadow-xs">
+              <img
+                id="thumb-img-${file.id}"
+                src="${file.firstPageThumbnail || ''}"
+                alt="Page 1 thumbnail"
+                class="w-full h-full object-contain ${file.firstPageThumbnail ? '' : 'hidden'}"
+              />
+              <div id="thumb-placeholder-${file.id}" class="text-accent flex items-center justify-center ${file.firstPageThumbnail ? 'hidden' : ''}">
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- File Info & Bookmark Title -->
+            <div class="space-y-1 min-w-0 flex-1">
+              <div class="flex items-center gap-2">
+                <h3 class="text-xs sm:text-sm font-bold text-primary-light dark:text-primary-dark truncate" title="${file.name}">
+                  ${file.name}
+                </h3>
+                ${
+                  isProblem
+                    ? `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/10 text-rose-500 border border-rose-500/20 shrink-0">
+                        ${file.isPasswordProtected ? t.card?.passwordProtected || 'Password Protected' : t.card?.corruptFile || 'Invalid PDF'}
+                       </span>`
+                    : ''
+                }
+              </div>
+
+              <!-- Page Stats & Size -->
+              <div class="flex flex-wrap items-center gap-2 text-[11px] text-secondary-light dark:text-secondary-dark">
+                <span>${formatBytes(file.size)}</span>
+                <span>•</span>
+                ${
+                  !isProblem
+                    ? `<span class="font-medium text-accent">${selectedPagesCount} / ${file.pageCount} ${t.card?.pagesCount?.replace('{count}', '') || 'pages'}</span>`
+                    : `<span class="text-rose-500">${file.errorMessage}</span>`
+                }
+              </div>
+
+              <!-- Editable Bookmark Title Input -->
+              ${
+                !isProblem
+                  ? `<div class="pt-1">
+                      <div class="flex items-center gap-1.5 text-[11px] text-secondary-light dark:text-secondary-dark">
+                        <span class="shrink-0">📑</span>
+                        <input
+                          type="text"
+                          id="bookmark-input-${file.id}"
+                          value="${file.bookmarkTitle}"
+                          placeholder="${t.card?.bookmarkTitle || 'Bookmark Title'}"
+                          class="w-full max-w-xs bg-bg-light dark:bg-bg-dark border border-border-light dark:border-border-dark rounded-lg px-2 py-1 text-[11px] text-primary-light dark:text-primary-dark focus:outline-none focus:border-accent"
+                          aria-label="${t.card?.bookmarkTitle || 'Bookmark Title'}"
+                        />
+                      </div>
+                    </div>`
+                  : ''
+              }
+
+              <!-- 100MB Warning -->
+              ${
+                isLarge
+                  ? `<p class="text-[10px] text-amber-600 dark:text-amber-400">⚠️ ${t.card?.largeFileWarning || 'Large file (>100MB)'}</p>`
+                  : ''
+              }
+            </div>
+          </div>
+
+          <!-- Actions Toolbar for File -->
+          <div class="flex items-center justify-between sm:justify-end gap-1.5 w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-border-light/60 dark:border-border-dark/60">
+            ${
+              !isProblem
+                ? `
+                <!-- Choose Pages Modal Button -->
+                <button
+                  type="button"
+                  id="btn-choose-pages-${file.id}"
+                  class="px-2.5 py-1.5 rounded-xl border border-border-light dark:border-border-dark hover:border-accent hover:text-accent bg-bg-light dark:bg-bg-dark text-xs font-semibold text-primary-light dark:text-primary-dark transition-colors inline-flex items-center gap-1 shadow-xs"
+                >
+                  <span>📄</span>
+                  <span>${t.card?.choosePages || 'Choose Pages'}</span>
+                </button>
+
+                <!-- Rotate All Pages of File -->
+                <button
+                  type="button"
+                  id="btn-rotate-file-${file.id}"
+                  class="p-1.5 rounded-xl border border-border-light dark:border-border-dark hover:bg-slate-100 dark:hover:bg-slate-800 text-secondary-light dark:text-secondary-dark hover:text-accent transition-colors"
+                  title="${t.card?.rotateAll || 'Rotate +90°'}"
+                >
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+                  </svg>
+                </button>
+
+                <!-- Reverse Pages of File -->
+                <button
+                  type="button"
+                  id="btn-reverse-file-${file.id}"
+                  class="p-1.5 rounded-xl border border-border-light dark:border-border-dark hover:bg-slate-100 dark:hover:bg-slate-800 text-secondary-light dark:text-secondary-dark hover:text-accent transition-colors"
+                  title="${t.card?.reversePages || 'Reverse Pages'}"
+                >
+                  ⇄
+                </button>
+                `
+                : ''
+            }
+
+            <!-- Touch Move Up / Down Buttons -->
+            <button
+              type="button"
+              id="btn-move-up-${file.id}"
+              class="p-1.5 rounded-xl border border-border-light dark:border-border-dark hover:bg-slate-100 dark:hover:bg-slate-800 text-secondary-light dark:text-secondary-dark transition-colors ${index === 0 ? 'opacity-30 cursor-not-allowed' : ''}"
+              title="${t.card?.moveUp || 'Move Up'}"
+              ${index === 0 ? 'disabled' : ''}
+            >
+              ↑
+            </button>
+            <button
+              type="button"
+              id="btn-move-down-${file.id}"
+              class="p-1.5 rounded-xl border border-border-light dark:border-border-dark hover:bg-slate-100 dark:hover:bg-slate-800 text-secondary-light dark:text-secondary-dark transition-colors ${index === files.length - 1 ? 'opacity-30 cursor-not-allowed' : ''}"
+              title="${t.card?.moveDown || 'Move Down'}"
+              ${index === files.length - 1 ? 'disabled' : ''}
+            >
+              ↓
+            </button>
+
+            <!-- Delete Button -->
+            <button
+              type="button"
+              id="btn-delete-${file.id}"
+              class="p-1.5 rounded-xl border border-rose-500/20 hover:bg-rose-500/10 text-rose-500 transition-colors"
+              title="${t.card?.delete || 'Remove File'}"
+            >
+              ✕
+            </button>
+          </div>
+        `;
+
+        fileListEl.appendChild(card);
+
+        // Bind bookmark input
+        const bmInput = card.querySelector(`#bookmark-input-${file.id}`) as HTMLInputElement;
+        if (bmInput) {
+          bmInput.addEventListener('input', () => {
+            file.bookmarkTitle = bmInput.value;
+          });
+        }
+
+        // Bind Choose Pages
+        const chooseBtn = card.querySelector(`#btn-choose-pages-${file.id}`);
+        if (chooseBtn) {
+          chooseBtn.addEventListener('click', () => openPageModal(file.id));
+        }
+
+        // Bind Rotate All of file
+        const rotateBtn = card.querySelector(`#btn-rotate-file-${file.id}`);
+        if (rotateBtn) {
+          rotateBtn.addEventListener('click', () => {
+            file.pages.forEach((p) => {
+              p.rotation = (p.rotation + 90) % 360;
+            });
+            showToast(`Rotated pages in "${file.name}" +90°`);
+          });
+        }
+
+        // Bind Reverse Pages of file
+        const revBtn = card.querySelector(`#btn-reverse-file-${file.id}`);
+        if (revBtn) {
+          revBtn.addEventListener('click', () => {
+            file.pages.reverse();
+            showToast(`Reversed pages in "${file.name}"`);
+          });
+        }
+
+        // Bind Move Up
+        const upBtn = card.querySelector(`#btn-move-up-${file.id}`);
+        if (upBtn && index > 0) {
+          upBtn.addEventListener('click', () => {
+            const temp = files[index];
+            files[index] = files[index - 1];
+            files[index - 1] = temp;
+            renderFileList();
+          });
+        }
+
+        // Bind Move Down
+        const downBtn = card.querySelector(`#btn-move-down-${file.id}`);
+        if (downBtn && index < files.length - 1) {
+          downBtn.addEventListener('click', () => {
+            const temp = files[index];
+            files[index] = files[index + 1];
+            files[index + 1] = temp;
+            renderFileList();
+          });
+        }
+
+        // Bind Delete
+        const delBtn = card.querySelector(`#btn-delete-${file.id}`);
+        if (delBtn) {
+          delBtn.addEventListener('click', () => {
+            lastDeleted = { item: file, index };
+            files.splice(index, 1);
+            showToast(t.toolbar?.undoDeleted?.replace('{name}', file.name) || `Removed "${file.name}".`, true);
+            renderFileList();
+          });
+        }
+
+        // Drag and Drop Event Listeners for Card
+        setupCardDragAndDrop(card, index);
+      });
+
+      updateMergeButton();
+    }
+
+    // Drag-and-drop reordering logic
+    let draggedIndex: number | null = null;
+    function setupCardDragAndDrop(card: HTMLElement, index: number) {
+      card.addEventListener('dragstart', (e) => {
+        draggedIndex = index;
+        card.classList.add('drag-dragging');
+        if (e.dataTransfer) {
+          e.dataTransfer.effectAllowed = 'move';
+          e.dataTransfer.setData('text/plain', String(index));
+        }
+      });
+
+      card.addEventListener('dragend', () => {
+        card.classList.remove('drag-dragging');
+        draggedIndex = null;
+        document.querySelectorAll('.drag-over').forEach((el) => el.classList.remove('drag-over'));
+      });
+
+      card.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        if (draggedIndex === null || draggedIndex === index) return;
+        card.classList.add('drag-over');
+      });
+
+      card.addEventListener('dragleave', () => {
+        card.classList.remove('drag-over');
+      });
+
+      card.addEventListener('drop', (e) => {
+        e.preventDefault();
+        card.classList.remove('drag-over');
+        if (draggedIndex === null || draggedIndex === index) return;
+
+        const draggedItem = files.splice(draggedIndex, 1)[0];
+        files.splice(index, 0, draggedItem);
+        draggedIndex = null;
+        renderFileList();
+      });
+    }
+
+    // PAGE SELECTION MODAL LOGIC
+    // Generate range string (e.g. "1-3, 5, 7-9") from selected pages
+    function generateRangeString(pages: PageItem[]): string {
+      const selectedNums = pages
+        .filter((p) => p.selected)
+        .map((p) => p.pageNumber)
+        .sort((a, b) => a - b);
+
+      if (selectedNums.length === 0) return '';
+
+      const ranges: string[] = [];
+      let start = selectedNums[0];
+      let prev = start;
+
+      for (let i = 1; i < selectedNums.length; i++) {
+        const curr = selectedNums[i];
+        if (curr === prev + 1) {
+          prev = curr;
+        } else {
+          ranges.push(start === prev ? `${start}` : `${start}-${prev}`);
+          start = curr;
+          prev = curr;
+        }
+      }
+      ranges.push(start === prev ? `${start}` : `${start}-${prev}`);
+      return ranges.join(', ');
+    }
+
+    // Parse range string (e.g. "1-3, 7") and apply to pages
+    function applyRangeStringToPages(rangeStr: string, pages: PageItem[]) {
+      const tokens = rangeStr.split(',').map((s) => s.trim()).filter(Boolean);
+      const selectedSet = new Set<number>();
+
+      for (const token of tokens) {
+        if (token.includes('-')) {
+          const [sStr, eStr] = token.split('-').map((x) => parseInt(x.trim(), 10));
+          if (!isNaN(sStr) && !isNaN(eStr)) {
+            const min = Math.min(sStr, eStr);
+            const max = Math.max(sStr, eStr);
+            for (let i = min; i <= max; i++) {
+              selectedSet.add(i);
+            }
+          }
+        } else {
+          const num = parseInt(token, 10);
+          if (!isNaN(num)) selectedSet.add(num);
+        }
+      }
+
+      pages.forEach((p) => {
+        p.selected = selectedSet.has(p.pageNumber);
+      });
+    }
+
+    // Open Page Selection Modal
+    async function openPageModal(fileId: string) {
+      const file = files.find((f) => f.id === fileId);
+      if (!file || file.isPasswordProtected || file.isCorrupt) return;
+
+      activeModalFileId = fileId;
+      modalTitle.textContent = (t.modal?.title || 'Select Pages — {name}').replace('{name}', file.name);
+      modalRangeInput.value = generateRangeString(file.pages);
+      pageModal.classList.remove('hidden');
+
+      renderModalPageGrid(file);
+    }
+
+    // Render Page Grid inside modal
+    function renderModalPageGrid(file: PdfFileItem) {
+      modalGrid.innerHTML = '';
+      const selectedCount = file.pages.filter((p) => p.selected).length;
+      modalSelectedCount.textContent = `${selectedCount} / ${file.pageCount}`;
+
+      file.pages.forEach((pageItem) => {
+        const pageCard = document.createElement('div');
+        pageCard.className = `group relative rounded-2xl border p-2 cursor-pointer transition-all flex flex-col items-center justify-between text-center ${
+          pageItem.selected
+            ? 'border-accent bg-accent/10 dark:bg-accent/15 ring-2 ring-accent/30'
+            : 'border-border-light dark:border-border-dark bg-bg-light dark:bg-bg-dark opacity-60'
+        }`;
+        pageCard.id = `modal-page-card-${pageItem.pageNumber}`;
+
+        pageCard.innerHTML = `
+          <!-- Page Thumbnail -->
+          <div class="relative w-full aspect-[1/1.3] rounded-xl overflow-hidden bg-slate-200 dark:bg-slate-800 flex items-center justify-center shadow-inner">
+            <img
+              id="modal-thumb-${file.id}-${pageItem.pageNumber}"
+              src="${pageItem.thumbnailUrl || ''}"
+              alt="Page ${pageItem.pageNumber}"
+              class="max-w-full max-h-full object-contain ${pageItem.thumbnailUrl ? '' : 'hidden'}"
+              style="transform: rotate(${pageItem.rotation}deg);"
+            />
+            <div id="modal-thumb-placeholder-${file.id}-${pageItem.pageNumber}" class="text-xs text-secondary-light dark:text-secondary-dark ${pageItem.thumbnailUrl ? 'hidden' : ''}">
+              ${pageItem.pageNumber}
+            </div>
+
+            <!-- Rotation Badge -->
+            ${
+              pageItem.rotation > 0
+                ? `<span class="absolute top-1 start-1 px-1.5 py-0.5 rounded-md bg-black/70 text-white text-[10px] font-bold">
+                    ${pageItem.rotation}°
+                   </span>`
+                : ''
+            }
+
+            <!-- Checkmark Indicator -->
+            <div class="absolute top-1 end-1 w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold ${
+              pageItem.selected ? 'bg-accent text-white shadow-xs' : 'bg-black/40 text-white/50'
+            }">
+              ✓
+            </div>
+          </div>
+
+          <!-- Page Bottom Bar -->
+          <div class="w-full flex items-center justify-between pt-2 px-1 text-[11px]">
+            <span class="font-bold text-primary-light dark:text-primary-dark">
+              ${pageItem.pageNumber}
+            </span>
+            <button
+              type="button"
+              id="btn-rotate-single-${pageItem.pageNumber}"
+              class="p-1 rounded-lg hover:bg-black/10 dark:hover:bg-white/10 text-secondary-light dark:text-secondary-dark hover:text-accent transition-colors"
+              title="Rotate +90°"
+            >
+              ⟳
+            </button>
+          </div>
+        `;
+
+        // Toggle page selection on click
+        pageCard.addEventListener('click', (e) => {
+          // If clicked rotate button, don't toggle
+          if ((e.target as HTMLElement).closest(`#btn-rotate-single-${pageItem.pageNumber}`)) return;
+          pageItem.selected = !pageItem.selected;
+          modalRangeInput.value = generateRangeString(file.pages);
+          renderModalPageGrid(file);
+        });
+
+        // Rotate individual page
+        const rotBtn = pageCard.querySelector(`#btn-rotate-single-${pageItem.pageNumber}`);
+        if (rotBtn) {
+          rotBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            pageItem.rotation = (pageItem.rotation + 90) % 360;
+            renderModalPageGrid(file);
+          });
+        }
+
+        modalGrid.appendChild(pageCard);
+
+        // Load thumbnail lazily if not present
+        if (!pageItem.thumbnailUrl) {
+          renderPageToDataUrl(file.arrayBuffer, pageItem.pageNumber, 150).then((url) => {
+            if (url) {
+              pageItem.thumbnailUrl = url;
+              const img = document.getElementById(`modal-thumb-${file.id}-${pageItem.pageNumber}`) as HTMLImageElement;
+              const ph = document.getElementById(`modal-thumb-placeholder-${file.id}-${pageItem.pageNumber}`);
+              if (img && ph) {
+                img.src = url;
+                img.classList.remove('hidden');
+                ph.classList.add('hidden');
+              }
+            }
+          });
+        }
+      });
+    }
+
+    // Modal Events
+    modalRangeInput.addEventListener('input', () => {
+      const file = files.find((f) => f.id === activeModalFileId);
+      if (!file) return;
+      applyRangeStringToPages(modalRangeInput.value, file.pages);
+      renderModalPageGrid(file);
+    });
+
+    modalSelectAll.addEventListener('click', () => {
+      const file = files.find((f) => f.id === activeModalFileId);
+      if (!file) return;
+      file.pages.forEach((p) => (p.selected = true));
+      modalRangeInput.value = generateRangeString(file.pages);
+      renderModalPageGrid(file);
+    });
+
+    modalSelectNone.addEventListener('click', () => {
+      const file = files.find((f) => f.id === activeModalFileId);
+      if (!file) return;
+      file.pages.forEach((p) => (p.selected = false));
+      modalRangeInput.value = '';
+      renderModalPageGrid(file);
+    });
+
+    modalInvert.addEventListener('click', () => {
+      const file = files.find((f) => f.id === activeModalFileId);
+      if (!file) return;
+      file.pages.forEach((p) => (p.selected = !p.selected));
+      modalRangeInput.value = generateRangeString(file.pages);
+      renderModalPageGrid(file);
+    });
+
+    modalRotateSelected.addEventListener('click', () => {
+      const file = files.find((f) => f.id === activeModalFileId);
+      if (!file) return;
+      file.pages.forEach((p) => {
+        if (p.selected) p.rotation = (p.rotation + 90) % 360;
+      });
+      renderModalPageGrid(file);
+    });
+
+    modalReverseOrder.addEventListener('click', () => {
+      const file = files.find((f) => f.id === activeModalFileId);
+      if (!file) return;
+      file.pages.reverse();
+      renderModalPageGrid(file);
+    });
+
+    function closeModal() {
+      pageModal.classList.add('hidden');
+      activeModalFileId = null;
+      renderFileList();
+    }
+
+    modalCloseX.addEventListener('click', closeModal);
+    modalDoneBtn.addEventListener('click', closeModal);
+    pageModal.addEventListener('click', (e) => {
+      if (e.target === pageModal) closeModal();
+    });
+
+    // Global Toolbar Event Listeners
+    browseBtn.addEventListener('click', () => fileInput.click());
+    tbAdd.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files && fileInput.files.length > 0) {
+        handleFiles(fileInput.files);
+        fileInput.value = '';
+      }
+    });
+
+    // Drag and drop onto empty dropzone or workspace
+    [dropzone, workspace].forEach((el) => {
+      if (!el) return;
+      el.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        el.classList.add('border-accent');
+      });
+      el.addEventListener('dragleave', () => {
+        el.classList.remove('border-accent');
+      });
+      el.addEventListener('drop', (e) => {
+        e.preventDefault();
+        el.classList.remove('border-accent');
+        if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+          handleFiles(e.dataTransfer.files);
+        }
+      });
+    });
+
+    // Clipboard paste support (Ctrl+V)
+    window.addEventListener('paste', (e: ClipboardEvent) => {
+      if (!e.clipboardData) return;
+      const items = Array.from(e.clipboardData.items);
+      const pdfFiles: File[] = [];
+      for (const item of items) {
+        if (item.type === 'application/pdf') {
+          const file = item.getAsFile();
+          if (file) pdfFiles.push(file);
+        }
+      }
+      if (pdfFiles.length > 0) {
+        handleFiles(pdfFiles);
+      }
+    });
+
+    // Sort by name
+    let sortAsc = true;
+    tbSort.addEventListener('click', () => {
+      files.sort((a, b) => (sortAsc ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name)));
+      sortAsc = !sortAsc;
+      renderFileList();
+      showToast(`Sorted files ${sortAsc ? 'Z-A' : 'A-Z'}`);
+    });
+
+    // Reverse file order
+    tbReverse.addEventListener('click', () => {
+      files.reverse();
+      renderFileList();
+      showToast('Reversed file order');
+    });
+
+    // Select all pages across all files
+    tbSelectAll.addEventListener('click', () => {
+      files.forEach((f) => f.pages.forEach((p) => (p.selected = true)));
+      renderFileList();
+      showToast('Selected all pages');
+    });
+
+    // Clear all files
+    tbClear.addEventListener('click', () => {
+      if (files.length === 0) return;
+      files = [];
+      renderFileList();
+      showToast('Cleared all files');
+    });
+
+    // Mode Toggle: Normal vs Interleave
+    modeNormalBtn.addEventListener('click', () => {
+      isInterleaveMode = false;
+      modeNormalBtn.classList.add('bg-accent', 'text-white', 'font-bold', 'shadow-xs');
+      modeNormalBtn.classList.remove('text-secondary-light', 'dark:text-secondary-dark');
+      modeInterleaveBtn.classList.remove('bg-accent', 'text-white', 'font-bold', 'shadow-xs');
+      modeInterleaveBtn.classList.add('text-secondary-light', 'dark:text-secondary-dark');
+      interleaveBanner.classList.add('hidden');
+    });
+
+    modeInterleaveBtn.addEventListener('click', () => {
+      isInterleaveMode = true;
+      modeInterleaveBtn.classList.add('bg-accent', 'text-white', 'font-bold', 'shadow-xs');
+      modeInterleaveBtn.classList.remove('text-secondary-light', 'dark:text-secondary-dark');
+      modeNormalBtn.classList.remove('bg-accent', 'text-white', 'font-bold', 'shadow-xs');
+      modeNormalBtn.classList.add('text-secondary-light', 'dark:text-secondary-dark');
+      interleaveBanner.classList.remove('hidden');
+      showToast('Interleave Mode enabled');
+    });
+
+    // Bookmarks option toggle
+    bookmarksOpt.addEventListener('change', () => {
+      includeBookmarks = bookmarksOpt.checked;
+    });
+
+    // MERGE ENGINE (100% Client-Side with pdf-lib)
+    async function executeMerge() {
+      const validFiles = files.filter((f) => !f.isPasswordProtected && !f.isCorrupt && f.pageCount > 0);
+      if (validFiles.length === 0) {
+        showToast(t.errors?.minFiles || 'Please add valid PDF files to merge.');
+        return;
+      }
+
+      progressContainer.classList.remove('hidden');
+      mergeBtn.disabled = true;
+      mergeBtn.classList.add('opacity-50', 'cursor-not-allowed');
+
+      try {
+        const { PDFDocument, PDFName, PDFHexString, degrees } = await getPdfLib();
+        const mergedDoc = await PDFDocument.create();
+
+        // Outline / Bookmarks setup
+        const context = mergedDoc.context;
+        const outlineItems: { title: string; pageIndex: number }[] = [];
+
+        // Collect pages to merge according to mode
+        interface PageJob {
+          fileIndex: number;
+          fileItem: PdfFileItem;
+          pageItem: PageItem;
+          isFirstOfFile: boolean;
+        }
+
+        const pageJobs: PageJob[] = [];
+
+        if (isInterleaveMode && validFiles.length >= 2) {
+          // Interleave Mode: Round-robin across files
+          const maxPages = Math.max(...validFiles.map((f) => f.pages.filter((p) => p.selected).length));
+          const fileSelectedPages = validFiles.map((f) => f.pages.filter((p) => p.selected));
+          const hasMarkedFirst = new Set<number>();
+
+          for (let step = 0; step < maxPages; step++) {
+            for (let fIdx = 0; fIdx < validFiles.length; fIdx++) {
+              const filePages = fileSelectedPages[fIdx];
+              if (step < filePages.length) {
+                const isFirst = !hasMarkedFirst.has(fIdx);
+                if (isFirst) hasMarkedFirst.add(fIdx);
+                pageJobs.push({
+                  fileIndex: fIdx,
+                  fileItem: validFiles[fIdx],
+                  pageItem: filePages[step],
+                  isFirstOfFile: isFirst,
+                });
+              }
+            }
+          }
+        } else {
+          // Normal Mode: File by file in order
+          validFiles.forEach((fileItem, fIdx) => {
+            let isFirst = true;
+            fileItem.pages.forEach((pageItem) => {
+              if (pageItem.selected) {
+                pageJobs.push({
+                  fileIndex: fIdx,
+                  fileItem,
+                  pageItem,
+                  isFirstOfFile: isFirst,
+                });
+                isFirst = false;
+              }
+            });
+          });
+        }
+
+        if (pageJobs.length === 0) {
+          throw new Error(t.errors?.noPages || 'No pages selected to merge.');
+        }
+
+        const totalJobs = pageJobs.length;
+
+        // Group jobs by source file to load each document once and copy pages efficiently
+        // To preserve exact sequence, we load source documents as needed
+        const loadedSourceDocs = new Map<string, any>();
+
+        for (let i = 0; i < totalJobs; i++) {
+          const job = pageJobs[i];
+          const pct = Math.round(((i + 1) / totalJobs) * 90);
+          progressBar.style.width = `${pct}%`;
+          progressPct.textContent = `${pct}%`;
+          progressLabel.textContent = `${t.merge?.progress?.replace('{percent}', String(pct)) || `Merging… ${pct}%`}`;
+
+          let srcDoc = loadedSourceDocs.get(job.fileItem.id);
+          if (!srcDoc) {
+            srcDoc = await PDFDocument.load(job.fileItem.arrayBuffer, { ignoreEncryption: true });
+            loadedSourceDocs.set(job.fileItem.id, srcDoc);
+          }
+
+          // Native lossless stream copy
+          const [copiedPage] = await mergedDoc.copyPages(srcDoc, [job.pageItem.originalIndex]);
+
+          // Apply rotation if needed (lossless metadata level)
+          if (job.pageItem.rotation !== 0) {
+            const existingAngle = copiedPage.getRotation().angle;
+            copiedPage.setRotation(degrees((existingAngle + job.pageItem.rotation) % 360));
+          }
+
+          const newPageIndex = mergedDoc.getPageCount();
+          mergedDoc.addPage(copiedPage);
+
+          if (job.isFirstOfFile && includeBookmarks) {
+            outlineItems.push({
+              title: job.fileItem.bookmarkTitle || job.fileItem.name,
+              pageIndex: newPageIndex,
+            });
+          }
+
+          // Yield execution to maintain UI responsiveness
+          if (i % 5 === 0) {
+            await new Promise((resolve) => setTimeout(resolve, 0));
+          }
+        }
+
+        // Build PDF Outlines / Bookmarks tree if enabled and items exist
+        if (includeBookmarks && outlineItems.length > 0) {
+          try {
+            const outlinesDictRef = context.nextRef();
+            const outlinesDict = context.obj({ Type: 'Outlines' });
+            const itemRefs: any[] = [];
+
+            for (let idx = 0; idx < outlineItems.length; idx++) {
+              itemRefs.push(context.nextRef());
+            }
+
+            for (let idx = 0; idx < outlineItems.length; idx++) {
+              const outline = outlineItems[idx];
+              const targetPage = mergedDoc.getPage(outline.pageIndex);
+              const itemObj: any = {
+                Title: PDFHexString.fromText(outline.title),
+                Parent: outlinesDictRef,
+                Dest: [targetPage.ref, 'Fit'],
+              };
+              if (idx > 0) itemObj.Prev = itemRefs[idx - 1];
+              if (idx < outlineItems.length - 1) itemObj.Next = itemRefs[idx + 1];
+
+              context.assign(itemRefs[idx], context.obj(itemObj));
+            }
+
+            outlinesDict.set(PDFName.of('First'), itemRefs[0]);
+            outlinesDict.set(PDFName.of('Last'), itemRefs[outlineItems.length - 1]);
+            outlinesDict.set(PDFName.of('Count'), context.obj(outlineItems.length));
+            context.assign(outlinesDictRef, outlinesDict);
+            mergedDoc.catalog.set(PDFName.of('Outlines'), outlinesDictRef);
+          } catch (bmErr) {
+            console.warn('Bookmarks creation failed, proceeding with merged document:', bmErr);
+          }
+        }
+
+        // Finalize document
+        progressLabel.textContent = 'Finalizing merged PDF…';
+        progressBar.style.width = '98%';
+        progressPct.textContent = '98%';
+        await new Promise((resolve) => setTimeout(resolve, 10));
+
+        const mergedBytes = await mergedDoc.save();
+        mergedPdfBlob = new Blob([mergedBytes], { type: 'application/pdf' });
+
+        progressBar.style.width = '100%';
+        progressPct.textContent = '100%';
+        progressLabel.textContent = t.merge?.success || 'PDFs merged successfully!';
+
+        // Trigger download
+        downloadMergedPdf();
+
+        // Render Merged Preview Screen
+        renderMergedPreview(mergedBytes, validFiles.length, pageJobs.length);
+        showToast(t.merge?.success || 'PDFs merged successfully!');
+      } catch (err: any) {
+        console.error('Merge execution error:', err);
+        showToast(err.message || t.errors?.generic || 'Error merging PDFs.');
+      } finally {
+        progressContainer.classList.add('hidden');
+        mergeBtn.disabled = false;
+        mergeBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+      }
+    }
+
+    // Trigger PDF download
+    function downloadMergedPdf() {
+      if (!mergedPdfBlob) return;
+      const url = URL.createObjectURL(mergedPdfBlob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = t.merge?.outputFilename || 'merged_document.pdf';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
+    // Render preview screen with output thumbnail
+    async function renderMergedPreview(mergedBytes: Uint8Array, fileCount: number, pageCount: number) {
+      workspace.classList.add('hidden');
+      previewSection.classList.remove('hidden');
+
+      const template = t.preview?.stats || '{files} PDFs merged into {pages} pages ({size})';
+      previewStats.textContent = template
+        .replace('{files}', String(fileCount))
+        .replace('{pages}', String(pageCount))
+        .replace('{size}', formatBytes(mergedBytes.byteLength));
+
+      // Render first page of output to preview canvas
+      let loadingTask: any = null;
+      try {
+        const pdfjs = await getPdfJs();
+        loadingTask = pdfjs.getDocument({ data: new Uint8Array(mergedBytes.slice(0)) });
+        const doc = await loadingTask.promise;
+        const page = await doc.getPage(1);
+
+        const unscaledViewport = page.getViewport({ scale: 1 });
+        const scale = 260 / unscaledViewport.width;
+        const viewport = page.getViewport({ scale });
+
+        outputCanvas.width = Math.floor(viewport.width);
+        outputCanvas.height = Math.floor(viewport.height);
+        const ctx = outputCanvas.getContext('2d');
+        if (ctx) {
+          await page.render({ canvasContext: ctx, viewport }).promise;
+        }
+        doc.cleanup();
+        loadingTask.destroy();
+      } catch (prevErr) {
+        console.warn('Failed to render merged preview canvas:', prevErr);
+        if (loadingTask) {
+          try { loadingTask.destroy(); } catch (e) {}
+        }
+      }
+    }
+
+    // Bind Merge button
+    mergeBtn.addEventListener('click', executeMerge);
+
+    // Bind Preview Download Again button
+    downloadAgainBtn.addEventListener('click', downloadMergedPdf);
+
+    // Bind Back to Edit button
+    backEditBtn.addEventListener('click', () => {
+      previewSection.classList.add('hidden');
+      workspace.classList.remove('hidden');
+      renderFileList();
+    });
+  </script>
+</Base>

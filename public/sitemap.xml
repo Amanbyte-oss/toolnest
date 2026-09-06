@@ -90,6 +90,50 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://toolnest.pages.dev/pdf-merge</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/pdf-merge" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/pdf-merge" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/pdf-merge" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/pdf-merge" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/pdf-merge" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/pt/pdf-merge</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/pdf-merge" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/pdf-merge" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/pdf-merge" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/pdf-merge" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/pdf-merge" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/id/pdf-merge</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/pdf-merge" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/pdf-merge" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/pdf-merge" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/pdf-merge" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/pdf-merge" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://toolnest.pages.dev/ar/pdf-merge</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/pdf-merge" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/pdf-merge" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://toolnest.pages.dev/id/pdf-merge" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolnest.pages.dev/ar/pdf-merge" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolnest.pages.dev/pdf-merge" />
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://toolnest.pages.dev/image-compressor</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://toolnest.pages.dev/image-compressor" />
     <xhtml:link rel="alternate" hreflang="pt" href="https://toolnest.pages.dev/pt/image-compressor" />

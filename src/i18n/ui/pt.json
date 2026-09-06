@@ -26,7 +26,8 @@
       "sitemap": "Mapa do Site",
       "toolsDropdown": "Ferramentas",
       "imageCategory": "Ferramentas de Imagem e Documentos",
-      "utilityCategory": "Calculadoras e Utilitários"
+      "utilityCategory": "Calculadoras e Utilitários",
+      "pdfMerge": "Juntar PDF"
     },
     "buttons": {
       "calculate": "Calcular",
@@ -172,6 +173,10 @@
     "serverError": {
       "title": "Erro no Servidor (500) | ToolNest",
       "description": "Ocorreu um erro inesperado. Volte à página inicial do ToolNest para acessar todas as ferramentas gratuitas."
+    },
+    "pdfMerge": {
+      "title": "Juntar PDF Grátis — Combinar Arquivos PDF Online (Sem Upload, Privado)",
+      "description": "Junte e combine vários arquivos PDF em um só diretamente no seu dispositivo. Junção 100% privada no navegador, reordene páginas, gire, intercale e crie marcadores sem marcas d'água nem envio de arquivos."
     }
   },
   "picker": {
@@ -938,6 +943,32 @@
         "q": "O que a função Auto-Aprimorar faz?",
         "a": "O Auto-Aprimorar aplica um filtro de contraste e brilho otimizado para documentos fotografados, clareando o fundo e tornando textos escuros muito mais legíveis, como um scanner de mesa."
       }
+    ],
+    "pdfMerge": [
+      {
+        "q": "Meus arquivos PDF são enviados para algum servidor?",
+        "a": "Não, nunca. O ToolNest realiza a junção de PDFs 100% no lado do cliente, diretamente no seu navegador com pdf-lib e WebAssembly. Seus contratos confidenciais, documentos de identidade, declarações fiscais e extratos bancários nunca saem do seu computador ou celular."
+      },
+      {
+        "q": "Existe limite de tamanho de arquivo ou número de páginas?",
+        "a": "Você pode combinar mais de 20 arquivos PDF com centenas de páginas. Arquivos grandes (>100MB) são processados sequencialmente na memória do navegador para garantir desempenho estável mesmo em celulares com 2GB de RAM."
+      },
+      {
+        "q": "Posso mesclar páginas específicas ou intervalos de cada PDF?",
+        "a": "Sim! Os concorrentes costumam cobrar por esse recurso. No ToolNest, toque em 'Escolher Páginas' em qualquer arquivo para abrir a grade visual de miniaturas ou digite intervalos como '1-3, 7, 10-12' para mesclar apenas as páginas necessárias."
+      },
+      {
+        "q": "Posso girar ou reordenar páginas antes de juntar?",
+        "a": "Sim. Você pode arrastar e soltar os cartões de arquivo para alterar a ordem dos documentos, inverter a ordem das páginas (ideal para folhas digitalizadas de trás para frente) e girar páginas individuais ou selecionadas em passos de 90 graus."
+      },
+      {
+        "q": "O que é o Modo Intercalar?",
+        "a": "O Modo Intercalar alterna as páginas entre dois documentos PDF (ex.: Página 1 do Arquivo A, Página 1 do Arquivo B, Página 2 do Arquivo A, Página 2 do Arquivo B). É perfeito para reunir digitalizações separadas de páginas pares e ímpares em um único documento cronológico."
+      },
+      {
+        "q": "A qualidade original do PDF ou o texto pesquisável são perdidos?",
+        "a": "Não. A junção é 100% sem perdas (lossless). O pdf-lib copia os fluxos de conteúdo, fontes incorporadas e gráficos vetoriais originais do PDF diretamente, sem rasterização ou recompressão. O texto permanece nítido e totalmente selecionável."
+      }
     ]
   },
   "data": {
@@ -1490,5 +1521,83 @@
   "offline": {
     "banner": "⚡ Você está offline — as ferramentas do ToolNest continuam funcionando sem internet!",
     "online": "Conexão restabelecida!"
+  },
+  "pdfMerge": {
+    "title": "Juntar Arquivos PDF Online",
+    "subtitle": "Combine múltiplos documentos PDF em um só com rapidez, segurança e diretamente no seu dispositivo. 100% privado, sem marca d'água e páginas ilimitadas.",
+    "privacyBadge": "Seus PDFs nunca saem do seu dispositivo",
+    "dropzone": {
+      "title": "Toque ou solte os arquivos PDF aqui",
+      "subtitle": "Arraste e solte múltiplos PDFs, clique para navegar ou cole com Ctrl+V",
+      "browseBtn": "Selecionar Arquivos PDF",
+      "pasteHint": "ou cole da área de transferência (Ctrl+V)"
+    },
+    "toolbar": {
+      "addMore": "+ Adicionar Mais PDFs",
+      "sortName": "Ordenar por Nome",
+      "reverseFiles": "Inverter Ordem dos Arquivos",
+      "selectAllPages": "Selecionar Todas as Páginas",
+      "modeNormal": "Ordem Normal",
+      "modeInterleave": "Modo Intercalar",
+      "interleaveHint": "Alterna páginas entre os documentos (ideal para digitalizações de páginas pares e ímpares)",
+      "bookmarksToggle": "Criar Marcadores / Sumário no PDF Final",
+      "clearAll": "Limpar Tudo",
+      "undo": "Desfazer",
+      "undoDeleted": "Arquivo \"{name}\" removido."
+    },
+    "card": {
+      "pagesCount": "{count} páginas",
+      "pagesCountSingle": "1 página",
+      "selectedPages": "{selected} de {total} páginas selecionadas",
+      "choosePages": "Escolher Páginas",
+      "rotateAll": "Girar +90°",
+      "reversePages": "Inverter Páginas",
+      "bookmarkTitle": "Título do Marcador",
+      "moveUp": "Mover para Cima",
+      "moveDown": "Mover para Baixo",
+      "delete": "Remover Arquivo",
+      "passwordProtected": "Protegido por Senha",
+      "passwordMsg": "Este PDF é protegido por senha. Remova a senha antes de juntar os arquivos.",
+      "corruptFile": "PDF Inválido ou Corrompido",
+      "corruptMsg": "Não foi possível processar este arquivo PDF. Ele pode estar corrompido ou não ser um PDF válido.",
+      "largeFileWarning": "Arquivo grande (>100MB) — o processamento pode exigir mais memória no celular"
+    },
+    "modal": {
+      "title": "Selecionar Páginas para Juntar — {name}",
+      "subtitle": "Toque nas miniaturas ou digite os números/intervalos (ex.: 1-3, 7, 10-12)",
+      "rangeLabel": "Intervalo de Páginas",
+      "rangePlaceholder": "ex.: 1-5, 8, 11-14",
+      "selectAll": "Selecionar Todas",
+      "selectNone": "Desmarcar Todas",
+      "invert": "Inverter Seleção",
+      "rotateSelected": "Girar Selecionadas (+90°)",
+      "reverseOrder": "Inverter Ordem",
+      "apply": "Aplicar Seleção",
+      "close": "Concluído"
+    },
+    "merge": {
+      "btn": "Juntar {files} PDFs · {pages} páginas · ≈ {size}",
+      "btnSingle": "Salvar PDF · {pages} páginas · ≈ {size}",
+      "btnDisabled": "Adicione pelo menos 2 arquivos PDF para juntar",
+      "progress": "Juntando PDFs… {percent}%",
+      "preparing": "Preparando documentos…",
+      "success": "PDFs combinados com sucesso!",
+      "outputFilename": "documento_combinado.pdf"
+    },
+    "preview": {
+      "title": "Seu PDF Combinado Está Pronto!",
+      "subtitle": "Gerado 100% no seu dispositivo, sem envio de arquivos para servidores.",
+      "downloadBtn": "Baixar PDF Combinado",
+      "backToEdit": "Editar e Reordenar Arquivos",
+      "stats": "{files} PDFs combinados em {pages} páginas ({size})"
+    },
+    "crossSell": {
+      "imageToPdf": "Precisa converter fotos em PDF? Conheça Imagem para PDF →"
+    },
+    "errors": {
+      "minFiles": "Adicione pelo menos 2 arquivos PDF para juntar.",
+      "noPages": "Pelo menos uma página deve ser selecionada nos seus arquivos.",
+      "generic": "Ocorreu um erro ao juntar seus PDFs. Verifique os arquivos e tente novamente."
+    }
   }
 }

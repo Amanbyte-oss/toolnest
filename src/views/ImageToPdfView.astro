@@ -199,6 +199,22 @@ const faqSchema = {
         </div>
       </section>
 
+      <!-- Cross-tool prompt for PDF Merge -->
+      <div class="p-3.5 rounded-2xl bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark shadow-xs flex items-center justify-between gap-3 text-xs">
+        <div class="flex items-center gap-2 text-secondary-light dark:text-secondary-dark min-w-0">
+          <span class="text-base shrink-0">📑</span>
+          <span class="truncate">
+            {lang === 'ar' ? 'هل لديك ملفات PDF مسبقاً وتريد دمجها؟' : lang === 'pt' ? 'Já tem arquivos PDF e precisa combiná-los?' : lang === 'id' ? 'Punya beberapa file PDF yang ingin digabungkan?' : 'Already have PDF documents to combine?'}
+          </span>
+        </div>
+        <a
+          href={getLocalizedPath('/pdf-merge', lang)}
+          class="font-bold text-accent hover:underline inline-flex items-center gap-1 shrink-0"
+        >
+          <span>{lang === 'ar' ? 'جرب دمج PDF ←' : lang === 'pt' ? 'Juntar PDF →' : lang === 'id' ? 'Coba Gabung PDF →' : 'Try PDF Merge →'}</span>
+        </a>
+      </div>
+
       <!-- 2. WORKSPACE SECTION (Rendered when images are loaded) -->
       <section id="pdf-workspace" class="hidden space-y-6">
         <!-- Top Toolbar & Status Row -->
@@ -501,7 +517,7 @@ const faqSchema = {
             description={tool.desc}
             href={tool.href}
             anchor={tool.anchor}
-            icon={tool.href.includes('compressor') ? 'image' : tool.href.includes('converter') ? 'convert' : 'clock'}
+            icon={tool.href.includes('pdf-merge') ? 'pdf' : tool.href.includes('compressor') ? 'image' : tool.href.includes('converter') ? 'convert' : 'clock'}
             lang={lang}
           />
         ))}

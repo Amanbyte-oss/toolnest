@@ -431,6 +431,11 @@ const LOCALIZED_LINKS: Record<string, Record<Lang, { name: string; desc: string;
   'image-to-pdf': {
     en: [
       {
+        name: '📑 PDF Merge',
+        desc: 'Combine multiple PDF documents into one cleanly without uploading.',
+        anchor: 'Merge PDF files privately on your device',
+      },
+      {
         name: '🗜️ Image Compressor',
         desc: 'Compress your images before or after PDF conversion to save space.',
         anchor: 'Compress images securely in your browser',
@@ -440,13 +445,13 @@ const LOCALIZED_LINKS: Record<string, Record<Lang, { name: string; desc: string;
         desc: 'Convert images between JPG, PNG, and WebP before creating your PDF.',
         anchor: 'Convert image formats instantly in browser',
       },
-      {
-        name: '⏳ Countdown Timer',
-        desc: 'Track deadlines, product launches, or special events in real time.',
-        anchor: 'Set a live countdown clock for your events',
-      },
     ],
     pt: [
+      {
+        name: '📑 Juntar PDF',
+        desc: 'Combine múltiplos documentos PDF em um só sem enviar nada para servidores.',
+        anchor: 'Junte arquivos PDF com privacidade no seu dispositivo',
+      },
       {
         name: '🗜️ Compressor de Imagens',
         desc: 'Comprima suas imagens antes ou depois da conversão em PDF.',
@@ -457,13 +462,13 @@ const LOCALIZED_LINKS: Record<string, Record<Lang, { name: string; desc: string;
         desc: 'Converta imagens entre JPG, PNG e WebP antes de criar seu PDF.',
         anchor: 'Converta formatos de imagem com rapidez',
       },
-      {
-        name: '⏳ Contagem Regressiva',
-        desc: 'Acompanhe prazos, lançamentos de produtos ou eventos em tempo real.',
-        anchor: 'Crie uma contagem regressiva ao vivo para seus eventos',
-      },
     ],
     id: [
+      {
+        name: '📑 Gabung PDF',
+        desc: 'Satukan beberapa dokumen PDF menjadi satu tanpa perlu upload ke server.',
+        anchor: 'Gabungkan file PDF secara privat di perangkat Anda',
+      },
       {
         name: '🗜️ Kompresor Gambar',
         desc: 'Kompres gambar Anda sebelum atau sesudah dijadikan PDF.',
@@ -474,13 +479,13 @@ const LOCALIZED_LINKS: Record<string, Record<Lang, { name: string; desc: string;
         desc: 'Ubah format gambar antara JPG, PNG, dan WebP sebelum membuat PDF.',
         anchor: 'Ubah format gambar secara instan di peramban',
       },
-      {
-        name: '⏳ Hitung Mundur',
-        desc: 'Pantau batas waktu, peluncuran produk, atau acara spesial secara langsung.',
-        anchor: 'Buat jam hitung mundur langsung untuk acara Anda',
-      },
     ],
     ar: [
+      {
+        name: '📑 دمج PDF',
+        desc: 'ادمج عدة مستندات PDF في ملف واحد بدقة بدون رفعها إلى أي خادم.',
+        anchor: 'ادمج ملفات PDF بخصوصية تامة على جهازك',
+      },
       {
         name: '🗜️ ضاغط الصور',
         desc: 'ضغط صورك قبل أو بعد تحويلها إلى PDF لتوفير المساحة.',
@@ -490,20 +495,86 @@ const LOCALIZED_LINKS: Record<string, Record<Lang, { name: string; desc: string;
         name: '🔄 محول صيغ الصور',
         desc: 'تحويل الصور بين JPG وPNG وWebP قبل إنشاء مستند PDF.',
         anchor: 'حول صيغ الصور فورياً وبخصوصية تامة',
-        },
+      },
+    ],
+  },
+  'pdf-merge': {
+    en: [
       {
-        name: '⏳ العداد التنازلي',
-        desc: 'تابع المواعيد النهائية وإطلاق المنتجات والفعاليات في الوقت الفعلي.',
-        anchor: 'أنشئ عداً تنازلياً مباشراً لفعالياتك ومناسباتك',
+        name: '📄 Image to PDF',
+        desc: 'Convert photos, scans, and images into clean PDF documents.',
+        anchor: 'Convert images to PDF on your device',
+      },
+      {
+        name: '🗜️ Image Compressor',
+        desc: 'Compress images and photos to reduce file sizes before merging.',
+        anchor: 'Compress images securely in your browser',
+      },
+      {
+        name: '🔄 Image Converter',
+        desc: 'Convert image formats between JPG, PNG, and WebP instantly.',
+        anchor: 'Convert image formats instantly in browser',
+      },
+    ],
+    pt: [
+      {
+        name: '📄 Imagem para PDF',
+        desc: 'Converta fotos e digitalizações em documentos PDF limpos.',
+        anchor: 'Converta imagens em PDF no seu dispositivo',
+      },
+      {
+        name: '🗜️ Compressor de Imagens',
+        desc: 'Comprima fotos para reduzir o tamanho antes de mesclar.',
+        anchor: 'Comprima imagens com segurança no navegador',
+      },
+      {
+        name: '🔄 Conversor de Imagens',
+        desc: 'Converta imagens entre JPG, PNG e WebP instantaneamente.',
+        anchor: 'Converta formatos de imagem com rapidez',
+      },
+    ],
+    id: [
+      {
+        name: '📄 Gambar ke PDF',
+        desc: 'Ubah foto dan hasil scan menjadi dokumen PDF yang rapi.',
+        anchor: 'Ubah gambar ke PDF di perangkat Anda',
+      },
+      {
+        name: '🗜️ Kompresor Gambar',
+        desc: 'Kompres foto untuk memperkecil ukuran sebelum digabungkan.',
+        anchor: 'Kompres gambar secara aman di browser Anda',
+      },
+      {
+        name: '🔄 Konverter Gambar',
+        desc: 'Ubah format gambar antara JPG, PNG, dan WebP seketika.',
+        anchor: 'Ubah format gambar secara instan di peramban',
+      },
+    ],
+    ar: [
+      {
+        name: '📄 تحويل الصور إلى PDF',
+        desc: 'تحويل الصور والمستندات الممسوحة ضوئياً إلى ملفات PDF نظيفة.',
+        anchor: 'حول صورك إلى مستندات PDF على جهازك',
+      },
+      {
+        name: '🗜️ ضاغط الصور',
+        desc: 'ضغط الصور لتصغير حجم الملفات قبل دمجها.',
+        anchor: 'اضغط صورك بأمان داخل متصفحك',
+      },
+      {
+        name: '🔄 محول صيغ الصور',
+        desc: 'تحويل صيغ الصور بين JPG وPNG وWebP فورياً.',
+        anchor: 'حول صيغ الصور فورياً وبخصوصية تامة',
       },
     ],
   },
 };
 
 const DEFAULT_HREFS: Record<string, string[]> = {
-  'image-to-pdf': ['/image-compressor', '/image-converter', '/countdown'],
-  'image-compressor': ['/image-to-pdf', '/image-converter', '/countdown'],
-  'image-converter': ['/image-to-pdf', '/image-compressor', '/countdown'],
+  'image-to-pdf': ['/pdf-merge', '/image-compressor', '/image-converter'],
+  'pdf-merge': ['/image-to-pdf', '/image-compressor', '/image-converter'],
+  'image-compressor': ['/image-to-pdf', '/pdf-merge', '/image-converter'],
+  'image-converter': ['/image-to-pdf', '/pdf-merge', '/image-compressor'],
   'age-calculator': ['/birthday-facts', '/countdown', '/random-picker'],
   'birthday-facts': ['/age-calculator', '/countdown', '/random-picker'],
   'random-picker': ['/countdown', '/image-compressor', '/birthday-facts'],
