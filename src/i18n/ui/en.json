@@ -1448,99 +1448,28 @@
   },
   "compressor": {
     "title": "Free Online Image Compressor",
-    "subtitle": "Compress JPG, PNG, WebP & AVIF images 100% on your device. Fast, private, zero server uploads.",
+    "subtitle": "Compress JPG, PNG, and WebP images 100% on your device. Fast, private, zero server uploads.",
     "privacyBadge": "100% Client-Side • Nothing Leaves Your Device",
-    "privacyBadgeDesc": "Images are processed entirely in your browser using Canvas & WebAssembly",
-    "keyTakeaways": {
-      "title": "Quick Answer & Key Takeaways",
-      "kt1": "Zero Uploads: All compression runs 100% on your device. Your sensitive photos never touch any server or cloud.",
-      "kt2": "Smart Presets & Target Size: Reduce sizes by 70–80% with Smart Compress, or hit exact form limits like \"Under 100 KB\".",
-      "kt3": "Batch Processing & ZIP: Compress multiple images at once and download them individually or as a single ZIP archive."
-    },
     "dropzone": {
-      "title": "Drag & drop images here",
-      "subtitle": "or browse from your device, paste from clipboard (Ctrl+V), or take a photo",
-      "browseBtn": "Browse Files",
-      "cameraBtn": "Take Photo",
-      "pasteHint": "Tip: Press Ctrl+V (or Cmd+V) anywhere on the page to paste",
-      "dragOverText": "Drop images to start compressing...",
-      "supportedFormats": "Supports JPG, PNG, WebP, AVIF up to 50MB each"
+      "tapOrDrop": "Tap or drop image here",
+      "clickOrPaste": "Click to browse or paste with Ctrl+V"
     },
     "controls": {
-      "outputFormat": "Output Format",
-      "formatWebpDesc": "Best compression & modern web standard",
-      "formatJpegDesc": "Universal compatibility for legacy devices",
-      "formatPngDesc": "Lossless graphics with transparency",
-      "modeLabel": "Compression Mode",
-      "modeSmart": "Smart Compress (~75%)",
-      "modeManual": "Custom Quality",
-      "modeTarget": "Target File Size",
-      "qualityLabel": "Image Quality",
-      "presetsLabel": "Presets",
-      "presetHigh": "High Quality (90%)",
-      "presetBalanced": "Balanced (75%)",
-      "presetSmall": "Small Size (55%)",
-      "presetExtreme": "Extreme Email (35%)",
-      "targetSizeLabel": "Desired Max File Size",
-      "targetSizeHint": "Binary searches quality & downscales if needed to hit exact size",
-      "kbUnit": "KB",
-      "mbUnit": "MB",
-      "resizeHeading": "Resize Dimensions (Optional)",
-      "enableResize": "Enable image resizing",
-      "maxWidth": "Max Width",
-      "maxHeight": "Max Height",
-      "keepAspect": "Keep aspect ratio",
-      "scalePresets": "Quick Scale",
-      "stripExif": "Strip EXIF & GPS metadata",
-      "stripExifHint": "Removes camera info and location tags for privacy and extra savings",
-      "applyToAll": "Re-compress All",
-      "qualityEstimatedSavings": "Estimated savings: ~{savings}%"
-    },
-    "batch": {
-      "queueTitle": "Compression Queue",
-      "processing": "Compressing image {current} of {total}...",
-      "allDone": "All {total} images compressed successfully!",
-      "downloadAllZip": "Download All (ZIP)",
-      "zipping": "Creating ZIP archive...",
-      "clearAll": "Clear All",
-      "totalSaved": "Total Saved"
-    },
-    "results": {
-      "original": "Original",
-      "compressed": "Compressed",
-      "savedBadge": "Saved {percent}%",
-      "dimensions": "Dimensions",
       "quality": "Quality",
-      "download": "Download",
-      "share": "Share",
-      "remove": "Remove",
-      "compareSlider": "Compare Quality",
-      "dragToCompare": "Drag slider to compare Before / After",
-      "before": "Before",
-      "after": "After",
-      "noSavings": "Already optimal"
+      "targetPlaceholder": "Target size, e.g. 100 KB",
+      "targetLabel": "Target size (optional)",
+      "downloadBtn": "Download Compressed WebP",
+      "saved": "Saved",
+      "biggerWarning": "Bigger ⚠️ try a lower quality or use target size",
+      "closestPossible": "Closest possible: {size} (target {target} KB)",
+      "compressing": "Compressing..."
     },
-    "recent": {
-      "title": "Recent Compressions (In-Memory)",
-      "desc": "Kept in browser memory during this session only. Cleared on refresh to protect your privacy.",
-      "empty": "No images compressed in this session yet."
+    "preview": {
+      "remove": "Remove image and start over"
     },
     "errors": {
-      "invalidType": "Unsupported file format. Please select JPG, PNG, WebP, or AVIF.",
-      "fileTooLarge": "Image file is too large to process in browser memory (over 50MB).",
-      "corruptFile": "Could not decode image file. It may be corrupt or unreadable.",
-      "noImagesInClipboard": "No image found in clipboard. Copy an image first.",
-      "zipFailed": "Failed to create ZIP file. Please download files individually."
-    },
-    "howTo": {
-      "title": "How to Compress Images Online for Free in 3 Steps",
-      "subtitle": "A quick guide to reducing image file size in your browser with zero quality compromise.",
-      "s1Title": "Upload or paste your images",
-      "s1Desc": "Drag and drop your photos, click Browse Files, paste from your clipboard with Ctrl+V, or snap a photo on mobile.",
-      "s2Title": "Choose quality, format, or target size",
-      "s2Desc": "Select Smart Compress, adjust the quality slider, or specify an exact size limit like \"Under 100 KB\" for job or visa forms.",
-      "s3Title": "Compare quality and download",
-      "s3Desc": "Use the interactive before/after slider to verify crisp visual quality, then download individual files or a combined ZIP."
+      "invalidType": "Please select a valid JPG, PNG, WebP, or AVIF image.",
+      "corruptFile": "Could not decode this image file. It may be corrupt or unreadable."
     }
   }
 }

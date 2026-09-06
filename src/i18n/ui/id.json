@@ -1448,99 +1448,28 @@
   },
   "compressor": {
     "title": "Kompres Foto & Gambar Online Gratis",
-    "subtitle": "Kecilkan ukuran foto JPG, PNG, WebP & AVIF 100% di perangkat Anda. Cepat, privat, tanpa upload ke server.",
+    "subtitle": "Kecilkan ukuran foto JPG, PNG & WebP 100% di perangkat Anda. Cepat, privat, tanpa upload ke server.",
     "privacyBadge": "100% di Perangkat Anda • Tidak Ada yang Diunggah",
-    "privacyBadgeDesc": "Gambar diproses sepenuhnya di browser menggunakan Canvas & WebAssembly",
-    "keyTakeaways": {
-      "title": "Jawaban Cepat & Poin Utama",
-      "kt1": "Tanpa Upload: Semua kompresi berjalan 100% di browser Anda. Foto pribadi tidak pernah terkirim ke server.",
-      "kt2": "Preset Pintar & Target Ukuran: Kurangi ukuran 70–80% atau sesuaikan batas formulir seperti \"Di bawah 100 KB\".",
-      "kt3": "Proses Sekaligus & Unduh ZIP: Kompres banyak foto sekaligus dan unduh satu per satu atau dalam format ZIP."
-    },
     "dropzone": {
-      "title": "Tarik & lepas foto di sini",
-      "subtitle": "atau pilih dari perangkat, tempel dari clipboard (Ctrl+V), atau ambil foto langsung",
-      "browseBtn": "Pilih Berkas",
-      "cameraBtn": "Ambil Foto",
-      "pasteHint": "Tips: Tekan Ctrl+V (atau Cmd+V) di mana saja untuk menempelkan foto",
-      "dragOverText": "Lepaskan foto untuk mulai mengompres...",
-      "supportedFormats": "Mendukung JPG, PNG, WebP, AVIF hingga 50MB per berkas"
+      "tapOrDrop": "Ketuk atau letakkan foto di sini",
+      "clickOrPaste": "Klik untuk memilih atau tempel dengan Ctrl+V"
     },
     "controls": {
-      "outputFormat": "Format Keluaran",
-      "formatWebpDesc": "Kompresi terbaik & standar web masa kini",
-      "formatJpegDesc": "Kompatibilitas universal untuk semua perangkat",
-      "formatPngDesc": "Grafik lossless dengan transparansi",
-      "modeLabel": "Mode Kompresi",
-      "modeSmart": "Kompres Pintar (~75%)",
-      "modeManual": "Kualitas Kustom",
-      "modeTarget": "Target Ukuran Berkas",
-      "qualityLabel": "Kualitas Gambar",
-      "presetsLabel": "Preset Cepat",
-      "presetHigh": "Kualitas Tinggi (90%)",
-      "presetBalanced": "Seimbang (75%)",
-      "presetSmall": "Ukuran Kecil (55%)",
-      "presetExtreme": "Ekstrem Email (35%)",
-      "targetSizeLabel": "Target Ukuran Maksimal",
-      "targetSizeHint": "Pencarian biner otomatis kualitas & resolusi agar pas dengan batas ukuran",
-      "kbUnit": "KB",
-      "mbUnit": "MB",
-      "resizeHeading": "Ubah Resolusi / Dimensi (Opsional)",
-      "enableResize": "Aktifkan pengubahan ukuran gambar",
-      "maxWidth": "Lebar Maks.",
-      "maxHeight": "Tinggi Maks.",
-      "keepAspect": "Pertahankan rasio aspek",
-      "scalePresets": "Skala Cepat",
-      "stripExif": "Hapus metadata EXIF & GPS",
-      "stripExifHint": "Hapus info kamera dan koordinat lokasi untuk privasi & hemat ukuran ekstra",
-      "applyToAll": "Kompres Ulang Semua",
-      "qualityEstimatedSavings": "Estimasi penghematan: ~{savings}%"
-    },
-    "batch": {
-      "queueTitle": "Antrean Kompresi",
-      "processing": "Mengompres foto {current} dari {total}...",
-      "allDone": "Semua {total} foto berhasil dikompres!",
-      "downloadAllZip": "Unduh Semua (ZIP)",
-      "zipping": "Membuat arsip ZIP...",
-      "clearAll": "Hapus Semua",
-      "totalSaved": "Total Penghematan"
-    },
-    "results": {
-      "original": "Asli",
-      "compressed": "Hasil Kompres",
-      "savedBadge": "Hemat {percent}%",
-      "dimensions": "Resolusi",
       "quality": "Kualitas",
-      "download": "Unduh",
-      "share": "Bagikan",
-      "remove": "Hapus",
-      "compareSlider": "Bandingkan Kualitas",
-      "dragToCompare": "Geser pembatas untuk bandingkan Sebelum / Sesudah",
-      "before": "Sebelum",
-      "after": "Sesudah",
-      "noSavings": "Sudah optimal"
+      "targetPlaceholder": "Target ukuran, misal 100 KB",
+      "targetLabel": "Target ukuran (opsional)",
+      "downloadBtn": "Unduh WebP Hasil Kompres",
+      "saved": "Hemat",
+      "biggerWarning": "Lebih besar ⚠️ coba turunkan kualitas atau gunakan target ukuran",
+      "closestPossible": "Paling mendekati: {size} (target {target} KB)",
+      "compressing": "Mengompres..."
     },
-    "recent": {
-      "title": "Riwayat Kompresi (Memori Sesi)",
-      "desc": "Tersimpan di memori browser selama sesi ini saja. Dihapus saat refresh demi menjaga privasi Anda.",
-      "empty": "Belum ada foto yang dikompres pada sesi ini."
+    "preview": {
+      "remove": "Hapus foto dan mulai ulang"
     },
     "errors": {
-      "invalidType": "Format berkas tidak didukung. Harap pilih JPG, PNG, WebP, atau AVIF.",
-      "fileTooLarge": "Ukuran berkas terlalu besar untuk memori browser (lebih dari 50MB).",
-      "corruptFile": "Berkas gambar tidak dapat dibaca atau rusak.",
-      "noImagesInClipboard": "Tidak ada gambar yang ditemukan di clipboard.",
-      "zipFailed": "Gagal membuat berkas ZIP. Silakan unduh foto satu per satu."
-    },
-    "howTo": {
-      "title": "Cara Kompres Foto Online Gratis dalam 3 Langkah",
-      "subtitle": "Panduan praktis mengecilkan ukuran gambar di browser tanpa mengurangi ketajaman visual.",
-      "s1Title": "Unggah atau tempel foto Anda",
-      "s1Desc": "Tarik & lepas foto, klik Pilih Berkas, tempel dengan Ctrl+V, atau potret langsung menggunakan kamera ponsel.",
-      "s2Title": "Pilih kualitas, format, atau target ukuran",
-      "s2Desc": "Pilih Kompres Pintar, geser slider kualitas, atau tentukan batas seperti \"Di bawah 100 KB\" untuk lamaran kerja/ujian.",
-      "s3Title": "Bandingkan hasil dan unduh",
-      "s3Desc": "Gunakan slider sebelum/sesudah untuk memastikan kualitas gambar tetap tajam, lalu unduh berkas atau arsip ZIP."
+      "invalidType": "Harap pilih berkas gambar JPG, PNG, WebP, atau AVIF yang valid.",
+      "corruptFile": "Berkas gambar tidak dapat dibaca atau rusak."
     }
   }
 }
